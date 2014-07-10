@@ -1,0 +1,39 @@
+{
+    "name": "bolt/extensions",
+    "description": "An extension repository manager for Bolt CMS",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ross Riley",
+            "email": "riley.ross@gmail.com"
+        }
+    ],
+    
+
+    "minimum-stability": "dev",
+    "require": {
+        "composer/satis": "~1.0",
+        "doctrine/orm": "2.5.*@dev",
+        "mnapoli/php-di": "~4.0",
+        "rossriley/doctrine-migrations-helper": "1.0.*@dev",
+        "rossriley/stack-aura-router": "1.0.*@dev",
+        "stack/builder" : "1.0.*@dev",
+        "stack/url-map" : "1.0.*@dev",
+        "stack/run"     : "1.0.*@dev",
+        "stack/session": "1.0.*@dev",
+        "symfony/debug": "~2.5",
+        "symfony/form": "~2.5",
+        "symfony/twig-bridge": "~2.5",
+        "symfony/doctrine-bridge": "~2.5",
+        "symfony/validator": "~2.5",
+        "twig/twig": "1.15.*@dev"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Bolt\\Extensions\\": "src",
+            "Bolt\\Extensions\\Tests\\": "tests"
+        }
+    }
+
+}

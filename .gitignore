@@ -1,0 +1,11 @@
+.DS_*
+/vendor
+cache/
+config/config.php
+config/dealer.json
+public/uploads/*
+public/cache/*
+node_modules
+public/files
+satis.json
+public/satis

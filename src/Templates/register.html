@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="splash-section reverse search-section">
+    <div class="row">
+        <div class="large-12 columns">
+            <h2>Register for an account</h2>
+        </div>
+    </div>
+</div>
+<div class="panel">
+    <div class="row">
+        <div class="large-12 columns">
+            <form action="">
+                {{form_row(form.email)}}
+                {{form_row(form.password)}}
+                {{form_row(form.create, {attr:{class:'small expand radius'}})}}
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

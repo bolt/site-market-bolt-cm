@@ -1,0 +1,34 @@
+body {
+    font-family:Lato, Helvetica, sans-serif;
+}
+body h1, body h2, body h3, body h4 {
+    font-family:Lato, Helvetica, sans-serif;
+}
+
+.top-bar {
+    background-color:#131923;
+}
+.top-bar-section li:not(.has-form) a:not(.button) {
+    background-color:#131923;
+}
+.top-bar h4 {
+    color:white;
+    font-weight:100;
+    float:left;
+    margin-top:5px;
+}
+.top-bar .name img {
+    width:43px;
+    margin:4px;
+}
+
+.splash-section {
+    background:#2A3244;
+    text-align: center;
+}
+.search-section {
+    padding:3rem;
+}
+.reverse h2, .reverse h3, .reverse h4, .reverse p, .reverse label {
+    color:#FFFFFF;
+}

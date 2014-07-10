@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="splash-section reverse search-section">
+    <div class="row">
+        <div class="large-12 columns">
+            <h2>Submit a Bolt Extension</h2>
+            <form action="">
+
+            </form>
+        </div>
+    </div>
+</div>
+<div class="panel">
+    <div class="row">
+        <div class="large-12 columns">
+            <form action="" method="post">
+                {{form_row(form.title)}}
+                {{form_row(form.source)}}
+                {{form_row(form.description)}}
+                {{form_row(form.submit, {attr:{class:'small expand radius'}})}}
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
