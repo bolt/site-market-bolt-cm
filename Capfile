@@ -13,8 +13,7 @@ set :password,          "bolt30080"
 set :ports,             {"30080"=>"80"}
 set :stage,             "production" ### Default stage
 set :build_commands,    [
-    'composer install --no-dev --optimize-autoloader',
-    'mkdir -p public/uploads'
+    'composer install --no-dev --optimize-autoloader'
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
@@ -22,7 +21,7 @@ set :start_commands,    [
 ]
 set :volumes, {
     'postgresql'=>'/data/pgsql/',
-    'uploads'=>'/var/www/public/uploads'
+    'satis'=>'/var/www/public/satis'
 }
 
 set :proxies, {

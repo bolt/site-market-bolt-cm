@@ -9,3 +9,4 @@ node_modules
 public/files
 satis.json
 public/satis
+tmp/
