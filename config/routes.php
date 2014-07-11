@@ -11,6 +11,8 @@ $router->add("submit", "/submit")->setValues(['action'=>'Bolt\Extensions\Action\
 $router->add("submitted", "/submitted")->setValues(['action'=>'Bolt\Extensions\Action\Submitted']);
 $router->add("docs", "/docs")->setValues(['action'=>'Bolt\Extensions\Action\Docs']);
 $router->add("register", "/register")->setValues(['action'=>'Bolt\Extensions\Action\Register']);
+$router->add("admin", "/admin")->setValues(['action'=>'Bolt\Extensions\Action\Admin']);
+
 
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search']);
 

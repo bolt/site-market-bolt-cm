@@ -34,7 +34,7 @@ class Satis extends Command {
         $packages = $repo->findBy(['approved'=>true]);
         $repo = [
             'name'=> 'Bolt Extensions Repository',
-            'homepage' => 'http://extensions.bolt.cm',
+            'homepage' => 'http://bolt.rossriley.co.uk/satis',
             'require-all' => 'true',
             'repositories' => [],
             'output-dir' => getcwd().'/public/satis/'

@@ -21,6 +21,8 @@ use Aura\Router\Router;
 use Bolt\Extensions\Application;
 
 
+Symfony\Component\Debug\Debug::enable();
+
 return [
 
     Application::class => DI\object(),
