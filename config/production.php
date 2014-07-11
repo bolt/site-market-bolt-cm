@@ -81,7 +81,8 @@ return [
     
     'console.commands' => DI\factory(function($c){
         return [
-            $c->get(Bolt\Extensions\Command\Satis::class)
+            $c->get(Bolt\Extensions\Command\Satis::class),
+            $c->get(Bolt\Extensions\Command\Builder::class)
         ];
     }),
 

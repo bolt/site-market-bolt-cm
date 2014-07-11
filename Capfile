@@ -17,7 +17,8 @@ set :build_commands,    [
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
-    "./console migrations:migrate --no-interaction"
+    "./console migrations:migrate --no-interaction",
+    "./console bolt:builder",
 ]
 set :volumes, {
     'postgresql'=>'/data/pgsql/',

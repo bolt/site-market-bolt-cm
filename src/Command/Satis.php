@@ -35,7 +35,6 @@ class Satis extends Command {
         $repo = [
             'name'=> 'Bolt Extensions Repository',
             'homepage' => 'http://bolt.rossriley.co.uk/satis',
-            'require-all' => 'true',
             'repositories' => [],
             'output-dir' => getcwd().'/public/satis/'
         ];
