@@ -23,7 +23,7 @@ class Package extends Base {
         $builder->addField('source',                        'string',   ['nullable'=>true]);
         $builder->addField('title',                         'string',   ['nullable'=>true]);
         $builder->addField('description',                   'text',     ['nullable'=>true]);
-        $builder->addField('approved',                      'boolean',  ['nullable'=>true, 'default'=>false]);
+        $builder->addField('approved',                      'boolean',  ['nullable'=>true, 'default'=>true]);
 
     }
 
