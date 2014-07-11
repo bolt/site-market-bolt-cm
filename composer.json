@@ -12,6 +12,7 @@
 
     "minimum-stability": "dev",
     "require": {
+        "composer/composer": "1.0.*@dev",
         "composer/satis": "~1.0",
         "doctrine/orm": "2.5.*@dev",
         "mnapoli/php-di": "~4.0",
