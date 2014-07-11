@@ -1598,12 +1598,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Debug.git",
-                "reference": "52d0ee303ff1014e29d40fd02ec3194d1539c720"
+                "reference": "a0f1676b45b69aada4d630bd9e6317b1e95ed236"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Debug/zipball/52d0ee303ff1014e29d40fd02ec3194d1539c720",
-                "reference": "52d0ee303ff1014e29d40fd02ec3194d1539c720",
+                "url": "https://api.github.com/repos/symfony/Debug/zipball/a0f1676b45b69aada4d630bd9e6317b1e95ed236",
+                "reference": "a0f1676b45b69aada4d630bd9e6317b1e95ed236",
                 "shasum": ""
             },
             "require": {
@@ -1647,7 +1647,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "http://symfony.com",
-            "time": "2014-07-09 09:06:26"
+            "time": "2014-07-11 15:37:14"
         },
         {
             "name": "symfony/doctrine-bridge",
@@ -2434,12 +2434,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Translation.git",
-                "reference": "765f11a3ae608c3c53b26b081d4a41de2821e2e1"
+                "reference": "aae12f47f4496ff79c38847e68ba5437f2dc1044"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Translation/zipball/765f11a3ae608c3c53b26b081d4a41de2821e2e1",
-                "reference": "765f11a3ae608c3c53b26b081d4a41de2821e2e1",
+                "url": "https://api.github.com/repos/symfony/Translation/zipball/aae12f47f4496ff79c38847e68ba5437f2dc1044",
+                "reference": "aae12f47f4496ff79c38847e68ba5437f2dc1044",
                 "shasum": ""
             },
             "require": {
@@ -2482,7 +2482,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "http://symfony.com",
-            "time": "2014-07-09 09:06:26"
+            "time": "2014-07-11 11:07:55"
         },
         {
             "name": "symfony/twig-bridge",
@@ -2491,12 +2491,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/TwigBridge.git",
-                "reference": "36cd8cd7d83cfbb4ee7fdb563e4714384d5e6954"
+                "reference": "a4c0b23e7f7bf7220281444ec9a312f7d05c935c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/TwigBridge/zipball/36cd8cd7d83cfbb4ee7fdb563e4714384d5e6954",
-                "reference": "36cd8cd7d83cfbb4ee7fdb563e4714384d5e6954",
+                "url": "https://api.github.com/repos/symfony/TwigBridge/zipball/a4c0b23e7f7bf7220281444ec9a312f7d05c935c",
+                "reference": "a4c0b23e7f7bf7220281444ec9a312f7d05c935c",
                 "shasum": ""
             },
             "require": {
@@ -2556,7 +2556,7 @@
             ],
             "description": "Symfony Twig Bridge",
             "homepage": "http://symfony.com",
-            "time": "2014-07-09 09:06:26"
+            "time": "2014-07-11 15:37:14"
         },
         {
             "name": "symfony/validator",

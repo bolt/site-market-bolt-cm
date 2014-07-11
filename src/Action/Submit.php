@@ -27,13 +27,14 @@ class Submit extends AbstractAction
         if ($form->isValid()) {
             $package = $form->getData();
             $package->created = new \DateTime;
+            
             try {
                 $information = $this->readComposer($package);
                 $package->name = $information['name'];
-                $package->keywords = $information['keywords'];
+                $package->keywords = implode(',',$information['keywords']);
                 $this->em->persist($package);
                 $this->em->flush();
-                return new RedirectResponse($this->router->generate('submitted'));
+                return new RedirectResponse($this->router->generate('submitted')); 
             } catch (\Exception $e) {
                 $error = 'invalid';
             }
