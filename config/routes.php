@@ -15,7 +15,7 @@ $router->add("admin", "/admin")->setValues(['action'=>'Bolt\Extensions\Action\Ad
 
 
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search']);
-$router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\List']);
+$router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages']);
 
 
 return $router;

@@ -4,6 +4,10 @@ namespace Bolt\Extensions\Entity;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
+use Composer\IO\NullIO;
+use Composer\Factory;
+use Composer\Repository\VcsRepository;
+
 
 class Package extends Base {
 
@@ -14,7 +18,7 @@ class Package extends Base {
     protected $keywords;
     protected $description;
     protected $approved;
-
+    protected $versions;
 
     public static function loadMetadata(ClassMetadata $metadata)
     {
@@ -26,12 +30,33 @@ class Package extends Base {
         $builder->addField('keywords',                      'string',   ['nullable'=>true]);
         $builder->addField('description',                   'text',     ['nullable'=>true]);
         $builder->addField('approved',                      'boolean',  ['nullable'=>true, 'default'=>true]);
+        $builder->addField('versions',                      'string',   ['nullable'=>true]);
 
     }
     
     public function setSource($value)
     {
         $this->source = rtrim($value, "/");
+    }
+    
+    public function sync()
+    {
+        $io = new NullIO();
+        $config = Factory::createConfig();
+        $io->loadConfiguration($config);
+            
+        $repository = new VcsRepository(['url' => $this->getSource()], $io, $config);
+        $driver = $repository->getDriver();
+        $information = $driver->getComposerInformation($driver->getRootIdentifier());
+        $versions = $repository->getPackages();
+        $pv = [];
+        foreach($versions as $version) {
+            $pv[]=$version->getPrettyVersion();
+        }
+        
+        $this->setName($information['name']);
+        $this->setKeywords(implode(',',$information['keywords']));
+        $this->setVersions(implode(',', $pv));        
     }
 
 

@@ -7,11 +7,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Bolt\Extensions\Entity;
 
-use Composer\IO\NullIO;
-use Composer\Factory;
-use Composer\Repository\VcsRepository;
-
-
 class Submit extends AbstractAction
 {
     
@@ -29,9 +24,7 @@ class Submit extends AbstractAction
             $package->created = new \DateTime;
             
             try {
-                $information = $this->readComposer($package);
-                $package->name = $information['name'];
-                $package->keywords = implode(',',$information['keywords']);
+                $package->sync();
                 $this->em->persist($package);
                 $this->em->flush();
                 return new RedirectResponse($this->router->generate('submitted')); 
@@ -46,15 +39,5 @@ class Submit extends AbstractAction
     }
     
     
-    protected function readComposer($package)
-    {
-        $io = new NullIO();
-        $config = Factory::createConfig();
-        $io->loadConfiguration($config);
-            
-        $repository = new VcsRepository(['url' => $package->getSource()], $io, $config);
-        $driver = $repository->getDriver();
-        $information = $driver->getComposerInformation($driver->getRootIdentifier());
-        return $information;
-    }
+
 }
