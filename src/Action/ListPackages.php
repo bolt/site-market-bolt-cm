@@ -26,6 +26,9 @@ class ListPackages extends AbstractAction
             unset($v['approved']);
             $v['versions'] = explode(",",$v['versions']);
         });
-        return new JsonResponse(['packages'=>$packages]);
+
+        $response = new JsonResponse(['packages'=>$packages]);
+        $response->setCallback($request->get('callback'));
+        return $response;
     }
 }
