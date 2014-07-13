@@ -4,6 +4,7 @@ namespace Bolt\Extensions\Action;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Bolt\Extensions\Entity;
 
@@ -24,6 +25,6 @@ class ListPackages extends AbstractAction
             $v = $v->serialize();
             unset($v['approved']);
         });
-        return new Response(json_encode($packages, JSON_PRETTY_PRINT));
+        return new JsonResponse($packages);
     }
 }
