@@ -25,6 +25,6 @@ class ListPackages extends AbstractAction
             $v = $v->serialize();
             unset($v['approved']);
         });
-        return new JsonResponse($packages);
+        return new JsonResponse(['packages'=>$packages]);
     }
 }
