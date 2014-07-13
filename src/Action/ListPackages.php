@@ -15,7 +15,11 @@ class ListPackages extends AbstractAction
     {
         
         $repo = $this->em->getRepository(Entity\Package::class);
-        $packages = $repo->findBy(['approved'=>true]);
+        if($search = $request->get('name')) {
+            $packages = $repo->findBy(['approved'=>true, 'name'=>$search]);
+        } else {
+            $packages = $repo->findBy(['approved'=>true]);
+        }
         array_walk($packages, function(&$v, $k){
             $v = $v->serialize();
             unset($v['approved']);
