@@ -55,7 +55,9 @@ class Package extends Base {
         }
         
         $this->setName($information['name']);
-        $this->setKeywords(implode(',',$information['keywords']));
+        if(isset($information['keywords'])) {
+            $this->setKeywords(implode(',',$information['keywords']));
+        }
         $this->setVersions(implode(',', $pv));        
     }
 
