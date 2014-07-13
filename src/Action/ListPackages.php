@@ -24,6 +24,7 @@ class ListPackages extends AbstractAction
         array_walk($packages, function(&$v, $k){
             $v = $v->serialize();
             unset($v['approved']);
+            $v['versions'] = explode(",",$v['versions']);
         });
         return new JsonResponse(['packages'=>$packages]);
     }
