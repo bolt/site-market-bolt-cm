@@ -54,6 +54,10 @@ class Builder extends Command {
                     
                     $command = 'vendor/bin/satis build';
                     $output->writeln(shell_exec($command));
+                    
+                    $command2 = 'console bolt:update';
+                    $output->writeln(shell_exec($command2));
+
                 }
                 
             } catch (\Exception $e) {
