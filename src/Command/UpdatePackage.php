@@ -37,7 +37,6 @@ class UpdatePackage extends Command {
         $package->sync();
         $this->em->persist($package);
         $this->em->flush();
-        $wait = $this->period / 60;
         $output->writeln("<comment>Update Complete</comment>");
             
     }
