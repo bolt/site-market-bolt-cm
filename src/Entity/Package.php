@@ -19,18 +19,24 @@ class Package extends Base {
     protected $description;
     protected $approved;
     protected $versions;
+    protected $created;
+    protected $updated;
+    protected $authors;
 
     public static function loadMetadata(ClassMetadata $metadata)
     {
         $builder = new ClassMetadataBuilder($metadata);
-        $builder->createField('id',                         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
-        $builder->addField('source',                        'string',   ['nullable'=>true]);
-        $builder->addField('title',                         'string',   ['nullable'=>true]);
-        $builder->addField('name',                          'string',   ['nullable'=>true]);
-        $builder->addField('keywords',                      'string',   ['nullable'=>true]);
-        $builder->addField('description',                   'text',     ['nullable'=>true]);
-        $builder->addField('approved',                      'boolean',  ['nullable'=>true, 'default'=>true]);
-        $builder->addField('versions',                      'string',   ['nullable'=>true]);
+        $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
+        $builder->addField('source',        'string',   ['nullable'=>true]);
+        $builder->addField('title',         'string',   ['nullable'=>true]);
+        $builder->addField('name',          'string',   ['nullable'=>true]);
+        $builder->addField('keywords',      'string',   ['nullable'=>true]);
+        $builder->addField('description',   'text',     ['nullable'=>true]);
+        $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
+        $builder->addField('versions',      'string',   ['nullable'=>true]);
+        $builder->addField('authors',       'string',   ['nullable'=>true]);
+        $builder->addField('created',       'datetime', ['nullable'=>true]);
+        $builder->addField('updated',       'datetime', ['nullable'=>true]);
 
     }
     
@@ -48,6 +54,7 @@ class Package extends Base {
         $repository = new VcsRepository(['url' => $this->getSource()], $io, $config);
         $driver = $repository->getDriver();
         $information = $driver->getComposerInformation($driver->getRootIdentifier());
+
         $versions = $repository->getPackages();
         $pv = [];
         foreach($versions as $version) {
@@ -57,6 +64,13 @@ class Package extends Base {
         $this->setName($information['name']);
         if(isset($information['keywords'])) {
             $this->setKeywords(implode(',',$information['keywords']));
+        }
+        if(isset($information['authors'])) {
+            $authors = [];
+            foreach($information['authors'] as $author) {
+                $authors[]=$author['name'];
+            }
+            $this->setAuthors(implode(',',$authors));
         }
         $this->setVersions(implode(',', $pv));        
     }

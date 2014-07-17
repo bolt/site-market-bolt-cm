@@ -13,8 +13,9 @@ class Home extends AbstractAction
     
     public function __invoke(Request $request)
     {
-        
-        return new Response($this->renderer->render("index.html", []));
+        $repo = $this->em->getRepository(Entity\Package::class);
+        $latest = $repo->findBy(['approved'=>true], ['created'=>'DESC'], 10);
+        return new Response($this->renderer->render("index.html", ['latest'=>$latest]));
 
     }
 }

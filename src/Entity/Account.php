@@ -10,6 +10,7 @@ class Account extends Base {
     protected $id;
     protected $email;
     protected $password;
+    protected $name;
     protected $created;
     protected $packages;
 
@@ -20,6 +21,7 @@ class Account extends Base {
         $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
         $builder->addField('email',         'string',   ['nullable'=>true]);
         $builder->addField('password',      'string',   ['nullable'=>true]);
+        $builder->addField('name',          'string',   ['nullable'=>true]);
         $builder->addField('created',       'datetime');
         $builder->addOneToMany('packages',  'Bolt\Extensions\Entity\Package', 'user');
 
