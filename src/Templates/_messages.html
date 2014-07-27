@@ -1,0 +1,7 @@
+{% for label, flashes in session.flashbag.all %}
+    {% for flash in flashes %}
+        <div data-alert class="radius alert-box {{ label }}">
+            {{ flash }}
+        </div>
+    {% endfor %}
+{% endfor %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block splash %}
+    <h2>Login</h2>   
+{% endblock %}
+
+
+{% block content %}
+
+
+    <div class="large-4 columns large-offset-4">
+        <form action="" method="post">
+            {{form_row(form.email)}}
+            {{form_row(form.password)}}
+            {{form_row(form.login, {attr:{class:'small expand radius'}})}}
+        </form>
+        <p><strong>Don't have an account yet?</strong> <a href="{{url('register')}}">Register for one here</a>.</p>
+    </div>
+
+
+{% endblock %}
