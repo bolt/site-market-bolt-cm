@@ -12,6 +12,9 @@ class Submit extends AbstractAction
     
     public function __invoke(Request $request)
     {
+        if (! $this->restrictAccess($request)) {
+            return new RedirectResponse($this->router->generate('login'));
+        }
         putenv("COMPOSER_HOME=".sys_get_temp_dir());
         $error = false;
 

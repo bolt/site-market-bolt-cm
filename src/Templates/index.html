@@ -1,39 +1,33 @@
 {% extends "layout.html" %}
 
+{% block splash %}
+
+    <h2>Search for Bolt Extensions</h2>
+    <form action="" id="extension-search">
+        <input id="search-text" type="text" placeholder="eg: Package name or namespace or keyword" value="">
+    </form>
+        
+{% endblock %}
+
 {% block content %}
 
-<div class="splash-section reverse search-section">
-    <div class="row">
-        <div class="large-12 columns">
-            <h2>Search for Bolt Extensions</h2>
-            <form action="" id="extension-search">
-                <input id="search-text" type="text" placeholder="eg: Package name or namespace or keyword" value="">
-            </form>
+    <div class="large-12 columns package-list">
+        <h3>Latest Bolt Extensions</h3>
+        <hr />
+        <div class="row collapse">
+            <div class="large-3 columns"><strong>Name</strong></div>
+            <div class="large-5 columns"><strong>Description</strong></div>
+            <div class="large-3 columns"><strong>Author(s)</strong></div>
         </div>
-    </div>
-</div>
-
-<div class="panel">
-    <div class="row">
-        <div class="large-12 columns package-list">
-            <h3>Latest Bolt Extensions</h3>
-            <hr />
+        <hr />
+        {% for package in latest %}
             <div class="row collapse">
-                <div class="large-3 columns"><strong>Name</strong></div>
-                <div class="large-5 columns"><strong>Description</strong></div>
-                <div class="large-3 columns"><strong>Author(s)</strong></div>
+                <div class="large-3 columns"><h4>{{package.title}}</h4> <h6>{{package.name}}</h6></div>
+                <div class="large-5 columns"><p>{{package.description}}</p></div>
+                <div class="large-3 columns"><p>{{package.authors}}</p></div>
             </div>
             <hr />
-            {% for package in latest %}
-                <div class="row collapse">
-                    <div class="large-3 columns"><h4>{{package.title}}</h4> <h6>{{package.name}}</h6></div>
-                    <div class="large-5 columns"><p>{{package.description}}</p></div>
-                    <div class="large-3 columns"><p>{{package.authors}}</p></div>
-                </div>
-                <hr />
-            {% endfor %}
-        </div>  
-    </div>
-</div>
-
+        {% endfor %}
+    </div>  
+    
 {% endblock %}

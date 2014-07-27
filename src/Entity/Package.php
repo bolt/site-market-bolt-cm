@@ -1,4 +1,5 @@
 <?php
+
 namespace Bolt\Extensions\Entity;
 
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;

@@ -1,36 +1,29 @@
 {% extends "layout.html" %}
 
+{% block splash %}
+
+    <h2>Submit a Bolt Extension</h2>
+     
+{% endblock %}
+
+
 {% block content %}
 
-<div class="splash-section reverse search-section">
-    <div class="row">
+    {% if error == 'invalid' %}
         <div class="large-12 columns">
-            <h2>Submit a Bolt Extension</h2>
-            <form action="">
-
-            </form>
-        </div>
-    </div>
-</div>
-<div class="panel">
-    <div class="row">
-        {% if error == 'invalid' %}
-            <div class="large-12 columns">
-                <div data-alert class="alert-box alert radius">
-                    Sorry! We couldn't recognise the provided source as a valid extension. Check the url and that the project has a valid 'composer.json' file in the root of the project.
-                </div>
+            <div data-alert class="alert-box alert radius">
+                Sorry! We couldn't recognise the provided source as a valid extension. Check the url and that the project has a valid 'composer.json' file in the root of the project.
             </div>
-        {% endif %}
-        <div class="large-12 columns">
-            <form action="" method="post">
-                {{form_row(form.title)}}
-                {{form_row(form.source)}}
-                {{form_row(form.description)}}
-                {{form_row(form.submit, {attr:{class:'small expand radius'}})}}
-            </form>
         </div>
+    {% endif %}
+    <div class="large-12 columns">
+        <form action="" method="post">
+            {{form_row(form.title)}}
+            {{form_row(form.source)}}
+            {{form_row(form.description)}}
+            {{form_row(form.submit, {attr:{class:'small expand radius'}})}}
+        </form>
     </div>
-</div>
 
 
 {% endblock %}

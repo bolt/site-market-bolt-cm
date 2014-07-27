@@ -30,13 +30,32 @@
                     <li><a href="{{url('submit')}}">Submit An Extension</a></li>
                     <li><a href="{{url('docs')}}">How to Use Extensions</a></li>
                     <li><a href="http://bolt.cm">Bolt CMS</a></li>
+                    {% if isLoggedIn %}
+                        <li><a href="{{url('logout')}}">Logout</a></li>
+                    {% endif %}
                 </ul>   
             </section>
             
         </nav>
     </div>
     
-    {% block content %}{% endblock %}
+    <div class="splash-section reverse search-section">
+        <div class="row">
+            <div class="large-12 columns">
+                {% block splash%}{% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="panel">
+        <div class="row">
+            <div class="large-12 columns">
+                {% include '_messages.html' %}
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
 
 
 

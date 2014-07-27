@@ -11,6 +11,7 @@ class AccountForm extends AbstractType
 
         $builder
             ->add("email",          'text',     ['label'=>"Your email address"])
+            ->add("name",           'text',     ['label'=>"Your name"])
             ->add('password', 'repeated', [
                 'type' => 'password',
                 'required' => true,

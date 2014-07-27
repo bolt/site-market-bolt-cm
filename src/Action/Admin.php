@@ -14,6 +14,7 @@ class Admin extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->findAll();
+
         return new Response($this->renderer->render("admin.html", ['packages'=>$packages]));
 
     }

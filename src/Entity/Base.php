@@ -1,4 +1,5 @@
 <?php
+
 namespace Bolt\Extensions\Entity;
 
 abstract class Base

@@ -1,25 +1,36 @@
 {% extends "layout.html" %}
 
+
+
+{% block splash %}
+    <h2>Register for an account</h2>
+{% endblock %}
+
 {% block content %}
 
-<div class="splash-section reverse search-section">
     <div class="row">
-        <div class="large-12 columns">
-            <h2>Register for an account</h2>
+        <div class="large-10 columns">
+            <h3>Registration Information</h3>
+            <p>
+                Registering for an account allows you to submit extensions and themes that will then be available within the extensions
+                manager.
+            </p>
+            <p> 
+                <strong>Note:</strong> Extensions submitted are subject to moderation according to 
+                <a href="{{url('doc.page', {'page':'guidelines'})}}">the submission guidelines</a>.
+            </p>
         </div>
     </div>
-</div>
-<div class="panel">
     <div class="row">
         <div class="large-12 columns">
-            <form action="">
+            <form action="" method="post">
                 {{form_row(form.email)}}
+                {{form_row(form.name)}}
                 {{form_row(form.password)}}
                 {{form_row(form.create, {attr:{class:'small expand radius'}})}}
             </form>
         </div>
     </div>
-</div>
 
 
 {% endblock %}

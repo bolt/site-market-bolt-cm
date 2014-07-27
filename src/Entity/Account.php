@@ -1,4 +1,5 @@
 <?php
+
 namespace Bolt\Extensions\Entity;
 
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
@@ -11,6 +12,8 @@ class Account extends Base {
     protected $email;
     protected $password;
     protected $name;
+    protected $admin;
+    protected $approved;
     protected $created;
     protected $packages;
 
@@ -22,7 +25,9 @@ class Account extends Base {
         $builder->addField('email',         'string',   ['nullable'=>true]);
         $builder->addField('password',      'string',   ['nullable'=>true]);
         $builder->addField('name',          'string',   ['nullable'=>true]);
-        $builder->addField('created',       'datetime');
+        $builder->addField('admin',         'boolean',  ['nullable'=>true, 'default'=>false]);
+        $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
+        $builder->addField('created',       'datetime', ['nullable'=>true]);
         $builder->addOneToMany('packages',  'Bolt\Extensions\Entity\Package', 'user');
 
 
