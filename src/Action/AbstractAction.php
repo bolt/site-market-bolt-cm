@@ -18,6 +18,7 @@ class AbstractAction
     public $router;
     
     public $accountUser;
+    public $request;
     
 
     public function __construct(Twig_Environment $renderer, FormFactory $forms, EntityManager $em = null, Router $router = null)
@@ -28,16 +29,19 @@ class AbstractAction
         $this->router = $router;
     }
     
-    
-    public function restrictAccess($request)
+    public function checkUser()
     {
-        $id = $request->getSession()->get("bolt.account.id");
-        
+        $id = $this->request->getSession()->get("bolt.account.id");
         if (null !== $id) {
             $this->accountUser = $this->em->find(Entity\Account::class, $id);
             $this->renderer->addGlobal('isLoggedIn', true);
             return true;
         }
+    }
+    
+    
+    public function restrictAccess($request)
+    {
         
         if (null !== $this->accountUser) {
             return true;
@@ -47,8 +51,10 @@ class AbstractAction
         return false;
     }
     
-    public function setSession($request)
+    public function setRequest($request)
     {
+        $this->request = $request;
+        $this->checkUser();
         $this->renderer->addGlobal('session', $request->getSession());
     }
     

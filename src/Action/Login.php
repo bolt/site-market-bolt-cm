@@ -3,6 +3,7 @@ namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Bolt\Extensions\Entity;
 
@@ -24,12 +25,12 @@ class Login extends AbstractAction
             $repo = $this->em->getRepository(Entity\Account::class);
             $user = $repo->findOneBy(["email"=>$form->getData()["email"]]);
             if (null !== $user && password_verify($form->getData()["password"], $user->password)) {
-                $request->getSession()->set("bolt.user.id", $user->id);
-                $dest = ($ret = $request->getSession()->get('bolt.auth.return')) ? $ret : $this->getUrl("home");
+                $request->getSession()->set("bolt.account.id", $user->id);
+                $dest = ($ret = $request->getSession()->get('bolt.auth.return')) ? $ret : $this->router->generate("home");
                 $request->getSession()->remove('bolt.auth.return');
                 return new RedirectResponse($dest);
             } else {
-                $request->getSession()->getFlashBag()->add('error', 'Login Unsuccessful!');
+                $request->getSession()->getFlashBag()->add('alert', 'Login Unsuccessful!');
             }
         }
         

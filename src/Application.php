@@ -21,7 +21,7 @@ class Application implements HttpKernelInterface {
         if(isset($route['action']) && class_exists($route['action'])) {
             $action = $this->container->get($route['action']);
             if(is_callable($action)) {
-                $action->setSession($request);
+                $action->setRequest($request);
                 return $action($request, $route);
             }
         }

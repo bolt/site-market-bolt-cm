@@ -24,8 +24,8 @@ class Register extends AbstractAction
             $account->created = new \DateTime;
             $account->approved = true;
            
-            //$this->em->persist($account);
-            //$this->em->flush();
+            $this->em->persist($account);
+            $this->em->flush();
             $request->getSession()->getFlashBag()->add('success', 'Your account has been created, you can now login.');
             return new RedirectResponse($this->router->generate('login'));
 
