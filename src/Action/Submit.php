@@ -24,7 +24,7 @@ class Submit extends AbstractAction
         if ($form->isValid()) {
             $package = $form->getData();
             $package->created = new \DateTime;
-            
+            $package->account = $this->accountUser;
             try {
                 $package->sync();
                 $this->em->persist($package);
