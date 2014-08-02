@@ -1,0 +1,22 @@
+
+{% if results is empty %}
+    <div data-alert class="radius alert-box info">No extensions were found to match your search</div>
+{% else %}
+<div class="large-12 columns package-list">
+    {% if term %}<div data-alert class="radius alert-box success">Results for your search: '{{term}}'</div>{% endif %}
+    <div class="row collapse">
+        <div class="large-3 columns"><strong>Name</strong></div>
+        <div class="large-5 columns"><strong>Description</strong></div>
+        <div class="large-3 columns"><strong>Author(s)</strong></div>
+    </div>
+    <hr />
+    {% for package in results %}
+        <div class="row collapse">
+            <div class="large-3 columns"><h4>{{package.title}}</h4> <h6>{{package.name}}</h6></div>
+            <div class="large-5 columns"><p>{{package.description}}</p></div>
+            <div class="large-3 columns"><p>{{package.authors}}</p></div>
+        </div>
+        <hr />
+    {% endfor %}
+</div>  
+{% endif %}
