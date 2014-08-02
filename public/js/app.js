@@ -15,7 +15,9 @@ jQuery(document).ready(function($) {
     form.on('keyup', function(e){
         var searchVal = $(this).find('#search-text').val();
         delay(function(){
-            
+            $.get('/search',{'q':searchVal}, function(data) {
+                $('.package-list').html(data);  
+            });
         }, 500 );
     });
 });
