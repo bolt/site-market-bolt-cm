@@ -19,9 +19,6 @@ $router->add("logout", "/logout")->setValues(['action'=>'Bolt\Extensions\Action\
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search']);
 $router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages']);
 
-$router->add("docs", "/docs")->setValues(['action'=>'Bolt\Extensions\Action\Docs']);
-$router->add("doc.page", "/docs/{page}")->setValues(['action'=>'Bolt\Extensions\Action\Docs']);
-
 
 
 return $router;
