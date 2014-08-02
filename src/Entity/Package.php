@@ -50,6 +50,7 @@ class Package extends Base {
     
     public function sync()
     {
+        putenv("COMPOSER_HOME=".sys_get_temp_dir());
         $io = new NullIO();
         $config = Factory::createConfig();
         $io->loadConfiguration($config);
