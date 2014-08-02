@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Bolt\Extensions\Entity;
 
-class Submit extends AbstractAction
+class Submit extends AbstractAction 
 {
     
     public function __invoke(Request $request)
@@ -15,7 +15,6 @@ class Submit extends AbstractAction
         if (! $this->restrictAccess($request)) {
             return new RedirectResponse($this->router->generate('login'));
         }
-        putenv("COMPOSER_HOME=".sys_get_temp_dir());
         $error = false;
 
         $entity = new Entity\Package;
