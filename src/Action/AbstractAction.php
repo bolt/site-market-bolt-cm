@@ -35,6 +35,7 @@ class AbstractAction
         if (null !== $id) {
             $this->accountUser = $this->em->find(Entity\Account::class, $id);
             $this->renderer->addGlobal('isLoggedIn', true);
+            $this->renderer->addGlobal('user', $this->accountUser);
             return true;
         }
     }
