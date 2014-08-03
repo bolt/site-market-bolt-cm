@@ -81,7 +81,9 @@ class Package extends Base {
             }
             $this->setAuthors(implode(',',$authors));
         }
-        $this->setVersions(implode(',', $pv));        
+        $this->setVersions(implode(',', $pv));
+        $this->updated = new \DateTime;
+        
     }
 
 
