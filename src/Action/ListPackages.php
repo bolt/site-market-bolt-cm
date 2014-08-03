@@ -30,6 +30,7 @@ class ListPackages extends AbstractAction
         array_walk($packages, function(&$v, $k){
             $v = $v->serialize();
             unset($v['approved']);
+            unset($v['account']);
             $v['versions'] = explode(",",$v['versions']);
         });
 

@@ -17,6 +17,7 @@ class Package extends Base {
     protected $source;
     protected $name;
     protected $keywords;
+    protected $type;
     protected $description;
     protected $approved;
     protected $versions;
@@ -33,6 +34,7 @@ class Package extends Base {
         $builder->addField('title',         'string',   ['nullable'=>true]);
         $builder->addField('name',          'string',   ['nullable'=>true]);
         $builder->addField('keywords',      'string',   ['nullable'=>true]);
+        $builder->addField('type',          'string',   ['nullable'=>true]);
         $builder->addField('description',   'text',     ['nullable'=>true]);
         $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
         $builder->addField('versions',      'string',   ['nullable'=>true]);
@@ -66,6 +68,9 @@ class Package extends Base {
         }
         
         $this->setName($information['name']);
+        if(isset($information['type'])) {
+            $this->setType($information['type']);
+        }
         if(isset($information['keywords'])) {
             $this->setKeywords(implode(',',$information['keywords']));
         }
