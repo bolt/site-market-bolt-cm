@@ -21,6 +21,9 @@ $router->add("update", "/update/{package}")->setValues(['action'=>'Bolt\Extensio
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search']);
 $router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages']);
 
+$router->add("install", "/{package}/install.json")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'install']);
+$router->add("uninstall", "/{package}/uninstall.json")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'uninstall']);
+$router->add("star", "/{package}/star.json")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'star']);
 
 
 return $router;

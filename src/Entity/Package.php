@@ -25,6 +25,8 @@ class Package extends Base {
     protected $updated;
     protected $authors;
     protected $account;
+    protected $installs;
+    protected $stars;
 
     public static function loadMetadata(ClassMetadata $metadata)
     {
@@ -41,6 +43,8 @@ class Package extends Base {
         $builder->addField('authors',       'string',   ['nullable'=>true]);
         $builder->addField('created',       'datetime', ['nullable'=>true]);
         $builder->addField('updated',       'datetime', ['nullable'=>true]);
+        $builder->addField('installs',      'integer',  ['nullable'=>true]);
+        $builder->addField('stars',         'integer',  ['nullable'=>true]);
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
 
     }
