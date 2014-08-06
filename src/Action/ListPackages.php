@@ -21,7 +21,7 @@ class ListPackages extends AbstractAction
                 ->where('p.approved = :status')
                 ->andWhere('p.name LIKE :name')
                 ->setParameter('status', true)
-                ->setParameter('name', $search."%")
+                ->setParameter('name', '%'.$search.'%')
                 ->getQuery()
                 ->getResult();
         } else {

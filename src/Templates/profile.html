@@ -24,6 +24,7 @@
                 <div class="large-4 columns"><p>{{package.description}}</p></div>
                 <div class="large-3 columns"><p>{{package.authors}}</p></div>
                 <div class="large-2 columns">
+                    <a class="button radius tiny" href="{{url('edit',{'package':package.id})}}">EDIT</a>
                     <a class="button radius tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
                 </div>
             </div>
