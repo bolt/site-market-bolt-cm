@@ -35,6 +35,6 @@ set :proxies, {
 
 task :production do
     set :branch,        "master"
-    server 'docker.oneblackbear.com', user: 'docker', roles: %w{host}
+    server 'bolt.rossriley.co.uk', user: 'docker', roles: %w{host}
 end
 
