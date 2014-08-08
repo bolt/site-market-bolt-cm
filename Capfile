@@ -23,11 +23,13 @@ set :start_commands,    [
 ]
 set :volumes, {
     'postgresql'=>'/data/pgsql/',
-    'satis'=>'/var/www/public/satis'
+    'satis'=>'/var/www/public/satis',
+    'sessions'=>'/var/lib/php5'
 }
 
 set :proxies, {
-    "bolt.rossriley.co.uk" => "30080"
+    "bolt.rossriley.co.uk" => "30080",
+    "beta.extensions.bolt.cm" => "30080"
 }
 
 
