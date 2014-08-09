@@ -23,6 +23,8 @@ $router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\A
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'search']);
 $router->add("browse", "/browse")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'browse']);
 $router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages']);
+$router->add("usercheck", "/usercheck.json")->setValues(['action'=>'Bolt\Extensions\Action\UserCheck']);
+
 
 $router->add("install", "/{package}/install.json")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'install']);
 $router->add("uninstall", "/{package}/uninstall.json")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'uninstall']);
