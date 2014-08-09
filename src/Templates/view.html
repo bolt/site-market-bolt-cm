@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block splash %}
+
+    <h2>Information for {{package.title}}</h2>
+     
+{% endblock %}
+
+
+{% block content %}
+
+
+    <div class="large-12 columns">
+        <h3>{{package.title}} – {{package.name}}</h3>
+        <p>
+            {{package.description}}
+        </p>
+        <p>
+            <strong>Tags:</strong>
+            {% for tag in package.keywords %}
+                 <span class="label">{{tag}}</span>
+            {% endfor %}
+        </p>
+        <p>Source Code: </p>
+    </div>
+
+
+{% endblock %}
