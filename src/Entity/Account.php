@@ -11,6 +11,7 @@ class Account extends EntityBase {
 
     protected $id;
     protected $email;
+    protected $username;
     protected $password;
     protected $name;
     protected $admin;
@@ -24,6 +25,7 @@ class Account extends EntityBase {
         $builder = new ClassMetadataBuilder($metadata);
         $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
         $builder->addField('email',         'string',   ['nullable'=>true]);
+        $builder->addField('username',      'string',   ['nullable'=>true]);
         $builder->addField('password',      'string',   ['nullable'=>true]);
         $builder->addField('name',          'string',   ['nullable'=>true]);
         $builder->addField('admin',         'boolean',  ['nullable'=>true, 'default'=>false]);
