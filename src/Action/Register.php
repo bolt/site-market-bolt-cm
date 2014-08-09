@@ -23,6 +23,7 @@ class Register extends AbstractAction
             $account = $form->getData();
             $account->created = new \DateTime;
             $account->approved = true;
+            $account->regenerateToken();
            
             $this->em->persist($account);
             $this->em->flush();
