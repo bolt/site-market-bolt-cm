@@ -17,13 +17,7 @@ class ListPackages extends AbstractAction
         
         $repo = $this->em->getRepository(Entity\Package::class);
         if($search = $request->get('name')) {
-            $packages = $repo->createQueryBuilder('p')
-                ->where('p.approved = :status')
-                ->andWhere('p.name LIKE :name')
-                ->setParameter('status', true)
-                ->setParameter('name', '%'.$search.'%')
-                ->getQuery()
-                ->getResult();
+            $packages = $this->searchPackages($search);
         } else {
             $packages = $repo->findBy(['approved'=>true]);
         }
@@ -31,7 +25,6 @@ class ListPackages extends AbstractAction
             $v = $v->serialize();
             unset($v['approved']);
             unset($v['account']);
-            $v['versions'] = explode(",",$v['versions']);
         });
 
         $response = new JsonResponse(['packages'=>$packages]);
