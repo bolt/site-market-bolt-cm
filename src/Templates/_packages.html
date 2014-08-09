@@ -1,0 +1,18 @@
+<div class="row collapse">
+    <div class="large-2 columns"><strong>Name</strong></div>
+    <div class="large-5 columns"><strong>Description</strong></div>
+    <div class="large-3 columns"><strong>Author(s)</strong></div>
+    <div class="large-2 columns"></div>
+</div>
+<hr />
+{% for package in packages %}
+    <div class="row collapse">
+        <div class="large-2 columns"><h4>{{package.title}}</h4> <h6>{{package.name}}</h6></div>
+        <div class="large-5 columns"><p>{{package.description}}</p></div>
+        <div class="large-3 columns"><p>{{package.authors}}</p></div>
+        <div class="large-2 columns">                    
+            <a class="button radius tiny" href="{{url('view',{'package':package.id})}}">Details</a>
+        </div>
+    </div>
+    <hr />
+{% endfor %}
