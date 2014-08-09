@@ -20,7 +20,9 @@ class Package extends EntityBase {
     protected $keywords;
     protected $type;
     protected $description;
+    protected $documentation;
     protected $approved;
+    protected $requirements;
     protected $versions;
     protected $created;
     protected $updated;
@@ -39,8 +41,10 @@ class Package extends EntityBase {
         $builder->addField('keywords',      'string',   ['nullable'=>true]);
         $builder->addField('type',          'string',   ['nullable'=>true]);
         $builder->addField('description',   'text',     ['nullable'=>true]);
+        $builder->addField('documentation', 'text',     ['nullable'=>true]);
         $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
         $builder->addField('versions',      'string',   ['nullable'=>true]);
+        $builder->addField('requirements',  'string',   ['nullable'=>true]);
         $builder->addField('authors',       'string',   ['nullable'=>true]);
         $builder->addField('created',       'datetime', ['nullable'=>true]);
         $builder->addField('updated',       'datetime', ['nullable'=>true]);
@@ -67,14 +71,10 @@ class Package extends EntityBase {
     
     public function sync()
     {
-        putenv("COMPOSER_HOME=".sys_get_temp_dir());
-        $io = new NullIO();
-        $config = Factory::createConfig();
-        $io->loadConfiguration($config);
-            
-        $repository = new VcsRepository(['url' => $this->getSource()], $io, $config);
-        $driver = $repository->getDriver();
-        $information = $driver->getComposerInformation($driver->getRootIdentifier());
+        
+        $repository = $this->loadRepository();
+        $information = $this->loadInformation();
+        
 
         $versions = $repository->getPackages();
         $pv = [];
@@ -96,9 +96,28 @@ class Package extends EntityBase {
             }
             $this->setAuthors(implode(',',$authors));
         }
+        $this->setRequirements(json_encode($information['require']));
         $this->setVersions(implode(',', $pv));
         $this->updated = new \DateTime;
         
+    }
+    
+    public function loadInformation()
+    {
+        $repository = $this->loadRepository();
+        $driver = $repository->getDriver();
+        $information = $driver->getComposerInformation($driver->getRootIdentifier());
+        return $information;
+    }
+    
+    public function loadRepository()
+    {
+        putenv("COMPOSER_HOME=".sys_get_temp_dir());
+        $io = new NullIO();
+        $config = Factory::createConfig();
+        $io->loadConfiguration($config);
+        $repository = new VcsRepository(['url' => $this->getSource()], $io, $config);
+        return $repository;
     }
     
     public function regenerateToken()

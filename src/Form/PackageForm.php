@@ -10,10 +10,14 @@ class PackageForm extends AbstractType
     {
 
         $builder
-            ->add("title",      'text',     ['label'=>"Name of extension", 'attr'=>['placeholder'=>'Main title eg: My Widget Extension']])
-            ->add("source",     'text',     ['label'=>"Link to a public Git repository", 'attr'=>['placeholder'=>'eg: https://github.com/you/bolt-widget-extension']])
-            ->add("description",'textarea', ['label'=>"Description of your extension", 'attr'=>['placeholder'=>'Write a description of your package']])
-            ->add('submit',     'submit',   ['label'=>"Submit Your Extension"]);
+            ->add("title",          'text',     ['label'=>"Name of extension", 'attr'=>['placeholder'=>'Main title eg: My Widget Extension']])
+            ->add("source",         'text',     ['label'=>"Link to a public Git repository", 'attr'=>['placeholder'=>'eg: https://github.com/you/bolt-widget-extension']])
+            ->add("description",    'textarea', ['label'=>"Description of your extension", 'attr'=>['placeholder'=>'Write a description of your package']])
+            ->add("documentation",  'textarea', [
+                        'label'=>"Extension Documentation (You can return and edit this at any time)", 
+                        'attr'=>['placeholder'=>'Instructions for installation and usage. Links to IRC, help pages etc']
+                    ])
+            ->add('submit',         'submit',   ['label'=>"Submit Your Extension"]);
 
     }
 
