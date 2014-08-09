@@ -4,6 +4,7 @@ namespace Bolt\Extensions\Entity;
 
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Entity\Base;
 
 use Composer\IO\NullIO;
 use Composer\Factory;
@@ -25,8 +26,7 @@ class Package extends Base {
     protected $updated;
     protected $authors;
     protected $account;
-    protected $installs;
-    protected $stars;
+    protected $token;
 
     public static function loadMetadata(ClassMetadata $metadata)
     {
@@ -43,15 +43,20 @@ class Package extends Base {
         $builder->addField('authors',       'string',   ['nullable'=>true]);
         $builder->addField('created',       'datetime', ['nullable'=>true]);
         $builder->addField('updated',       'datetime', ['nullable'=>true]);
-        $builder->addField('installs',      'integer',  ['nullable'=>true]);
-        $builder->addField('stars',         'integer',  ['nullable'=>true]);
+        $builder->addField('token',         'string',   ['nullable'=>true]);
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
+        $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
 
     }
     
     public function setSource($value)
     {
         $this->source = rtrim($value, "/");
+    }
+    
+    public function getKeywords()
+    {
+        return explode(",",$this->keywords);
     }
     
     public function sync()
@@ -88,6 +93,11 @@ class Package extends Base {
         $this->setVersions(implode(',', $pv));
         $this->updated = new \DateTime;
         
+    }
+    
+    public function regenerateToken()
+    {
+        $this->token = bin2hex(openssl_random_pseudo_bytes(16));
     }
 
 
