@@ -20,7 +20,8 @@ $router->add("edit", "/edit/{package}")->setValues(['action'=>'Bolt\Extensions\A
 $router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\Action\ViewPackage']);
 
 
-$router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search']);
+$router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'search']);
+$router->add("browse", "/browse")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'browse']);
 $router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages']);
 
 $router->add("install", "/{package}/install.json")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'install']);

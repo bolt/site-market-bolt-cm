@@ -1,6 +1,14 @@
+{% extends layout %}
 
+{% block splash %}
+    <h2>Browsing Bolt Extension</h2> 
+{% endblock %}
+
+{% block content %}
 {% if results is empty %}
-    <div data-alert class="radius alert-box info">No extensions were found to match your search</div>
+    <div class="large-12 columns package-list">
+        <div data-alert class="radius alert-box info">No extensions were found to match your search</div>
+    </div>
 {% else %}
 <div class="large-12 columns package-list">
     {% if term %}<div data-alert class="radius alert-box success">Results for your search: '{{term}}'</div>{% endif %}
@@ -20,3 +28,4 @@
     {% endfor %}
 </div>  
 {% endif %}
+{% endblock %}

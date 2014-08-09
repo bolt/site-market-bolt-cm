@@ -18,7 +18,7 @@
         <p>
             <strong>Tags:</strong>
             {% for tag in package.keywords %}
-                <a href="{{url('search',{'q':tag})}}"><span class="label radius">{{tag}}</span></a>
+                <a href="{{url('list')}}?q={{tag}}"><span class="label radius">{{tag}}</span></a>
             {% endfor %}
         </p>
         <p><a href="{{package.source}}">View Source Code</a></p>

@@ -17,8 +17,10 @@ class Search extends AbstractAction
         $search = $request->get('q');
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $this->searchPackages($search);
+        
+        $layout = $params['type']=='browse' ? 'layout.html' : 'ajax.html';
 
-        return new Response($this->renderer->render("search.html", ['results'=>$packages, 'term'=>$search]));
+        return new Response($this->renderer->render("search.html", ['results'=>$packages, 'term'=>$search, 'layout'=>$layout]));
 
         
     }
