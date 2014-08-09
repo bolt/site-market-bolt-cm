@@ -20,19 +20,15 @@ class Ping extends AbstractAction
         
         $package = $repo->findOneBy(['id'=>$package]);
         
-        switch ($type) {
-            case 'install':
-                $package->installs ++;
-                break;
-                
-            case 'star':
-                $package->stars ++;
-                break;
-            
-            default:
-                # code...
-                break;
-        }
+        $stat = new Entity\Stat([
+            'source'=>$request->server->get('HTTP_REFERER'),
+            'recorded'=> new \DateTime,
+            'package'=>$package,
+            'type'=>$type
+        ]);
+        
+        $this->em->persist($stat);
+        $this->em->flush();
         
     
         $response = new JsonResponse(['status'=>'OK','package'=>$package->id]);
