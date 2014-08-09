@@ -13,7 +13,7 @@ class Stat extends Base {
     protected $type;
     protected $recorded;
     protected $source;
-    protected $packages;
+    protected $package;
 
 
     public static function loadMetadata(ClassMetadata $metadata)
@@ -22,7 +22,7 @@ class Stat extends Base {
         $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
         $builder->addField('type',          'string',   ['nullable'=>true]);
         $builder->addField('source',        'string',   ['nullable'=>true]);
-        $builder->addField('created',       'datetime', ['nullable'=>true]);
+        $builder->addField('recorded',       'datetime', ['nullable'=>true]);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
 
 

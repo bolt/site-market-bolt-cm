@@ -27,6 +27,7 @@ class Package extends Base {
     protected $authors;
     protected $account;
     protected $token;
+    protected $stats;
 
     public static function loadMetadata(ClassMetadata $metadata)
     {

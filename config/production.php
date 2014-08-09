@@ -46,7 +46,6 @@ return [
         $config = Setup::createConfiguration(true);
         $config->setMetadataDriverImpl($driver);
         $em = EntityManager::create($c->get(DB::class), $config);
-
         return $em;
     }),
     
