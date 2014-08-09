@@ -18,7 +18,7 @@ set :build_commands,    [
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
-    "composer selfupdate",
+    "composer selfupdate -q",
     "composer config --global github-oauth.github.com `cat config/github`",
     "./console migrations:migrate --no-interaction",
     "./console orm:generate-proxies",

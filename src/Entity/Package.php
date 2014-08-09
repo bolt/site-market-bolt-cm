@@ -107,11 +107,15 @@ class Package extends EntityBase {
         
     }
     
-    public function loadInformation()
+    public function loadInformation($identifier = null)
     {
         $repository = $this->loadRepository();
         $driver = $repository->getDriver();
-        $information = $driver->getComposerInformation($driver->getRootIdentifier());
+        
+        if (null === $identifier) {
+            $identifier = $driver->getRootIdentifier();
+        }
+        $information = $driver->getComposerInformation($identifier);
         return $information;
     }
     
