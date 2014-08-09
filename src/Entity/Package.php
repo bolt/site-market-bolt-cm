@@ -4,14 +4,14 @@ namespace Bolt\Extensions\Entity;
 
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Entity\Base;
+use Doctrine\Entity\Base as EntityBase;
 
 use Composer\IO\NullIO;
 use Composer\Factory;
 use Composer\Repository\VcsRepository;
 
 
-class Package extends Base {
+class Package extends EntityBase {
 
     protected $id;
     protected $title;

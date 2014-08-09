@@ -13,7 +13,7 @@ set :password,          "bolt30080"
 set :ports,             {"30080"=>"80"}
 set :stage,             "production" ### Default stage
 set :build_commands,    [
-    'composer install --no-dev --optimize-autoloader'
+    'composer install --no-dev --prefer-dist --optimize-autoloader'
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",

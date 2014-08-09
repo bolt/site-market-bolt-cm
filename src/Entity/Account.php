@@ -4,10 +4,10 @@ namespace Bolt\Extensions\Entity;
 
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Entity\Base;
+use Doctrine\Entity\Base as EntityBase;
 
 
-class Account extends Base {
+class Account extends EntityBase {
 
     protected $id;
     protected $email;
