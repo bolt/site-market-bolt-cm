@@ -25,6 +25,8 @@ Symfony\Component\Debug\Debug::enable();
 
 return [
 
+    'debug' => false, 
+
     Application::class => DI\object(),
     
     
@@ -45,6 +47,7 @@ return [
         $driver = new StaticPHPDriver(dirname(__DIR__) . '/src/Entity');
         $config = Setup::createConfiguration(true);
         $config->setMetadataDriverImpl($driver);
+        $config->setAutoGenerateProxyClasses($c->get('debug'));
         $em = EntityManager::create($c->get(DB::class), $config);
         return $em;
     }),
