@@ -17,6 +17,7 @@ $router->add("logout", "/logout")->setValues(['action'=>'Bolt\Extensions\Action\
 $router->add("profile", "/profile")->setValues(['action'=>'Bolt\Extensions\Action\Profile']);
 $router->add("update", "/update/{package}")->setValues(['action'=>'Bolt\Extensions\Action\UpdatePackage']);
 $router->add("edit", "/edit/{package}")->setValues(['action'=>'Bolt\Extensions\Action\EditPackage']);
+$router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\Action\ViewPackage']);
 
 
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search']);
