@@ -57,12 +57,12 @@ class Package extends EntityBase {
     
     public function getKeywords()
     {
-        return explode(",",$this->keywords);
+        return array_filter(explode(",",$this->keywords));
     }
     
     public function getVersions()
     {
-        return explode(",",$this->versions);
+        return array_filter(explode(",",$this->versions));
     }
     
     public function sync()
