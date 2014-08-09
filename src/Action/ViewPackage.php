@@ -15,7 +15,7 @@ class ViewPackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
-        return new Response($this->renderer->render("view.html", ['package'=>$package, 'info'=>$package->loadInformation()]));
+        return new Response($this->renderer->render("view.html", ['package'=>$package]));
 
     }
 }

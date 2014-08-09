@@ -69,6 +69,11 @@ class Package extends EntityBase {
         return array_filter(explode(",",$this->versions));
     }
     
+    public function getRequirements()
+    {
+        return json_decode($this->requirements, true);
+    }
+    
     public function sync()
     {
         

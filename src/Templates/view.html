@@ -12,8 +12,15 @@
 
     <div class="large-12 columns">
         <h3>{{package.title}} – {{package.name}}</h3>
+    
         <p>
             {{package.description}}
+        </p>
+        <h5>Version Requirements:</h5>
+        <p>
+            {% for dep,version in package.requirements %}
+                <strong>{{dep}}:</strong> {{version}}<br>
+            {% endfor %}
         </p>
         <p>
             <strong>Tags:</strong>
