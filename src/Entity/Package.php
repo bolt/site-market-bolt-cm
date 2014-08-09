@@ -60,6 +60,11 @@ class Package extends Base {
         return explode(",",$this->keywords);
     }
     
+    public function getVersions()
+    {
+        return explode(",",$this->versions);
+    }
+    
     public function sync()
     {
         putenv("COMPOSER_HOME=".sys_get_temp_dir());
