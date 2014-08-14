@@ -11,3 +11,4 @@ satis.json
 public/satis
 tmp/
 config/github.json
+config/github*
