@@ -77,8 +77,11 @@ class AbstractAction
                 ->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search')
                 ->setParameter('status', true)
                 ->setParameter('search', "%".$keyword."%")
-                ->getQuery()
-                ->getResult();
+                ->getQuery();
+                
+        $q = $packages->getSql();
+        echo $q; exit;
+
                 
         return $packages;
     }
