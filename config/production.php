@@ -18,6 +18,12 @@ use Symfony\Component\Form\FormFactory;
 
 use Aura\Router\Router;
 
+use Composer\Config as Composer;
+use Composer\Factory;
+use Composer\IO\NullIO;
+use Composer\Json\JsonFile;
+use Composer\Config\JsonConfigSource;
+
 use Bolt\Extensions\Application;
 
 
@@ -61,7 +67,17 @@ return [
     }),
 
  
-    
+    Composer::class => DI\factory(function($c){
+        putenv("COMPOSER_HOME=".sys_get_temp_dir());
+        $io = new NullIO();
+        $config = Factory::createConfig($io);
+        $file = new JsonFile(__DIR__.'/github.json');
+        if ($file->exists()) {
+            $config->merge(array('config' => $file->read()));
+        }
+        $config->setAuthConfigSource(new JsonConfigSource($file, true));
+        return $config;
+    }),
     
     Twig_Environment::class => DI\factory(function ($c) {
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../src/Templates');
