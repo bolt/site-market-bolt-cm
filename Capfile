@@ -10,7 +10,7 @@ require 'capistrano/docker'
 set :namespace,         "bolt"
 set :application,       "extensions"
 set :password,          "bolt30080"
-set :ports,             {"30080"=>"80"}
+set :ports,             ["80"]
 set :stage,             "production" ### Default stage
 set :build_commands,    [
     'composer install --no-dev --prefer-dist --optimize-autoloader',
@@ -31,8 +31,8 @@ set :volumes, {
 }
 
 set :proxies, {
-    "bolt.rossriley.co.uk" => "30080",
-    "beta.extensions.bolt.cm" => "30080"
+    "bolt.rossriley.co.uk" => "80",
+    "beta.extensions.bolt.cm" => "80"
 }
 
 
