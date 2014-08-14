@@ -40,7 +40,6 @@ class UpdatePackage extends Command {
         $packages = $repo->findBy(['approved'=>true]);
         $package = $packages[array_rand($packages)];
         $output->writeln("<info>Updating ".$package->getName()."</info>");
-        print_r($this->packageManager->config); exit;
         $package = $this->packageManager->syncPackage($package);
         $this->em->persist($package);
         $this->em->flush();

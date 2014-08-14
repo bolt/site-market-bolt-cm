@@ -21,6 +21,7 @@ set :start_commands,    [
     "composer selfupdate -q",
     "./console migrations:migrate --no-interaction",
     "./console orm:generate-proxies",
+    "chmod -R 0777 /tmp",
     "./console bolt:builder",
     "./console bolt:update",
 ]
