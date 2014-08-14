@@ -17,7 +17,7 @@ class UpdatePackage extends AbstractAction
         $package = $repo->findOneBy(['id'=>$params['package']]);
         try {
             $package = $this->packageManager->syncPackage($package);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
            $package->approved = false; 
         }
         

@@ -42,7 +42,7 @@ class UpdatePackage extends Command {
         $output->writeln("<info>Updating ".$package->getName()."</info>");
         try {
             $package = $this->packageManager->syncPackage($package);  
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $package->approved = false;
         }
         
