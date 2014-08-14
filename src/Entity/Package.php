@@ -59,6 +59,11 @@ class Package extends EntityBase {
         $this->source = rtrim($value, "/");
     }
     
+    public function setName($value)
+    {
+        $this->name = strtolower($value);
+    }
+    
     public function getKeywords()
     {
         return array_filter(explode(",",$this->keywords));
@@ -72,39 +77,6 @@ class Package extends EntityBase {
     public function getRequirements()
     {
         return json_decode($this->requirements, true);
-    }
-    
-    public function sync()
-    {
-        
-        $repository = $this->loadRepository();
-        $information = $this->loadInformation();
-        
-
-        $versions = $repository->getPackages();
-        $pv = [];
-        foreach($versions as $version) {
-            $pv[]=$version->getPrettyVersion();
-        }
-        
-        $this->setName($information['name']);
-        if(isset($information['type'])) {
-            $this->setType($information['type']);
-        }
-        if(isset($information['keywords'])) {
-            $this->setKeywords(implode(',',$information['keywords']));
-        }
-        if(isset($information['authors'])) {
-            $authors = [];
-            foreach($information['authors'] as $author) {
-                $authors[]=$author['name'];
-            }
-            $this->setAuthors(implode(',',$authors));
-        }
-        $this->setRequirements(json_encode($information['require']));
-        $this->setVersions(implode(',', $pv));
-        $this->updated = new \DateTime;
-        
     }
     
     

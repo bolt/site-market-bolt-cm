@@ -14,14 +14,15 @@ set :ports,             ["80"]
 set :stage,             "production" ### Default stage
 set :build_commands,    [
     'composer install --no-dev --prefer-dist --optimize-autoloader',
-    'cp ../../config/github.json ./config/'
+    'cp ../../config/github.json ./config/',
+    'cp ../../config/github ./config/'
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
+    "composer selfupdate -q",
     "mkdir -p ~/.composer",
     "cp config/github.json ~/.composer/auth.json",
     "composer config --global github-oauth.github.com `cat config/github`",
-    "composer selfupdate -q",
     "./console migrations:migrate --no-interaction",
     "./console orm:generate-proxies",
     "chmod -R 0777 /tmp",
