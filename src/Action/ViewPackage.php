@@ -15,10 +15,9 @@ class ViewPackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
-        //$info = $package->loadInformation();
-        foreach($package->versions as $version) {
-            
-        }
+
+        $info = $this->packageManager->getVersions($package);
+       
         return new Response($this->renderer->render("view.html", ['package'=>$package]));
 
     }

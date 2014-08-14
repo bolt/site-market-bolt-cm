@@ -15,7 +15,7 @@ class UpdatePackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
-        $package->sync();
+        $package = $this->packageManager->syncPackage($package);
         $this->em->flush();
         $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
         return new RedirectResponse($this->router->generate('profile'));

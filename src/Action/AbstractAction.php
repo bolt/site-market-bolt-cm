@@ -6,8 +6,10 @@ use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManager;
 use Twig_Environment;
 use Aura\Router\Router;
+use Bolt\Extensions\Service\PackageManager;
 
 use Bolt\Extensions\Entity;
+
 
 class AbstractAction
 {
@@ -16,17 +18,25 @@ class AbstractAction
     public $forms;
     public $em;
     public $router;
+    public $packageManager;
     
     public $accountUser;
     public $request;
     
 
-    public function __construct(Twig_Environment $renderer, FormFactory $forms, EntityManager $em = null, Router $router = null)
+    public function __construct(
+        Twig_Environment $renderer, 
+        FormFactory $forms, 
+        EntityManager $em = null, 
+        Router $router = null,
+        PackageManager $packageManager = null
+    )
     {
         $this->renderer = $renderer;
         $this->em = $em;
         $this->forms = $forms;
         $this->router = $router;
+        $this->packageManager = $packageManager;
     }
     
     public function checkUser()

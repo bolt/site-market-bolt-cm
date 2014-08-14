@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
 
+use Bolt\Extensions\Service\PackageManager;
 
 
 class UpdatePackage extends Command {
@@ -17,8 +18,13 @@ class UpdatePackage extends Command {
     public $em;
     
  
-    public function __construct(EntityManager $em = null) {
-        if(false !== $em) $this->em = $em;
+    public function __construct(EntityManager $em = null, PackageManager $packageManager = null) {
+        if (null !== $em) {
+            $this->em = $em;
+        }
+        if (null !== $packageManager) {
+            $this->packageManager = $packageManager;
+        }
         parent::__construct();
     }
 
@@ -34,7 +40,7 @@ class UpdatePackage extends Command {
         $packages = $repo->findBy(['approved'=>true]);
         $package = $packages[array_rand($packages)];
         $output->writeln("<info>Updating ".$package->getName()."</info>");
-        $package->sync();
+        $package = $this->packageManager->syncPackage($package);
         $this->em->persist($package);
         $this->em->flush();
         $output->writeln("<comment>Update Complete</comment>");

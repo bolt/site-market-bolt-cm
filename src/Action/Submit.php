@@ -29,7 +29,7 @@ class Submit extends AbstractAction
                 $package->approved = true;
             }
             try {
-                $package->sync();
+                $package = $this->packageManager->syncPackage($package);
                 $this->em->persist($package);
                 $this->em->flush();
                 return new RedirectResponse($this->router->generate('submitted')); 

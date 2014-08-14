@@ -107,27 +107,7 @@ class Package extends EntityBase {
         
     }
     
-    public function loadInformation($identifier = null)
-    {
-        $repository = $this->loadRepository();
-        $driver = $repository->getDriver();
-        
-        if (null === $identifier) {
-            $identifier = $driver->getRootIdentifier();
-        }
-        $information = $driver->getComposerInformation($identifier);
-        return $information;
-    }
     
-    public function loadRepository()
-    {
-        putenv("COMPOSER_HOME=".sys_get_temp_dir());
-        $io = new NullIO();
-        $config = Factory::createConfig();
-        $io->loadConfiguration($config);
-        $repository = new VcsRepository(['url' => $this->getSource()], $io, $config);
-        return $repository;
-    }
     
     public function regenerateToken()
     {
