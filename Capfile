@@ -19,10 +19,8 @@ set :build_commands,    [
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
-    "composer selfupdate -q",
-    "mkdir -p ~/.composer",
-    "cp config/github.json ~/.composer/auth.json",
     "composer config --global github-oauth.github.com `cat config/github`",
+    "cp config/github.json ~/.composer/auth.json",
     "./console migrations:migrate --no-interaction",
     "./console orm:generate-proxies",
     "chmod -R 0777 /tmp",
