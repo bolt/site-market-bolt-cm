@@ -77,7 +77,7 @@ class AbstractAction
                 ->andWhere('p.name LIKE :search')
                 ->orWhere('p.title LIKE :search')
                 ->orWhere('p.keywords LIKE :search')
-                ->setParameter('approved', true)
+                ->setParameter('status', true)
                 ->setParameter('search', "%".$keyword."%")
                 ->getQuery()
                 ->getResult();
