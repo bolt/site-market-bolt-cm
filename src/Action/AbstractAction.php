@@ -78,7 +78,7 @@ class AbstractAction
                 ->setParameter('status', true)
                 ->setParameter('search', "%".$keyword."%")
                 ->getQuery()
-                ->getResults();
+                ->getResult();
             
                 
         return $packages;
