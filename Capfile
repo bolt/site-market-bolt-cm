@@ -19,11 +19,13 @@ set :build_commands,    [
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
-    "composer config --global github-oauth.github.com `cat config/github`",
-    "cp config/github.json ~/.composer/auth.json",
+    "composer selfupdate -q",
     "./console migrations:migrate --no-interaction",
     "./console orm:generate-proxies",
     "chmod -R 0777 /tmp",
+    "mkdir -p /root/.composer",
+    "cp config/github.json /root/.composer/auth.json",
+    "composer config -g github-oauth.github.com '`head -1 config/github`'",
     "./console bolt:builder",
     "./console bolt:update",
 ]

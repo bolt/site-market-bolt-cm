@@ -80,8 +80,9 @@ class PackageManager
         }
 
         foreach($package->versions as $version) {
-            $info[$version] = $this->loadInformation($package, $version);
+            $info[$package->getStability()][$version] = $this->loadInformation($package, $version);
         }
+        print_r($info); exit;
         return $info;
     }
 
