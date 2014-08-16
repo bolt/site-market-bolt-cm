@@ -20,11 +20,10 @@ class PackageInfo extends AbstractAction
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['approved'=>true, 'name'=>$p]);
         
-        $vers = $this->packageManager->getVersions($package);
-        
-        print_r($vers); exit;        
+        $allVersions = $this->packageManager->getInfo($package);
+                
 
-        $response = new JsonResponse(['package'=>$package->serialize()]);
+        $response = new JsonResponse(['package'=>$package->serialize(),'version'=>$allVersions]);
         $response->setCallback($request->get('callback'));
         return $response;
     }

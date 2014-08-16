@@ -5,7 +5,7 @@ namespace Bolt\Extensions\Service;
 use Composer\Config;
 use Composer\IO\NullIO;
 use Composer\Repository\VcsRepository;
-use Composer\Package\
+use Composer\Package\Dumper\ArrayDumper;
 
 
 class PackageManager
@@ -78,6 +78,18 @@ class PackageManager
         $versions = $rep->getPackages();
         foreach($versions as $version) {
             $info[] = $version;
+        }
+        return $info;
+    }
+    
+    public function getInfo($package)
+    {
+        $info = [];
+        $rep = $this->loadRepository($package);
+        $versions = $rep->getPackages();
+        $dumper = new ArrayDumper();
+        foreach($versions as $version) {
+            $info[]= $dumper->dump($version);
         }
         return $info;
     }
