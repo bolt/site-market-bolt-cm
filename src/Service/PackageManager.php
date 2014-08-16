@@ -89,7 +89,9 @@ class PackageManager
         $versions = $rep->getPackages();
         $dumper = new ArrayDumper();
         foreach($versions as $version) {
-            $info[]= $dumper->dump($version);
+            $data = $dumper->dump($version);
+            $data['stability'] = $version->getStability();
+            $info[]= $data;
         }
         return $info;
     }
