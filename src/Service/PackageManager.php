@@ -5,6 +5,7 @@ namespace Bolt\Extensions\Service;
 use Composer\Config;
 use Composer\IO\NullIO;
 use Composer\Repository\VcsRepository;
+use Composer\Package\
 
 
 class PackageManager
@@ -76,13 +77,8 @@ class PackageManager
         $rep = $this->loadRepository($package);
         $versions = $rep->getPackages();
         foreach($versions as $version) {
-            $pv[]=$version->getPrettyVersion();
+            $info[] = $version;
         }
-
-        foreach($package->versions as $version) {
-            $info[$package->getStability()][$version] = $this->loadInformation($package, $version);
-        }
-        print_r($info); exit;
         return $info;
     }
 
