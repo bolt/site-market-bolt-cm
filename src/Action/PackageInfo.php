@@ -16,11 +16,12 @@ class PackageInfo extends AbstractAction
     {
         
         $p = $request->get('package');
+        $bolt = $request->get("bolt");
         
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['approved'=>true, 'name'=>$p]);
         
-        $allVersions = $this->packageManager->getInfo($package);
+        $allVersions = $this->packageManager->getInfo($package, $bolt);
                 
 
         $response = new JsonResponse(['package'=>$package->serialize(),'version'=>$allVersions]);
