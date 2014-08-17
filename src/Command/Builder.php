@@ -50,32 +50,12 @@ class Builder extends Command {
                 $input = new ArrayInput([]);
                 $returnCode = $command->run($input, $output);
                 if($returnCode === 0) {
-                    $output->writeln("<info>Satis file built...</info>");
-                    
-                    $output->writeln(shell_exec("whoami"));
-                    $output->writeln(shell_exec("composer config -g -l"));
+                    $output->writeln("<info>Satis file built...</info>");                    
+                    $output->writeln(shell_exec("composer config -g home /root/.composer"));
+                    $output->writeln(shell_exec("vendor/bin/satis build --skip-errors"));
 
+                    $output->writeln(shell_exec("console bolt:update"));
                     
-                    
-                    $command = 'vendor/bin/satis build --skip-errors -n';
-                    $process = new Process($command);
-                    $process->run();
-
-                    // executes after the command finishes
-                    if (!$process->isSuccessful()) {
-                        $output->writeln("Unable to build Satis");
-                        $output->writeln($process->getErrorOutput());
-                    }
-
-                    
-                    $command2 = 'console bolt:update';
-                    $process = new Process($command2);
-                    $process->run();
-
-                    // executes after the command finishes
-                    if (!$process->isSuccessful()) {
-                        $output->writeln($process->getErrorOutput());
-                    }
 
                 }
                 
