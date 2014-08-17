@@ -26,8 +26,7 @@ set :start_commands,    [
     "mkdir -p /root/.composer",
     "cp config/github.json /root/.composer/auth.json",
     "composer config -g github-oauth.github.com '`head -1 config/github`'",
-    "./console bolt:builder",
-    "./console bolt:update",
+    "./console bolt:builder"
 ]
 set :volumes, {
     'postgresql'=>'/data/pgsql/',
