@@ -7,7 +7,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Process\Process;
 
 use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
@@ -51,7 +50,8 @@ class Builder extends Command {
                 $returnCode = $command->run($input, $output);
                 if($returnCode === 0) {
                     $output->writeln("<info>Satis file built...</info>");                    
-                    $output->writeln(shell_exec("COMPOSER_HOME='/root/' vendor/bin/satis build --skip-errors"));
+                    $output->writeln(shell_exec("composer config -g -l"));
+                    $output->writeln(shell_exec("vendor/bin/satis build --skip-errors"));
                     $output->writeln(shell_exec("console bolt:update"));
                     
 
