@@ -52,8 +52,8 @@ class Builder extends Command {
                 if($returnCode === 0) {
                     $output->writeln("<info>Satis file built...</info>");                    
                     $output->writeln(shell_exec("composer config -g home /root/.composer"));
+                    $output->writeln(shell_exec("composer config -g -l"));
                     $output->writeln(shell_exec("vendor/bin/satis build --skip-errors"));
-
                     $output->writeln(shell_exec("console bolt:update"));
                     
 
