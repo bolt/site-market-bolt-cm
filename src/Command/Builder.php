@@ -52,6 +52,9 @@ class Builder extends Command {
                 if($returnCode === 0) {
                     $output->writeln("<info>Satis file built...</info>");
                     
+                    $output->writeln(shell_exec("whoami"));
+                    $output->writeln(shell_exec("composer config -g -l"));
+
                     
                     
                     $command = 'vendor/bin/satis build --skip-errors -n';
