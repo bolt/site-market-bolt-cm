@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Process\Process;
 
 use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
@@ -52,13 +53,26 @@ class Builder extends Command {
                     $output->writeln("<info>Satis file built...</info>");
                     
                     
+                    
                     $command = 'vendor/bin/satis build --skip-errors -n';
-                    $output->writeln("Running:".$command);
+                    $process = new Process($command);
+                    $process->run();
 
-                    $output->writeln(passthru($command));
+                    // executes after the command finishes
+                    if (!$process->isSuccessful()) {
+                        $output->writeln("Unable to build Satis");
+                        $output->writeln($process->getErrorOutput());
+                    }
+
                     
                     $command2 = 'console bolt:update';
-                    $output->writeln(passthru($command2));
+                    $process = new Process($command2);
+                    $process->run();
+
+                    // executes after the command finishes
+                    if (!$process->isSuccessful()) {
+                        $output->writeln($process->getErrorOutput());
+                    }
 
                 }
                 
