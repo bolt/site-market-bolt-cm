@@ -52,11 +52,13 @@ class Builder extends Command {
                     $output->writeln("<info>Satis file built...</info>");
                     
                     
-                    $command = 'vendor/bin/satis build --skip-errors -vvv';
-                    $output->writeln(shell_exec($command));
+                    $command = 'vendor/bin/satis build --skip-errors -n';
+                    $output->writeln("Running:".$command);
+
+                    $output->writeln(passthru($command));
                     
                     $command2 = 'console bolt:update';
-                    $output->writeln(shell_exec($command2));
+                    $output->writeln(passthru($command2));
 
                 }
                 
