@@ -6,7 +6,6 @@ use Composer\Config;
 use Composer\IO\NullIO;
 use Composer\Repository\VcsRepository;
 use Composer\Package\Dumper\ArrayDumper;
-use Composer\Package\Version\VersionParser;
 use Composer\Package\LinkConstraint\VersionConstraint;
 
 class PackageManager
@@ -83,7 +82,7 @@ class PackageManager
         return $info;
     }
     
-    public function getInfo($package, $boltVersion = '2.0')
+    public function getInfo($package, $boltVersion)
     {        
         $info = [];
         $repo = $this->loadRepository($package);
@@ -101,10 +100,9 @@ class PackageManager
     
     public function isCompatible($version, $boltVersion)
     {
-        $versionParser = new VersionParser;
         $require = $version->getRequires();
         $constraint = $require['bolt/bolt']->getConstraint();
-        $v = new VersionConstraint("=", $boltVersion);
+        $v = new VersionConstraint("=", $boltVersion.".0");
         return $constraint->matches($v);        
     }
 
