@@ -19,7 +19,7 @@ class UpdatePackage extends AbstractAction
             $package = $this->packageManager->syncPackage($package);
             $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
         } catch (\Exception $e) {
-            $message = "This package has an invalid composer.json<br>"."\n";
+            $message = "This package has an invalid composer.json!"."\n";
             $request->getSession()->getFlashBag()->add('alert', $message.$e->getMessage());
             $package->approved = false; 
         }
