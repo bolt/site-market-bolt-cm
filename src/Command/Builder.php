@@ -50,10 +50,8 @@ class Builder extends Command {
                 $returnCode = $command->run($input, $output);
                 if($returnCode === 0) {
                     $output->writeln("<info>Satis file built...</info>");
-                    $output->writeln(shell_exec("vendor/bin/satis build --skip-errors"));
+                    $output->writeln(shell_exec("vendor/bin/satis build --skip-errors -vvv"));
                     $output->writeln(shell_exec("console bolt:update"));
-                    
-
                 }
                 
             } catch (\Exception $e) {
