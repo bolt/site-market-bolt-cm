@@ -17,7 +17,7 @@ class ViewPackage extends AbstractAction
         $package = $repo->findOneBy(['id'=>$params['package']]);
         try {
            $info = $this->packageManager->getVersions($package); 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
         }
        
