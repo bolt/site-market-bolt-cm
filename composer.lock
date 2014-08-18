@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4ae6269a4dba5ff0e3dbc6afa9c17943",
+    "hash": "233e6bc7211c8b3306531e20c7d30e6d",
     "packages": [
         {
             "name": "aura/router",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Router.git",
-                "reference": "48fc85a1cb6152b2292c709a8cb154701f187399"
+                "reference": "07f0bc2f296bfe4ceaf8315f8a631b14854b1f89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Router/zipball/48fc85a1cb6152b2292c709a8cb154701f187399",
-                "reference": "48fc85a1cb6152b2292c709a8cb154701f187399",
+                "url": "https://api.github.com/repos/auraphp/Aura.Router/zipball/07f0bc2f296bfe4ceaf8315f8a631b14854b1f89",
+                "reference": "07f0bc2f296bfe4ceaf8315f8a631b14854b1f89",
                 "shasum": ""
             },
             "require": {
@@ -58,7 +58,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2014-08-02 12:23:21"
+            "time": "2014-08-18 04:38:58"
         },
         {
             "name": "composer/composer",
@@ -498,12 +498,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "83f92c3f28e927917ddcb7cf214ce99c0b72004b"
+                "reference": "f61840a697a6b0a83812caeddc7395e28995b530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/83f92c3f28e927917ddcb7cf214ce99c0b72004b",
-                "reference": "83f92c3f28e927917ddcb7cf214ce99c0b72004b",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/f61840a697a6b0a83812caeddc7395e28995b530",
+                "reference": "f61840a697a6b0a83812caeddc7395e28995b530",
                 "shasum": ""
             },
             "require": {
@@ -561,7 +561,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-08-13 07:14:49"
+            "time": "2014-08-18 14:09:13"
         },
         {
             "name": "doctrine/inflector",
@@ -758,12 +758,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "5ff67c92ee869841e71d5783f035eee36c85047f"
+                "reference": "c20b3a7cf29ef65de5652cf11489845a81adfaa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/5ff67c92ee869841e71d5783f035eee36c85047f",
-                "reference": "5ff67c92ee869841e71d5783f035eee36c85047f",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/c20b3a7cf29ef65de5652cf11489845a81adfaa0",
+                "reference": "c20b3a7cf29ef65de5652cf11489845a81adfaa0",
                 "shasum": ""
             },
             "require": {
@@ -824,7 +824,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-08-15 14:13:33"
+            "time": "2014-08-18 13:22:13"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1836,12 +1836,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Form.git",
-                "reference": "fd7dd81c73d8eb24993946dcdbd72d2b49041e84"
+                "reference": "b9c2643b99fc2b71f43022b04f115828173b177f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Form/zipball/fd7dd81c73d8eb24993946dcdbd72d2b49041e84",
-                "reference": "fd7dd81c73d8eb24993946dcdbd72d2b49041e84",
+                "url": "https://api.github.com/repos/symfony/Form/zipball/b9c2643b99fc2b71f43022b04f115828173b177f",
+                "reference": "b9c2643b99fc2b71f43022b04f115828173b177f",
                 "shasum": ""
             },
             "require": {
@@ -1891,7 +1891,7 @@
             ],
             "description": "Symfony Form Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-14 16:37:29"
+            "time": "2014-08-18 09:02:08"
         },
         {
             "name": "symfony/http-foundation",
@@ -2553,12 +2553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Validator.git",
-                "reference": "a0b1349f74e9e4cc764baee05fba0006fb0d292d"
+                "reference": "0cc47b44bbf3e39c42e9fcd81331c6cf89cd9af9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Validator/zipball/a0b1349f74e9e4cc764baee05fba0006fb0d292d",
-                "reference": "a0b1349f74e9e4cc764baee05fba0006fb0d292d",
+                "url": "https://api.github.com/repos/symfony/Validator/zipball/0cc47b44bbf3e39c42e9fcd81331c6cf89cd9af9",
+                "reference": "0cc47b44bbf3e39c42e9fcd81331c6cf89cd9af9",
                 "shasum": ""
             },
             "require": {
@@ -2614,7 +2614,7 @@
             ],
             "description": "Symfony Validator Component",
             "homepage": "http://symfony.com",
-            "time": "2014-08-14 16:37:29"
+            "time": "2014-08-18 09:02:08"
         },
         {
             "name": "symfony/yaml",

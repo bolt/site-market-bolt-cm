@@ -50,7 +50,7 @@ class Builder extends Command {
                 $returnCode = $command->run($input, $output);
                 if($returnCode === 0) {
                     $output->writeln("<info>Satis file built...</info>");
-                    $output->writeln(shell_exec("composer config -g github-oauth.github.com '`head -1 config/github`'"));
+                    $output->writeln(shell_exec("composer config -g github-oauth.github.com `head -1 config/github`"));
                     $output->writeln(shell_exec("vendor/bin/satis build --skip-errors -n --no-html-output"));
                 }
                 
