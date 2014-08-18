@@ -37,7 +37,7 @@
                     {% for version in versions.stable %}
                     <h5>{{version.version}} – <small><span class="label success">{{version.stability}}</span></small></h5>
                         <p>Type: <strong>{{version.type}}</strong></p>
-                        <p>Released: <strong>{{version.time|date('j/F/Y G:i')}}</strong></p>
+                        <p>Released: <strong>{{version.time|date('jS F Y G:i')}}</strong></p>
                         <p>Bolt version compatibility: <strong>{{version.require['bolt/bolt']}}</strong></p>
                         <hr>
                     {% endfor %}
@@ -51,7 +51,7 @@
                     {% for version in versions.dev %}
                         <h5>{{version.version}} – <small><span class="label alert">{{version.stability}}</span></small></h5>
                         <p>Type: <strong>{{version.type}}</strong></p>
-                        <p>Released: <strong>{{version.time|date('j/F/Y G:i')}}</strong></p>
+                        <p>Released: <strong>{{version.time|date('jS F Y G:i')}}</strong></p>
                         <p>Bolt version compatibility: <strong>{{version.require['bolt/bolt']}}</strong></p>
                         <hr>
                     {% endfor %}
