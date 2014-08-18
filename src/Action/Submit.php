@@ -22,7 +22,7 @@ class Submit extends AbstractAction
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $package = $form->getData();
+            $package = $form->getData();            
             $package->created = new \DateTime;
             $package->account = $this->accountUser;
             if ($this->accountUser->approved) {

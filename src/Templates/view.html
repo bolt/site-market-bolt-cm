@@ -16,12 +16,13 @@
         <p>
             {{package.description}}
         </p>
-        <h5>Version Requirements:</h5>
-        <p>
-            {% for dep,version in package.requirements %}
-                <strong>{{dep}}:</strong> {{version}}<br>
-            {% endfor %}
-        </p>
+        {% if package.documentation%}
+            <h4>Documentation:</h4>
+            <p>
+                {{package.documentation}}
+            </p>
+        {% endif %}
+        
         <p>
             <strong>Tags:</strong>
             {% for tag in package.keywords %}
@@ -29,6 +30,36 @@
             {% endfor %}
         </p>
         <p><a href="{{package.source}}">View Source Code</a></p>
+        <div class="row">
+            <div class="large-6 columns">
+                <h3>Stable Versions</h3>
+                {% if versions.stable %}
+                    {% for version in versions.stable %}
+                    <h5>{{version.version}} – <small><span class="label success">{{version.stability}}</span></small></h5>
+                        <p>Type: <strong>{{version.type}}</strong></p>
+                        <p>Released: <strong>{{version.time|date('j/F/Y G:i')}}</strong></p>
+                        <p>Bolt version compatibility: <strong>{{version.require['bolt/bolt']}}</strong></p>
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p>No stable versions are available</p>
+                {% endif %}
+            </div>
+            <div class="large-6 columns">
+                <h3>Test / Development Versions</h3>
+                {% if versions.dev %}
+                    {% for version in versions.dev %}
+                        <h5>{{version.version}} – <small><span class="label alert">{{version.stability}}</span></small></h5>
+                        <p>Type: <strong>{{version.type}}</strong></p>
+                        <p>Released: <strong>{{version.time|date('j/F/Y G:i')}}</strong></p>
+                        <p>Bolt version compatibility: <strong>{{version.require['bolt/bolt']}}</strong></p>
+                        <hr>
+                    {% endfor %}
+                {% else %}
+                    <p>No development versions are available</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
 
