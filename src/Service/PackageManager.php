@@ -68,6 +68,8 @@ class PackageManager
         $home = getenv("HOME");
         if (!$home) {
             putenv("COMPOSER_HOME=".sys_get_temp_dir());        
+        } else {
+            putenv("COMPOSER_HOME=".$home);        
         }
         $io = new NullIO();
         $io->loadConfiguration($this->config);
