@@ -18,7 +18,8 @@ class UpdatePackage extends AbstractAction
         try {
             $package = $this->packageManager->syncPackage($package);
         } catch (\Exception $e) {
-           $package->approved = false; 
+            $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
+            $package->approved = false; 
         }
         
         $this->em->flush();
