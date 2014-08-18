@@ -15,8 +15,11 @@ class ViewPackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
-
-        $info = $this->packageManager->getVersions($package);
+        try {
+           $info = $this->packageManager->getVersions($package); 
+        } catch (Exception $e) {
+            $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
+        }
        
         return new Response($this->renderer->render("view.html", ['package'=>$package]));
 
