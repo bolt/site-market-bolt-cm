@@ -22,9 +22,9 @@ set :start_commands,    [
     "composer selfupdate -q",
     "./console migrations:migrate --no-interaction",
     "./console orm:generate-proxies",
-    "chmod -R 0777 /tmp",
     "cp config/github.json /root/.composer/auth.json",
-    "composer config -g github-oauth.github.com '`head -1 config/github`'",
+    "composer config -g github-oauth.github.com `head -1 config/github`",
+    "chmod -R 0777 /tmp",
     "./console bolt:builder"
 ]
 set :volumes, {
