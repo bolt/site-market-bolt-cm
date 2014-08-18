@@ -17,13 +17,13 @@ class UpdatePackage extends AbstractAction
         $package = $repo->findOneBy(['id'=>$params['package']]);
         try {
             $package = $this->packageManager->syncPackage($package);
+            $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
         } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
             $package->approved = false; 
         }
         
         $this->em->flush();
-        $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
         return new RedirectResponse($this->router->generate('profile'));
 
     }
