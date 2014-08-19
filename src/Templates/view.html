@@ -43,14 +43,17 @@
                             <tr>
                                 <td>Version</td>
                                 <td>Type</td>
-                                <td>Release Date</td>
-                                <td>Bolt Compatibility</td>
+                                <td>Released</td>
+                                <td>Supports Bolt:</td>
                             </tr>
                         </thead>
                         <tbody>
                             {% for version in versions.stable %}
                                 <tr>
-                                    <td>{{version.version}} <span class="label success">{{version.stability}}</span></td>
+                                    <td>
+                                        <span class="label success radius">{{version.stability}}</span> 
+                                        {{version.version}}
+                                    </td>
                                     <td>{{version.type|replace({'bolt-':''})}}</td>
                                     <td>{{version.time|date('jS M Y')}}</td>
                                     <td>{{version.require['bolt/bolt']}}</td>
@@ -71,17 +74,17 @@
                             <tr>
                                 <td>Version</td>
                                 <td>Type</td>
-                                <td>Release Date</td>
-                                <td>Bolt Compatibility</td>
+                                <td>Released</td>
+                                <td>Supports Bolt:</td>
                             </tr>
                         </thead>
                         <tbody>
                             {% for version in versions.dev %}
                                 <tr>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>{{version.version}} <span class="label alert">{{version.stability}}</span></td>
+                                    <td>
+                                        <span class="label alert radius">{{version.stability}}</span> 
+                                        {{version.version}}
+                                    </td>
                                     <td>{{version.type|replace({'bolt-':''})}}</td>
                                     <td>{{version.time|date('jS M Y')}}</td>
                                     <td>{{version.require['bolt/bolt']}}</td>
