@@ -117,7 +117,7 @@ class PackageManager
         $errors = [];
         $manifest = $this->loadInformation($package);
         
-        if(!isset($manifest['name']) || !preg_match('#^[a-z0-9]/[a-z0-9]#', $manifest['name'])) {
+        if(!isset($manifest['name']) || !preg_match('#^[a-z0-9]/[a-z\-0-9]#', $manifest['name'])) {
             $valid = false;
             $errors[] = "'name' in composer.json must be set, must be lowercase and contain only alphanumerics";
         }
