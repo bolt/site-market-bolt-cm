@@ -117,14 +117,19 @@ class PackageManager
         $errors = [];
         $manifest = $this->loadInformation($package);
         
-        if(!preg_match('#^[a-z0-9]/[a-z0-9]#', $manifest['name'])) {
+        if(!isset($manifest['name']) || !preg_match('#^[a-z0-9]/[a-z0-9]#', $manifest['name'])) {
             $valid = false;
             $errors[] = "'name' in composer.json must be set, must be lowercase and contain only alphanumerics";
         }
         
-        if(!preg_match('#^bolt-(theme|extension)#', $manifest['type'])) {
+        if(!isset($manifest['type']) ||  !preg_match('#^bolt-(theme|extension)#', $manifest['type'])) {
             $valid = false;
             $errors[] = "'type' in composer.json must be set, and must be either 'bolt-extension' or 'bolt-theme'";
+        }
+        
+        if(!isset($manifest['require'])) {
+            $valid = false;
+            $errors[] = "'require' in composer.json must be set, and must provide Bolt version compatibility";
         }
         
         if(false === $valid) {
