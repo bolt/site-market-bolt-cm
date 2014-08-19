@@ -4,7 +4,8 @@ namespace Bolt\Extensions\Action;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use Composer\Util\ConfigValidator;
+use Composer\IO\NullIO;
 use Bolt\Extensions\Entity;
 
 
@@ -15,6 +16,7 @@ class ViewPackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
+        
         try {
            $info = $this->packageManager->getInfo($package, "2.0.0");
            $versions = [];

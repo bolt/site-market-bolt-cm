@@ -4,7 +4,9 @@ namespace Bolt\Extensions\Action;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use Composer\Package\Loader\ArrayLoader;
+use Composer\Package\Loader\ValidatingArrayLoader;
+use Composer\Package\Loader\InvalidPackageException;
 use Bolt\Extensions\Entity;
 
 class Submit extends AbstractAction 
@@ -28,14 +30,16 @@ class Submit extends AbstractAction
             if ($this->accountUser->approved) {
                 $package->approved = true;
             }
+
             try {
+                $this->packageManager->validate($package);
                 $package = $this->packageManager->syncPackage($package);
                 $this->em->persist($package);
                 $this->em->flush();
                 return new RedirectResponse($this->router->generate('submitted')); 
             } catch (\Exception $e) {
-                $message = "This package has an invalid composer.json! ---"."\n";
-                $request->getSession()->getFlashBag()->add('alert', $message.$e->getMessage());
+                $request->getSession()->getFlashBag()->add('alert', "Package has an invalid composer.json!");
+                $request->getSession()->getFlashBag()->add('warning', $e->getMessage());
                 $package->approved = false; 
                 $error = 'invalid';
             }

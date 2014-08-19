@@ -9,13 +9,6 @@
 
 {% block content %}
 
-    {% if error == 'invalid' %}
-        <div class="large-12 columns">
-            <div data-alert class="alert-box alert radius">
-                Sorry! We couldn't recognise the provided source as a valid extension. Check the url and that the project has a valid 'composer.json' file in the root of the project.
-            </div>
-        </div>
-    {% endif %}
     <div class="large-12 columns">
         <form action="" method="post">
             {{form_row(form.title)}}

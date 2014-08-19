@@ -110,6 +110,28 @@ class PackageManager
         $v = new VersionConstraint("=", $boltVersion.".0");
         return $constraint->matches($v);        
     }
+    
+    public function validate($package, $version = null)
+    {
+        $valid = true;
+        $errors = [];
+        $manifest = $this->loadInformation($package);
+        
+        if(!preg_match('#^[a-z0-9]/[a-z0-9]#', $manifest['name'])) {
+            $valid = false;
+            $errors[] = "'name' in composer.json must be set, must be lowercase and contain only alphanumerics";
+        }
+        
+        if(!preg_match('#^bolt-(theme|extension)#', $manifest['type'])) {
+            $valid = false;
+            $errors[] = "'type' in composer.json must be set, and must be either 'bolt-extension' or 'bolt-theme'";
+        }
+        
+        if(false === $valid) {
+            throw new \InvalidArgumentException(join("\n\n",$errors));
+        }
+        
+    }
 
 
 
