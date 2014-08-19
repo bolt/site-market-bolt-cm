@@ -16,7 +16,7 @@ class UpdatePackage extends AbstractAction
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
         try {
-            $package = $this->packageManager->validate($package);
+            $this->packageManager->validate($package);
             $package = $this->packageManager->syncPackage($package);
             $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
         } catch (\Exception $e) {
