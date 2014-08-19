@@ -20,7 +20,11 @@
         <hr />
         {% for package in packages %}
             <div class="row collapse">
-                <div class="large-3 columns"><h4>{{package.title}}</h4> <h6>{{package.name}}</h6></div>
+                <div class="large-3 columns">
+                    <h4>{{package.title}}</h4> 
+                    <h6>{{package.name}}</h6>
+                    {% if package.approved == false %}<span class="label warning">Package invalid and disabled!</span>
+                </div>
                 <div class="large-4 columns"><p>{{package.description}}</p></div>
                 <div class="large-3 columns"><p>{{package.authors}}</p></div>
                 <div class="large-2 columns">
