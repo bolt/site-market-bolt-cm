@@ -23,7 +23,7 @@ class ViewPackage extends AbstractAction
            }
         } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
-        }
+        }     
        
         return new Response($this->renderer->render("view.html", ['package'=>$package, 'versions'=>$versions]));
 

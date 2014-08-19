@@ -11,36 +11,54 @@
 
 
     <div class="large-12 columns">
-        <h3>{{package.title}} – {{package.name}}</h3>
-    
-        <p>
-            {{package.description}}
-        </p>
-        {% if package.documentation%}
-            <h4>Documentation:</h4>
-            <p>
-                {{package.documentation}}
-            </p>
-        {% endif %}
-        
-        <p>
-            <strong>Tags:</strong>
-            {% for tag in package.keywords %}
-                <a href="{{url('browse')}}?q={{tag}}"><span class="label radius">{{tag}}</span></a>
-            {% endfor %}
-        </p>
-        <p><a href="{{package.source}}">View Source Code</a></p>
+        <div class="row">
+            <div class="large-12 columns">
+                <h3>{{package.title}} &mdash; {{package.name}} 
+                    <i class="fi-info has-tip" data-tooltip title='Use this name to add to your Bolt installation'></i>
+                </h3>
+                <hr>
+                <h5>By {{package.authors}}</h5>
+            </div>
+            <div class="large-12 columns">
+                <p>
+                    {{package.description}}
+                </p>
+                
+                <p>
+                    <strong>Tags:</strong>
+                    {% for tag in package.keywords %}
+                        <a href="{{url('browse')}}?q={{tag}}"><span class="label radius">{{tag}}</span></a>
+                    {% endfor %}
+                </p>
+                <p><a href="{{package.source}}">View Source Code</a></p>
+            </div>
+        </div>
         <div class="row">
             <div class="large-6 columns">
                 <h3>Stable Versions</h3>
                 {% if versions.stable %}
-                    {% for version in versions.stable %}
-                    <h5>{{version.version}} – <small><span class="label success">{{version.stability}}</span></small></h5>
-                        <p>Type: <strong>{{version.type}}</strong></p>
-                        <p>Released: <strong>{{version.time|date('jS F Y G:i')}}</strong></p>
-                        <p>Bolt version compatibility: <strong>{{version.require['bolt/bolt']}}</strong></p>
-                        <hr>
-                    {% endfor %}
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Version</td>
+                                <td>Type</td>
+                                <td>Release Date</td>
+                                <td>Bolt Compatibility</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for version in versions.stable %}
+                                <tr>
+                                    <td>{{version.version}} <span class="label success">{{version.stability}}</span></td>
+                                    <td>{{version.type|replace({'bolt-':''})}}</td>
+                                    <td>{{version.time|date('jS M Y')}}</td>
+                                    <td>{{version.require['bolt/bolt']}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                                            
                 {% else %}
                     <p>No stable versions are available</p>
                 {% endif %}
@@ -48,13 +66,29 @@
             <div class="large-6 columns">
                 <h3>Test / Development Versions</h3>
                 {% if versions.dev %}
-                    {% for version in versions.dev %}
-                        <h5>{{version.version}} – <small><span class="label alert">{{version.stability}}</span></small></h5>
-                        <p>Type: <strong>{{version.type}}</strong></p>
-                        <p>Released: <strong>{{version.time|date('jS F Y G:i')}}</strong></p>
-                        <p>Bolt version compatibility: <strong>{{version.require['bolt/bolt']}}</strong></p>
-                        <hr>
-                    {% endfor %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Version</td>
+                                <td>Type</td>
+                                <td>Release Date</td>
+                                <td>Bolt Compatibility</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for version in versions.dev %}
+                                <tr>
+                                    
+                                </tr>
+                                <tr>
+                                    <td>{{version.version}} <span class="label alert">{{version.stability}}</span></td>
+                                    <td>{{version.type|replace({'bolt-':''})}}</td>
+                                    <td>{{version.time|date('jS M Y')}}</td>
+                                    <td>{{version.require['bolt/bolt']}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>                    
                 {% else %}
                     <p>No development versions are available</p>
                 {% endif %}

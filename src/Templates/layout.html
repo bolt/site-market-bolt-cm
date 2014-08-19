@@ -29,7 +29,7 @@
                 <ul class="right">
                     <li><a href="{{url('submit')}}">Submit An Extension</a></li>
                     <li><a href="http://docs.bolt.cm/extensions">How to Use Extensions</a></li>
-1                    {% if isLoggedIn %}
+                    {% if isLoggedIn %}
                         <li><a href="{{url('profile')}}">Your Profile</a></li>
                         <li><a href="{{url('logout')}}">Logout ({{user.email}})</a></li>
                     {% else %}
@@ -52,11 +52,7 @@
     
     <div class="panel">
         <div class="row">
-            <div class="large-12 columns">
-                <div data-alert class="radius alert-box alert">
-                    Warning! This site is currently an early test version. Packages are not guranteed to be retained and data may be deleted
-                    periodically. Keep an eye on <a href="http://bolt.cm">the Bolt website</a> for launch news.
-                </div>
+            <div class="large-12 columns page">
                 {% include '_messages.html' %}
                 {% block content %}{% endblock %}
             </div>

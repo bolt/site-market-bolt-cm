@@ -32,3 +32,9 @@ body h1, body h2, body h3, body h4 {
 .reverse h2, .reverse h3, .reverse h4, .reverse p, .reverse label {
     color:#FFFFFF;
 }
+
+.page {
+    background:white;
+    box-shadow: 1px 1px 9px rgba(0,0,0,0.2);
+    padding-top:20px;
+}
