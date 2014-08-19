@@ -19,6 +19,9 @@ class UpdatePackage extends AbstractAction
             $this->packageManager->validate($package);
             $package = $this->packageManager->syncPackage($package);
             $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
+            if ($this->accountUser->approved) {
+                $package->approved = true;
+            }
         } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('alert', "Package has an invalid composer.json and will be disabled!");
             $request->getSession()->getFlashBag()->add('warning', $e->getMessage());
