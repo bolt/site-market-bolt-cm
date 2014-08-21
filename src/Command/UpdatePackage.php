@@ -31,14 +31,20 @@ class UpdatePackage extends Command {
 
     protected function configure() {
         $this->setName("bolt:update")
-                ->setDescription("Updates the registered extensions on a random basis");
+                ->setDescription("Updates the registered extensions on a random basis")
+                ->addOption('name', null, InputOption::VALUE_NONE, 'If set, this package will update');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        
         $repo = $this->em->getRepository(Entity\Package::class);
-        $packages = $repo->findBy(['approved'=>true]);
-        $package = $packages[array_rand($packages)];
+        if ($input->getOption('name')) {
+            $packages = $repo->findOneBy(['approved'=>true, 'name'=>$input->getOption('name')]);
+        } else {
+           $packages = $repo->findBy(['approved'=>true]); 
+           $package = $packages[array_rand($packages)];
+        }
+        
+        
         $output->writeln("<info>Updating ".$package->getName()."</info>");
         try {
             $package = $this->packageManager->syncPackage($package);  
