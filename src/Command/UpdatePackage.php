@@ -46,9 +46,12 @@ class UpdatePackage extends Command {
         
         
         $output->writeln("<info>Updating ".$package->getName()."</info>");
-
-        $package = $this->packageManager->syncPackage($package);  
-        
+        try {
+            $package = $this->packageManager->syncPackage($package);  
+        } catch (\Exception $e) {
+            $output->writeln("<error>".$e->getMessage()."</error>");
+            $package->approved = false;
+        }
         
         $this->em->persist($package);
         $this->em->flush();
