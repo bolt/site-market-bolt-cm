@@ -106,6 +106,9 @@ class PackageManager
     public function isCompatible($version, $boltVersion)
     {
         $require = $version->getRequires();
+        if (!isset($require['bolt/bolt'])) {
+            return false;
+        }
         $constraint = $require['bolt/bolt']->getConstraint();
         $v = new VersionConstraint("=", $boltVersion.".0");
         return $constraint->matches($v);        
