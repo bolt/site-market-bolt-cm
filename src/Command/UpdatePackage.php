@@ -38,7 +38,7 @@ class UpdatePackage extends Command {
     protected function execute(InputInterface $input, OutputInterface $output) {
         $repo = $this->em->getRepository(Entity\Package::class);
         if ($input->getArgument('name')) {
-            $packages = $repo->findOneBy(['approved'=>true, 'name'=>$input->getArgument('name')]);
+            $package = $repo->findOneBy(['approved'=>true, 'name'=>$input->getArgument('name')]);
         } else {
            $packages = $repo->findBy(['approved'=>true]); 
            $package = $packages[array_rand($packages)];
