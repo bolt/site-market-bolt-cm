@@ -47,7 +47,10 @@ class UpdatePackage extends Command {
         
         $output->writeln("<info>Updating ".$package->getName()."</info>");
         try {
-            $package = $this->packageManager->syncPackage($package);  
+            $package = $this->packageManager->syncPackage($package);
+            if ($package->account->approved == true) {
+               $package->approved = true; 
+            }  
         } catch (\Exception $e) {
             $output->writeln("<error>".$e->getMessage()."</error>");
             $package->approved = false;
