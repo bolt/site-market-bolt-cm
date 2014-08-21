@@ -26,6 +26,7 @@ set :start_commands,    [
     "cp config/github.json /root/.composer/auth.json",
     "cp config/github.json /tmp/.composer/auth.json",
     "composer config -g github-oauth.github.com `head -1 config/github`",
+    "composer config -g store-auths false",
     "chmod -R 0777 /tmp",
     "./console bolt:builder"
 ]
