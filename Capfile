@@ -25,6 +25,7 @@ set :start_commands,    [
     "cp config/github.json /root/.composer/auth.json",
     "composer config -g github-oauth.github.com `head -1 config/github`",
     "chmod -R 0777 /tmp",
+    "composer config -l -g",
     "./console bolt:builder"
 ]
 set :volumes, {
