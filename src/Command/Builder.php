@@ -49,12 +49,10 @@ class Builder extends Command {
                 $input = new ArrayInput([]);
                 $returnCode = $command->run($input, $output);
                 if($returnCode === 0) {
-                    $output->writeln(print_r($_SERVER,1));
                     $output->writeln("<info>Satis file built...</info>");
-                    $output->writeln(exec("composer config -g github-oauth.github.com `head -1 config/github`"));
-                    $output->writeln(exec("chmod -R 0777 /tmp"));
-                    $output->writeln(exec("composer config -g -l"));
-                    $output->writeln(exec("vendor/bin/satis build --skip-errors -n"));
+                    $output->writeln(shell_exec("composer config -g github-oauth.github.com `head -1 config/github`"));
+                    $output->writeln(shell_exec("chmod -R 0777 /tmp"));
+                    $output->writeln(shell_exec("vendor/bin/satis build --skip-errors -n"));
                 }
                 
             } catch (\Exception $e) {
