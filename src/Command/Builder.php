@@ -19,7 +19,7 @@ use Composer\Satis\Command\BuildCommand;
 class Builder extends Command {
     
     
-    public $period = 120;
+    public $period = 1200;
     public $em;
     
  

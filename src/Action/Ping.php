@@ -22,6 +22,7 @@ class Ping extends AbstractAction
         
         $stat = new Entity\Stat([
             'source'=>$request->server->get('HTTP_REFERER'),
+            'ip'=>$request->server->get('REMOT_ADDR'),
             'recorded'=> new \DateTime,
             'package'=>$package,
             'type'=>$type

@@ -22,7 +22,8 @@ class Stat extends EntityBase {
         $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
         $builder->addField('type',          'string',   ['nullable'=>true]);
         $builder->addField('source',        'string',   ['nullable'=>true]);
-        $builder->addField('recorded',       'datetime', ['nullable'=>true]);
+        $builder->addField('ip',            'string',   ['nullable'=>true]);
+        $builder->addField('recorded',      'datetime', ['nullable'=>true]);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
 
 
