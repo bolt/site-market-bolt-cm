@@ -15,7 +15,8 @@ set :stage,             "production" ### Default stage
 set :build_commands,    [
     'composer install --no-dev --prefer-dist --optimize-autoloader',
     'cp ../../config/github.json ./config/',
-    'cp ../../config/github ./config/'
+    'cp ../../config/github ./config/',
+    'cp ../../config/github-config.json ./config/'
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
@@ -23,7 +24,7 @@ set :start_commands,    [
     "./console migrations:migrate --no-interaction",
     "./console orm:generate-proxies",
     "cp config/github.json /root/.composer/auth.json",
-    "composer config -g github-oauth.github.com `head -1 config/github`",
+    "cp config/github-config.json /root/.composer/config.json",
     "chmod -R 0777 /tmp",
     "./console bolt:builder"
 ]
