@@ -13,6 +13,7 @@ class Stat extends EntityBase {
     protected $type;
     protected $recorded;
     protected $source;
+    protected $ip;
     protected $package;
 
 
