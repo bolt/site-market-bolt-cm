@@ -26,7 +26,8 @@ set :start_commands,    [
     "cp config/github.json /root/.composer/auth.json",
     "cp config/github-config.json /root/.composer/config.json",
     "chmod -R 0777 /tmp",
-    "./console bolt:builder"
+    "./console bolt:satis",
+    "./vendor/bin/satis build --skip-errors"
 ]
 set :volumes, {
     'postgresql'=>'/data/pgsql/',
