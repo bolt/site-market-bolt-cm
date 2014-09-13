@@ -60,7 +60,7 @@ Rake::Task[:deploy].clear_actions
 desc 'Deploy a new release.'
 task :deploy do
   set(:deploying, true)
-  %w{ build push finished }.each do |task|
+  %w{ build push start finished }.each do |task|
     invoke "deploy:#{task}"
   end
 end
