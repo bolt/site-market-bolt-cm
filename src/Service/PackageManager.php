@@ -65,12 +65,6 @@ class PackageManager
     
     public function loadRepository($package)
     {
-        $home = getenv("HOME");
-        if (!$home) {
-            putenv("COMPOSER_HOME=".sys_get_temp_dir());        
-        } else {
-            putenv("COMPOSER_HOME=".$home);        
-        }
         $io = new NullIO();
         $io->loadConfiguration($this->config);
         $repository = new VcsRepository(['url' => $package->getSource()], $io, $this->config);
