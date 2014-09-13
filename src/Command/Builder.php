@@ -62,9 +62,9 @@ class Builder extends Command {
                 }
             }
 
-            $wait = $this->period / 60;
-            $output->writeln("<comment>Sleeping for $wait minutes</comment>");
-            sleep($this->period);
+            //$wait = $this->period / 60;
+            //$output->writeln("<comment>Sleeping for $wait minutes</comment>");
+            //sleep($this->period);
         }
 
     }
