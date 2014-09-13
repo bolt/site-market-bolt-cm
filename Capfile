@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'rake'
 require 'bundler/setup'
 require 'net/http'
 require 'json'
@@ -12,24 +13,22 @@ set :application,       "extensions"
 set :password,          "bolt30080"
 set :ports,             ["80"]
 set :stage,             "production" ### Default stage
-set :deploy_to,         "domains/extensions.bolt.cm/private_html/"
+set :deploy_path,        "domains/extensions.bolt.cm/private_html"
 set :build_commands,    [
     'composer install --no-dev --prefer-dist --optimize-autoloader',
     'cp ../../config/github.json ./config/',
     'cp ../../config/github ./config/',
     'cp ../../config/github-config.json ./config/'
 ]
-# set :start_commands,    [
-#     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
-#     "composer selfupdate -q",
-#     "./console migrations:migrate --no-interaction",
-#     "./console orm:generate-proxies",
-#     "cp config/github.json /root/.composer/auth.json",
-#     "cp config/github-config.json /root/.composer/config.json",
-#     "chmod -R 0777 /tmp",
-#     "./console bolt:satis",
-#     "./vendor/bin/satis build --skip-errors"
-# ]
+set :start_commands,    [
+    "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
+    "curl -sS https://getcomposer.org/installer | php",
+    "composer selfupdate -q",
+    "./console migrations:migrate --no-interaction",
+    "composer config -g github-oauth.github.com `head config/github`",
+    "./console orm:generate-proxies",
+    "./console bolt:builder",
+]
 
 
 
@@ -40,20 +39,21 @@ end
 
 namespace :deploy do
     desc "Updates the code on the remote container"
-    task :update do
+    task :push do
         on roles :host do |host|
             info " Running Rsync to: #{host.user}@#{host.hostname}"
             run_locally do
-                execute "rsync -rupl --exclude '.git' tmp/build/* #{host.user}@#{host.hostname}:#{fetch(:deploy_to)}/"
+                execute "rsync -rupl --exclude '.git' tmp/build/* #{host.user}@#{host.hostname}:#{fetch(:deploy_path)}/"
             end
         end
     end
 end
 
+Rake::Task[:deploy].clear_actions
 desc 'Deploy a new release.'
 task :deploy do
   set(:deploying, true)
-  %w{ build update finished }.each do |task|
+  %w{ build push finished }.each do |task|
     invoke "deploy:#{task}"
   end
 end
