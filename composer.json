@@ -23,11 +23,11 @@
         "stack/url-map" : "1.0.*@dev",
         "stack/run"     : "1.0.*@dev",
         "stack/session": "1.0.*@dev",
-        "symfony/debug": "2.5.*",
-        "symfony/form": "2.5.*",
-        "symfony/twig-bridge": "2.5.*",
-        "symfony/doctrine-bridge": "2.5.*",
-        "symfony/validator": "2.5.*",
+        "symfony/debug": "~2.5",
+        "symfony/form": "~2.5",
+        "symfony/twig-bridge": "~2.5",
+        "symfony/doctrine-bridge": "~2.5",
+        "symfony/validator": "~2.5",
         "twig/twig": "1.15.*@dev"
     },
 
