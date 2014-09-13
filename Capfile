@@ -26,8 +26,7 @@ set :start_commands,    [
     "composer selfupdate -q",
     "./console migrations:migrate --no-interaction",
     "composer config -g github-oauth.github.com `head config/github`",
-    "./console orm:generate-proxies",
-    "./console bolt:builder",
+    "./console orm:generate-proxies"
 ]
 
 
@@ -51,7 +50,7 @@ namespace :deploy do
     desc "Updates the code on the remote container"
     task :start do
         on roles :host do |host|
-            execute "cd #{fetch(:deploy_path)} && nohup ./start.sh > /dev/null 2>&1 &" 
+            execute "cd #{fetch(:deploy_path)} && ./start.sh &" 
         end
     end
 end
