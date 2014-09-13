@@ -47,6 +47,13 @@ namespace :deploy do
             end
         end
     end
+    
+    desc "Updates the code on the remote container"
+    task :start do
+        on roles :host do |host|
+            execute "cd #{fetch(:deploy_path)} && ./start.sh" 
+        end
+    end
 end
 
 Rake::Task[:deploy].clear_actions
