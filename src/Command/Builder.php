@@ -19,7 +19,6 @@ use Composer\Satis\Command\BuildCommand;
 class Builder extends Command {
     
     
-    public $period = 1200;
     public $em;
     
  
@@ -42,30 +41,28 @@ class Builder extends Command {
             : $output;
         
         $error = '';
-        while (true) {
-            try {
-                
-                $command = new Satis($this->em);
-                $input = new ArrayInput([]);
-                $returnCode = $command->run($input, $output);
-                if($returnCode === 0) {
-                    $output->writeln("<info>Satis file built...</info>");
-                    $output->writeln(shell_exec("./vendor/bin/satis build --skip-errors"));
-                }
-                
-            } catch (\Exception $e) {
 
-                    
-                if ($error != $msg = $e->getMessage()) {
-                    $stderr->writeln('<error>[error]</error> '.$msg);
-                    $error = $msg;
-                }
+        try {
+            
+            $command = new Satis($this->em);
+            $input = new ArrayInput([]);
+            $returnCode = $command->run($input, $output);
+            if($returnCode === 0) {
+                $output->writeln("<info>Satis file built...</info>");
+                $output->writeln(shell_exec("./vendor/bin/satis build --skip-errors"));
             }
+            
+        } catch (\Exception $e) {
 
-            //$wait = $this->period / 60;
-            //$output->writeln("<comment>Sleeping for $wait minutes</comment>");
-            //sleep($this->period);
+                
+            if ($error != $msg = $e->getMessage()) {
+                $stderr->writeln('<error>[error]</error> '.$msg);
+                $error = $msg;
+            }
         }
+
+
+
 
     }
     
