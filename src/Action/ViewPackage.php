@@ -16,10 +16,10 @@ class ViewPackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
+        $versions = [];
         
         try {
             $info = $this->packageManager->getInfo($package, "2.0.0");
-            $versions = [];
             foreach($info as $ver) {
                 $versions[$ver['stability']][] = $ver;
             }
