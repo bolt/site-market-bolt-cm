@@ -23,6 +23,7 @@ set :build_commands,    [
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
     "curl -sS https://getcomposer.org/installer | php",
+    "mv composer.phar composer",
     "composer selfupdate -q",
     "./console migrations:migrate --no-interaction",
     "composer config -g github-oauth.github.com `head config/github`",
