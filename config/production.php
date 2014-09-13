@@ -37,7 +37,7 @@ return [
     
     
     'db'=> [
-        'driver'     => 'pdo_pgsql',
+        'driver'     => 'pdo_mysql',
         'dbname'     => 'bolt_extensions',
         'host'       => '127.0.0.1',
         'user'       => 'bolt_extensions',
