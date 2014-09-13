@@ -68,6 +68,7 @@ return [
 
  
     Composer::class => DI\factory(function($c){
+        putenv("COMPOSER_HOME=".sys_get_temp_dir());
         $io = new NullIO();
         $config = Factory::createConfig($io);
         $file = new JsonFile(__DIR__.'/github.json');
