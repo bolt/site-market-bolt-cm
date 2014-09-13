@@ -51,7 +51,7 @@ namespace :deploy do
     desc "Updates the code on the remote container"
     task :start do
         on roles :host do |host|
-            execute "cd #{fetch(:deploy_path)} && ./start.sh" 
+            execute "cd #{fetch(:deploy_path)} && nohup ./start.sh > /dev/null 2>&1 &" 
         end
     end
 end
