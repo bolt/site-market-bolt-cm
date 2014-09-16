@@ -18,7 +18,8 @@ set :build_commands,    [
     'composer install --no-dev --prefer-dist --optimize-autoloader',
     'cp ../../config/github.json ./config/',
     'cp ../../config/github ./config/',
-    'cp ../../config/github-config.json ./config/'
+    'cp ../../config/github-config.json ./config/',
+    'cp ../../config/env.php ./config/'
 ]
 set :start_commands,    [
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
