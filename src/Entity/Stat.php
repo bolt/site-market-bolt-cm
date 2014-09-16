@@ -15,6 +15,7 @@ class Stat extends EntityBase {
     protected $source;
     protected $ip;
     protected $package;
+    protected $version;
 
 
     public static function loadMetadata(ClassMetadata $metadata)
@@ -26,6 +27,7 @@ class Stat extends EntityBase {
         $builder->addField('ip',            'string',   ['nullable'=>true]);
         $builder->addField('recorded',      'datetime', ['nullable'=>true]);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
+        $builder->addField('version',       'string',   ['nullable'=>true]);
 
 
     }
