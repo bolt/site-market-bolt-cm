@@ -27,9 +27,9 @@ class AbstractAction
     public function __construct(
         Twig_Environment $renderer, 
         FormFactory $forms, 
-        EntityManager $em = null, 
-        Router $router = null,
-        PackageManager $packageManager = null
+        EntityManager $em, 
+        Router $router,
+        PackageManager $packageManager
     )
     {
         $this->renderer = $renderer;
