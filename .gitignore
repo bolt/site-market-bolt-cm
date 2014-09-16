@@ -2,7 +2,6 @@
 /vendor
 cache/
 config/config.php
-config/dealer.json
 public/uploads/*
 public/cache/*
 node_modules
@@ -12,3 +11,4 @@ public/satis
 tmp/
 config/github.json
 config/github*
+config/env.php

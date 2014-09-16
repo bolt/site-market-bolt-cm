@@ -15,7 +15,7 @@
         "composer/composer": "1.0.*@dev",
         "composer/satis": "1.0.*",
         "doctrine/orm": "2.5.*@dev",
-        "mnapoli/php-di": "4.1",
+        "mnapoli/php-di": "4.3",
         "rossriley/doctrine-migrations-helper": "1.0.*@dev",
         "rossriley/doctrine-entity-base": "1.0.*@dev",
         "rossriley/stack-aura-router": "1.0.*@dev",

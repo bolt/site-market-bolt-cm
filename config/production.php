@@ -28,7 +28,7 @@ use Bolt\Extensions\Application;
 
 
 Symfony\Component\Debug\Debug::enable();
-
+@include_once 'env.php';
 return [
 
     'debug' => false, 
@@ -41,7 +41,7 @@ return [
         'dbname'     => 'bolt_extensions',
         'host'       => '127.0.0.1',
         'user'       => 'bolt_extensions',
-        'password'   => 'bolt30080',
+        'password'   => DI\env('APP_DB_PASSWORD')
     ],
 
 

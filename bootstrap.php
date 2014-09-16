@@ -8,7 +8,6 @@ $builder->addDefinitions(__DIR__."/config/config.php");
 $container = $builder->build();
 $container->set("Aura\Router\Router", $router);
 
-
 $app = $container->get("Bolt\Extensions\Application");
 
 $app = (new Stack\Builder())
