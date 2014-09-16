@@ -36,13 +36,15 @@ return [
     Application::class => DI\object(),
     
     
-    'db'=> [
-        'driver'     => 'pdo_mysql',
-        'dbname'     => 'bolt_extensions',
-        'host'       => '127.0.0.1',
-        'user'       => 'bolt_extensions',
-        'password'   => DI\env('APP_DB_PASSWORD')
-    ],
+    'db' => DI\factory(function($c){
+        return [
+            'driver'     => 'pdo_mysql',
+            'dbname'     => 'bolt_extensions',
+            'host'       => '127.0.0.1',
+            'user'       => 'bolt_extensions',
+            'password'   => getenv('APP_DB_PASSWORD')
+        ];
+    }),
 
 
     DB::class => DI\factory(function($c) {
