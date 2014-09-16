@@ -32,7 +32,7 @@ class Submit extends AbstractAction
             }
 
             try {
-                $this->packageManager->validate($package);
+                $this->packageManager->validate($package, $this->accountUser->admin);
                 $package = $this->packageManager->syncPackage($package);
                 $this->em->persist($package);
                 $this->em->flush();

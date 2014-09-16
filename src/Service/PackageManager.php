@@ -108,7 +108,7 @@ class PackageManager
         return $constraint->matches($v);        
     }
     
-    public function validate($package, $version = null)
+    public function validate($package, $isAdmin = false)
     {
         $valid = true;
         $errors = [];
@@ -127,6 +127,13 @@ class PackageManager
         if(!isset($manifest['require'])) {
             $valid = false;
             $errors[] = "'require' in composer.json must be set, and must provide Bolt version compatibility";
+        }
+        
+        if(isset($manifest['name']) && substr($manifest['name'], 0,5 == 'bolt/')) {
+            if(!$isAdmin) {
+                $valid = false;
+                $errors[] = "package name uses a 'bolt/' prefix which is reserved for official extensions only.";
+            }
         }
         
         if(false === $valid) {
