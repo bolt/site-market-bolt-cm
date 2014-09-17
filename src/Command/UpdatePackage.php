@@ -18,7 +18,7 @@ class UpdatePackage extends Command {
     public $em;
     
  
-    public function __construct(EntityManager $em = null, PackageManager $packageManager = null) {
+    public function __construct(EntityManager $em, PackageManager $packageManager) {
         if (null !== $em) {
             $this->em = $em;
         }
