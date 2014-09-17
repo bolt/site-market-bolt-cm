@@ -22,7 +22,7 @@ class Builder extends Command {
     public $em;
     
  
-    public function __construct(EntityManager $em = null) {
+    public function __construct(EntityManager $em) {
         if(false !== $em) $this->em = $em;
         parent::__construct();
     }
