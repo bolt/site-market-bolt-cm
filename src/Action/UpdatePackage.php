@@ -24,7 +24,7 @@ class UpdatePackage extends AbstractAction
             $this->packageManager->validate($package, $isAdmin);
             $package = $this->packageManager->syncPackage($package);
             $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
-            if ($this->accountUser->approved) {
+            if ($package->account->approved) {
                 $package->approved = true;
             }
         } catch (\Exception $e) {
