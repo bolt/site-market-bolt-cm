@@ -18,6 +18,14 @@ class ViewPackage extends AbstractAction
         $package = $repo->findOneBy(['id'=>$params['package']]);
         $versions = [];
         
+        // @todo: There must be a better way to do this..
+        $packageowner = $repo->findOneBy(['id'=>$params['package'], 'account'=>$this->accountUser]);
+        if($packageowner) {
+            $allowedit = true;
+        } else {
+            $allowedit = false;
+        }
+
         try {
             $info = $this->packageManager->getInfo($package, "2.0.0");
             foreach($info as $ver) {
@@ -27,7 +35,7 @@ class ViewPackage extends AbstractAction
             $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
         }     
        
-        return new Response($this->renderer->render("view.html", ['package'=>$package, 'versions'=>$versions]));
+        return new Response($this->renderer->render("view.html", ['package' => $package, 'versions' => $versions, 'allowedit' => $allowedit]));
 
     }
 }
