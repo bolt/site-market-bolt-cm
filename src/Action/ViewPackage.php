@@ -18,13 +18,7 @@ class ViewPackage extends AbstractAction
         $package = $repo->findOneBy(['id'=>$params['package']]);
         $versions = [];
         
-        // @todo: There must be a better way to do this..
-        $packageowner = $repo->findOneBy(['id'=>$params['package'], 'account'=>$this->accountUser]);
-        if($packageowner) {
-            $allowedit = true;
-        } else {
-            $allowedit = false;
-        }
+        $allowedit = $package->account === $this->accountUser;        
 
         try {
             $info = $this->packageManager->getInfo($package, "2.0.0");
