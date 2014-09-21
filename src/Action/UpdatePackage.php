@@ -15,8 +15,13 @@ class UpdatePackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
+        if (isset($this->accountUser) && $this->accountUser->admin ) {
+            $isAdmin = true;
+        } else {
+            $isAdmin = false;
+        }
         try {
-            $this->packageManager->validate($package, $this->accountUser->admin);
+            $this->packageManager->validate($package, $isAdmin);
             $package = $this->packageManager->syncPackage($package);
             $request->getSession()->getFlashBag()->add('success', "Package ".$package->name." has been updated");
             if ($this->accountUser->approved) {
