@@ -26,8 +26,9 @@
                     {% if package.approved == false %}<span class="label alert">Package invalid and disabled!</span>{% endif %}
                 </div>
                 <div class="large-4 columns"><p>{{package.description}}</p></div>
-                <div class="large-3 columns"><p>{{package.authors}}</p></div>
-                <div class="large-2 columns">
+                <div class="large-2 columns"><p>{{package.authors}}</p></div>
+                <div class="large-3 columns">
+                    <a class="button radius tiny" href="{{url('view',{'package':package.id})}}">VIEW</a>
                     <a class="button radius tiny" href="{{url('edit',{'package':package.id})}}">EDIT</a>
                     <a class="button radius tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
                 </div>
