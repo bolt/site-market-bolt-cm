@@ -15,7 +15,7 @@ class UpdatePackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
-        if (isset($this->accountUser) && $this->accountUser->admin ) {
+        if ( $package->account->admin ) {
             $isAdmin = true;
         } else {
             $isAdmin = false;
