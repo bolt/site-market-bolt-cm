@@ -70,6 +70,7 @@ return [
 
  
     Composer::class => DI\factory(function($c){
+        putenv("COMPOSER_HOME=".$_ENV['HOME']);
         $io = new NullIO();
         $config = Factory::createConfig($io);
         $file = new JsonFile(__DIR__.'/github.json');
