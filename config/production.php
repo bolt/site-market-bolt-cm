@@ -70,6 +70,8 @@ return [
 
  
     Composer::class => DI\factory(function($c){
+        // Beware changing or removing this can have bad effects, since the server may run as the home user
+        // If this is the case, the ocmposer library will deny access to the server
         putenv("COMPOSER_HOME=".sys_get_temp_dir());
         $io = new NullIO();
         $config = Factory::createConfig($io);
