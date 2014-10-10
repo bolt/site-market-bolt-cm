@@ -60,6 +60,13 @@ class TestExtension extends AbstractAction
             'response'=> $client->getResponse()->getStatus(),
             'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
         ];
+        
+        $test[$build->url] = [
+            'title' => 'Can load site home page',
+            'response'=> $client->getResponse()->getStatus(),
+            'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
+        ];
+        
         $build->testResult = json_encode($test);
         $this->em->flush();
     }
