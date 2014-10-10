@@ -55,7 +55,7 @@ class TestExtension extends AbstractAction
         $crawler = $client->request('GET', $build->url.'/bolt');
         $form = $crawler->selectButton('Log on')->form();
         $crawler = $client->submit($form, array('username' => 'admin', 'password' => 'password'));
-        $test[$build->url.'/bolt'] = [
+        $test[$build->url.'/bolt/'] = [
             'title' => 'Can login to admin dashboard',
             'response'=> $client->getResponse()->getStatus(),
             'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
