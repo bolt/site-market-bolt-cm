@@ -17,6 +17,8 @@ class VersionBuild extends EntityBase {
     protected $lastrun;
     protected $url;
     protected $hash;
+    protected $testResult;
+    protected $testStatus;
     protected $built;
 
     public static function loadMetadata(ClassMetadata $metadata)
@@ -28,9 +30,16 @@ class VersionBuild extends EntityBase {
         $builder->addField('lastrun',       'datetime', ['nullable'=>true]);
         $builder->addField('url',           'string',   ['nullable'=>true]);
         $builder->addField('hash',          'string',   ['nullable'=>true]);
+        $builder->addField('testResult',    'text',   ['nullable'=>true]);
+        $builder->addField('testStatus',    'string',   ['default'=>'pending']);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
 
 
+    }
+    
+    public function getTestResult()
+    {
+        return json_decode($this->testResult, true);
     }
     
 

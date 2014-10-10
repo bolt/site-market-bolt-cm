@@ -43,8 +43,25 @@ class TestExtension extends AbstractAction
         }
         
         $this->em->flush(); 
-        return new Response($this->renderer->render("extension-test.html", ['build'=>$build]));
+        $tests = $this->testFunctionality($build);
+        return new Response($this->renderer->render("extension-test.html", ['build'=>$build, 'tests'=>$tests]));
 
+    }
+    
+    protected function testFunctionality($build)
+    {
+        $test = $build->getTestResult();
+        $client = new Client();
+        $crawler = $client->request('GET', $build->url.'/bolt');
+        $form = $crawler->selectButton('Log on')->form();
+        $crawler = $client->submit($form, array('username' => 'admin', 'password' => 'password'));
+        $test[$build->url.'/bolt'] = [
+            'title' => 'Can login to admin dashboard',
+            'response'=> $client->getResponse()->getStatus(),
+            'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
+        ];
+        $build->testResult = json_encode($test);
+        $this->em->flush();
     }
     
     

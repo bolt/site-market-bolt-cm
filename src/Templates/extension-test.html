@@ -9,20 +9,35 @@
 {% block content %}
 
     <div class="row">
-        <div class="large-12 columns">
-            {% if build.status == 'waiting' %}
-                <p>It is now being processed and will shortly be available. Please wait...</p>
-                <script type="text/javascript">
-                window.setTimeout(function(){location.reload()},1000);
-                </script>
-            {% elseif build.status == 'complete' %}
-                <p>Test your extension here: <a href="{{ build.url }}/bolt/">{{ build.url }}</a></p>
-                <p>
-                    When requested login as:<br>
-                    <strong>Username:</strong> 'admin'<br>
-                    <strong>Password:</strong> 'password'
-                </p>
-            {% endif %}
+        <div class="large-8 columns">
+        <h2>Test Summary</h2>
+        <ol>
+            {% for url, test in build.testResult %}
+                <li>
+                    <div data-alert class="alert-box {% if test.status =='OK' %}success{%else%}warning{%endif%}">
+                        Test: {{ test.title }}<br>
+                        Status: {{ test.response }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ol>
+        </div>
+        <div class="large-4 columns">
+            <div class="panel">
+                {% if build.status == 'waiting' %}
+                    <p>It is now being processed and will shortly be available. Please wait...</p>
+                    <script type="text/javascript">
+                    window.setTimeout(function(){location.reload()},1000);
+                    </script>
+                {% elseif build.status == 'complete' %}
+                    <p>Test your extension here: <a href="{{ build.url }}/bolt/">{{ build.url }}</a></p>
+                    <p>
+                        When requested login as:<br>
+                        <strong>Username:</strong> 'admin'<br>
+                        <strong>Password:</strong> 'password'
+                    </p>
+                {% endif %}
+            </div>
         </div>
     </div>
 

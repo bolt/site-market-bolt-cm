@@ -921,12 +921,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "46bead5c1520393e98af776c0aa32dcccd7e3b60"
+                "reference": "286525b387b0207195ce0deefc1566d6ba7cdc80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/46bead5c1520393e98af776c0aa32dcccd7e3b60",
-                "reference": "46bead5c1520393e98af776c0aa32dcccd7e3b60",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/286525b387b0207195ce0deefc1566d6ba7cdc80",
+                "reference": "286525b387b0207195ce0deefc1566d6ba7cdc80",
                 "shasum": ""
             },
             "require": {
@@ -976,7 +976,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-10-07 05:25:04"
+            "time": "2014-10-10 07:35:58"
         },
         {
             "name": "guzzlehttp/ring",
@@ -984,12 +984,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle-ring.git",
-                "reference": "a6ab3c0d16a413a13d0b06f20689c5f8f4e3f3ef"
+                "reference": "f343221de73af899381150a51ec600eb4eedcaf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle-ring/zipball/a6ab3c0d16a413a13d0b06f20689c5f8f4e3f3ef",
-                "reference": "a6ab3c0d16a413a13d0b06f20689c5f8f4e3f3ef",
+                "url": "https://api.github.com/repos/guzzle/guzzle-ring/zipball/f343221de73af899381150a51ec600eb4eedcaf0",
+                "reference": "f343221de73af899381150a51ec600eb4eedcaf0",
                 "shasum": ""
             },
             "require": {
@@ -1004,7 +1004,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1-dev"
+                    "dev-master": "1.0-dev"
                 }
             },
             "autoload": {
@@ -1023,7 +1023,7 @@
                     "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "time": "2014-10-07 05:05:56"
+            "time": "2014-10-10 07:28:06"
         },
         {
             "name": "guzzlehttp/streams",
@@ -1031,12 +1031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/streams.git",
-                "reference": "d80b7713f977f743166054e83bf8904c4d24f3dd"
+                "reference": "3de3ee5dac6973cba9798d3802d58d3d75918435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/streams/zipball/d80b7713f977f743166054e83bf8904c4d24f3dd",
-                "reference": "d80b7713f977f743166054e83bf8904c4d24f3dd",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/3de3ee5dac6973cba9798d3802d58d3d75918435",
+                "reference": "3de3ee5dac6973cba9798d3802d58d3d75918435",
                 "shasum": ""
             },
             "require": {
@@ -1073,7 +1073,7 @@
                 "Guzzle",
                 "stream"
             ],
-            "time": "2014-10-08 04:10:28"
+            "time": "2014-10-09 19:33:11"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1955,12 +1955,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/CssSelector.git",
-                "reference": "0c11572e1420ae1e59309bb188f8daed5545717c"
+                "reference": "453e66dacf59674222d1b7f26054ae35296747c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/CssSelector/zipball/0c11572e1420ae1e59309bb188f8daed5545717c",
-                "reference": "0c11572e1420ae1e59309bb188f8daed5545717c",
+                "url": "https://api.github.com/repos/symfony/CssSelector/zipball/453e66dacf59674222d1b7f26054ae35296747c4",
+                "reference": "453e66dacf59674222d1b7f26054ae35296747c4",
                 "shasum": ""
             },
             "require": {
@@ -1997,7 +1997,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "http://symfony.com",
-            "time": "2014-10-01 05:53:11"
+            "time": "2014-10-09 16:00:19"
         },
         {
             "name": "symfony/debug",
@@ -2404,12 +2404,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "a32e518e25bb435a5ef18bec76d4942b4cbb98e6"
+                "reference": "26d82e307861f7d0612aa84a2a5fa07dbd0dd3bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/a32e518e25bb435a5ef18bec76d4942b4cbb98e6",
-                "reference": "a32e518e25bb435a5ef18bec76d4942b4cbb98e6",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/26d82e307861f7d0612aa84a2a5fa07dbd0dd3bc",
+                "reference": "26d82e307861f7d0612aa84a2a5fa07dbd0dd3bc",
                 "shasum": ""
             },
             "require": {
@@ -2470,7 +2470,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "http://symfony.com",
-            "time": "2014-10-06 12:52:17"
+            "time": "2014-10-08 20:39:21"
         },
         {
             "name": "symfony/intl",
