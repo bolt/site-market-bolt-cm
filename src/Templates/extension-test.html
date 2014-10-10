@@ -11,7 +11,10 @@
     <div class="row">
         <div class="large-12 columns">
             {% if build.status == 'waiting' %}
-                <p>It is now being processed and will shortly be available for searching.</p>
+                <p>It is now being processed and will shortly be available. Please wait...</p>
+                <script type="text/javascript">
+                window.setTimeout(function(){location.reload()},1000);
+                </script>
             {% elseif build.status == 'complete' %}
                 <p>Test your extension here: <a href="{{ build.url }}/bolt/">{{ build.url }}</a></p>
                 <p>
