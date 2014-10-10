@@ -72,7 +72,7 @@ class ExtensionTestRunner extends Command {
             $build->url = str_replace("0.0.0.0",$this->domain, $lines[2]);
             $build->lastrun = new \DateTime;
             $this->em->flush();
-            $output->writeln("<info>Built ".$build->package->name." version ".$build->version." to ".$build->url);
+            $output->writeln("<info>Built ".$build->package->name." version ".$build->version." to ".$build->url."</info>");
         }
         $this->isRunning = false;
     }
