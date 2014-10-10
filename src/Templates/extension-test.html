@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block splash %}
+
+    <h2>Extension Test Status</h2>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="large-12 columns">
+            {% if build.status == 'waiting' %}
+                <p>It is now being processed and will shortly be available for searching.</p>
+            {% elseif build.status == 'complete' %}
+                <p>Test your extension here: <a href="{{ build.url }}/bolt/">{{ build.url }}</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

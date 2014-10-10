@@ -105,7 +105,8 @@ return [
         return [
             $c->get(Bolt\Extensions\Command\Satis::class),
             $c->get(Bolt\Extensions\Command\Builder::class),
-            $c->get(Bolt\Extensions\Command\UpdatePackage::class)
+            $c->get(Bolt\Extensions\Command\UpdatePackage::class),
+            $c->get(Bolt\Extensions\Command\ExtensionTestRunner::class)
         ];
     }),
 
