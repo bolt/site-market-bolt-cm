@@ -31,7 +31,7 @@ set :start_commands,    [
     "./console migrations:migrate --no-interaction",
     "./composer config -g github-oauth.github.com `head config/github`",
     "./console orm:generate-proxies",
-    "./console bolt:extension-tester"
+    "./console bolt:extension-tester &"
 ]
 
 

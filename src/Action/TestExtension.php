@@ -39,6 +39,7 @@ class TestExtension extends AbstractAction
             $build->package = $p;
             $build->version = $version;
             $build->status = 'waiting';
+            $this->em->persist($build);
         }
         
         $this->em->flush(); 
