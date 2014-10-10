@@ -31,7 +31,7 @@ class VersionBuild extends EntityBase {
         $builder->addField('url',           'string',   ['nullable'=>true]);
         $builder->addField('hash',          'string',   ['nullable'=>true]);
         $builder->addField('testResult',    'text',   ['nullable'=>true]);
-        $builder->addField('testStatus',    'string',   ['default'=>'pending']);
+        $builder->addField('testStatus',    'string',   ['default'=>'pending', 'nullable'=>true]);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
 
 
