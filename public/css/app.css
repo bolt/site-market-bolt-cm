@@ -38,3 +38,12 @@ body h1, body h2, body h3, body h4 {
     box-shadow: 1px 1px 9px rgba(0,0,0,0.2);
     padding-top:20px;
 }
+.buildstatus {
+    font-size: 100%;
+}
+.buildstatus i {
+    color:white;
+}
+.buildstatus i:hover {
+    color:#DDDDDD;
+}
