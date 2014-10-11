@@ -21,14 +21,19 @@ class ViewPackage extends AbstractAction
         $allowedit = $package->account === $this->accountUser;        
 
         try {
+            $repo = $this->em->getRepository(Entity\VersionBuild::class);
             $info = $this->packageManager->getInfo($package, "2.0.0");
             foreach($info as $ver) {
+                $build = $repo->findOneBy(['package'=>$package->id, 'version'=>$ver['version']]);
+                if($build) {
+                    $ver['build'] = $build;
+                } 
                 $versions[$ver['stability']][] = $ver;
             }
         } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
-        }     
-       
+        }
+               
         return new Response($this->renderer->render("view.html", ['package' => $package, 'versions' => $versions, 'allowedit' => $allowedit]));
 
     }
