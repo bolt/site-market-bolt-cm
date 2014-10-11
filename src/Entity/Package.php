@@ -30,6 +30,7 @@ class Package extends EntityBase {
     protected $account;
     protected $token;
     protected $stats;
+    protected $builds;
 
     public static function loadMetadata(ClassMetadata $metadata)
     {
@@ -51,6 +52,7 @@ class Package extends EntityBase {
         $builder->addField('token',         'string',   ['nullable'=>true]);
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
         $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
+        $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');
 
     }
     
