@@ -118,15 +118,19 @@
                 <div class="row collapse">
                     <div class="large-2 columns"><strong>Version</strong></div>
                     <div class="large-2 columns"><strong>Type</strong></div>
-                    <div class="large-3 columns"><strong>Current Status</strong></div>
+                    <div class="large-2 columns"><strong>Current Status</strong></div>
+                    <div class="large-2 columns"><strong>Last Run</strong></div>
                     <div class="large-3 columns end"></div>
                 </div>
                 <hr />
-                {% for version in versions.stable|default({})|merge(versions.dev) %}
+                {% for version in versions.stable|merge(versions.dev) %}
                     <div class="row collapse">
                         <div class="large-2 columns">{{version.version}}</div>
                         <div class="large-2 columns">{{version.type|replace({'bolt-':''})}}</div>
-                        <div class="large-3 columns">{{buildStatus(version.build)}} {{version.build.testStatus|default('not setup')}}</div>
+                        <div class="large-2 columns">
+                            {{buildStatus(version.build)}} {{version.build.testStatus|default('not setup')}}
+                        </div>
+                        <div class="large-2 columns">{{ version.build.lastrun|humanTime }} ago</div>
                         <div class="large-3 columns end">                    
                             <a class="button tiny radius" href="{{url('test', {package:package.id})}}?version={{version.version}}">Start Test</a>
                         </div>

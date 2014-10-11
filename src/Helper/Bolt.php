@@ -10,7 +10,14 @@ class Bolt extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus',['is_safe' => ['html']])
+            'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus',['is_safe' => ['html']]),
+        );
+    }
+    
+    public function getFilters()
+    {
+        return array(
+            'humanTime'  => new \Twig_SimpleFilter('humanTime', [$this, 'humanTime'])
         );
     }
 
@@ -28,6 +35,31 @@ class Bolt extends \Twig_Extension
         if($build->testStatus === 'failed') {
             return sprintf($this->statusTemplate, 'alert', 'x', "This version is not an approved build");
         }
+    }
+    
+    public function humanTime($time)
+    {
+        if ($time instanceof \DateTime) {
+           $time = $time->getTimestamp(); 
+        }
+        $time = time() - $time; // to get the time since that moment
+
+        $tokens = array (
+            31536000 => 'year',
+            2592000 => 'month',
+            604800 => 'week',
+            86400 => 'day',
+            3600 => 'hour',
+            60 => 'minute',
+            1 => 'second'
+        );
+
+        foreach ($tokens as $unit => $text) {
+            if ($time < $unit) continue;
+            $numberOfUnits = floor($time / $unit);
+            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+        }
+
     }
 
     public function getName()

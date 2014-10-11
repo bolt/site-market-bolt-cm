@@ -16,7 +16,7 @@ class ViewPackage extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
-        $versions = [];
+        $versions = ['dev'=>[],'stable'=>[]];
         
         $allowedit = $package->account === $this->accountUser;        
 
