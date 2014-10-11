@@ -18,7 +18,7 @@ class Bolt extends \Twig_Extension
     public function buildStatus($build, $options = [])
     {
         if(!$build || $build->testStatus === 'pending') {
-            return sprintf($this->statusTemplate, 'warning', 'wrench', "This version is currently awaiting a test result");
+            return sprintf($this->statusTemplate, 'alert', 'clock', "This version is currently awaiting a test result");
         }
         
         if($build->testStatus === 'approved') {

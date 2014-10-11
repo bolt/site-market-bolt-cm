@@ -27,8 +27,9 @@
             <div class="panel">
                 {% if build.status == 'waiting' %}
                     <p>It is now being processed and will shortly be available. Please wait...</p>
+                    <p>(the page will reload automatically)</p>
                     <script type="text/javascript">
-                    window.setTimeout(function(){location.reload()},1000);
+                    window.setTimeout(function(){location.reload()},3000);
                     </script>
                 {% elseif build.status == 'complete' %}
                     <p>Test your extension here: <a href="{{ build.url }}/bolt/">{{ build.url }}</a></p>

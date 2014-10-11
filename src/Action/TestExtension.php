@@ -21,10 +21,10 @@ class TestExtension extends AbstractAction
     public function __invoke(Request $request, $params)
     {
         $version = $request->get('version', 'dev-master');
-        $package = $params['namespace']."/".$params['package'];
+        $package = $params['package'];
         
         $repo = $this->em->getRepository(Entity\Package::class);
-        $p = $repo->findOneBy(['name'=>$package]);
+        $p = $repo->findOneBy(['id'=>$package]);
         
         if (!$p) {
             die("No extension");

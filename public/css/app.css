@@ -47,3 +47,9 @@ body h1, body h2, body h3, body h4 {
 .buildstatus i:hover {
     color:#DDDDDD;
 }
+.package-versions table td {
+    font-size:75%;
+}
+.builds-list .button {
+    margin-bottom:0;
+}
