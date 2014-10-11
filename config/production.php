@@ -90,6 +90,7 @@ return [
         $formEngine->setEnvironment($twig);
         $twig->addExtension(new FormExtension(new TwigRenderer($formEngine)));
         $twig->addExtension(new Bolt\Extensions\Helper\Url($c->get(Router::class)));
+        $twig->addExtension(new Bolt\Extensions\Helper\Bolt());
         return $twig;
     }),
     
