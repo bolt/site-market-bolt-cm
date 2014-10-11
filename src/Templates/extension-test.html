@@ -10,13 +10,14 @@
 
     <div class="row">
         <div class="large-8 columns">
-        <h2>Test Summary</h2>
+        <h3>{{ buildStatus(build) }} Test Summary for: {{build.package.name}} <small>({{ build.version }})</small></h3>
+        
         <ol>
             {% for url, test in build.testResult %}
                 <li>
-                    <div data-alert class="alert-box {% if test.status =='OK' %}success{%else%}warning{%endif%}">
-                        Test: {{ test.title }}<br>
-                        Status: {{ test.response }}
+                    <div data-alert class="radius alert-box {% if test.status =='OK' %}success{%else%}alert{%endif%}">
+                        <strong>Test:</strong> {{ test.title }}<br>
+                        <strong>Status:</strong> {{ test.status }}
                     </div>
                 </li>
             {% endfor %}

@@ -82,7 +82,8 @@
                                 <td>Version</td>
                                 <td>Type</td>
                                 <td>Released</td>
-                                <td>Supports Bolt:</td>
+                                <td>Bolt:</td>
+                                <td>Build </td>
                             </tr>
                         </thead>
                         <tbody>
@@ -95,6 +96,7 @@
                                     <td>{{version.type|replace({'bolt-':''})}}</td>
                                     <td>{{version.time|date('jS M Y')}}</td>
                                     <td>{{version.require['bolt/bolt']}}</td>
+                                    <td>{{ buildStatus(version.build) }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
