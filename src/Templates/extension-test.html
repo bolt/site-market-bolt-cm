@@ -29,7 +29,9 @@
                     <p>It is now being processed and will shortly be available. Please wait...</p>
                     <p>(the page will reload automatically)</p>
                     <script type="text/javascript">
-                    window.setTimeout(function(){location.reload()},3000);
+                    window.setTimeout(function(){
+                        location.href = '{{url('test', {package:build.package.id,version:build.version} )}}'; 
+                    },7000);
                     </script>
                 {% elseif build.status == 'complete' %}
                     <p>Test your extension here: <a href="{{ build.url }}/bolt/">{{ build.url }}</a></p>
@@ -38,6 +40,11 @@
                         <strong>Username:</strong> 'admin'<br>
                         <strong>Password:</strong> 'password'
                     </p>
+                    
+                    <p>If the url above has expired then you can trigger a retest using the link below.</p>
+                    <a href="{{url('retest',{package:build.package.id,version:build.version})}}" class="button tiny">
+                        TRIGGER TEST
+                    </a>
                 {% endif %}
             </div>
         </div>

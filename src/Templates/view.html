@@ -132,7 +132,7 @@
                         </div>
                         <div class="large-2 columns">{{ version.build.lastrun|humanTime }} ago</div>
                         <div class="large-3 columns end">                    
-                            <a class="button tiny radius" href="{{url('test', {package:package.id})}}?version={{version.version}}">Start Test</a>
+                            <a class="button tiny radius" href="{{url('test', {package:package.id,version:version.version})}}">Check Test Status</a>
                         </div>
                     </div>
                 {% endfor %}

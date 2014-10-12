@@ -26,8 +26,8 @@ $router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action
 $router->add("usercheck", "/usercheck.json")->setValues(['action'=>'Bolt\Extensions\Action\UserCheck']);
 $router->add("info", "/info.json")->setValues(['action'=>'Bolt\Extensions\Action\PackageInfo']);
 
-$router->add("test", "/test/{package}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension']);
-$router->add("retest", "/retest/{package}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension','retest'=>true]);
+$router->add("test", "/test/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension']);
+$router->add("retest", "/retest/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension','retest'=>true]);
 
 
 $router->add("stat", "/stat/{type}")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'type']);

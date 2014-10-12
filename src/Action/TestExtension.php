@@ -20,7 +20,7 @@ class TestExtension extends AbstractAction
     
     public function __invoke(Request $request, $params)
     {
-        $version = $request->get('version', 'dev-master');
+        $version = $params['version'];
         $package = $params['package'];
         $retest = isset($params['retest']) ? true : false;
        
@@ -29,30 +29,40 @@ class TestExtension extends AbstractAction
         $p = $repo->findOneBy(['id'=>$package]);
         
         if (!$p) {
-            die("No extension");
+            throw new \InvalidArgumentException("The extension provided does not exist", 1);
         }
         
         $repo = $this->em->getRepository(Entity\VersionBuild::class);
         $build = $repo->findOneBy(['package'=>$p->id, 'version'=>$version]);
         
-        if (!$build) {
-            
+        if (!$build) {            
             $build = new Entity\VersionBuild;
             $build->package = $p;
             $build->version = $version;
             $build->status = 'waiting';
             $this->em->persist($build);
+            $this->em->flush();
         }
         
         if ($retest) {
             $build->status = 'waiting';
             $build->testStatus = 'pending';
+            $build->testResult = '';
+            $this->em->flush();
         }
+
         
-        $this->em->flush();
         $tests = [];
         if($build->url) {
-            $tests = $this->testFunctionality($build);
+            try {
+               $tests = $this->testFunctionality($build); 
+            } catch (\Exception $e) {
+                $build->status = 'waiting';
+                $build->testStatus = 'pending';
+                $build->testResult = '';
+                $this->em->flush();
+            }
+            
         }
         return new Response($this->renderer->render("extension-test.html", ['build'=>$build, 'tests'=>$tests]));
 

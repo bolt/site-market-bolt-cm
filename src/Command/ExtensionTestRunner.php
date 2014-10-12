@@ -43,7 +43,7 @@ class ExtensionTestRunner extends Command {
                     $this->startJob($build, $output);
                 }
             }
-            
+            $output->writeln("Sleeping for ".$this->waitTime." seconds");
             sleep($this->waitTime);
         }
     }
@@ -66,7 +66,7 @@ class ExtensionTestRunner extends Command {
             $response = $process->getOutput();
             $lines = explode("\n", $response);
             if( !isset($lines[2])) {
-               continue; 
+                throw new \Exception("Error Launching Bolt Instance", 1);
             }
             $build->status = "complete";
             $build->url = str_replace("0.0.0.0",$this->domain, $lines[2]);
