@@ -22,6 +22,8 @@ class TestExtension extends AbstractAction
     {
         $version = $request->get('version', 'dev-master');
         $package = $params['package'];
+        $retest = isset($params['retest']) ? true : false;
+       
         
         $repo = $this->em->getRepository(Entity\Package::class);
         $p = $repo->findOneBy(['id'=>$package]);
@@ -40,6 +42,11 @@ class TestExtension extends AbstractAction
             $build->version = $version;
             $build->status = 'waiting';
             $this->em->persist($build);
+        }
+        
+        if ($retest) {
+            $build->status = 'waiting';
+            $build->testStatus = 'pending';
         }
         
         $this->em->flush();
