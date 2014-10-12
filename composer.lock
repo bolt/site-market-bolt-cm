@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0186fe1bd685ab49fb3f33208b37f270",
+    "hash": "7f57408c62cec262dd467b64410a1753",
     "packages": [
         {
             "name": "aura/router",
@@ -916,17 +916,56 @@
             "time": "2014-10-03 05:28:07"
         },
         {
+            "name": "forxer/gravatar",
+            "version": "1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/forxer/gravatar.git",
+                "reference": "9bb46b8bad661aa978d50a7415af1d0f79975188"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/forxer/gravatar/zipball/9bb46b8bad661aa978d50a7415af1d0f79975188",
+                "reference": "9bb46b8bad661aa978d50a7415af1d0f79975188",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "forxer\\Gravatar\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Garnier",
+                    "email": "contact@okatea.org"
+                }
+            ],
+            "description": "A library providing easy gravatar integration.",
+            "keywords": [
+                "gravatar"
+            ],
+            "time": "2014-08-22 17:33:45"
+        },
+        {
             "name": "guzzlehttp/guzzle",
             "version": "dev-ring",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "286525b387b0207195ce0deefc1566d6ba7cdc80"
+                "reference": "cfa65c51e10be1595b452bfb1c3153c533619cf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/286525b387b0207195ce0deefc1566d6ba7cdc80",
-                "reference": "286525b387b0207195ce0deefc1566d6ba7cdc80",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/cfa65c51e10be1595b452bfb1c3153c533619cf1",
+                "reference": "cfa65c51e10be1595b452bfb1c3153c533619cf1",
                 "shasum": ""
             },
             "require": {
@@ -976,7 +1015,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-10-10 07:35:58"
+            "time": "2014-10-12 06:04:34"
         },
         {
             "name": "guzzlehttp/ring",
@@ -984,12 +1023,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle-ring.git",
-                "reference": "f343221de73af899381150a51ec600eb4eedcaf0"
+                "reference": "bef75d4dee15f6bd3d4038604c90f93ef7354987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle-ring/zipball/f343221de73af899381150a51ec600eb4eedcaf0",
-                "reference": "f343221de73af899381150a51ec600eb4eedcaf0",
+                "url": "https://api.github.com/repos/guzzle/guzzle-ring/zipball/bef75d4dee15f6bd3d4038604c90f93ef7354987",
+                "reference": "bef75d4dee15f6bd3d4038604c90f93ef7354987",
                 "shasum": ""
             },
             "require": {
@@ -1023,7 +1062,7 @@
                     "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "time": "2014-10-10 07:28:06"
+            "time": "2014-10-12 05:52:01"
         },
         {
             "name": "guzzlehttp/streams",
@@ -1031,12 +1070,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/streams.git",
-                "reference": "3de3ee5dac6973cba9798d3802d58d3d75918435"
+                "reference": "c7603412e82e6074aaf7bafadd7085802a81eb3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/streams/zipball/3de3ee5dac6973cba9798d3802d58d3d75918435",
-                "reference": "3de3ee5dac6973cba9798d3802d58d3d75918435",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/c7603412e82e6074aaf7bafadd7085802a81eb3e",
+                "reference": "c7603412e82e6074aaf7bafadd7085802a81eb3e",
                 "shasum": ""
             },
             "require": {
@@ -1073,7 +1112,7 @@
                 "Guzzle",
                 "stream"
             ],
-            "time": "2014-10-09 19:33:11"
+            "time": "2014-10-12 06:24:23"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -2711,12 +2750,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-core.git",
-                "reference": "cd35c9337766e0f0f14f2968371e1922d93ea880"
+                "reference": "e9030aec262e7d697e2f66d7f47db6164cc360c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-core/zipball/cd35c9337766e0f0f14f2968371e1922d93ea880",
-                "reference": "cd35c9337766e0f0f14f2968371e1922d93ea880",
+                "url": "https://api.github.com/repos/symfony/security-core/zipball/e9030aec262e7d697e2f66d7f47db6164cc360c0",
+                "reference": "e9030aec262e7d697e2f66d7f47db6164cc360c0",
                 "shasum": ""
             },
             "require": {
@@ -2764,7 +2803,7 @@
             ],
             "description": "Symfony Security Component - Core Library",
             "homepage": "http://symfony.com",
-            "time": "2014-09-29 07:38:25"
+            "time": "2014-10-10 16:59:52"
         },
         {
             "name": "symfony/security-csrf",

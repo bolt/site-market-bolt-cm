@@ -16,6 +16,7 @@
         "composer/satis": "1.0.*",
         "doctrine/orm": "2.5.*@dev",
         "fabpot/goutte": "2.0.*@dev",
+        "forxer/gravatar": "1.2",
         "mnapoli/php-di": "4.3",
         "rossriley/doctrine-migrations-helper": "1.0.*@dev",
         "rossriley/doctrine-entity-base": "1.0.*@dev",
