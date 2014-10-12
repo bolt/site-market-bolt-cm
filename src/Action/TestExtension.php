@@ -11,6 +11,9 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Process\Process;
 use Goutte\Client;
+use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\RequestException;
+
 
 class TestExtension extends AbstractAction
 {
@@ -54,13 +57,29 @@ class TestExtension extends AbstractAction
         
         $tests = [];
         if($build->url) {
+            $canConnect = true;
             try {
-               $tests = $this->testFunctionality($build); 
-            } catch (\Exception $e) {
+                $client = new Guzzle(['base_url' => $build->url]);
+                $response = $client->get('/');
+            } catch (RequestException $e) {
+                $canConnect = false;
                 $build->status = 'waiting';
                 $build->testStatus = 'pending';
                 $build->testResult = '';
                 $this->em->flush();
+            }
+            
+            if ($canConnect) {
+
+                try {
+                   $tests = $this->testFunctionality($build); 
+                } catch (\Exception $e) {
+                    $build->status = 'failed';
+                    $this->em->flush();
+                }
+                $build->status = 'complete';
+                $this->em->flush();
+
             }
             
         }
@@ -113,6 +132,10 @@ class TestExtension extends AbstractAction
     
     protected function testExtensionLoaded($build)
     {
+        $test['extension'] = [
+            'title' => 'Extension is loaded, appears in installed list',
+            'status' => 'FAIL'
+        ];
         $client = new Client();
         $crawler = $client->request('GET', $build->url.'/bolt');
         $form = $crawler->selectButton('Log on')->form();
@@ -123,19 +146,13 @@ class TestExtension extends AbstractAction
             $extensions = json_decode($json, true);
             foreach ($extensions as $ext) {
                 if ($ext['name'] === $build->package->name && $ext['version'] === $build->version) {
-                    $test['extension'] = [
-                        'title' => 'Extension is loaded, appears in installed list',
-                        'response'=> $client->getResponse()->getStatus(),
-                        'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
-                    ];
+                    $test['extension']['response'] = $client->getResponse()->getStatus();
+                    $test['extension']['status'] = $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL";
                 }    
             }
             
         } catch (\Exception $e) {
-            $test['extension'] = [
-                'title' => 'Extension is loaded, appears in installed list',
-                'status' => 'FAIL'
-            ];
+            return $test;
         }
         
         return $test;
