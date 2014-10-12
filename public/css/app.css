@@ -50,6 +50,7 @@ body h1, body h2, body h3, body h4 {
 .package-versions table td {
     font-size:75%;
 }
-.builds-list .button {
+.builds-list .button,
+.package-title .button {
     margin-bottom:0;
 }

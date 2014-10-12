@@ -1,5 +1,6 @@
 <?php
 namespace Bolt\Extensions\Helper;
+use forxer\Gravatar\Gravatar;
 
 
 class Bolt extends \Twig_Extension
@@ -11,6 +12,7 @@ class Bolt extends \Twig_Extension
     {
         return array(
             'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus',['is_safe' => ['html']]),
+            'gravatar'  => new \Twig_Function_Method($this, 'gravatar',['is_safe' => ['html']])
         );
     }
     
@@ -35,6 +37,11 @@ class Bolt extends \Twig_Extension
         if($build->testStatus === 'failed') {
             return sprintf($this->statusTemplate, 'alert', 'x', "This version is not an approved build");
         }
+    }
+    
+    public function gravatar($email, $options = [])
+    {
+        return Gravatar::image($email);
     }
     
     public function humanTime($time)

@@ -8,106 +8,126 @@
 
 
 {% block content %}
-
-
-    <div class="large-12 columns">
-        <div class="row">
-            <div class="large-9 columns">
-                <h3>{{package.title}} &mdash; {{package.name}} 
-                    <i class="fi-info has-tip" data-tooltip title='Use this name to add to your Bolt installation'></i>
-                </h3>
-                <hr>
-                <h6>Author: <strong>{{package.authors}}</strong></h6>
-                <hr>
-            </div>
-            <div class="large-3 columns">
+    <div class="row package-title">
+        <div class="large-8 columns">
+            <h3>{{package.title}} &mdash; {{package.name}} 
+                <i class="fi-info has-tip" data-tooltip title='Use this name to add to your Bolt installation'></i>
+            </h3>
+        </div>
+        <div class="large-4 columns">
             {% if allowedit %}
                     <a class="button radius tiny" href="{{url('edit',{'package':package.id})}}">EDIT</a>
                     <a class="button radius tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
+                    <a class="button radius tiny alert" href="{{url('disable',{'package':package.id})}}">DISABLE</a>
             {% endif %}
-            </div>
-            <div class="large-12 columns">
-                <p>
-                    {{package.description}}
-                </p>
-                
-                <p>
-                    <strong>Tags:</strong>
-                    {% for tag in package.keywords %}
-                        <a href="{{url('browse')}}?q={{tag}}"><span class="label radius">{{tag}}</span></a>
-                    {% endfor %}
-                </p>
-                <p><a href="{{package.source}}">View Source Code</a></p>
-            </div>
-        </div>
-        <div class="row package-versions">
-            <div class="large-6 columns">
-                <h3>Stable Versions</h3>
-                {% if versions.stable %}
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Version</td>
-                                <td>Type</td>
-                                <td>Released</td>
-                                <td>Supports Bolt:</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for version in versions.stable %}
-                                <tr>
-                                    <td>
-                                        <span class="label success radius">{{version.stability}}</span> 
-                                        {{version.version}}
-                                    </td>
-                                    <td>{{version.type|replace({'bolt-':''})}}</td>
-                                    <td>{{version.time|date('jS M Y')}}</td>
-                                    <td>{{version.require['bolt/bolt']}}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                                            
-                {% else %}
-                    <p>No stable versions are available</p>
-                {% endif %}
-            </div>
-            <div class="large-6 columns">
-                <h3>Test / Development Versions</h3>
-                {% if versions.dev %}
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Version</td>
-                                <td>Type</td>
-                                <td>Released</td>
-                                <td>Bolt:</td>
-                                <td>Status</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for version in versions.dev %}
-                                <tr>
-                                    <td>
-                                        <span class="label alert radius">{{version.stability}}</span> 
-                                        {{version.version}}
-                                    </td>
-                                    <td>{{version.type|replace({'bolt-':''})}}</td>
-                                    <td>{{version.time|date('jS M Y')}}</td>
-                                    <td>{{version.require['bolt/bolt']}}</td>
-                                    <td>{{ buildStatus(version.build) }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>                    
-                {% else %}
-                    <p>No development versions are available</p>
-                {% endif %}
-            </div>
         </div>
     </div>
+        
+    <hr>
+        
+    <div class="row">
+        <div class="large-2 columns">
+           <img src="{{gravatar(package.account.email)}}"> 
+        </div>
+        <div class="large-6 columns"
+            <h6>Author: <strong>{{package.authors}}</strong></h6>
+            <p><a href="{{package.source}}">View Source Code</a></p>
+        </div>
+        <div class="large-4 columns">
+            <h6><strong>Usage Stats</strong></h6>
+            <h6><i class="fi-download"></i> {{package.downloadCount|default(0)}}</h6>
+            <h6><i class="fi-star"></i> {{package.starCount|default(0)}}</h6>
+        </div>
+
+        
+    </div>
+     
+    <hr>
+       
+    <div class="large-12 columns">
+        <p>
+            {{package.description}}
+        </p>
+        
+        <p>
+            <strong>Tags:</strong>
+            {% for tag in package.keywords %}
+                <a href="{{url('browse')}}?q={{tag}}"><span class="label radius">{{tag}}</span></a>
+            {% endfor %}
+        </p>
+    </div>
+    
+    <hr>
+    
+    <div class="row package-versions">
+        <div class="large-6 columns">
+            <h3>Stable Versions</h3>
+            {% if versions.stable %}
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Version</td>
+                            <td>Type</td>
+                            <td>Released</td>
+                            <td>Supports Bolt:</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for version in versions.stable %}
+                            <tr>
+                                <td>
+                                    <span class="label success radius">{{version.stability}}</span> 
+                                    {{version.version}}
+                                </td>
+                                <td>{{version.type|replace({'bolt-':''})}}</td>
+                                <td>{{version.time|date('jS M Y')}}</td>
+                                <td>{{version.require['bolt/bolt']}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                                        
+            {% else %}
+                <p>No stable versions are available</p>
+            {% endif %}
+        </div>
+        <div class="large-6 columns">
+            <h3>Test / Development Versions</h3>
+            {% if versions.dev %}
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Version</td>
+                            <td>Type</td>
+                            <td>Released</td>
+                            <td>Bolt:</td>
+                            <td>Status</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for version in versions.dev %}
+                            <tr>
+                                <td>
+                                    <span class="label alert radius">{{version.stability}}</span> 
+                                    {{version.version}}
+                                </td>
+                                <td>{{version.type|replace({'bolt-':''})}}</td>
+                                <td>{{version.time|date('jS M Y')}}</td>
+                                <td>{{version.require['bolt/bolt']}}</td>
+                                <td>{{ buildStatus(version.build) }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>                    
+            {% else %}
+                <p>No development versions are available</p>
+            {% endif %}
+        </div>
+    </div>
+
     {% if allowedit %}
+        <hr>
         <div class="row builds-list">
             <div class="large-12 columns">
                 <h3>Build Tests</h3>
