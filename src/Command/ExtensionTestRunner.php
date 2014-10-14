@@ -19,7 +19,7 @@ class ExtensionTestRunner extends Command {
 
     public $em;
     public $isRunning = false;
-    public $waitTime = 20;
+    public $waitTime = 5;
     public $protocol = "http://";
     
  
