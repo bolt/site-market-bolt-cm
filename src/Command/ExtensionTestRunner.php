@@ -66,7 +66,9 @@ class ExtensionTestRunner extends Command {
             $response = $process->getOutput();
             $lines = explode("\n", $response);
             if( !isset($lines[5])) {
-                throw new \Exception("Error Launching Bolt Instance", 1);
+                // This means the container couldn't launch a new instance.
+                // Best bet here is to remain in waiting mode and try again next loop
+                return;
             }
             $build->status = "complete";
             $build->url = $this->protocol.$lines[5];
