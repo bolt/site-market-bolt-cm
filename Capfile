@@ -22,6 +22,7 @@ set :build_commands,    [
     'cp ../../config/env.php ./config/'
 ]
 set :start_commands,    [
+    "pkill -f start.sh",
     "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
     "curl -sS https://getcomposer.org/installer | php",
     "mv composer.phar composer",
@@ -55,7 +56,7 @@ namespace :deploy do
     desc "Updates the code on the remote container"
     task :start do
         on roles :host do |host|
-            execute "cd #{fetch(:deploy_path)} && ./start.sh &" 
+            execute "cd #{fetch(:deploy_path)} && nohup ./start.sh &" 
         end
     end
 end
