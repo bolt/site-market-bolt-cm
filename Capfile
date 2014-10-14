@@ -56,7 +56,7 @@ namespace :deploy do
     task :start do
         on roles :host do |host|
             begin execute "pkill -f 'start.sh'" rescue nil end 
-            execute "cd #{fetch(:deploy_path)} && nohup ./start.sh &" 
+            execute "cd #{fetch(:deploy_path)}; ((nohup ./start.sh &>/dev/null) &)" 
         end
     end
 end
