@@ -20,7 +20,7 @@ class ExtensionTestRunner extends Command {
     public $em;
     public $isRunning = false;
     public $waitTime = 20;
-    public $domain = "http://bolt.rossriley.co.uk";
+    public $protocol = "http://";
     
  
     public function __construct(EntityManager $em) {
@@ -65,11 +65,11 @@ class ExtensionTestRunner extends Command {
         if ($process->isSuccessful()) {
             $response = $process->getOutput();
             $lines = explode("\n", $response);
-            if( !isset($lines[2])) {
+            if( !isset($lines[5])) {
                 throw new \Exception("Error Launching Bolt Instance", 1);
             }
             $build->status = "complete";
-            $build->url = str_replace("0.0.0.0",$this->domain, $lines[2]);
+            $build->url = $this->protocol.$lines[5];
             $build->lastrun = new \DateTime;
             $output->writeln($build->status);
             $output->writeln("<info>Built ".$build->package->name." version ".$build->version." to ".$build->url."</info>");
