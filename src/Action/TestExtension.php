@@ -51,6 +51,7 @@ class TestExtension extends AbstractAction
             $build->status = 'waiting';
             $build->testStatus = 'pending';
             $build->testResult = '';
+            $build->url = '';
             $this->em->flush();
         }
 
