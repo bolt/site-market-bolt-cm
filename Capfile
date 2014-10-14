@@ -55,7 +55,7 @@ namespace :deploy do
     desc "Updates the code on the remote container"
     task :start do
         on roles :host do |host|
-            execute "pkill -f start.sh"
+            execute "pkill -f 'start.sh'"
             execute "cd #{fetch(:deploy_path)} && nohup ./start.sh &" 
         end
     end
