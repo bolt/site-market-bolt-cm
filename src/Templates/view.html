@@ -19,7 +19,10 @@
                     <a class="button radius tiny" href="{{url('edit',{'package':package.id})}}">EDIT</a>
                     <a class="button radius tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
                     <a class="button radius tiny alert" href="{{url('disable',{'package':package.id})}}">DISABLE</a>
+            {% elseif isLoggedIn %}
+                <a class="button radius tiny" href="{{url('stat.star',{'package':package.id})}}"><i class="fi-star"></i></a>
             {% endif %}
+            
         </div>
     </div>
         
@@ -36,7 +39,7 @@
         <div class="large-4 columns">
             <h6><strong>Usage Stats</strong></h6>
             <h6><i class="fi-download"></i> {{package.downloads|default(0)}}</h6>
-            <h6><i class="fi-star"></i> {{package.starCount|default(0)}}</h6>
+            <h6><i class="fi-star"></i> {{package.stars|default(0)}}</h6>
         </div>
 
         

@@ -37,5 +37,7 @@ $router->add(
         ->addTokens(['package' => '[^/]+/[^/]+'])
         ->setValues(['action'=>'Bolt\Extensions\Action\Stat','id'=>'install']);
 
+$router->add("stat.star", "/stat/star/{package}")->setValues(['action'=>'Bolt\Extensions\Action\Stat','id'=>'star']);
+
 
 return $router;

@@ -80,6 +80,17 @@ class Package extends EntityBase {
         
     }
     
+    public function getStars()
+    {
+        $stars = 0;
+        foreach ($this->stats as $stat) {
+            if($stat->type == 'star') {
+                $stars ++;
+            }
+        }
+        return $stars;
+    }
+    
     
     public static function loadMetadata(ClassMetadata $metadata)
     {

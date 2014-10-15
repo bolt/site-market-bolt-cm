@@ -15,6 +15,7 @@ class Stat extends EntityBase {
     protected $ip;
     protected $package;
     protected $version;
+    protected $account;
     
     
     
@@ -28,6 +29,7 @@ class Stat extends EntityBase {
         $builder->addField('recorded',      'datetime', ['nullable'=>true]);
         $builder->addField('version',       'string',   ['nullable'=>true]);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
+        $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
     }
 
 }
