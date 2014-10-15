@@ -60,6 +60,25 @@ class Package extends EntityBase {
         $this->token = bin2hex(openssl_random_pseudo_bytes(16));
     }
     
+    public function getDownloads($version = false)
+    {
+        $downloads = [];
+        foreach ($this->stats as $stat) {
+            if($stat->type == 'install') {
+                $downloads[$stat->version][$stat->ip] = 1;
+            }
+        }
+        foreach($downloads as $version=>$hits) {
+            $downloads[$version] = count($hits);
+        }
+        
+        if($version && isset($downloads[$version])) {
+            return $downloads[$version];
+        }
+        
+        return $downloads;
+        
+    }
     
     
     public static function loadMetadata(ClassMetadata $metadata)
