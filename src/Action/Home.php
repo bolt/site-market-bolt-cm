@@ -15,7 +15,13 @@ class Home extends AbstractAction
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $latest = $repo->findBy(['approved'=>true], ['created'=>'DESC'], 10);
-        return new Response($this->renderer->render("index.html", ['latest'=>$latest]));
+        $starred = $repo->mostStarred(5);
+        $downloaded = $repo->mostDownloaded(5);
+        return new Response($this->renderer->render("index.html", [
+            'latest' => $latest, 
+            'starred' => $starred,
+            'downloaded' => $downloaded
+        ]));
 
     }
 }

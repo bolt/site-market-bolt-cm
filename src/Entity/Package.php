@@ -124,6 +124,7 @@ class Package extends EntityBase {
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
         $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
         $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');
+        $builder->setCustomRepositoryClass('Bolt\Extensions\Repository\Package');
     }
 
 
