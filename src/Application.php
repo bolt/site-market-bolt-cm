@@ -18,10 +18,12 @@ class Application implements HttpKernelInterface {
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
         $route = $request->attributes->get("route");
-        if(isset($route['action']) && class_exists($route['action'])) {
+        if (isset($route['action']) && class_exists($route['action'])) {
             $action = $this->container->get($route['action']);
-            if(is_callable($action)) {
-                $action->setRequest($request);
+            if (is_callable($action)) {
+                if (method_exists($action, 'setRequest')) {
+                    $action->setRequest($request);    
+                }
                 return $action($request, $route);
             }
         }

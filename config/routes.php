@@ -31,7 +31,11 @@ $router->add("test", "/test/{package}/{version}")->setValues(['action'=>'Bolt\Ex
 $router->add("retest", "/retest/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension','retest'=>true]);
 
 
-$router->add("stat", "/stat/{type}")->setValues(['action'=>'Bolt\Extensions\Action\Ping','id'=>'type']);
+$router->add(
+    "stat.install", 
+    "/stat/install{/package,version}")
+        ->addTokens(['package' => '[^/]+/[^/]+'])
+        ->setValues(['action'=>'Bolt\Extensions\Action\Stat','id'=>'install']);
 
 
 return $router;
