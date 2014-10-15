@@ -91,6 +91,17 @@ class Package extends EntityBase {
         return $stars;
     }
     
+    public function isStarredBy($user)
+    {
+        $starred = false;
+        foreach ($this->stats as $stat) {
+            if($stat->type == 'star' && $stat->account === $user) {
+                $starred = true;
+            }
+        }
+        return $starred;
+    }
+    
     
     public static function loadMetadata(ClassMetadata $metadata)
     {

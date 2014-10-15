@@ -20,7 +20,13 @@
                     <a class="button radius tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
                     <a class="button radius tiny alert" href="{{url('disable',{'package':package.id})}}">DISABLE</a>
             {% elseif isLoggedIn %}
-                <a class="warning label radius tiny right" href="{{url('star',{'package':package.id})}}"><i class="fi-star"></i></a>
+                {% if package.isStarredBy(user) %}
+                    <span class="label radius tiny right success"><i class="fi-star"></i> Starred</span>
+                {% else %}
+                    <a class="warning label tiny right" href="{{url('star',{'package':package.id})}}">
+                        <i class="fi-star"></i> Star Package
+                    </a>
+                {% endif %}
             {% endif %}
             
         </div>
