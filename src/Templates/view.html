@@ -20,7 +20,7 @@
                     <a class="button radius tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
                     <a class="button radius tiny alert" href="{{url('disable',{'package':package.id})}}">DISABLE</a>
             {% elseif isLoggedIn %}
-                <a class="button radius tiny" href="{{url('stat.star',{'package':package.id})}}"><i class="fi-star"></i></a>
+                <a class="warning label radius tiny right" href="{{url('star',{'package':package.id})}}"><i class="fi-star"></i></a>
             {% endif %}
             
         </div>
