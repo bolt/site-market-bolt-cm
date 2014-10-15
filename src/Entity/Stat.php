@@ -2,10 +2,9 @@
 
 namespace Bolt\Extensions\Entity;
 
+use Doctrine\Entity\Base as EntityBase;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Entity\Base as EntityBase;
-
 
 class Stat extends EntityBase {
 
@@ -16,8 +15,9 @@ class Stat extends EntityBase {
     protected $ip;
     protected $package;
     protected $version;
-
-
+    
+    
+    
     public static function loadMetadata(ClassMetadata $metadata)
     {
         $builder = new ClassMetadataBuilder($metadata);
@@ -26,11 +26,8 @@ class Stat extends EntityBase {
         $builder->addField('source',        'string',   ['nullable'=>true]);
         $builder->addField('ip',            'string',   ['nullable'=>true]);
         $builder->addField('recorded',      'datetime', ['nullable'=>true]);
-        $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
         $builder->addField('version',       'string',   ['nullable'=>true]);
-
-
+        $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
     }
-
 
 }

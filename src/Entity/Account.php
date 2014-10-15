@@ -2,10 +2,9 @@
 
 namespace Bolt\Extensions\Entity;
 
+use Doctrine\Entity\Base as EntityBase;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Entity\Base as EntityBase;
-
 
 class Account extends EntityBase {
 
@@ -19,7 +18,13 @@ class Account extends EntityBase {
     protected $created;
     protected $packages;
 
-
+    
+    public function setPassword($password)
+    {
+        if(substr($password,0,1) !== "$2") $this->password = password_hash($password, PASSWORD_DEFAULT);
+    }
+    
+    
     public static function loadMetadata(ClassMetadata $metadata)
     {
         $builder = new ClassMetadataBuilder($metadata);
@@ -33,12 +38,6 @@ class Account extends EntityBase {
         $builder->addField('created',       'datetime', ['nullable'=>true]);
         $builder->addOneToMany('packages',  'Bolt\Extensions\Entity\Package', 'user');
 
-
-    }
-    
-    public function setPassword($password)
-    {
-        if(substr($password,0,1) !== "$2") $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
 

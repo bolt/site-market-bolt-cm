@@ -2,14 +2,9 @@
 
 namespace Bolt\Extensions\Entity;
 
+use Doctrine\Entity\Base as EntityBase;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Entity\Base as EntityBase;
-
-use Composer\IO\NullIO;
-use Composer\Factory;
-use Composer\Repository\VcsRepository;
-
 
 class Package extends EntityBase {
 
@@ -32,29 +27,6 @@ class Package extends EntityBase {
     protected $stats;
     protected $builds;
 
-    public static function loadMetadata(ClassMetadata $metadata)
-    {
-        $builder = new ClassMetadataBuilder($metadata);
-        $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
-        $builder->addField('source',        'string',   ['nullable'=>true]);
-        $builder->addField('title',         'string',   ['nullable'=>true]);
-        $builder->addField('name',          'string',   ['nullable'=>true]);
-        $builder->addField('keywords',      'string',   ['nullable'=>true]);
-        $builder->addField('type',          'string',   ['nullable'=>true]);
-        $builder->addField('description',   'text',     ['nullable'=>true]);
-        $builder->addField('documentation', 'text',     ['nullable'=>true]);
-        $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
-        $builder->addField('versions',      'string',   ['nullable'=>true]);
-        $builder->addField('requirements',  'string',   ['nullable'=>true]);
-        $builder->addField('authors',       'string',   ['nullable'=>true]);
-        $builder->addField('created',       'datetime', ['nullable'=>true]);
-        $builder->addField('updated',       'datetime', ['nullable'=>true]);
-        $builder->addField('token',         'string',   ['nullable'=>true]);
-        $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
-        $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
-        $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');
-
-    }
     
     public function setSource($value)
     {
@@ -86,6 +58,31 @@ class Package extends EntityBase {
     public function regenerateToken()
     {
         $this->token = bin2hex(openssl_random_pseudo_bytes(16));
+    }
+    
+    
+    
+    public static function loadMetadata(ClassMetadata $metadata)
+    {
+        $builder = new ClassMetadataBuilder($metadata);
+        $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
+        $builder->addField('source',        'string',   ['nullable'=>true]);
+        $builder->addField('title',         'string',   ['nullable'=>true]);
+        $builder->addField('name',          'string',   ['nullable'=>true]);
+        $builder->addField('keywords',      'string',   ['nullable'=>true]);
+        $builder->addField('type',          'string',   ['nullable'=>true]);
+        $builder->addField('description',   'text',     ['nullable'=>true]);
+        $builder->addField('documentation', 'text',     ['nullable'=>true]);
+        $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
+        $builder->addField('versions',      'string',   ['nullable'=>true]);
+        $builder->addField('requirements',  'string',   ['nullable'=>true]);
+        $builder->addField('authors',       'string',   ['nullable'=>true]);
+        $builder->addField('created',       'datetime', ['nullable'=>true]);
+        $builder->addField('updated',       'datetime', ['nullable'=>true]);
+        $builder->addField('token',         'string',   ['nullable'=>true]);
+        $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
+        $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
+        $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');
     }
 
 

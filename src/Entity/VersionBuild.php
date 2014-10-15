@@ -2,11 +2,9 @@
 
 namespace Bolt\Extensions\Entity;
 
+use Doctrine\Entity\Base as EntityBase;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Entity\Base as EntityBase;
-
-
 
 class VersionBuild extends EntityBase {
 
@@ -20,6 +18,12 @@ class VersionBuild extends EntityBase {
     protected $testResult;
     protected $testStatus;
     protected $built;
+    
+    public function getTestResult()
+    {
+        return json_decode($this->testResult, true);
+    }
+    
 
     public static function loadMetadata(ClassMetadata $metadata)
     {
@@ -34,15 +38,6 @@ class VersionBuild extends EntityBase {
         $builder->addField('testStatus',    'string',   ['default'=>'pending', 'nullable'=>true]);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
 
-
     }
-    
-    public function getTestResult()
-    {
-        return json_decode($this->testResult, true);
-    }
-    
-
-
 
 }

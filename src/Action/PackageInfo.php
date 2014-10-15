@@ -22,7 +22,14 @@ class PackageInfo extends AbstractAction
         $package = $repo->findOneBy(['approved'=>true, 'name'=>$p]);
         
         $allVersions = $this->packageManager->getInfo($package, $bolt);
-                
+        $buildRepo = $this->em->getRepository(Entity\VersionBuild::class);
+
+        foreach($allVersions as &$version) {
+            $build = $buildRepo->findOneBy(['package'=>$package->id, 'version'=>$version['version']]);
+            if ($build) {
+                $version['buildStatus'] = $build->testStatus;
+            }
+        }                
 
         $response = new JsonResponse(['package'=>$package->serialize(),'version'=>$allVersions]);
         $response->setCallback($request->get('callback'));
