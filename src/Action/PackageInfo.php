@@ -28,6 +28,8 @@ class PackageInfo extends AbstractAction
             $build = $buildRepo->findOneBy(['package'=>$package->id, 'version'=>$version['version']]);
             if ($build) {
                 $version['buildStatus'] = $build->testStatus;
+            } else {
+                $version['buildStatus'] = 'untested';
             }
         }                
 
