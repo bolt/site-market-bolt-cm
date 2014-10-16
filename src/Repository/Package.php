@@ -20,10 +20,11 @@ class Package extends EntityRepository
     {
         $qb = $this->createQueryBuilder("p");
         $qb->select("p, count(p.id) as hidden pcount")
-            ->leftJoin("p.stats", "s")->addSelect("s")
+            ->innerJoin("p.stats", "s")
             ->where('s.type = :type')
             ->andWhere('p.approved = true')
-            ->addOrderby('pcount', 'DESC')
+            ->groupBy('p.id')
+            ->orderBy('pcount',"DESC")
             ->setParameter('type', $type)
             ->setMaxResults($limit);
         return $qb->getQuery()->getResult();
