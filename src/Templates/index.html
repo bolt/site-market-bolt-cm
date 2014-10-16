@@ -26,7 +26,7 @@
             {% for package in starred %}
                 <div class="row collapse">
                     <div class="large-7 columns"><h6><strong>{{package.name}}</strong></h6></div>
-                    <div class="large-1 columns"><h5><i class="fi-download"></i> {{package.stars|default(0)}}</h5></div>
+                    <div class="large-1 columns"><h5><i class="fi-star"></i> {{package.stars|default(0)}}</h5></div>
                     <div class="large-4 columns">                    
                         <a class="button radius tiny" href="{{url('view',{'package':package.id})}}">Details</a>
                     </div>

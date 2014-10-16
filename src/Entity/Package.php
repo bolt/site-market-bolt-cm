@@ -63,9 +63,11 @@ class Package extends EntityBase {
     public function getDownloads($version = false)
     {
         $downloads = [];
+        $dcount = 0;
         foreach ($this->stats as $stat) {
             if($stat->type == 'install') {
                 $downloads[$stat->version][$stat->ip] = 1;
+                $dcount ++ ;
             }
         }
         foreach($downloads as $version=>$hits) {
@@ -76,7 +78,7 @@ class Package extends EntityBase {
             return $downloads[$version];
         }
         
-        return $downloads;
+        return $dcount;
         
     }
     

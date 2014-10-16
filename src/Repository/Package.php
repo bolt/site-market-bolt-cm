@@ -8,7 +8,7 @@ class Package extends EntityRepository
 
     public function mostDownloaded($limit = 10)
     {
-       return $this->statCount('download', $limit);
+        return $this->statCount('install', $limit);
     }
     
     public function mostStarred($limit = 10)
