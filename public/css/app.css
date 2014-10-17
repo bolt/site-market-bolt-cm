@@ -55,3 +55,6 @@ body h1, body h2, body h3, body h4 {
 .pack-summary .button {
     margin-bottom:5px;
 }
+.pack-summary hr {
+    margin:0px 0 3px 0;
+}
