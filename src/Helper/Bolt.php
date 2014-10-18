@@ -6,7 +6,7 @@ use forxer\Gravatar\Gravatar;
 class Bolt extends \Twig_Extension
 {
 
-    public $statusTemplate = '<span class="buildstatus label radius %s"><i class="fi-%s has-tip" data-tooltip title="%s"></i><sup><small>%s+</small></sup></span>';
+    public $statusTemplate = '<span class="buildstatus label radius %s"><i class="fi-%s has-tip" data-tooltip title="%s"></i><span class="version">%s+</span></span>';
 
     public function getFunctions()
     {
