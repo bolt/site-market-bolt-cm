@@ -42,9 +42,18 @@
                     </p>
                     
                     <p>If the url above has expired then you can trigger a retest using the link below.</p>
-                    <a href="{{url('retest',{package:build.package.id,version:build.version})}}" class="button tiny">
-                        TRIGGER TEST
-                    </a>
+                    <form action="{{url('retest',{package:build.package.id,version:build.version})}}" method="post">
+                        <label>PHP Version to Target</label>
+                        <select name="phpTarget">
+                            <option value="php56">Latest (PHP 5.6)</option>
+                            <option value="php55">PHP 5.5</option>
+                            <option value="php54">PHP 5.4</option>
+                            <option value="php53">PHP 5.3</option>
+                        </select>
+                        <button class="tiny">
+                            TRIGGER TEST
+                        </button>
+                    </form>
                 {% endif %}
             </div>
         </div>

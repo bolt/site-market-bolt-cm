@@ -17,6 +17,7 @@ class VersionBuild extends EntityBase {
     protected $hash;
     protected $testResult;
     protected $testStatus;
+    protected $phpTarget;
     protected $built;
     
     public function getTestResult()
@@ -36,6 +37,7 @@ class VersionBuild extends EntityBase {
         $builder->addField('hash',          'string',   ['nullable'=>true]);
         $builder->addField('testResult',    'text',   ['nullable'=>true]);
         $builder->addField('testStatus',    'string',   ['default'=>'pending', 'nullable'=>true]);
+        $builder->addField('phpTarget',     'string',   ['nullable'=>true]);
         $builder->addManyToOne('package',   'Bolt\Extensions\Entity\Package');
 
     }

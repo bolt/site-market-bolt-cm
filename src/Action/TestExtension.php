@@ -48,6 +48,9 @@ class TestExtension extends AbstractAction
         }
         
         if ($retest) {
+            if($request->request->get('phpTarget')) {
+                $build->phpTarget = $request->request->get('phpTarget');
+            }
             $build->status = 'waiting';
             $build->testStatus = 'pending';
             $build->testResult = '';
