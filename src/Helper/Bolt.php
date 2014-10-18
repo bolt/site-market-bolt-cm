@@ -6,7 +6,7 @@ use forxer\Gravatar\Gravatar;
 class Bolt extends \Twig_Extension
 {
 
-    public $statusTemplate = '<span class="buildstatus label radius %s"><i class="fi-%s has-tip" data-tooltip title="%s"></i></span>';
+    public $statusTemplate = '<span class="buildstatus label radius %s"><i class="fi-%s has-tip" data-tooltip title="%s"></i> %s</span>';
 
     public function getFunctions()
     {
@@ -30,8 +30,16 @@ class Bolt extends \Twig_Extension
             return sprintf($this->statusTemplate, 'warning', 'clock', "This version is currently awaiting a test result");
         }
         
+        if($build->phpTarget) {
+            $php = str_replace('php', '', $build->phptarget);
+            $php = substr_replace($php, ".", 1, 0);
+        } else {
+            $php = "";
+        }
+
+        
         if($build->testStatus === 'approved') {
-            return sprintf($this->statusTemplate, 'success', 'star', "This version is an approved build");
+            return sprintf($this->statusTemplate, 'success', 'star', "This version is an approved build", $php);
         }
         
         if($build->testStatus === 'failed') {
