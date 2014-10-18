@@ -31,8 +31,8 @@ class Bolt extends \Twig_Extension
         }
         
         if($build->phpTarget) {
-            $php = str_replace('php', '', $build->phptarget);
-            $php = substr_replace($php, ".", 1, 0);
+            $fullver = str_replace('php', '', $build->phptarget);
+            $php = substr_replace($fullver, ".", 1, 0);
         } else {
             $php = "";
         }
