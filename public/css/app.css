@@ -40,9 +40,15 @@ body h1, body h2, body h3, body h4 {
 }
 .buildstatus {
     font-size: 100%;
-}
-.buildstatus i {
     color:white;
+}
+.buildstatus i,
+.buildstatus small {
+    color:white;
+}
+.buildstatus small {
+    line-height: 10%;
+    margin:-5px 0 -5px 3px;
 }
 .buildstatus i:hover {
     color:#DDDDDD;
