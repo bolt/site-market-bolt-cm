@@ -43,7 +43,7 @@ class Bolt extends \Twig_Extension
         }
         
         if($build->testStatus === 'failed') {
-            return sprintf($this->statusTemplate, 'alert', 'x', "This version is not an approved build", "");
+            return sprintf($this->statusTemplate, 'alert', 'x', "This version is not an approved build", $php);
         }
     }
     
