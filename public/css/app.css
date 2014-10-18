@@ -48,7 +48,10 @@ body h1, body h2, body h3, body h4 {
 }
 .buildstatus small {
     line-height: 10%;
-    margin:-5px 0 -5px 3px;
+    margin:-5px 0 -5px 4px;
+}
+.buildstatus sup {
+    line-height:0;
 }
 .buildstatus i:hover {
     color:#DDDDDD;
