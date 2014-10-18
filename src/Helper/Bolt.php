@@ -6,7 +6,7 @@ use forxer\Gravatar\Gravatar;
 class Bolt extends \Twig_Extension
 {
 
-    public $statusTemplate = '<span class="buildstatus label radius %s"><i class="fi-%s has-tip" data-tooltip title="%s"></i> %s</span>';
+    public $statusTemplate = '<span class="buildstatus label radius %s"><i class="fi-%s has-tip" data-tooltip title="%s"></i>%s</span>';
 
     public function getFunctions()
     {
@@ -31,8 +31,8 @@ class Bolt extends \Twig_Extension
         }
         
         if($build->phpTarget) {
-            $fullver = str_replace('php', '', $build->phptarget);
-            $php = substr_replace($fullver, ".", 1, 0);
+            $php = str_replace('php', '', $build->phpTarget);
+            $php = substr_replace($php, ".", 1, 0);
         } else {
             $php = "";
         }
