@@ -27,7 +27,7 @@ class Bolt extends \Twig_Extension
     public function buildStatus($build, $options = [])
     {
         if(!$build || $build->testStatus === 'pending') {
-            return sprintf($this->statusTemplate, 'warning', 'clock', "This version is currently awaiting a test result");
+            return sprintf($this->statusTemplate, 'warning', 'clock', "This version is currently awaiting a test result", "");
         }
         
         if($build->phpTarget) {
@@ -43,7 +43,7 @@ class Bolt extends \Twig_Extension
         }
         
         if($build->testStatus === 'failed') {
-            return sprintf($this->statusTemplate, 'alert', 'x', "This version is not an approved build");
+            return sprintf($this->statusTemplate, 'alert', 'x', "This version is not an approved build", "");
         }
     }
     
