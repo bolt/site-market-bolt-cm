@@ -58,9 +58,11 @@ class ExtensionTestRunner extends Command {
     protected function startJob($build, OutputInterface $output)
     {
         $this->isRunning = true;
-        $command = "ssh boltrunner@bolt.rossriley.co.uk 'cap production docker:run package=".$build->package->name." version=".$build->version."'";
+        $command = "ssh boltrunner@bolt.rossriley.co.uk 'cap production docker:run package=".$build->package->name." version=".$build->version;
         if ($build->phpTarget) {
-           $command .= " php=".$build->phpTarget; 
+           $command .= " php=".$build->phpTarget."'"; 
+        } else {
+            $command .= "'";
         }
         $process = new Process($command);
         $process->mustRun();
