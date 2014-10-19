@@ -66,11 +66,19 @@ class TestExtension extends AbstractAction
                 $client = new Guzzle(['base_url' => $build->url]);
                 $response = $client->get('/');
             } catch (RequestException $e) {
-                $canConnect = false;
-                $build->status = 'waiting';
-                $build->testStatus = 'pending';
-                $build->testResult = '';
+                if($e->getCode() == '502') {
+                    $canConnect = false;
+                    $build->status = 'complete';
+                    $build->testStatus = 'failed';
+                } else {
+                    $canConnect = false;
+                    $build->status = 'waiting';
+                    $build->testStatus = 'pending';
+                    $build->testResult = '';
+                }
                 $this->em->flush();
+
+                
             }
             
             if ($canConnect) {

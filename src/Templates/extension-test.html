@@ -10,18 +10,25 @@
 
     <div class="row">
         <div class="large-8 columns">
-        <h3>{{ buildStatus(build) }} Test Summary for: {{build.package.name}} <small>({{ build.version }})</small></h3>
-        
-        <ol>
-            {% for url, test in build.testResult %}
-                <li>
-                    <div data-alert class="radius alert-box {% if test.status =='OK' %}success{%else%}alert{%endif%}">
-                        <strong>Test:</strong> {{ test.title }}<br>
-                        <strong>Status:</strong> {{ test.status }}
-                    </div>
-                </li>
-            {% endfor %}
-        </ol>
+            <h3>{{ buildStatus(build) }} Test Summary for: {{build.package.name}} <small>({{ build.version }})</small></h3>
+            
+            <ol>
+                {% for url, test in build.testResult %}
+                    <li>
+                        <div data-alert class="radius alert-box {% if test.status =='OK' %}success{%else%}alert{%endif%}">
+                            <strong>Test:</strong> {{ test.title }}<br>
+                            <strong>Status:</strong> {{ test.status }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+            {% if not build.testResult and build.testStatus == 'failed' %}
+                <h5>The automated tests for your extension did not successfully run!</h5>
+                <p>The most likely reason for this is that the extension created an unstable installation on the PHP version targeted.</p>
+                <p>
+                    You can test again using the form on the right, if you think there may be a problem please get in touch for help via the normal Bolt support channels.
+                </p>
+            {% endif %}
         </div>
         <div class="large-4 columns">
             <div class="panel">
