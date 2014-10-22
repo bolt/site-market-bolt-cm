@@ -84,6 +84,9 @@ class ExtensionTestRunner extends Command {
             $output->writeln($build->status);
             $output->writeln("<info>Built ".$build->package->name." version ".$build->version." to ".$build->url."</info>");
             $this->em->flush();
+        } else {
+            $build->status = "failed";
+            $this->em->flush();
         }
         $this->isRunning = false;
     }
