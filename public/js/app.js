@@ -19,5 +19,6 @@ jQuery(document).ready(function($) {
                 $('.package-list').html(data);  
             });
         }, 500 );
+        e.preventDefault();
     });
 });
