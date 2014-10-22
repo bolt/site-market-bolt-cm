@@ -12,13 +12,16 @@ jQuery(document).ready(function($) {
         };
     })();
         
-    form.on('keyup', function(e){
+    form.on('keyup', function(){
         var searchVal = $(this).find('#search-text').val();
         delay(function(){
             $.get('/search',{'q':searchVal}, function(data) {
                 $('.package-list').html(data);  
             });
         }, 500 );
-        e.preventDefault();
+    });
+    
+    $(form).bind('keypress keydown keyup', function(e){
+       if(e.keyCode == 13) { e.preventDefault(); }
     });
 });
