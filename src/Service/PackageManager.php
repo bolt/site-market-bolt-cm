@@ -24,7 +24,6 @@ class PackageManager
         $repository = $this->loadRepository($package);
         $information = $this->loadInformation($package);
         
-
         $versions = $repository->getPackages();
         $pv = [];
         foreach($versions as $version) {
@@ -45,6 +44,11 @@ class PackageManager
             }
             $package->setAuthors(implode(',',$authors));
         }
+        
+        if (isset($information['extra']) && isset($information['extra']['bolt-screenshots'])) {
+            $package->setScreenshots(implode(',', $information['extra']['bolt-screenshots']) );
+        }
+        
         $package->setRequirements(json_encode($information['require']));
         $package->setVersions(implode(',', $pv));
         $package->updated = new \DateTime;

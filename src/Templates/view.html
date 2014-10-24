@@ -54,6 +54,19 @@
     <hr>
        
     <div class="large-12 columns">
+        {% if package.screenshots %}
+            <div class="large-6 columns right">
+                <ul class="screenshots" data-orbit> 
+                    {% for image in package.screenshots%}
+                        {% if "//" in image %}
+                            <li><img src="{{image}}"></li>                    
+                        {% else %} 
+                            <li><img src="{{package.source}}/blob/master/{{image}}?raw=true"></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
         <p>
             {{package.description}}
         </p>

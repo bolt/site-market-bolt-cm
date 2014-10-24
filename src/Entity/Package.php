@@ -26,11 +26,17 @@ class Package extends EntityBase {
     protected $token;
     protected $stats;
     protected $builds;
+    protected $screenshots;
 
     
     public function setSource($value)
     {
         $this->source = rtrim($value, "/");
+    }
+    
+    public function getSource()
+    {
+        return dirname($this->source)."/".basename($this->source);
     }
     
     public function setName($value)
@@ -51,6 +57,11 @@ class Package extends EntityBase {
     public function getRequirements()
     {
         return json_decode($this->requirements, true);
+    }
+    
+    public function getScreenshots()
+    {
+        return array_filter(explode(",",$this->screenshots));
     }
     
     
@@ -123,6 +134,7 @@ class Package extends EntityBase {
         $builder->addField('created',       'datetime', ['nullable'=>true]);
         $builder->addField('updated',       'datetime', ['nullable'=>true]);
         $builder->addField('token',         'string',   ['nullable'=>true]);
+        $builder->addField('screenshots',   'text',     ['nullable'=>true]);
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
         $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
         $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');

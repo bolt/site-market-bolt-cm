@@ -13,7 +13,7 @@ set :application,       "extensions"
 set :password,          "bolt30080"
 set :ports,             ["80"]
 set :stage,             "production" ### Default stage
-set :deploy_path,        "domains/extensions.bolt.cm/private_html"
+set :deploy_path,        "domains/extensions.bolt.cm/private_html_real"
 set :build_commands,    [
     'composer install --no-dev --prefer-dist --optimize-autoloader',
     'cp ../../config/github.json ./config/',
