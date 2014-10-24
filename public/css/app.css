@@ -69,6 +69,6 @@ body h1, body h2, body h3, body h4 {
 .pack-summary hr {
     margin:0px 0 3px 0;
 }
-.screenshots li img {
+.screenshots {
     box-shadow:1px 1px 5px rgba(0,0,0,0.2);
 }
