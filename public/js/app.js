@@ -26,10 +26,4 @@ jQuery(document).ready(function($) {
     });
     
     
-    $(document).foundation({
-      orbit: {
-        slide_number: false
-      }
-    });
-    
 });
