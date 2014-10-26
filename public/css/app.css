@@ -72,3 +72,6 @@ body h1, body h2, body h3, body h4 {
 .screenshots {
     box-shadow:1px 1px 5px rgba(0,0,0,0.2);
 }
+.screenshots img {
+    max-height:400px;
+}
