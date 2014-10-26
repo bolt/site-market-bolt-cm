@@ -4,12 +4,28 @@ namespace Bolt\Extensions\Action;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use Twig_Environment;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\FormFactory;
+use Aura\Router\Router;
 use Bolt\Extensions\Entity;
 
 
-class Login extends AbstractAction
+class Login
 {
+    
+    public $renderer;
+    public $em;
+    public $forms;
+    public $router;
+    
+    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, Router $router)
+    {
+        $this->renderer = $renderer;
+        $this->em = $em;
+        $this->forms = $forms;
+        $this->router = $router;
+    }
     
     public function __invoke(Request $request)
     {

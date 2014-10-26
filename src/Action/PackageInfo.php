@@ -5,12 +5,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
+use Bolt\Extensions\Service\PackageManager;
 
 
-class PackageInfo extends AbstractAction
+class PackageInfo
 {
+    public $em;
+    
+    public function __construct(EntityManager $em, PackageManager $packageManager)
+    {
+        $this->em = $em;
+        $this->packageManager = $packageManager;
+    }
     
     public function __invoke(Request $request, $params)
     {

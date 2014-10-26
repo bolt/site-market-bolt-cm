@@ -3,12 +3,19 @@ namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Twig_Environment;
 use Bolt\Extensions\Entity;
 
 
-class Submitted extends AbstractAction
+class Submitted
 {
+    
+    public $renderer;
+    
+    public function __construct(Twig_Environment $renderer)
+    {
+        $this->renderer = $renderer;
+    }
     
     public function __invoke(Request $request)
     {

@@ -3,20 +3,31 @@ namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\Loader\ValidatingArrayLoader;
 use Composer\Package\Loader\InvalidPackageException;
+use Twig_Environment;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\FormFactory;
 use Bolt\Extensions\Entity;
 
-class Submit extends AbstractAction 
+class Submit 
 {
+    
+    public $renderer;
+    public $em;
+    public $forms;
+    
+    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms)
+    {
+        $this->renderer = $renderer;
+        $this->em = $em;
+        $this->forms = $forms;
+    }
     
     public function __invoke(Request $request)
     {
-        if (! $this->restrictAccess($request)) {
-            return new RedirectResponse($this->router->generate('login'));
-        }
+
         $error = false;
 
         $entity = new Entity\Package;

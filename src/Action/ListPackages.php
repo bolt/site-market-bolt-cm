@@ -5,19 +5,26 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
 
 
-class ListPackages extends AbstractAction
+class ListPackages
 {
+    
+    public $em;
+    
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
     
     public function __invoke(Request $request, $params)
     {
         
         $repo = $this->em->getRepository(Entity\Package::class);
         if($search = $request->get('name')) {
-            $packages = $this->searchPackages($search);
+            $packages = $repo->searchPackages($search);
         } else {
             $packages = $repo->findBy(['approved'=>true]);
         }

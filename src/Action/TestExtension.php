@@ -4,7 +4,7 @@ namespace Bolt\Extensions\Action;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Environment;
-
+use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
 use Bolt\Extensions\Command\TestExtension as TestCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -15,11 +15,18 @@ use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\RequestException;
 
 
-class TestExtension extends AbstractAction
+class TestExtension
 {
     
     public $renderer;
-
+    public $em;
+    
+    public function __construct(Twig_Environment $renderer, EntityManager $em)
+    {
+        $this->renderer = $renderer;
+        $this->em = $em;
+    }
+    
     
     public function __invoke(Request $request, $params)
     {

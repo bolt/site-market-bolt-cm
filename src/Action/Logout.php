@@ -4,11 +4,18 @@ namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Aura\Router\Router;
 
 
-class Logout extends AbstractAction
+class Logout
 {
     
+    public $router;
+    
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+    }
     
     public function __invoke(Request $request)
     {
