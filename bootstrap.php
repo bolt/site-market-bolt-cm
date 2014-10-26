@@ -10,9 +10,13 @@ $container->set("Aura\Router\Router", $router);
 
 $app = $container->get("Bolt\Extensions\Application");
 
+
 $app = (new Stack\Builder())
         ->push('Stack\Session')
         ->push('Stack\Aura\RequestRouter', $router)
+        ->push(function($app) use ($container){
+            return $container->make('Bolt\Extensions\Firewall', ['app'=>$app]);
+        })
         ->resolve($app);
 
 Stack\run($app);

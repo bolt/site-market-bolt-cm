@@ -15,6 +15,7 @@ use Symfony\Bridge\Twig\Form\TwigRenderer;
 
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 use Aura\Router\Router;
 
@@ -25,6 +26,8 @@ use Composer\Json\JsonFile;
 use Composer\Config\JsonConfigSource;
 
 use Bolt\Extensions\Application;
+use Bolt\Extensions\Firewall;
+use Bolt\Extensions\Action;
 
 
 Symfony\Component\Debug\Debug::enable();
@@ -34,6 +37,10 @@ return [
     'debug' => false, 
 
     Application::class => DI\object(),
+
+    Firewall::class => DI\object()
+        ->constructorParameter('restrict', DI\link('userfirewall'))
+        ->lazy(),
     
     
     'db' => DI\factory(function($c){
@@ -59,6 +66,13 @@ return [
         $em = EntityManager::create($c->get(DB::class), $config);
         return $em;
     }),
+    
+    'userfirewall' => [
+        Action\Submit::class,
+        Action\EditPackage::class,
+        Action\TestExtension::class,
+        Action\Profile::class  
+    ],
     
     "migrations" => DI\factory(function($c){
         $m = new MigrateConfig($c->get(DB::class));
@@ -91,6 +105,8 @@ return [
         $twig->addExtension(new FormExtension(new TwigRenderer($formEngine)));
         $twig->addExtension(new Bolt\Extensions\Helper\Url($c->get(Router::class)));
         $twig->addExtension(new Bolt\Extensions\Helper\Bolt());
+        $twig->addGlobal('request', $c->get(Request::class));
+        $twig->addGlobal('session', $c->get(Request::class)->getSession());
         return $twig;
     }),
     
