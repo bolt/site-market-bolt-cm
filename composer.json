@@ -15,7 +15,7 @@
         "composer/composer": "1.0.*@dev",
         "composer/satis": "1.0.*",
         "doctrine/orm": "2.5.*@dev",
-        "fabpot/goutte": "2.0.*@dev",
+        "fabpot/goutte": "2.0",
         "forxer/gravatar": "1.2",
         "mnapoli/php-di": "4.3",
         "rossriley/doctrine-migrations-helper": "1.0.*@dev",
@@ -31,7 +31,7 @@
         "symfony/twig-bridge": "~2.5",
         "symfony/doctrine-bridge": "~2.5",
         "symfony/validator": "~2.5",
-        "twig/twig": "1.15.*@dev"
+        "twig/twig": "~1.1"
     },
 
     "autoload": {
