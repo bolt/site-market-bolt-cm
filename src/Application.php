@@ -17,6 +17,7 @@ class Application implements HttpKernelInterface {
 
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
+        $this->container->set(Request::class, $request);
         $route = $request->attributes->get("route");
         if (isset($route['action']) && class_exists($route['action'])) {
             $action = $this->container->get($route['action']);

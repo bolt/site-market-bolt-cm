@@ -29,5 +29,18 @@ class Package extends EntityRepository
             ->setMaxResults($limit);
         return $qb->getQuery()->getResult();
     }
+    
+    public function search($keyword)
+    {
+        $packages = $this->createQueryBuilder('p')
+                ->where('p.approved = :status')
+                ->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search')
+                ->setParameter('status', true)
+                ->setParameter('search', "%".$keyword."%")
+                ->getQuery()
+                ->getResult();
+                
+        return $packages;
+    }
 
 }
