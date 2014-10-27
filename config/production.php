@@ -39,9 +39,7 @@ return [
     Application::class => DI\object(),
 
     Firewall::class => DI\object()
-        ->constructorParameter('restrict', DI\link('userfirewall'))
-        ->lazy(),
-    
+        ->constructorParameter('restrict', DI\link('userfirewall')),    
     
     'db' => DI\factory(function($c){
         return [
@@ -68,10 +66,14 @@ return [
     }),
     
     'userfirewall' => [
-        Action\Submit::class,
+        Action\Admin::class,
         Action\EditPackage::class,
+        Action\Profile::class,  
+        Action\StarPackage::class, 
+        Action\Submit::class,
+        Action\Submitted::class,
         Action\TestExtension::class,
-        Action\Profile::class  
+        Action\UpdatePackage::class,
     ],
     
     "migrations" => DI\factory(function($c){

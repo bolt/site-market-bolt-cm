@@ -22,11 +22,6 @@ class Firewall implements HttpKernelInterface
     private $em;
     
     /**
-    * @var Request
-    */
-    private $request;
-    
-    /**
     * @var Router
     */
     private $router;

@@ -24,7 +24,7 @@ class ListPackages
         
         $repo = $this->em->getRepository(Entity\Package::class);
         if($search = $request->get('name')) {
-            $packages = $repo->searchPackages($search);
+            $packages = $repo->search($search);
         } else {
             $packages = $repo->findBy(['approved'=>true]);
         }
