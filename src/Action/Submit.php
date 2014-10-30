@@ -10,6 +10,7 @@ use Twig_Environment;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactory;
 use Bolt\Extensions\Entity;
+use Bolt\Extensions\Service\packageManager;
 
 class Submit 
 {
@@ -17,12 +18,14 @@ class Submit
     public $renderer;
     public $em;
     public $forms;
+    public $packageManager;
     
-    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms)
+    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, PackageManager $packageManager)
     {
         $this->renderer = $renderer;
         $this->em = $em;
         $this->forms = $forms;
+        $this->packageManager = $packageManager;
     }
     
     public function __invoke(Request $request)
