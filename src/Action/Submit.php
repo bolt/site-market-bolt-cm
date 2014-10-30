@@ -3,6 +3,7 @@ namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Composer\Package\Loader\ArrayLoader;
 use Composer\Package\Loader\ValidatingArrayLoader;
 use Composer\Package\Loader\InvalidPackageException;
@@ -11,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactory;
 use Bolt\Extensions\Entity;
 use Bolt\Extensions\Service\PackageManager;
+use Aura\Router\Router;
 
 class Submit 
 {
@@ -20,12 +22,13 @@ class Submit
     public $forms;
     public $packageManager;
     
-    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, PackageManager $packageManager)
+    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, PackageManager $packageManager, Router $router)
     {
         $this->renderer = $renderer;
         $this->em = $em;
         $this->forms = $forms;
         $this->packageManager = $packageManager;
+        $this->router = $router;
     }
     
     public function __invoke(Request $request)
