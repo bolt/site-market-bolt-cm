@@ -29,7 +29,7 @@ class Submit
     {
 
         $error = false;
-
+        $this->accountUser = $request->get('user');
         $entity = new Entity\Package;
         $form = $this->forms->create('package', $entity);
         $form->handleRequest();
