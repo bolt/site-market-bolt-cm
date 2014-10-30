@@ -10,7 +10,7 @@ use Twig_Environment;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormFactory;
 use Bolt\Extensions\Entity;
-use Bolt\Extensions\Service\packageManager;
+use Bolt\Extensions\Service\PackageManager;
 
 class Submit 
 {
