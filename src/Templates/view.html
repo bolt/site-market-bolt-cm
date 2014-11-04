@@ -16,12 +16,12 @@
         </div>
         <div class="large-4 columns">
             {% if allowedit %}
-                    <a class="button radius tiny" href="{{url('edit',{'package':package.id})}}">EDIT</a>
-                    <a class="button radius tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
-                    <a class="button radius tiny alert" href="{{url('disable',{'package':package.id})}}">DISABLE</a>
+                    <a class="button tiny" href="{{url('edit',{'package':package.id})}}">EDIT</a>
+                    <a class="button tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
+                    <a class="button tiny alert disable" href="{{url('disable',{'package':package.id})}}">DISABLE</a>
             {% elseif isLoggedIn %}
                 {% if package.isStarredBy(user) %}
-                    <span class="label radius tiny right success"><i class="fi-star"></i> Starred</span>
+                    <span class="label tiny right success"><i class="fi-star"></i> Starred</span>
                 {% else %}
                     <a class="warning label tiny right" href="{{url('star',{'package':package.id})}}">
                         <i class="fi-star"></i> Star Package
@@ -52,7 +52,8 @@
     </div>
      
     <hr>
-       
+    
+    <div class="row">   
     <div class="large-12 columns">
         {% if package.screenshots %}
             <div class="large-6 columns right">
@@ -74,9 +75,10 @@
         <p>
             <strong>Tags:</strong>
             {% for tag in package.keywords %}
-                <a href="{{url('browse')}}?q={{tag}}"><span class="label radius">{{tag}}</span></a>
+                <a href="{{url('browse')}}?q={{tag}}"><span class="label tags">{{tag}}</span></a>
             {% endfor %}
         </p>
+    </div>
     </div>
     
     <hr>
@@ -100,7 +102,7 @@
                         {% for version in versions.stable %}
                             <tr>
                                 <td>
-                                    <span class="label success radius">{{version.stability}}</span> 
+                                    <span class="label success">{{version.stability}}</span> 
                                     {{version.version}}
                                 </td>
                                 <td>{{version.type|replace({'bolt-':''})}}</td>
@@ -133,7 +135,7 @@
                         {% for version in versions.dev %}
                             <tr>
                                 <td>
-                                    <span class="label alert radius">{{version.stability}}</span> 
+                                    <span class="label alert">{{version.stability}}</span> 
                                     {{version.version}}
                                 </td>
                                 <td>{{version.type|replace({'bolt-':''})}}</td>
@@ -176,7 +178,7 @@
                         </div>
                         <div class="large-2 columns">{{ version.build.lastrun|humanTime }} ago</div>
                         <div class="large-3 columns end">                    
-                            <a class="button tiny radius" href="{{url('test', {package:package.id,version:version.version})}}">     TEST THIS VERSION
+                            <a class="button tiny" href="{{url('test', {package:package.id,version:version.version})}}">     TEST THIS VERSION
                             </a>
                         </div>
                     </div>

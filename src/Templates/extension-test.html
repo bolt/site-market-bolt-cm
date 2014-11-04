@@ -15,7 +15,7 @@
             <ol>
                 {% for url, test in build.testResult %}
                     <li>
-                        <div data-alert class="radius alert-box {% if test.status =='OK' %}success{%else%}alert{%endif%}">
+                        <div data-alert class="alert-box {% if test.status =='OK' %}success{%else%}alert{%endif%}">
                             <strong>Test:</strong> {{ test.title }}<br>
                             <strong>Status:</strong> {{ test.status }}
                         </div>
