@@ -429,8 +429,8 @@
     <div class='image-upload'>
         {% if form.vars.data.getFileName %}
             <span class="existing">
-                <span class="button small alert radius">{{ form.vars.data.getFileName }}</span>
-                <a class="button radius small reupload" href="#" title="Change Image"><i class="fi-refresh"></i></a>
+                <span class="button small alert">{{ form.vars.data.getFileName }}</span>
+                <a class="button small reupload" href="#" title="Change Image"><i class="fi-refresh"></i></a>
             </span>
             {{ form_widget(form, {attr:{class:'inactive'}}) }}
         {% else %}

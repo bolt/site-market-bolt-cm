@@ -7,11 +7,11 @@
 {% block content %}
 {% if results is empty %}
     <div class="large-12 columns package-list">
-        <div data-alert class="radius alert-box info">No extensions were found to match your search</div>
+        <div data-alert class="alert-box info">No extensions were found to match your search</div>
     </div>
 {% else %}
 <div class="large-12 columns package-list">
-    {% if term %}<div data-alert class="radius alert-box success">Results for your search: '{{term}}'</div>{% endif %}
+    {% if term %}<div data-alert class="alert-box success">Results for your search: '{{term}}'</div>{% endif %}
     
     {% include '_packages.html' with {'packages':results} %}
     
