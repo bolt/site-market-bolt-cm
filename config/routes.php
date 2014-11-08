@@ -20,7 +20,6 @@ $router->add("edit", "/edit/{package}")->setValues(['action'=>'Bolt\Extensions\A
 $router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\Action\ViewPackage']);
 $router->add("disable", "/disable/{package}")->setValues(['action'=>'Bolt\Extensions\Action\DisablePackage']);
 
-
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'search']);
 $router->add("browse", "/browse")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'browse']);
 $router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages']);
@@ -30,9 +29,10 @@ $router->add("info", "/info.json")->setValues(['action'=>'Bolt\Extensions\Action
 $router->add("test", "/test/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension']);
 $router->add("retest", "/retest/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension','retest'=>true]);
 
+$router->add("ping", "/ping")->setValues(['action'=>'Bolt\Extensions\Action\Ping']);
 
 $router->add(
-    "stat.install", 
+    "stat.install",
     "/stat/install{/package,version}")
         ->addTokens(['package' => '[^/]+/[^/]+'])
         ->setValues(['action'=>'Bolt\Extensions\Action\Stat','id'=>'install']);
