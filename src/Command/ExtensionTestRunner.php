@@ -73,13 +73,13 @@ class ExtensionTestRunner extends Command {
         if ($process->isSuccessful()) {
             $response = $process->getOutput();
             $lines = explode("\n", $response);
-            if( !isset($lines[5])) {
+            if( !isset($lines[2])) {
                 // This means the container couldn't launch a new instance.
                 // Best bet here is to remain in waiting mode and try again next loop
                 return;
             }
             $build->status = "complete";
-            $build->url = $this->protocol.$lines[5];
+            $build->url = $this->protocol.$lines[2];
             $build->lastrun = new \DateTime;
             $output->writeln($build->status);
             $output->writeln("<info>Built ".$build->package->name." version ".$build->version." to ".$build->url."</info>");
