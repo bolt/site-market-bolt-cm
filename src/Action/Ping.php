@@ -19,8 +19,6 @@ class Ping
 
     public function __invoke(Request $request)
     {
-        if ($request->getMethod() == 'GET') {
-            return new Response('pong', Response::HTTP_OK);
-        }
+        return new Response('pong', Response::HTTP_OK);
     }
 }

@@ -29,7 +29,7 @@
                     <li><a href="http://docs.bolt.cm/extensions">How to Use Extensions</a></li>
                     {% if request.get('isLoggedIn') %}
                         <li><a href="{{url('profile')}}">Your Profile</a></li>
-                        <li><a href="{{url('logout')}}">Logout ({{request.get('user').email}})</a></li>
+                        <li><a href="{{url('logout')}}">Logout ({{request.get('user').name}})</a></li>
                     {% else %}
                         <li><a href="{{url('login')}}">Login</a></li>
                     {% endif %}
