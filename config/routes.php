@@ -28,6 +28,7 @@ $router->add("info", "/info.json")->setValues(['action'=>'Bolt\Extensions\Action
 
 $router->add("test", "/test/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension']);
 $router->add("retest", "/retest/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension','retest'=>true]);
+$router->add("check", "/check/{build}")->setValues(['action'=>'Bolt\Extensions\Action\TestBuildCheck']);
 
 $router->add("ping", "/ping")->setValues(['action'=>'Bolt\Extensions\Action\Ping']);
 
