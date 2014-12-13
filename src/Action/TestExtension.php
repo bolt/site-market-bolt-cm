@@ -45,7 +45,7 @@ class TestExtension
         $repo = $this->em->getRepository(Entity\VersionBuild::class);
         $build = $repo->findOneBy(['package'=>$p->id, 'version'=>$version]);
         
-        if (!$build) {            
+        if (!$build) {
             $build = new Entity\VersionBuild;
             $build->package = $p;
             $build->version = $version;
@@ -89,7 +89,6 @@ class TestExtension
             }
             
             if ($canConnect) {
-
                 try {
                    $tests = $this->testFunctionality($build); 
                 } catch (\Exception $e) {

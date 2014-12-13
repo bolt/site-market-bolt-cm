@@ -67,6 +67,7 @@ class ExtensionTestRunner extends Command {
         } else {
             $command .= "'";
         }
+        
         $process = new Process($command);
         $process->mustRun();
         
