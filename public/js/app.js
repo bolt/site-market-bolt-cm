@@ -27,3 +27,43 @@ jQuery(document).ready(function($) {
     
     
 });
+
+
+jQuery(document).ready(function($){
+    
+    if ($('div[data-build-building]').length) {
+        checkStatus();
+    } 
+});
+
+var statustimer;
+var waitCount=0;
+var buildCount=0;
+function checkStatus() {
+    var el = $('div[data-build-building]');
+    var id = el.data('build');
+    $.ajax({
+          url: '/check/'+id
+    })
+    .done(function(response) {
+        switch(response.status) {
+            case 'building': 
+                el.append('.');
+                buildCount ++;
+                statustimer = setTimeout(checkStatus, 3000);
+                break;
+            case 'waiting':
+                el.append('.');
+                waitCount ++;
+                statustimer = setTimeout(checkStatus, 3000);
+                break;
+            case 'complete':
+                var reload = el.data('build-url');
+                el.html("RUNNING FUNCTIONAL TESTS."); 
+                setTimeout(function(){location.href=reload;}, 300);
+                break;
+                
+        }
+        
+    });
+}
