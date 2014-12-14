@@ -23,7 +23,12 @@ class ListPackages
     {
         
         $repo = $this->em->getRepository(Entity\Package::class);
-        if($search = $request->get('name')) {
+        
+        if(isset($params['sort'])) {
+            if($params['sort']=='downloaded') {
+                $packages = $repo->mostDownloaded(200);
+            }
+        } elseif($search = $request->get('name')) {
             $packages = $repo->search($search);
         } else {
             $packages = $repo->findBy(['approved'=>true]);
