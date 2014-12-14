@@ -42,5 +42,32 @@ class Package extends EntityRepository
                 
         return $packages;
     }
+    
+    public function fetchTags()
+    {
+        $packages = $this->createQueryBuilder('p')
+            ->select('p.keywords')
+            ->where('p.approved = true')
+            ->getQuery()
+            ->getResult();
+        return $packages;
+    }
+    
+    public function popularTags()
+    {
+        $allTags = $this->fetchTags();
+        $tagList = [];
+        foreach($allTags as $tag) {
+            $tagList = array_merge($tagList, explode(",", $tag['keywords']) );
+        }
+        $tagList = array_filter($tagList);
+        $tagList = array_count_values($tagList);
+
+        // sort on the value (word count) in descending order
+        arsort($tagList);
+
+        // get the top frequent words
+        return array_slice($tagList, 0, 10);
+    }
 
 }

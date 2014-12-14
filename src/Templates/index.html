@@ -6,6 +6,17 @@
     <form action="" id="extension-search">
         <input id="search-text" type="text" placeholder="eg: Package name or namespace or keyword" value="">
     </form>
+    
+    <div class="row">
+        <div class="large-12 columns">
+            <p>
+                most popular keywords:
+                {% for tag,count in popular %}
+                    <a href="{{url('browse')}}?q={{tag}}"><span class="label tags round">{{tag}}</span></a>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
         
 {% endblock %}
 

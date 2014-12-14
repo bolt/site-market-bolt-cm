@@ -29,7 +29,8 @@ class Home
         return new Response($this->renderer->render("index.html", [
             'latest' => $latest, 
             'starred' => $starred,
-            'downloaded' => $downloaded
+            'downloaded' => $downloaded,
+            'popular' => $repo->popularTags()
         ]));
 
     }
