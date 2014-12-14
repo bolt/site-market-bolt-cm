@@ -62,7 +62,7 @@
                         {% if "//" in image %}
                             <li><img src="{{image}}"></li>                    
                         {% else %} 
-                            <li><img src="{{package.source}}/blob/master/{{image}}?raw=true"></li>
+                            <li><img src="{{theme.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{image}}"></li>
                         {% endif %}
                     {% endfor %}
                 </ul>
