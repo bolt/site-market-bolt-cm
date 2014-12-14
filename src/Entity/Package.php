@@ -36,7 +36,7 @@ class Package extends EntityBase {
     
     public function getSource()
     {
-        return dirname($this->source)."/".basename($this->source);
+        return dirname($this->source)."/".basename($this->source, '.git');
     }
     
     public function setName($value)
