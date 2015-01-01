@@ -26,7 +26,7 @@
             <section class="top-bar-section">
                 <ul class="right">
                     <li><a href="{{url('submit')}}">Submit An Extension</a></li>
-                    <li><a href="http://docs.bolt.cm/extensions">How to Use Extensions</a></li>
+                    <li><a href="http://docs.bolt.cm/extensions/introduction">How to Use Extensions</a></li>
                     {% if request.get('isLoggedIn') %}
                         <li><a href="{{url('profile')}}">Your Profile</a></li>
                         <li><a href="{{url('logout')}}">Logout ({{request.get('user').name}})</a></li>
