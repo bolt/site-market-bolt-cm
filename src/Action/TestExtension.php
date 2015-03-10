@@ -162,7 +162,7 @@ class TestExtension
         try {
             $json = $client->getResponse()->getContent()->getContents();
             $extensions = json_decode($json, true);
-            foreach ($extensions as $ext) {
+            foreach ($extensions['installed'] as $ext) {
                 if ($ext['name'] === $build->package->name && $ext['version'] === $build->version) {
                     $test['extension']['response'] = $client->getResponse()->getStatus();
                     $test['extension']['status'] = $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL";
