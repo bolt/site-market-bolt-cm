@@ -19,7 +19,7 @@
                     <a class="button tiny" href="{{url('edit',{'package':package.id})}}">EDIT</a>
                     <a class="button tiny" href="{{url('update',{'package':package.id})}}">UPDATE</a>
                     <a class="button tiny alert disable" href="{{url('disable',{'package':package.id})}}">DISABLE</a>
-            {% elseif isLoggedIn %}
+            {% elseif request.get('isLoggedIn') %}
                 {% if package.isStarredBy(user) %}
                     <span class="label tiny right success"><i class="fi-star"></i> Starred</span>
                 {% else %}

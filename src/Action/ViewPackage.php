@@ -49,7 +49,16 @@ class ViewPackage
             $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
         }
                
-        return new Response($this->renderer->render("view.html", ['package' => $package, 'versions' => $versions, 'allowedit' => $allowedit]));
+        return new Response(
+            $this->renderer->render(
+                "view.html", 
+                [
+                    'package' => $package, 
+                    'versions' => $versions, 
+                    'allowedit' => $allowedit
+                ]
+            )
+        );
 
     }
 }
