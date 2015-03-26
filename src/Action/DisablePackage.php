@@ -3,6 +3,7 @@ namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Twig_Environment;
 use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
