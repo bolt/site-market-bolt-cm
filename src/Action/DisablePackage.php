@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
 use Aura\Router\Router;
 
-class EditPackage
+class DisablePackage
 {
     
     public $renderer;
