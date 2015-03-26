@@ -19,7 +19,7 @@ class DisablePackage
     public function __construct(EntityManager $em, Router $router)
     {
         $this->em = $em;
-        $this->reouter = $router;
+        $this->router = $router;
     }
     
     public function __invoke(Request $request, $params)
