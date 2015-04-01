@@ -92,7 +92,7 @@ class PackageManager
         $versions = $repo->getPackages();
         $dumper = new ArrayDumper();
         foreach($versions as $version) {
-            if($this->isCompatible($version, $boltVersion)) {
+            if(!$boltVersion || $this->isCompatible($version, $boltVersion)) {
                 $data = $dumper->dump($version);
                 $data['stability'] = $version->getStability();
                 $info[]= $data;

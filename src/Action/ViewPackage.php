@@ -37,7 +37,7 @@ class ViewPackage
 
         try {
             $repo = $this->em->getRepository(Entity\VersionBuild::class);
-            $info = $this->packageManager->getInfo($package, "2.0.0");
+            $info = $this->packageManager->getInfo($package, false);
             foreach($info as $ver) {
                 $build = $repo->findOneBy(['package'=>$package->id, 'version'=>$ver['version']]);
                 if($build) {
