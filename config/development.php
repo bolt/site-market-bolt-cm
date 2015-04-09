@@ -4,6 +4,7 @@ $main = include __DIR__."/production.php";
 return array_merge($main, [
 
     'debug' => true,
+    'doctrine.proxymode' => 1,
     
     'db'=> [
         'driver'     => 'pdo_mysql',

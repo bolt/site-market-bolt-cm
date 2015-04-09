@@ -34,7 +34,8 @@ Symfony\Component\Debug\Debug::enable();
 @include_once 'env.php';
 return [
 
-    'debug' => false, 
+    'debug' => false,
+    'doctrine.proxymode' => 2,
 
     Application::class => DI\object(),
 
@@ -60,7 +61,7 @@ return [
         $driver = new StaticPHPDriver(dirname(__DIR__) . '/src/Entity');
         $config = Setup::createConfiguration(true);
         $config->setMetadataDriverImpl($driver);
-        $config->setAutoGenerateProxyClasses($c->get('debug'));
+        $config->setAutoGenerateProxyClasses($c->get('octrine.proxymode'));
         $em = EntityManager::create($c->get(DB::class), $config);
         return $em;
     }),
