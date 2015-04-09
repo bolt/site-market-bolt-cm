@@ -61,7 +61,7 @@ return [
         $driver = new StaticPHPDriver(dirname(__DIR__) . '/src/Entity');
         $config = Setup::createConfiguration(true);
         $config->setMetadataDriverImpl($driver);
-        $config->setAutoGenerateProxyClasses($c->get('octrine.proxymode'));
+        $config->setAutoGenerateProxyClasses($c->get('doctrine.proxymode'));
         $em = EntityManager::create($c->get(DB::class), $config);
         return $em;
     }),
