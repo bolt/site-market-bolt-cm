@@ -30,7 +30,7 @@ class PackageInfo
         $package = $repo->findOneBy(['approved'=>true, 'name'=>$p]);
         
         if ($package) {
-           new JsonResponse(['package'=>false,'version'=>false]);
+           return new JsonResponse(['package'=>false,'version'=>false]);
         }
         
         $allVersions = $this->packageManager->getInfo($package, $bolt);
