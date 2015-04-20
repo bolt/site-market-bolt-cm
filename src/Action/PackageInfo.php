@@ -29,6 +29,10 @@ class PackageInfo
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['approved'=>true, 'name'=>$p]);
         
+        if ($package) {
+           new JsonResponse(['package'=>false,'version'=>false]);
+        }
+        
         $allVersions = $this->packageManager->getInfo($package, $bolt);
         $buildRepo = $this->em->getRepository(Entity\VersionBuild::class);
 
