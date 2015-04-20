@@ -29,7 +29,7 @@ class PackageInfo
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['approved'=>true, 'name'=>$p]);
         
-        if ($package) {
+        if (!$package) {
            return new JsonResponse(['package'=>false,'version'=>false]);
         }
         
