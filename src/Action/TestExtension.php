@@ -142,7 +142,7 @@ class TestExtension
             'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
         ];
 
-        if ($client->getRequest()->getUri() !== $build->url.'/bolt') {
+        if (strpos($client->getRequest()->getUri(), 'login') !== false) {
            $test['dashboard']['status'] = "FAIL"; 
         }
         return $test;
