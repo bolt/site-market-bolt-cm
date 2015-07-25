@@ -162,6 +162,7 @@ class TestExtension
         try {
             $json = $client->getResponse()->getContent()->getContents();
             $test['extension']['response'] = $client->getResponse()->getStatus();
+            $test['extension']['raw_response'] = $json;
             $extensions = json_decode($json, true);
             foreach ($extensions['installed'] as $ext) {
                 if ($ext['name'] === $build->package->name && $ext['version'] === $build->version) {
