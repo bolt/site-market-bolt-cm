@@ -121,7 +121,7 @@ class TestExtension
     protected function testHomepage($build)
     {
         $client = new Client();
-        $crawler = $client->request('GET', $build->url.'/bolt');
+        $crawler = $client->request('GET', $build->url.'/');
         $test['homepage'] = [
             'title' => 'Can load site home page',
             'response'=> $client->getResponse()->getStatus(),
@@ -142,7 +142,7 @@ class TestExtension
             'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
         ];
 
-        if ($client->getRequest()->getUri() !== $build->url.'/bolt/') {
+        if ($client->getRequest()->getUri() !== $build->url.'/bolt') {
            $test['dashboard']['status'] = "FAIL"; 
         }
         return $test;
