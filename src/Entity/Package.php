@@ -39,6 +39,11 @@ class Package extends EntityBase {
         return dirname($this->source)."/".basename($this->source, '.git');
     }
     
+    public function getRawSource()
+    {
+        return $this->source;
+    }
+    
     public function setName($value)
     {
         $this->name = strtolower($value);
