@@ -71,7 +71,7 @@ class PackageManager
     {
         $io = new NullIO();
         $io->loadConfiguration($this->config);
-        $repository = new VcsRepository(['url' => $package->getSource()], $io, $this->config);
+        $repository = new VcsRepository(['url' => $package->getRawSource()], $io, $this->config);
         return $repository;
     }
     
