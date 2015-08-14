@@ -41,6 +41,8 @@ class Login
             $repo = $this->em->getRepository(Entity\Account::class);
             $user = $repo->findOneBy(["email"=>$form->getData()["email"]]);
             if (null !== $user && password_verify($form->getData()["password"], $user->password)) {
+                // Sessions not persisting without saving…
+                $request->getSession()->save();
                 $request->getSession()->set("bolt.account.id", $user->id);
                 $dest = ($ret = $request->getSession()->get('bolt.auth.return')) ? $ret : $this->router->generate("home");
                 $request->getSession()->remove('bolt.auth.return');
