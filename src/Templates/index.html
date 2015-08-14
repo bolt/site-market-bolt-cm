@@ -36,11 +36,11 @@
             <hr>
             {% for package in starred %}
                 <div class="row">
-                    <div class="large-7 columns">
+                    <div class="large-6 columns">
                         <h5>{{package.title}}</h5>
                         <h6>{{package.name}}</h6>
                     </div>
-                    <div class="large-2 columns"><h5><i class="fi-star"></i> {{package.stars|default(0)}}</h5></div>
+                    <div class="large-3 columns text-right"><h5><i class="fi-star"></i> {{package.stars|default(0)}}</h5></div>
                     <div class="large-3 columns">                    
                         <a class="button tiny" href="{{url('view',{'package':package.id})}}">Details</a>
                     </div>
@@ -54,11 +54,11 @@
             <hr>
             {% for package in downloaded %}
                 <div class="row">
-                    <div class="large-7 columns">
+                    <div class="large-6 columns">
                         <h5>{{package.title}}</h5>
                         <h6>{{package.name}}</h6>
                     </div>
-                    <div class="large-2 columns"><h5><i class="fi-download"></i> {{package.downloads|default(0)}}</h5></div>
+                    <div class="large-3 columns text-right"><h5><i class="fi-download"></i> {{package.downloads|default(0)|number_format}}</h5></div>
                     <div class="large-3 columns">                    
                         <a class="button tiny" href="{{url('view',{'package':package.id})}}">Details</a>
                     </div>

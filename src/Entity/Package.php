@@ -86,13 +86,14 @@ class Package extends EntityBase {
                 $dcount ++ ;
             }
         }
-        foreach($downloads as $version=>$hits) {
-            $downloads[$version] = count($hits);
+        foreach($downloads as $ver=>$hits) {
+            $downloads[$ver] = count($hits);
         }
-        
+
         if($version && isset($downloads[$version])) {
             return $downloads[$version];
         }
+        
         
         return $dcount;
         
