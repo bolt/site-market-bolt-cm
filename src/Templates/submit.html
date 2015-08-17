@@ -3,14 +3,23 @@
 
 {% block content %}
 
-    <div class="large-12 columns">
-        <form action="" method="post">
-            {{form_row(form.title)}}
-            {{form_row(form.source)}}
-            {{form_row(form.description)}}
-            {{form_row(form.submit, {attr:{class:'small expand'}})}}
-        </form>
-    </div>
+<div class="ui form">
+	<form action="" method="post">
+		<div class="field">
+			<label>Name of extension</label>
+			{{form_row(form.title)}}
+		</div>
+		<div class="field">
+			<label>Link to a public Git repository</label>
+			{{form_row(form.source)}}
+		</div>
+		<div class="field">
+			<label>Description of your extension</label>
+			{{form_row(form.description)}}
+		</div>
+		{{form_row(form.submit, {attr:{class:'ui fluid large vk submit button'}})}}
+	</form>
+</div>
 
 
 {% endblock %}

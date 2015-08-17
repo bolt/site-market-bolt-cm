@@ -23,86 +23,84 @@
 
 <body>
 
-<div class="ui inverted menu small no_radius" id="top_bar">
-    <a class="item" href="/">
-        Home
-    </a>
-
-    {% if request.get('isLoggedIn') %}
+    <div class="ui inverted menu small no_radius" id="top_bar">
+        <a class="item" href="/">Home</a>
+        {% if request.get('isLoggedIn') %}
         <a class="item" href="{{url('profile')}}">Your Profile</a>
         <a class="item" href="{{url('logout')}}">Logout ({{request.get('user').name}})</a>
-    {% else %}
+        {% else %}
         <a class="item" href="{{url('login')}}">Login</a>
-    {% endif %}
-</div>
+        {% endif %}
+        <a class="item" href="{{url('submit')}}">Submit an Extension</a>
+    </div>
 
-<div class="ui top menu sticky no_radius">
+    <div class="ui top menu sticky no_radius">
 
-    <div class="left menu">
-        <a class="browse item">
-            Browse Extensions
-            <i class="dropdown icon"></i>
-        </a>
-        <div class="ui flowing basic admission transition popup">
-            <div class="ui three column relaxed divided grid">
-                <div class="column">
-                    <h4 class="ui header">Plugins</h4>
-                    <div class="ui link list">
-                        <a class="item" href="/browse?q=social">Social Networks</a>
-                        <a class="item" href="/browse?q=comment">Comments</a>
-                        <a class="item" href="/browse?q=seo">SEO</a>
-                        <a class="item" href="/browse?q=form">Content Form</a>
+        <div class="left menu">
+            <a class="browse item">
+                Browse Extensions
+                <i class="dropdown icon"></i>
+            </a>
+            <div class="ui flowing basic admission transition popup">
+                <div class="ui three column relaxed divided grid">
+                    <div class="column">
+                        <h4 class="ui header">Plugins</h4>
+                        <div class="ui link list">
+                            <a class="item" href="/browse?q=social">Social Networks</a>
+                            <a class="item" href="/browse?q=comment">Comments</a>
+                            <a class="item" href="/browse?q=seo">SEO</a>
+                            <a class="item" href="/browse?q=form">Content Form</a>
+                        </div>
                     </div>
-                </div>
-                <div class="column">
-                    <h4 class="ui header">Themes</h4>
-                    <div class="ui link list">
-                        <a class="item">Blog</a>
-                        <a class="item">Business</a>
-                        <a class="item">Promotional</a>
-                        <a class="item">Portfolio</a>
+                    <div class="column">
+                        <h4 class="ui header">Themes</h4>
+                        <div class="ui link list">
+                            <a class="item">Blog</a>
+                            <a class="item">Business</a>
+                            <a class="item">Promotional</a>
+                            <a class="item">Portfolio</a>
+                        </div>
                     </div>
-                </div>
-                <div class="column">
-                    <h4 class="ui header">Others</h4>
-                    <div class="ui link list">
-                        <a class="item">Mobile</a>
-                        <a class="item">Standalone</a>
+                    <div class="column">
+                        <h4 class="ui header">Others</h4>
+                        <div class="ui link list">
+                            <a class="item">Mobile</a>
+                            <a class="item">Standalone</a>
+                        </div>
                     </div>
                 </div>
             </div>
+            <script type="text/javascript">
+                $('.browse')
+                .popup({
+                    movePopup: false,
+                    inline   : false,
+                    hoverable: true,
+                    position : 'bottom left',
+                    delay: {
+                        show: 300,
+                        hide: 800
+                    }
+                })
+                ;
+            </script>
+
         </div>
-        <script type="text/javascript">
-            $('.browse')
-            .popup({
-                movePopup: false,
-                inline   : false,
-                hoverable: true,
-                position : 'bottom left',
-                delay: {
-                    show: 300,
-                    hide: 800
-                }
-            })
-            ;
-        </script>
 
+
+        <div class="right menu">
+            <form class="ui right aligned category search item" onsubmit="return tsearch();" style="margin-bottom: 0;">
+                <div class="ui transparent icon input">
+                    <input class="prompt" type="text" id="txtSearch" placeholder="Search extension...">
+                    <i class="search link icon"></i>
+                </div>
+                <div class="results"></div>
+            </form>
+            <script type="text/javascript">
+                function tsearch() {window.location = '/browse?q=' + document.getElementById('txtSearch').value; return false;}
+            </script>
+        </div>
     </div>
-
-
-    <div class="right menu">
-        <form class="ui right aligned category search item" onsubmit="return tsearch();" style="margin-bottom: 0;">
-            <div class="ui transparent icon input">
-                <input class="prompt" type="text" id="txtSearch" placeholder="Search extension...">
-                <i class="search link icon"></i>
-            </div>
-            <div class="results"></div>
-        </form>
-        <script type="text/javascript">
-            function tsearch() {window.location = '/browse?q=' + document.getElementById('txtSearch').value; return false;}
-        </script>
-    </div>
-</div>
 
     {% block header_splash %}{% endblock %}
 
