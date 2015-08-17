@@ -25,8 +25,9 @@ class Search
     public function __invoke(Request $request, $params)
     {
         $search = $request->get('q');
+        $type = $request->get('type');
         $repo = $this->em->getRepository(Entity\Package::class);
-        $packages = $repo->search($search);
+        $packages = $repo->search($search, $type);
         
         $layout = $params['type']=='browse' ? 'layout.html' : 'ajax.html';
 
