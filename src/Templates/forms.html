@@ -279,8 +279,8 @@
 
 {% block form_row %}
 {% spaceless %}
-    <div>
-        {{ form_label(form) }}
+    <div style="width: 100%;">
+       <!--  {{ form_label(form) }} --> {# !!!!! UNCOMMENT TO GET LABELS BACK !!!!!!! #}
         {{ form_widget(form) }}
         {{ form_errors(form) }}
     </div>

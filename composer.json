@@ -31,7 +31,8 @@
         "symfony/twig-bridge": "^2.5",
         "symfony/doctrine-bridge": "^2.5",
         "symfony/validator": "^2.5",
-        "twig/twig": "^1.1"
+        "twig/twig": "^1.1",
+        "symfony/var-dumper": "^2.7"
     },
 
     "autoload": {

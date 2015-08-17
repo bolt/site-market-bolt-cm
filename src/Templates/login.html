@@ -1,21 +1,43 @@
 {% extends "layout.html" %}
 
-{% block splash %}
-    <h2>Login</h2>   
-{% endblock %}
-
 
 {% block content %}
 
+    <div class="ui middle aligned center aligned grid">
+      <div class="column" style="max-width: 450px;">
+        <h2 class="ui vk image header">
+          <img src="/images/bolt_icon.png" class="image">
+          <div class="content">
+            Log-in to your account
+          </div>
+        </h2>
+        <form class="ui large form" action="" method="post">
+          <div class="ui stacked segment">
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="user icon"></i>
+                {{form_row(form.email)}}
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left icon input">
+                <i class="lock icon"></i>
+                {{form_row(form.password)}}
+              </div>
+            </div>
+            {{form_row(form.login, {attr:{class:'ui fluid large vk submit button'}})}}
+          </div>
 
-    <div class="large-4 columns large-offset-4">
-        <form action="" method="post">
-            {{form_row(form.email)}}
-            {{form_row(form.password)}}
-            {{form_row(form.login, {attr:{class:'small expand'}})}}
+          <div class="ui error message"></div>
+
         </form>
-        <p><strong>Don't have an account yet?</strong> <a href="{{url('register')}}">Register for one here</a>.</p>
+
+        <div class="ui message">
+          Don't have an account yet? <a href="{{url('register')}}">Register for one here</a>
+        </div>
+      </div>
     </div>
+
 
 
 {% endblock %}

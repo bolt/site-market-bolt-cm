@@ -1,7 +1,7 @@
 <?php
 namespace Bolt\Extensions\Helper;
 use forxer\Gravatar\Gravatar;
-
+use Symfony\Component\VarDumper\VarDumper;
 
 class Bolt extends \Twig_Extension
 {
@@ -12,10 +12,11 @@ class Bolt extends \Twig_Extension
     {
         return array(
             'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus',['is_safe' => ['html']]),
-            'gravatar'  => new \Twig_Function_Method($this, 'gravatar',['is_safe' => ['html']])
+            'gravatar'  => new \Twig_Function_Method($this, 'gravatar',['is_safe' => ['html']]),
+            'dump'  => new \Twig_Function_Method($this, 'printDump',['is_safe' => ['html']])
         );
     }
-    
+
     public function getFilters()
     {
         return array(
@@ -29,7 +30,7 @@ class Bolt extends \Twig_Extension
         if(!$build || $build->testStatus === 'pending') {
             return sprintf($this->statusTemplate, 'warning', 'clock', "This version is currently awaiting a test result", "");
         }
-        
+
         if($build->phpTarget) {
             $php = str_replace('php', '', $build->phpTarget);
             $php = substr_replace($php, ".", 1, 0);
@@ -38,25 +39,31 @@ class Bolt extends \Twig_Extension
             $php = "";
         }
 
-        
+
         if($build->testStatus === 'approved') {
             return sprintf($this->statusTemplate, 'success', 'star', "This version is an approved build", $php);
         }
-        
+
         if($build->testStatus === 'failed') {
             return sprintf($this->statusTemplate, 'alert', 'x', "This version is not an approved build", $php);
         }
     }
-    
+
     public function gravatar($email, $options = [])
     {
         return Gravatar::image($email);
     }
-    
+
+
+    public function printDump($var)
+    {
+        return VarDumper::dump($var);
+    }
+
     public function humanTime($time)
     {
         if ($time instanceof \DateTime) {
-           $time = $time->getTimestamp(); 
+           $time = $time->getTimestamp();
         }
         $time = time() - $time; // to get the time since that moment
 
