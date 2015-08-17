@@ -30,7 +30,7 @@ class Package extends EntityRepository
         return $qb->getQuery()->getResult();
     }
     
-    public function search($keyword, $type = null)
+    public function search($keyword, $type = null, $order = null)
     {
         $packages = $this->createQueryBuilder('p')
                 ->where('p.approved = :status')
@@ -39,6 +39,21 @@ class Package extends EntityRepository
         if ($type !== null) {
             $packages->andWhere('p.type = :type');
             $packages->setParameter('type', $type);
+        }
+        
+        if ($order !== null ) {
+            switch ($order) {
+                case 'date':
+                    $packages->orderBy('p.created', 'DESC');
+                    break;
+                case 'modified':
+                    $packages->orderBy('p.updated', 'DESC');
+                    break;
+                
+                default:
+                    break;
+            }
+            
         }
         
         $results = $packages->setParameter('status', true)

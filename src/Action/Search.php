@@ -26,8 +26,9 @@ class Search
     {
         $search = $request->get('q');
         $type = $request->get('type');
+        $order = $request->get('order');
         $repo = $this->em->getRepository(Entity\Package::class);
-        $packages = $repo->search($search, $type);
+        $packages = $repo->search($search, $type, $order);
         
         $layout = $params['type']=='browse' ? 'layout.html' : 'ajax.html';
 
