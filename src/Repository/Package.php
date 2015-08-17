@@ -30,17 +30,23 @@ class Package extends EntityRepository
         return $qb->getQuery()->getResult();
     }
     
-    public function search($keyword)
+    public function search($keyword, $type = null)
     {
         $packages = $this->createQueryBuilder('p')
                 ->where('p.approved = :status')
-                ->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search')
-                ->setParameter('status', true)
+                ->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search');
+        
+        if ($type !== null) {
+            $packages->andWhere('p.type = :type');
+            $packages->setParameter('type', $type);
+        }
+        
+        $results = $packages->setParameter('status', true)
                 ->setParameter('search', "%".$keyword."%")
                 ->getQuery()
                 ->getResult();
                 
-        return $packages;
+        return $results;
     }
     
     public function fetchTags()
