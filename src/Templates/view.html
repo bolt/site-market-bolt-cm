@@ -20,32 +20,32 @@
         <div class="buttons_header">
             <button class="ui toggle button" id="copy-button" data-content="{{ package.name }}" data-title="Click to copy the package name" data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard</button>
 
-             <script type="text/javascript">
+            <script type="text/javascript">
                     // Copy function
                     var client = new ZeroClipboard( document.getElementById("copy-button") );
                     client.on( "ready", function( readyEvent ) {} );
 
                     $('.ui.toggle.button')
-                      .popup()
+                    .popup()
                     ;
                 </script>
 
-            <button class="ui green button">FREE</button>
-        </div>
+                <button class="ui green button">FREE</button>
+            </div>
 
-        <div class="ui right floated main menu">
-            <a class="bug popup icon item" data-content="Downloads" href="#">
-                <i class="download icon"> {{package.downloads|default(0)}}</i>
-            </a>
+            <div class="ui right floated main menu">
+                <a class="bug popup icon item" data-content="Downloads" href="#">
+                    <i class="download icon"> {{package.downloads|default(0)}}</i>
+                </a>
 
-            <a class="bug popup icon item" data-content="Stars" href="#">
-                <i class="star icon"> {{package.stars|default(0)}}</i>
-            </a>
+                <a class="bug popup icon item" data-content="Stars" href="#">
+                    <i class="star icon"> {{package.stars|default(0)}}</i>
+                </a>
 
-            <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}">
-               {% if "github.com" in package.source %} <i class="alternate github icon"></i> {% else %} <i class="alternate link icon"></i> {% endif %}
-            </a>
-            <script type="text/javascript">
+                <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}">
+                 {% if "github.com" in package.source %} <i class="alternate github icon"></i> {% else %} <i class="alternate link icon"></i> {% endif %}
+             </a>
+             <script type="text/javascript">
                 $('.popup')
                 .popup( {position    : 'bottom left'})
                 ;
@@ -90,7 +90,7 @@
     <div class="ten wide column">
         <h2 class="ui left floated header">Description</h2>
         <div class="ui clearing divider"></div>
-        <p>{{package.description}}</p>
+        <p style="font-size: 110%;">{{package.description}}</p>
 
         {# {{ dump(package) }} #}
 
@@ -153,7 +153,7 @@
     <br>
 
 
-{% if "github.com" in package.source %}
+    {% if "github.com" in package.source %}
 
     <div class="sixteen wide column">
         <h2 class="ui left floated header">Changelog & Releases</h2>
@@ -164,45 +164,45 @@
         </div>
 
         <script type="text/javascript">
-        var repo_name = "{{ package.source }}";
-        var repo_name = repo_name.replace('https://github.com/', '');
+            var repo_name = "{{ package.source }}";
+            var repo_name = repo_name.replace('https://github.com/', '');
 
-        console.log( repo_name );
+            console.log( repo_name );
 
-        $.getJSON( "https://api.github.com/repos/" + repo_name + "/releases?username=mikescops&access_token=43a8a0150fb7da81a7aa8205caa8e609b606a7eb", function( json ) {
+            $.getJSON( "https://api.github.com/repos/" + repo_name + "/releases?username=mikescops&access_token=43a8a0150fb7da81a7aa8205caa8e609b606a7eb", function( json ) {
 //          console.log( "JSON Data: " + json[0].body );
 
-            $.each( json, function (i){
-                var gbody = json[i].body;
-                var gversion = json[i].tag_name;
-                if( !$.trim(gbody).length ){
-                    var gbody = "No description for this version of the extension.";
-                }
+$.each( json, function (i){
+    var gbody = json[i].body;
+    var gversion = json[i].tag_name;
+    if( !$.trim(gbody).length ){
+        var gbody = "No description for this version of the extension.";
+    }
 
-                $( '<div class="title"><i class="dropdown icon"></i>' + gversion + '</div> <div class="content"><pre>' + gbody + '</pre></div>').appendTo( '.gbody' );
-            })
-          
+    $( '<div class="title"><i class="dropdown icon"></i>' + gversion + '</div> <div class="content"><pre>' + gbody + '</pre></div>').appendTo( '.gbody' );
+})
 
-          
-         });
-        
+
+
+});
+
             $('.ui.accordion')
-              .accordion()
+            .accordion()
             ;
         </script>
-</div>
+    </div>
 
-{% endif %}
-<br>
+    {% endif %}
+    <br>
 
 
-<div class="ten wide column">
-    <h2 class="ui left floated header">Comments</h2>
-    <div class="ui clearing divider"></div>
-    <div class="disqus_comments">
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    <div class="ten wide column">
+        <h2 class="ui left floated header">Comments</h2>
+        <div class="ui clearing divider"></div>
+        <div class="disqus_comments">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = 'boltcm'; // Required - Replace '<example>' with your forum shortname
 
             /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -220,8 +220,8 @@
         <div class="ui clearing divider"></div>
 
         <div class="ui relaxed large divided vertical list related_list">
-        {% for related in package.account.packages |slice(0, 7) %}
-        {% if related != package %}
+            {% for related in package.account.packages |slice(0, 7) %}
+            {% if related != package %}
             <div class="item">
                 <img class="ui avatar image" src="/images/{{ related.type }}">
                 <div class="content">
