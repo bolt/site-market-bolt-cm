@@ -38,7 +38,7 @@ class Package extends EntityRepository
                 ->where('p.approved = :status');
         
         if ($keyword !== null) {
-            $packages->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search');
+            $packages->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search OR p.authors LIKE :search');
             $packages->setParameter('search', "%".$keyword."%");
         }
         
