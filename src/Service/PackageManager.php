@@ -59,6 +59,9 @@ class PackageManager
     {
         $repository = $this->loadRepository($package);
         $driver = $repository->getDriver();
+        if ($driver === null) {
+            return false;
+        }
         
         if (null === $identifier) {
             $identifier = $driver->getRootIdentifier();
@@ -118,25 +121,31 @@ class PackageManager
         $errors = [];
         $manifest = $this->loadInformation($package);
         
-        if(!isset($manifest['name']) || !preg_match('#^[a-z0-9]+/[a-z0-9\-]+#', $manifest['name'])) {
+        if ($manifest === false) {
             $valid = false;
-            $errors[] = "'name' in composer.json must be set, must be lowercase and contain only alphanumerics";
-        }
+            $errors[] = "The repository URL you provided could not be loaded - Check that it points to a publicly readable repository.";
+        } else {
         
-        if(!isset($manifest['type']) ||  !preg_match('#^bolt-(theme|extension)#', $manifest['type'])) {
-            $valid = false;
-            $errors[] = "'type' in composer.json must be set, and must be either 'bolt-extension' or 'bolt-theme'";
-        }
-        
-        if(!isset($manifest['require'])) {
-            $valid = false;
-            $errors[] = "'require' in composer.json must be set, and must provide Bolt version compatibility";
-        }
-        
-        if(isset($manifest['name']) && substr($manifest['name'], 0,5) === 'bolt/') {
-            if(!$isAdmin) {
+            if(!isset($manifest['name']) || !preg_match('#^[a-z0-9]+/[a-z0-9\-]+#', $manifest['name'])) {
                 $valid = false;
-                $errors[] = "package name uses a 'bolt/' prefix which is reserved for official extensions only.";
+                $errors[] = "'name' in composer.json must be set, must be lowercase and contain only alphanumerics";
+            }
+            
+            if(!isset($manifest['type']) ||  !preg_match('#^bolt-(theme|extension)#', $manifest['type'])) {
+                $valid = false;
+                $errors[] = "'type' in composer.json must be set, and must be either 'bolt-extension' or 'bolt-theme'";
+            }
+            
+            if(!isset($manifest['require'])) {
+                $valid = false;
+                $errors[] = "'require' in composer.json must be set, and must provide Bolt version compatibility";
+            }
+            
+            if(isset($manifest['name']) && substr($manifest['name'], 0,5) === 'bolt/') {
+                if(!$isAdmin) {
+                    $valid = false;
+                    $errors[] = "package name uses a 'bolt/' prefix which is reserved for official extensions only.";
+                }
             }
         }
         
