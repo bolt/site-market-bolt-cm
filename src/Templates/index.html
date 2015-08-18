@@ -21,7 +21,7 @@
             <option value="articles">Plugins</option>
             <option value="products">Themes</option>
         </select>
-       <!-- <div type="submit" class="ui button teal">Search</div> -->
+        <!-- <div type="submit" class="ui button teal">Search</div> -->
     </form>
 
     <script type="text/javascript">
@@ -45,7 +45,7 @@
 
 <br>
 
-<div class="module_recents_plugin">
+<div class="module_mdownloaded_plugins">
 
     <h2 class="ui left floated header">Most Downloaded Plugins</h2>
     <div class="ui clearing divider"></div>
@@ -60,7 +60,7 @@
                 </a>
                 <div class="content">
                     <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title}}</a>
-                    <div class="meta">
+                    <div class="meta" style="overflow: hidden;">
                         <a>{{package.name}}</a>
 
                     </div>
@@ -107,13 +107,73 @@
 
 <div class="module_categories_plugins">
 
-    <h2 class="ui left floated header">Plugins Categories</h2>
+<h2 class="ui left floated header">Popular Categories & Tags</h2>
     <div class="ui clearing divider"></div>
 
-    <a class="ui tag large label" href="/list.html">Social Networks</a>
-    <a class="ui red tag large label">Forms</a>
-    <a class="ui teal tag large label">Media</a>
-    <a class="ui green tag large label">SEO</a>
+    {% for tag,count in popular %}
+        <a class="ui tag {{ random(['red', 'blue', 'green', 'orange', 'brown', 'teal', 'pink', 'purple', 'grey', 'black', 'olive', 'yellow']) }} large label" href="{{url('browse')}}?q={{tag}}">{{tag}}</a>
+    {% endfor %}
+
+</div>
+
+<br>
+
+<div class="module_mdowloaded_themes">
+
+    <h2 class="ui left floated header">Most Downloaded Themes</h2>
+    <div class="ui clearing divider"></div>
+
+    <div class="ui three column grid stackable">
+
+        {% for package in mdownloaded_themes %}
+        <div class="column">
+            <div class="ui fluid card">
+                <a class="image" href="{{url('view',{'package':package.id})}}">
+                    {% if package.screenshots %}
+                    <img style="height: 150px;" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{ package.screenshots[0] }}">
+                    {% else %}
+                    <img style="height: 150px;" src="https://placehold.it/350x150?text=No screenshot">
+                    {% endif %}
+                </a>
+                <div class="content">
+                    <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title}}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+<br>
+
+<div class="module_latest_plugins">
+
+    <h2 class="ui left floated header">Latest Plugins</h2>
+    <div class="ui clearing divider"></div>
+
+    <div class="ui six column grid doubling">
+
+        {% for package in latest_plugins %}
+        <div class="column">
+            <div class="ui fluid card">
+                <a class="image" href="{{url('view',{'package':package.id})}}">
+                    <img src="/images/{{ package.type }}">
+                </a>
+                <div class="content">
+                    <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title|slice(0, 20)}}{% if package.title|length > 20 %}&#8230;{% endif %}</a>
+                    <div class="meta" style="overflow: hidden;">
+                        <a>{{package.name|slice(0, 19)}}{% if package.title|length > 19 %}&#8230;{% endif %}</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
 
 </div>
 
