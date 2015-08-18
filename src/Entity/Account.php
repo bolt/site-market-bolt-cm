@@ -36,7 +36,7 @@ class Account extends EntityBase {
         $builder->addField('admin',         'boolean',  ['nullable'=>true, 'default'=>false]);
         $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
         $builder->addField('created',       'datetime', ['nullable'=>true]);
-        $builder->addOneToMany('packages',  'Bolt\Extensions\Entity\Package', 'user');
+        $builder->addOneToMany('packages',  'Bolt\Extensions\Entity\Package', 'account');
 
     }
 
