@@ -26,6 +26,7 @@
         "stack/run"     : "^1.0",
         "stack/session": "^1.0@dev",
         "symfony/debug": "^2.5",
+        "symfony/var-dumper": "^2.5",
         "symfony/form": "^2.5",
         "symfony/process": "^2.5",
         "symfony/twig-bridge": "^2.5",

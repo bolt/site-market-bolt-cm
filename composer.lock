@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9305df09460df5caa915b69c5f0c5700",
+    "hash": "19073ebbeeb4aa8b6d00a5caf5363659",
     "packages": [
         {
             "name": "aura/router",
@@ -66,12 +66,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "a979cc78ed141855a76b7f196d24205c41107bbc"
+                "reference": "9859859f1082d94e546aa75746867df127aa0d9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/6c7e4a671b0edcb23396a7845ffc0460a9551107",
-                "reference": "a979cc78ed141855a76b7f196d24205c41107bbc",
+                "url": "https://api.github.com/repos/composer/composer/zipball/9859859f1082d94e546aa75746867df127aa0d9e",
+                "reference": "9859859f1082d94e546aa75746867df127aa0d9e",
                 "shasum": ""
             },
             "require": {
@@ -130,7 +130,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2015-08-11 10:20:39"
+            "time": "2015-08-17 14:57:00"
         },
         {
             "name": "composer/satis",
@@ -3208,16 +3208,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.19.0",
+            "version": "v1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90"
+                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/edbeaf43b0a606cdaadc32a11d2673614a377b90",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
+                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
                 "shasum": ""
             },
             "require": {
@@ -3226,7 +3226,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.19-dev"
+                    "dev-master": "1.20-dev"
                 }
             },
             "autoload": {
@@ -3261,7 +3261,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-07-31 13:45:26"
+            "time": "2015-08-12 15:56:39"
         }
     ],
     "packages-dev": [],

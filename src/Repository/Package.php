@@ -33,6 +33,8 @@ class Package extends EntityRepository
     public function search($keyword, $type = null, $order = null)
     {
         $packages = $this->createQueryBuilder('p')
+                ->select("p, count(p.id) as hidden pcount")
+                ->innerJoin("p.stats", "s")
                 ->where('p.approved = :status')
                 ->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search');
         
@@ -51,11 +53,23 @@ class Package extends EntityRepository
 			case 'name':
                     $packages->orderBy('p.title', 'ASC');
                     break;
+            case 'downloads':
+                    $packages->andWhere("s.type = 'install'");
+                    $packages->orderBy('pcount', 'DESC');
+                    $packages->groupBy('p.id');
+
+                    break;
+            case 'stars':
+                    $packages->andWhere("s.type = 'star'");
+                    $packages->orderBy('pcount', 'DESC');
+                    $packages->groupBy('p.id');
+                    break;
             
             default:
                 break;
         }
             
+        $packages->groupBy('p.id');
         
         $results = $packages->setParameter('status', true)
                 ->setParameter('search', "%".$keyword."%")
