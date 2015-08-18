@@ -60,13 +60,11 @@ class Package extends EntityRepository
             case 'downloads':
                     $packages->andWhere("s.type = 'install'");
                     $packages->orderBy('pcount', 'DESC');
-                    $packages->groupBy('p.id');
 
                     break;
             case 'stars':
                     $packages->andWhere("s.type = 'star'");
                     $packages->orderBy('pcount', 'DESC');
-                    $packages->groupBy('p.id');
                     break;
             
             default:
