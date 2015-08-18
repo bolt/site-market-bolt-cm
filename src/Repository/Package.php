@@ -41,20 +41,18 @@ class Package extends EntityRepository
             $packages->setParameter('type', $type);
         }
         
-        if ($order !== null ) {
-            switch ($order) {
-                case 'date':
-                    $packages->orderBy('p.created', 'DESC');
-                    break;
-                case 'modified':
-                    $packages->orderBy('p.updated', 'DESC');
-                    break;
-                
-                default:
-                    break;
-            }
+        switch ($order) {
+            case 'date':
+                $packages->orderBy('p.created', 'DESC');
+                break;
+            case 'modified':
+                $packages->orderBy('p.updated', 'DESC');
+                break;
             
+            default:
+                break;
         }
+            
         
         $results = $packages->setParameter('status', true)
                 ->setParameter('search', "%".$keyword."%")
