@@ -48,6 +48,9 @@ class Package extends EntityRepository
             case 'modified':
                 $packages->orderBy('p.updated', 'DESC');
                 break;
+			case 'name':
+                    $packages->orderBy('p.title', 'ASC');
+                    break;
             
             default:
                 break;

@@ -5,7 +5,7 @@
             <img src="/images/{{ package.type }}">
         </div>
         <div class="content">
-            <a class="header">{{package.title}}</a>
+            <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title}}</a>
             <div class="meta">
                 <span class="cinema">by {{package.authors}}</span>
             </div>

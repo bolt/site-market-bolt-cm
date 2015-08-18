@@ -3,35 +3,46 @@
 
 
 {% block splash %}
-    <h2>Register for an account</h2>
+<h2>Register for an account</h2>
 {% endblock %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="large-10 columns">
-            <h3>Registration Information</h3>
-            <p>
-                Registering for an account allows you to submit extensions and themes that will then be available within the extensions
-                manager.
-            </p>
-            <p> 
-                <strong>Note:</strong> Extensions submitted are subject to moderation according to 
-                <a href="http://docs.bolt.cm/extensions">the submission guidelines</a>.
-            </p>
+<div class="">
+    <h3>Registration Information</h3>
+    <p>
+        Registering for an account allows you to submit extensions and themes that will then be available within the extensions
+        manager.
+    </p>
+    <p> 
+        <strong>Note:</strong> Extensions submitted are subject to moderation according to 
+        <a href="http://docs.bolt.cm/extensions/config" target="_blank">the submission guidelines</a>.
+    </p>
+</div>
+
+<br>
+
+<div class="ui form">
+    <form action="" method="post">
+        <div class="field">
+            <label>Email</label>
+            {{form_row(form.email)}}
         </div>
-    </div>
-    <div class="row">
-        <div class="large-12 columns">
-            <form action="" method="post">
-                {{form_row(form.email)}}
-                {{form_row(form.name)}}
-                {{form_row(form.username)}}
-                {{form_row(form.password)}}
-                {{form_row(form.create, {attr:{class:'small expand'}})}}
-            </form>
+        <div class="field">
+            <label>Name</label>
+            {{form_row(form.name)}}
         </div>
-    </div>
+        <div class="field">
+            <label>Username</label>
+            {{form_row(form.username)}}
+        </div>
+        <div class="field">
+            <label>Password</label>
+            {{form_row(form.password)}}
+        </div>
+        {{form_row(form.create, {attr:{class:'ui fluid large green submit button'}})}}
+    </form>
+</div>
 
 
 {% endblock %}

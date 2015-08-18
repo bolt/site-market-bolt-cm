@@ -16,7 +16,7 @@
 
     <form  class="ui action fluid input" name="searchform" onsubmit="return qsearch();">
         <input type="text" id="txtSearchbar" placeholder="Search...">
-        <select class="ui compact selection dropdown">
+        <select id="searchselect" class="ui compact selection dropdown">
             <option value="all">All</option>
             <option value="articles">Plugins</option>
             <option value="products">Themes</option>
@@ -25,7 +25,20 @@
     </form>
 
     <script type="text/javascript">
-        function qsearch() {window.location = '/browse?q=' + document.getElementById('txtSearchbar').value; return false;}
+        function qsearch() {
+            var coption = document.getElementById("searchselect").selectedIndex;
+            if (coption == 1) {
+                var filter_option = "&type=bolt-extension";
+            }
+            else if (coption == 2) {
+                var filter_option = "&type=bolt-theme";
+            }
+            else{
+                var filter_option = "";
+            }
+            window.location = '/browse?q=' + document.getElementById('txtSearchbar').value + filter_option; return false;
+        }
+        
     </script>
 
 </div>
