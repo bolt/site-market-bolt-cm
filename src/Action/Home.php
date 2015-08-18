@@ -27,11 +27,13 @@ class Home
         $starred = $repo->mostStarred(5);
         $downloaded = $repo->mostDownloaded(6);
         $latest_themes = $repo->findBy(['approved'=>true, 'type'=>'bolt-theme'], ['created'=>'DESC'], 3);
+        $latest_plugins = $repo->findBy(['approved'=>true, 'type'=>'bolt-extension'], ['created'=>'DESC'], 12);
         return new Response($this->renderer->render("index.html", [
             'latest' => $latest, 
             'starred' => $starred,
             'downloaded' => $downloaded,
             'latest_themes' => $latest_themes,
+            'latest_plugins' => $latest_plugins,
             'popular' => $repo->popularTags()
         ]));
 
