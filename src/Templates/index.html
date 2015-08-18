@@ -52,7 +52,7 @@
 
     <div class="ui six column grid doubling">
 
-        {% for package in downloaded %}
+        {% for package in mdownloaded_plugins |slice(0, 6) %}
         <div class="column">
             <div class="ui fluid card">
                 <a class="image" href="{{url('view',{'package':package.id})}}">
@@ -60,7 +60,7 @@
                 </a>
                 <div class="content">
                     <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title}}</a>
-                    <div class="meta" style="overflow: hidden;">
+                    <div class="meta meta_package">
                         <a>{{package.name}}</a>
 
                     </div>
@@ -86,11 +86,11 @@
         {% for package in latest_themes %}
         <div class="column">
             <div class="ui fluid card">
-                <a class="image" href="{{url('view',{'package':package.id})}}">
+                <a class="image image_card" href="{{url('view',{'package':package.id})}}">
                     {% if package.screenshots %}
-                    <img style="height: 150px;" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{ package.screenshots[0] }}">
+                    <img src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{ package.screenshots[0] }}">
                     {% else %}
-                    <img style="height: 150px;" src="https://placehold.it/350x150?text=No screenshot">
+                    <img src="https://placehold.it/350x150?text=No screenshot">
                     {% endif %}
                 </a>
                 <div class="content">
@@ -125,18 +125,18 @@
 
     <div class="ui three column grid stackable">
 
-        {% for package in mdownloaded_themes %}
+        {% for package in mdownloaded_themes |slice(0, 6) %}
         <div class="column">
             <div class="ui fluid card">
-                <a class="image" href="{{url('view',{'package':package.id})}}">
+                <a class="image image_card" href="{{url('view',{'package':package.id})}}">
                     {% if package.screenshots %}
-                    <img style="height: 150px;" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{ package.screenshots[0] }}">
+                    <img src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{ package.screenshots[0] }}">
                     {% else %}
-                    <img style="height: 150px;" src="https://placehold.it/350x150?text=No screenshot">
+                    <img src="https://placehold.it/350x150?text=No screenshot">
                     {% endif %}
                 </a>
                 <div class="content">
-                    <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title}}</a>
+                    <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title |slice(0, 28)}}</a>
                 </div>
             </div>
         </div>
@@ -163,7 +163,7 @@
                 </a>
                 <div class="content">
                     <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title|slice(0, 20)}}{% if package.title|length > 20 %}&#8230;{% endif %}</a>
-                    <div class="meta" style="overflow: hidden;">
+                    <div class="meta meta_package">
                         <a>{{package.name|slice(0, 19)}}{% if package.title|length > 19 %}&#8230;{% endif %}</a>
 
                     </div>

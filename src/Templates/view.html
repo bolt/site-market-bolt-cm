@@ -67,7 +67,7 @@
         {% if "//" in image %}
         <img class="image_gallery" src="{{image}}">                    
         {% else %} 
-        <img class="image_gallery" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{image}}" style="max-height: 270px; max-width: 500px; ">
+        <img class="image_gallery" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{image}}">
         {% endif %}
         {% endfor %}
     </div>

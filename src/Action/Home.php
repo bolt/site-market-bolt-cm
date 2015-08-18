@@ -28,12 +28,16 @@ class Home
         $downloaded = $repo->mostDownloaded(6);
         $latest_themes = $repo->findBy(['approved'=>true, 'type'=>'bolt-theme'], ['created'=>'DESC'], 3);
         $latest_plugins = $repo->findBy(['approved'=>true, 'type'=>'bolt-extension'], ['created'=>'DESC'], 12);
+        $mdownloaded_themes = $repo->search(null, 'bolt-theme', 'downloads');
+        $mdownloaded_plugins = $repo->search(null, 'bolt-extension', 'downloads');
         return new Response($this->renderer->render("index.html", [
             'latest' => $latest, 
             'starred' => $starred,
             'downloaded' => $downloaded,
             'latest_themes' => $latest_themes,
             'latest_plugins' => $latest_plugins,
+            'mdownloaded_themes' => $mdownloaded_themes,
+            'mdownloaded_plugins' => $mdownloaded_plugins,
             'popular' => $repo->popularTags()
         ]));
 
