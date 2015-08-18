@@ -35,8 +35,12 @@ class Package extends EntityRepository
         $packages = $this->createQueryBuilder('p')
                 ->select("p, count(p.id) as hidden pcount")
                 ->innerJoin("p.stats", "s")
-                ->where('p.approved = :status')
-                ->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search');
+                ->where('p.approved = :status');
+        
+        if ($keyword !== null) {
+            $packages->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search');
+            $packages->setParameter('search', "%".$keyword."%");
+        }
         
         if ($type !== null) {
             $packages->andWhere('p.type = :type');
@@ -72,7 +76,6 @@ class Package extends EntityRepository
         $packages->groupBy('p.id');
         
         $results = $packages->setParameter('status', true)
-                ->setParameter('search', "%".$keyword."%")
                 ->getQuery()
                 ->getResult();
                 
