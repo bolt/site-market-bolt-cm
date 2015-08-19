@@ -19,18 +19,7 @@
 
         <div class="buttons_header">
             <button class="ui toggle button" id="copy-button" data-content="{{ package.name }}" data-title="Click to copy the package name" data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard</button>
-
-            <script type="text/javascript">
-                    // Copy function
-                    var client = new ZeroClipboard( document.getElementById("copy-button") );
-                    client.on( "ready", function( readyEvent ) {} );
-
-                    $('.ui.toggle.button')
-                    .popup()
-                    ;
-                </script>
-
-                <button class="ui green button">FREE</button>
+            <button class="ui green button">FREE</button>
             </div>
 
             <div class="ui right floated main menu">
@@ -43,13 +32,12 @@
                 </a>
 
                 <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}">
-                 {% if "github.com" in package.source %} <i class="alternate github icon"></i> {% else %} <i class="alternate link icon"></i> {% endif %}
-             </a>
-             <script type="text/javascript">
-                $('.popup')
-                .popup( {position    : 'bottom left'})
-                ;
-            </script>
+                    {% if "github.com" in package.source %} 
+                        <i class="alternate github icon"></i> 
+                    {% else %} 
+                        <i class="alternate link icon"></i> 
+                    {% endif %}
+                </a>
         </div>
     </div>
 </div>
@@ -242,4 +230,5 @@ $.each( json, function (i){
 {% block header_extra_scripts %}
 <script src="/js/jquery.scrollbar.min.js"></script>
 <script src="//cdn.jsdelivr.net/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+<script src="/js/extension-extras.js"></script>
 {% endblock %}
