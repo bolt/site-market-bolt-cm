@@ -1,19 +1,16 @@
-require 'rubygems'
-require 'rake'
-require 'bundler/setup'
-require 'net/http'
-require 'json'
-
 # Load DSL and Setup Up Stages
 require 'capistrano/setup'
-require 'capistrano/docker'
+require 'capistrano/simpledeploy'
 
-set :namespace,         "bolt"
-set :application,       "extensions"
-set :password,          "bolt30080"
-set :ports,             ["80"]
-set :stage,             "production" ### Default stage
-set :deploy_path,        "domains/extensions.bolt.cm/private_html_real"
+set :application,   "bolt-extensions"
+set :password,      "bolt30080"
+set :deploy_to,     "domains/rosstest/private_html_real"
+set :repo_url,      "git@github.com:bolt/bolt-extensions.git"
+set :stage,         "production" ### Default stage
+
+set :composer_roles, :web
+set :composer_install_flags, '--no-dev --prefer-dist --no-interaction --quiet'
+
 set :build_commands,    [
     'composer install --no-dev --prefer-dist --optimize-autoloader',
     'cp ../../config/github.json ./config/',
@@ -21,54 +18,32 @@ set :build_commands,    [
     'cp ../../config/github-config.json ./config/',
     'cp ../../config/env.php ./config/'
 ]
-set :start_commands,    [
-    "ln -sf `pwd`/config/#{fetch(:stage)}.php `pwd`/config/config.php",
-    "curl -sS https://getcomposer.org/installer | php",
-    "mv composer.phar composer",
-    "./composer selfupdate -q",
-    "mkdir -p /tmp/.composer",
-    "cp config/github.json /tmp/.composer/auth.json",
-    "./console migrations:migrate --no-interaction",
-    "./composer config -g github-oauth.github.com `head config/github`",
-    "./console orm:generate-proxies",
-    "./console bolt:extension-tester"
-]
-
 
 
 task :production do
-    set :branch,        "master"
-    server 'bolt.cm', user: 'bolt', roles: %w{host}
+    set :branch,        "feature/new-layout"
+    server 'bolt.cm', user: 'bolt', roles: %w{web}
 end
 
 namespace :deploy do
-    desc "Updates the code on the remote container"
-    task :push do
-        on roles :host do |host|
-            info " Running Rsync to: #{host.user}@#{host.hostname}"
-            run_locally do
-                execute "rsync -rupl --exclude '.git' tmp/build/* #{host.user}@#{host.hostname}:#{fetch(:deploy_path)}/"
-            end
-        end
-    end
     
     desc "Updates the code on the remote container"
     task :start do
-        on roles :host do |host|
+        on roles :web do |host|
             begin execute "pkill -f 'start.sh'" rescue nil end 
-            execute "cd #{fetch(:deploy_path)}; ((nohup ./start.sh &>/dev/null) &)" 
+            execute "cd #{fetch(:deploy_to)}; ((nohup ./start.sh &>/dev/null) &)" 
         end
     end
+    
+    task :symlink do
+        on roles :all do
+            execute "ln -fs production.php #{fetch(:deploy_to)}/config/config.php"
+        end
+    end
+    
 end
 
-Rake::Task[:deploy].clear_actions
-desc 'Deploy a new release.'
-task :deploy do
-  set(:deploying, true)
-  %w{ build push start finished }.each do |task|
-    invoke "deploy:#{task}"
-  end
-end
-task default: :deploy
-invoke 'load:defaults'
+before "deploy", "composer:install_executable"
+after "deploy", "deploy:symlink"
+#after "deploy", "deploy:start"
 
