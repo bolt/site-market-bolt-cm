@@ -25,7 +25,6 @@ jQuery(document).ready(function($) {
        if(e.keyCode == 13) { e.preventDefault(); }
     });
     
-    
 });
 
 
@@ -67,3 +66,7 @@ function checkStatus() {
         
     });
 }
+
+
+
+    
