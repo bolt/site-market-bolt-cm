@@ -4,9 +4,11 @@ namespace Bolt\Extensions\Service;
 
 use Composer\Config;
 use Composer\IO\NullIO;
+use Composer\Json\JsonFile;
 use Composer\Repository\VcsRepository;
 use Composer\Package\Dumper\ArrayDumper;
 use Composer\Package\LinkConstraint\VersionConstraint;
+use Composer\Util\RemoteFilesystem;
 
 class PackageManager
 {
@@ -89,19 +91,56 @@ class PackageManager
     }
     
     public function getInfo($package, $boltVersion)
-    {        
+    {   
         $info = [];
         $repo = $this->loadRepository($package);
         $versions = $repo->getPackages();
         $dumper = new ArrayDumper();
+        $releaseInfo = $this->getReleaseInfo($package);
         foreach($versions as $version) {
             if(!$boltVersion || $this->isCompatible($version, $boltVersion)) {
                 $data = $dumper->dump($version);
                 $data['stability'] = $version->getStability();
+                
+                if ($releaseInfo) {
+                    foreach ($releaseInfo as $rel) {
+                        if ($version->getPrettyVersion() == $rel['tag_name']) {
+                            $data['release'] = $rel;
+                        }
+                    }
+                    
+                }
+                
                 $info[]= $data;
             }
         }
+        
+
         return $info;
+    }
+    
+    /**
+     * If we have a Github repo this gets some extra information about the version
+     * @param  string $package
+     * @param  array $version 
+     * @return array         
+     */
+    public function getReleaseInfo($package)
+    {
+        $io = new NullIO();
+        $io->loadConfiguration($this->config);
+        $rfs = new RemoteFilesystem($io, $this->config);
+
+        $baseApiUrl = 'https://api.github.com/repos/'.str_replace("https://github.com/", "", $package->getSource())."/releases";
+
+        try {
+            $repoData = JsonFile::parseJson($rfs->getContents('github.com', $baseApiUrl, false), $baseApiUrl);
+        } catch (\Exception $e) {
+            return;
+        }
+        
+        return $repoData;
+        
     }
     
     public function isCompatible($version, $boltVersion)
