@@ -61,7 +61,7 @@
                 <div class="content">
                     <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title}}</a>
                     <div class="meta meta_package">
-                        <a>{{package.name}}</a>
+                        <p>{{package.name|slice(0, 19)}}{% if package.title|length > 19 %}&#8230;{% endif %}</p>
 
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                 <div class="content">
                     <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title|slice(0, 20)}}{% if package.title|length > 20 %}&#8230;{% endif %}</a>
                     <div class="meta meta_package">
-                        <a>{{package.name|slice(0, 19)}}{% if package.title|length > 19 %}&#8230;{% endif %}</a>
+                        <p>{{package.name|slice(0, 19)}}{% if package.title|length > 19 %}&#8230;{% endif %}</p>
 
                     </div>
                 </div>
