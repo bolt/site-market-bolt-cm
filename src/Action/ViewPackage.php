@@ -1,6 +1,7 @@
 <?php
 namespace Bolt\Extensions\Action;
 
+use Aura\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,23 +20,33 @@ class ViewPackage
     public $renderer;
     public $em;
     public $packageManager;
+    public $router;
     
-    public function __construct(Twig_Environment $renderer, EntityManager $em, PackageManager $packageManager)
+    public function __construct(Twig_Environment $renderer, EntityManager $em, PackageManager $packageManager, Router $router)
     {
         $this->renderer = $renderer;
         $this->em = $em;
         $this->packageManager = $packageManager;
+        $this->router = $router;
     }
     
     public function __invoke(Request $request, $params)
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
-        $versions = ['dev'=>[],'stable'=>[]];
         
-        $allowedit = $package->account === $request->get('user');        
+        
+        if(!$package) {
+            $request->getSession()->getFlashBag()->add('error', "There was a problem accessing this package");
+            return new RedirectResponse($this->router->generate('profile'));
+        }
+        
+        $versions = ['dev'=>[],'stable'=>[]];               
+        $allowedit = false;
+        $readme = null;
 
         try {
+            $allowedit = $package->account === $request->get('user');
             $repo = $this->em->getRepository(Entity\VersionBuild::class);
             $info = $this->packageManager->getInfo($package, false);
             $readme = $this->packageManager->getReadme($package);

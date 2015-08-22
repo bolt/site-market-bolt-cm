@@ -1,6 +1,7 @@
 <?php
 namespace Bolt\Extensions\Action;
 
+use Aura\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,12 +17,14 @@ class EditPackage
     public $renderer;
     public $em;
     public $forms;
+    public $router;
     
-    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms)
+    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, Router $router)
     {
         $this->renderer = $renderer;
         $this->em = $em;
         $this->forms = $forms;
+        $this->router = $router;
     }
     
     public function __invoke(Request $request, $params)
