@@ -12,7 +12,7 @@
     {% for package in packages %}
     <div class="item">
         <div class="ui tiny image">
-            <img src="/images/{{ package.type }}">
+            <img src="/images/{{ package.type }}.png">
         </div>
         <div class="content">
             <a class="header">{{package.title}}</a>
@@ -35,6 +35,10 @@
                 <a href="{{url('update',{'package':package.id})}}" class="ui right floated orange button">
                     Update
                     <i class="right repeat icon"></i>
+                </a>
+                <a href="{{url('tests',{'package':package.id})}}" class="ui right floated green button">
+                    Run Tests
+                    <i class="right chevron icon"></i>
                 </a>
                 <div class="ui label">
                     {% if "bolt-extension" == package.type %}
