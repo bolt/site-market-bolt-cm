@@ -55,7 +55,8 @@
             <div class="ui message">
                 
                 {% if build.status == 'complete' %}
-                    <p>Test your extension here:<br> <a href="{{ build.url }}/bolt/">Launch {{ build.url[:26] }}...</a></p>
+                    <h4 class="ui header">Test your extension here</h4>
+                    <p><a href="{{ build.url }}/bolt/">Launch {{ build.url[:26] }}...</a></p>
                     <p>
                         When requested login as:<br>
                         <strong>Username:</strong> 'admin'<br>
@@ -64,13 +65,15 @@
                     
                     <p>If the url above has expired then you can trigger a retest using the link below.</p>
                     <form class="ui form" action="{{url('retest',{package:build.package.id,version:build.version})}}" method="post">
-                        <label>PHP Version to Target</label>
-                        <select name="phpTarget">
-                            <option value="php56"{%if build.phpTarget == 'php56' %} selected="selected"{%endif%}>Latest (PHP 5.6)</option>
-                            <option value="php55"{%if build.phpTarget == 'php55' %} selected="selected"{%endif%}>PHP 5.5</option>
-                            <option value="php54"{%if build.phpTarget == 'php54' %} selected="selected"{%endif%}>PHP 5.4</option>
-                            <option value="php53"{%if build.phpTarget == 'php53' %} selected="selected"{%endif%}>PHP 5.3</option>
-                        </select>
+                        <div class="field">
+                            <label>PHP Version to Target</label>
+                            <select name="phpTarget">
+                                <option value="php56"{%if build.phpTarget == 'php56' %} selected="selected"{%endif%}>Latest (PHP 5.6)</option>
+                                <option value="php55"{%if build.phpTarget == 'php55' %} selected="selected"{%endif%}>PHP 5.5</option>
+                                <option value="php54"{%if build.phpTarget == 'php54' %} selected="selected"{%endif%}>PHP 5.4</option>
+                                <option value="php53"{%if build.phpTarget == 'php53' %} selected="selected"{%endif%}>PHP 5.3</option>
+                            </select>
+                        </div>
                         <button class="tiny ui button teal">
                             TRIGGER TEST
                         </button>
