@@ -6,7 +6,7 @@ use Symfony\Component\VarDumper\VarDumper;
 class Bolt extends \Twig_Extension
 {
 
-    public $statusTemplate = '<div class="buildstatus ui icon button %s" data-content="%s"><i class="icon %s"></i><span class="version">%s</span></div>';
+    public $statusTemplate = '<div class="buildstatus ui icon button %s" data-content="%s"><i class="icon %s"></i><span class="version">%s</span>%s</div>';
 
     public function getFunctions()
     {
@@ -28,7 +28,7 @@ class Bolt extends \Twig_Extension
     public function buildStatus($build, $options = [])
     {
         if(!$build || $build->testStatus === 'pending') {
-            return sprintf($this->statusTemplate, 'warning', "This version is currently awaiting a test result", 'wait', "");
+            return sprintf($this->statusTemplate, 'warning', "This version is currently awaiting a test result", 'wait', "", 'not setup');
         }
 
         if($build->phpTarget) {
@@ -41,11 +41,11 @@ class Bolt extends \Twig_Extension
 
 
         if($build->testStatus === 'approved') {
-            return sprintf($this->statusTemplate, 'success', "This version is an approved build", 'checkmark', $php);
+            return sprintf($this->statusTemplate, 'success', "This version is an approved build", 'checkmark', $php, $build->testStatus);
         }
 
         if($build->testStatus === 'failed') {
-            return sprintf($this->statusTemplate, 'alert', "This version is not an approved build", 'remove', $php);
+            return sprintf($this->statusTemplate, 'alert', "This version is not an approved build", 'remove', $php, $build->testStatus);
         }
     }
 

@@ -23,7 +23,7 @@
                         <tr>
                             <td class="collapsing">{{version.version}}</td>
                             <td class="collapsing">{{version.type|replace({'bolt-':''})}}</td>
-                            <td class="collapsing">{{buildStatus(version.build)}} {{version.build.testStatus|default('not setup')}}</td>
+                            <td class="collapsing">{{buildStatus(version.build)}}</td>
                             <td class="collapsing">{{ version.build.lastrun|humanTime(' ago') }}</td>
                             <td class="collapsing">
                                 <a class="ui button tiny" href="{{url('test', {package:package.id,version:version.version})}}">     
