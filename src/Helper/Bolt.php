@@ -36,16 +36,16 @@ class Bolt extends \Twig_Extension
             $php = substr_replace($php, ".", 1, 0);
             $php .= "+";
         } else {
-            $php = "";
+            $php = "5.6";
         }
 
 
         if($build->testStatus === 'approved') {
-            return sprintf($this->statusTemplate, 'green', "This version is an approved build", 'checkmark', $php, $build->testStatus);
+            return sprintf($this->statusTemplate, 'green', "This version is an approved build", 'checkmark', "for PHP ". $php, $build->testStatus);
         }
 
         if($build->testStatus === 'failed') {
-            return sprintf($this->statusTemplate, 'red', "This version is not an approved build", 'remove', $php, $build->testStatus);
+            return sprintf($this->statusTemplate, 'red', "This version is not an approved build", 'remove', "for PHP ".$php, $build->testStatus);
         }
     }
 
