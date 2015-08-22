@@ -42,49 +42,36 @@
                 <i class="dropdown icon"></i>
             </a>
             <div class="ui flowing basic admission transition popup">
-                <div class="ui three column relaxed divided grid">
-                    <div class="column">
+                <div class="ui grid container relaxed divided">
+                    <div class="two wide column">
                         <h4 class="ui header">Plugins</h4>
                         <div class="ui link list">
-                            <a class="item" href="/browse?q=social&type=bolt-extension">Social Networks</a>
+                            <a class="item" href="/browse?q=social&type=bolt-extension">Social</a>
                             <a class="item" href="/browse?q=comment&type=bolt-extension">Comments</a>
                             <a class="item" href="/browse?q=seo&type=bolt-extension">SEO</a>
-                            <a class="item" href="/browse?q=form&type=bolt-extension">Content Form</a>
+                            <a class="item" href="/browse?q=form&type=bolt-extension">Forms</a>
                         </div>
                     </div>
-                    <div class="column">
+                    <div class="two wide column">
                         <h4 class="ui header">Themes</h4>
                         <div class="ui link list">
                             <a class="item" href="/browse?q=blog&type=bolt-theme">Blog</a>
-                            <a class="item" href="/browse?q=business&type=bolt-theme">Business</a>
-                            <a class="item" href="/browse?q=landing&type=bolt-theme">Landing</a>
+                            <a class="item" href="/browse?q=responsive&type=bolt-theme">Responsive</a>
                             <a class="item" href="/browse?q=portfolio&type=bolt-theme">Portfolio</a>
+                            <a class="item" href="/browse?q=foundation&type=bolt-theme">Foundation</a>
+                            <a class="item" href="/browse?q=bootstrap&type=bolt-theme">Bootstrap</a>
                         </div>
                     </div>
-                    <div class="column">
-                        <h4 class="ui header">Others</h4>
+                    <div class="three wide column">
+                        <h4 class="ui header">Other Links</h4>
                         <div class="ui link list">
-                            <a class="item" href="/browse?q=mobile">Mobile</a>
-                            <a class="item" href="/browse?q=standalone">Standalone</a>
+                            <a href="/browse?order=date&type=" class="item">Most recent</a>
+                            <a href="/browse?order=downloads&type=" class="item">Most dowloaded</a>
+                            <a href="/browse?order=stars&type=" class="item">Most starred</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <script type="text/javascript">
-                $('.browse')
-                .popup({
-                    movePopup: false,
-                    inline   : false,
-                    hoverable: true,
-                    position : 'bottom left',
-                    delay: {
-                        show: 300,
-                        hide: 800
-                    }
-                })
-                ;
-            </script>
-
         </div>
 
 
