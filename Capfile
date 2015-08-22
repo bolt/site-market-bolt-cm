@@ -34,6 +34,15 @@ namespace :deploy do
         end
     end
     
+    task :secrets do
+        on roles :web do
+            upload "config/env.php", "#{fetch(:deploy_to)}/config/env.php"
+            upload "config/github", "#{fetch(:deploy_to)}/config/github"
+            upload "config/github-config.json", "#{fetch(:deploy_to)}/config/github-config.json"
+            upload "config/github.json", "#{fetch(:deploy_to)}/config/github.json"
+        end
+    end
+    
     task :symlink do
         on roles :all do
             execute "ln -fs production.php #{fetch(:deploy_to)}/config/config.php"
@@ -53,5 +62,6 @@ end
 before "deploy", "composer:install_executable"
 before "deploy", "composer:symlink"
 after "deploy", "deploy:symlink"
+after "deploy", "deploy:secrets"
 #after "deploy", "deploy:start"
 
