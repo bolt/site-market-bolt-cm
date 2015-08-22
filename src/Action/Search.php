@@ -25,8 +25,8 @@ class Search
     public function __invoke(Request $request, $params)
     {
         $search = $request->get('q');
-        $type = $request->get('type');
-        $order = $request->get('order');
+        $type = $request->get('type') ?: null;
+        $order = $request->get('order') ?: null;
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->search($search, $type, $order);
         
