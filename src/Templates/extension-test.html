@@ -56,7 +56,7 @@
                 
                 {% if build.status == 'complete' %}
                     <h4 class="ui header">Test your extension here</h4>
-                    <p><a href="{{ build.url }}/bolt/">Launch {{ build.url[:26] }}...</a></p>
+                    <p><a class="ui button small green" href="{{ build.url }}/bolt/">Launch App</a></p>
                     <p>
                         When requested login as:<br>
                         <strong>Username:</strong> 'admin'<br>
