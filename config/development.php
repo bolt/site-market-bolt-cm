@@ -8,7 +8,7 @@ return array_merge($main, [
     
     'db'=> [
         'driver'     => 'pdo_mysql',
-        'dbname'     => 'bolt_newext',
+        'dbname'     => 'bolt_extensions',
         'host'       => '127.0.0.1',
         'user'       => 'root',
         'password'   => '',

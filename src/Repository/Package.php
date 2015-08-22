@@ -98,6 +98,7 @@ class Package extends EntityRepository
             $tagList = array_merge($tagList, explode(",", $tag['keywords']) );
         }
         $tagList = array_filter($tagList);
+        $tagList = array_diff($tagList, ['bolt']);
         $tagList = array_count_values($tagList);
 
         // sort on the value (word count) in descending order
