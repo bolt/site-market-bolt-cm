@@ -6,7 +6,7 @@ use Symfony\Component\VarDumper\VarDumper;
 class Bolt extends \Twig_Extension
 {
 
-    public $statusTemplate = '<div class="buildstatus ui icon button %s" data-content="%s"><i class="icon %s"></i><span class="version">%s</span>%s</div>';
+    public $statusTemplate = '<div class="buildstatus ui icon button %s" data-content="%s"><i class="icon %s"></i><span class="version">%s</span> %s</div>';
 
     public function getFunctions()
     {

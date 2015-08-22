@@ -36,6 +36,8 @@ jQuery(document).ready(function($) {
         }
     });
     
+    $(".buildstatus").popup();
+    
 });
 
 
