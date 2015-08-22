@@ -34,7 +34,7 @@ class StarPackage
         $existing = $statRepo->findOneBy(['package'=>$package, 'account'=>$account]);
         
         if ($existing) {
-            $request->getSession()->getFlashBag()->add('alert', "Your have already starred this package");
+            $request->getSession()->getFlashBag()->add('error', "Your have already starred this package");
         } else {
         
             $stat = new Entity\Stat([

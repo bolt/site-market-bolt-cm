@@ -29,7 +29,7 @@ class EditPackage
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package'], 'account'=>$request->get('user')]);
         if(!$package) {
-            $request->getSession()->getFlashBag()->add('alert', "There was a problem accessing this package");
+            $request->getSession()->getFlashBag()->add('error', "There was a problem accessing this package");
             return new RedirectResponse($this->router->generate('profile'));
         }
        

@@ -55,7 +55,7 @@ class Submit
                 $this->em->flush();
                 return new RedirectResponse($this->router->generate('submitted')); 
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('alert', "Package has an invalid composer.json!");
+                $request->getSession()->getFlashBag()->add('error', "Package has an invalid composer.json!");
                 $request->getSession()->getFlashBag()->add('warning', $e->getMessage());
                 $package->approved = false; 
                 $error = 'invalid';

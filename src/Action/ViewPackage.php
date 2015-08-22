@@ -47,7 +47,7 @@ class ViewPackage
                 $versions[$ver['stability']][] = $ver;
             }
         } catch (\Exception $e) {
-            $request->getSession()->getFlashBag()->add('alert', $e->getMessage());
+            $request->getSession()->getFlashBag()->add('error', $e->getMessage());
         }
                        
         return new Response(

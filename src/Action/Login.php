@@ -48,7 +48,7 @@ class Login
                 $request->getSession()->remove('bolt.auth.return');
                 return new RedirectResponse($dest);
             } else {
-                $request->getSession()->getFlashBag()->add('alert', 'Login Unsuccessful!');
+                $request->getSession()->getFlashBag()->add('error', 'Login Unsuccessful!');
             }
         }
         

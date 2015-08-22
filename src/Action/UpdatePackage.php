@@ -44,7 +44,7 @@ class UpdatePackage
                 $package->approved = true;
             }
         } catch (\Exception $e) {
-            $request->getSession()->getFlashBag()->add('alert', "Package has an invalid composer.json and will be disabled!");
+            $request->getSession()->getFlashBag()->add('error', "Package has an invalid composer.json and will be disabled!");
             $request->getSession()->getFlashBag()->add('warning', implode(" : ", [$e->getMessage(),$e->getFile(),$e->getLine()]));
             $package->approved = false; 
         }

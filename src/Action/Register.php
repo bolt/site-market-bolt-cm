@@ -41,7 +41,7 @@ class Register
             $repo = $this->em->getRepository(Entity\Account::class);
             $existing = $repo->findOneBy(['username'=>$account->username]);
             if ($existing) {
-                $request->getSession()->getFlashBag()->add('alert', 'The username '.$account->username.' is already in use. Please try again with a different username');
+                $request->getSession()->getFlashBag()->add('error', 'The username '.$account->username.' is already in use. Please try again with a different username');
                 return new RedirectResponse($this->router->generate('register'));
 
             }
