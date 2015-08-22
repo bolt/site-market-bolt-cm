@@ -1,0 +1,36 @@
+{% if allowedit %}
+    <hr>
+    <div class="row builds-list">
+        <div class="large-12 columns">
+            <h3>Build Tests</h3>
+            <p>
+                We recommend you run tests for all your stable versions, once the tests pass versions will receive
+                an 'approved build' lablel, in future this may also become a requirement to allow user installs
+            </p>
+            <div class="row collapse">
+                <div class="large-2 columns"><strong>Version</strong></div>
+                <div class="large-2 columns"><strong>Type</strong></div>
+                <div class="large-2 columns"><strong>Current Status</strong></div>
+                <div class="large-2 columns"><strong>Last Run</strong></div>
+                <div class="large-3 columns end"></div>
+            </div>
+            <hr />
+            {% for version in versions.stable %}
+                <div class="row collapse">
+                    <div class="large-2 columns">{{version.version}}</div>
+                    <div class="large-2 columns">{{version.type|replace({'bolt-':''})}}</div>
+                    <div class="large-2 columns">
+                        {{buildStatus(version.build)}} {{version.build.testStatus|default('not setup')}}
+                    </div>
+                    <div class="large-2 columns">{{ version.build.lastrun|humanTime }} ago</div>
+                    <div class="large-3 columns end">                    
+                        <a class="button tiny" href="{{url('test', {package:package.id,version:version.version})}}">     TEST THIS VERSION
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            <hr>
+        </div>
+    </div>
+
+{% endif %}
