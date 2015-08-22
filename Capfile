@@ -3,7 +3,7 @@ require 'capistrano/setup'
 require 'capistrano/simpledeploy'
 
 set :application,   "bolt-extensions"
-set :deploy_to,     "domains/rosstest/private_html_real"
+set :deploy_to,     "domains/new-extensions.bolt.cm/private_html_real"
 set :repo_url,      "git@github.com:bolt/bolt-extensions.git"
 set :stage,         "production" ### Default stage
 
@@ -36,10 +36,10 @@ namespace :deploy do
     
     task :secrets do
         on roles :web do
-            upload "config/env.php", "#{fetch(:deploy_to)}/config/env.php"
-            upload "config/github", "#{fetch(:deploy_to)}/config/github"
-            upload "config/github-config.json", "#{fetch(:deploy_to)}/config/github-config.json"
-            upload "config/github.json", "#{fetch(:deploy_to)}/config/github.json"
+            upload! "config/env.php", "#{fetch(:deploy_to)}/config/env.php"
+            upload! "config/github", "#{fetch(:deploy_to)}/config/github"
+            upload! "config/github-config.json", "#{fetch(:deploy_to)}/config/github-config.json"
+            upload! "config/github.json", "#{fetch(:deploy_to)}/config/github.json"
         end
     end
     
