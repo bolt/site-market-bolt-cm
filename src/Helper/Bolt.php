@@ -6,7 +6,7 @@ use Symfony\Component\VarDumper\VarDumper;
 class Bolt extends \Twig_Extension
 {
 
-    public $statusTemplate = '<div class="buildstatus ui icon label %s" data-content="%s"><i class="icon %s"></i><span class="version">%s</span> %s</div>';
+    public $statusTemplate = '<div class="buildstatus ui icon label %s" data-content="%s"><i class="icon %s"></i> %s <span class="version">%s</span></div>';
 
     public function getFunctions()
     {
@@ -28,7 +28,7 @@ class Bolt extends \Twig_Extension
     public function buildStatus($build, $options = [])
     {
         if(!$build || $build->testStatus === 'pending') {
-            return sprintf($this->statusTemplate, 'orange', "This version is currently awaiting a test result", 'wait', "", 'not setup');
+            return sprintf($this->statusTemplate, 'orange', "This version is currently awaiting a test result", 'wait', "not setup", '');
         }
 
         if($build->phpTarget) {
@@ -41,11 +41,11 @@ class Bolt extends \Twig_Extension
 
 
         if($build->testStatus === 'approved') {
-            return sprintf($this->statusTemplate, 'green', "This version is an approved build", 'checkmark', "for PHP ". $php, $build->testStatus);
+            return sprintf($this->statusTemplate, 'green', "This version is an approved build", 'checkmark', $build->testStatus, "for PHP ". $php);
         }
 
         if($build->testStatus === 'failed') {
-            return sprintf($this->statusTemplate, 'red', "This version is not an approved build", 'remove', "for PHP ".$php, $build->testStatus);
+            return sprintf($this->statusTemplate, 'red', "This version is not an approved build", 'remove', $build->testStatus, "for PHP ".$php);
         }
     }
 
