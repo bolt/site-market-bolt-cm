@@ -168,7 +168,7 @@
                 {% for related in package.account.packages |slice(0, 7) %}
                     {% if related != package %}
                         <div class="item">
-                            <img class="ui avatar image" src="/images/{{ related.type }}">
+                            <img class="ui avatar image" src="/images/{{ related.type }}.png">
                             <div class="content">
                                 <a class="header" href="{{url('view',{'package':related.id})}}">{{related.title}}</a>
                                 {{related.name}}
