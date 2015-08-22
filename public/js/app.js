@@ -25,6 +25,17 @@ jQuery(document).ready(function($) {
        if(e.keyCode == 13) { e.preventDefault(); }
     });
     
+    $('.browse').popup({
+        movePopup: false,
+        inline   : false,
+        hoverable: true,
+        position : 'bottom left',
+        delay: {
+            show: 300,
+            hide: 800
+        }
+    });
+    
 });
 
 
