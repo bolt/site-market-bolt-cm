@@ -60,13 +60,18 @@ class Bolt extends \Twig_Extension
         return VarDumper::dump($var);
     }
 
-    public function humanTime($time)
+    public function humanTime($time, $suffix='')
     {
         if ($time instanceof \DateTime) {
            $time = $time->getTimestamp();
         }
+        
+        if (!$time) {
+            return 'never';
+        }
+        
         $time = time() - $time; // to get the time since that moment
-
+        
         $tokens = array (
             31536000 => 'year',
             2592000 => 'month',
@@ -80,7 +85,7 @@ class Bolt extends \Twig_Extension
         foreach ($tokens as $unit => $text) {
             if ($time < $unit) continue;
             $numberOfUnits = floor($time / $unit);
-            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'').$suffix;
         }
 
     }

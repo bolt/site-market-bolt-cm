@@ -27,6 +27,7 @@ $router->add("list.popular", "/list/downloaded.json")->setValues(['action'=>'Bol
 $router->add("usercheck", "/usercheck.json")->setValues(['action'=>'Bolt\Extensions\Action\UserCheck']);
 $router->add("info", "/info.json")->setValues(['action'=>'Bolt\Extensions\Action\PackageInfo']);
 
+$router->add("tests", "/tests/{package}")->setValues(['action'=>'Bolt\Extensions\Action\Tests']);
 $router->add("test", "/test/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension']);
 $router->add("retest", "/retest/{package}/{version}")->setValues(['action'=>'Bolt\Extensions\Action\TestExtension','retest'=>true]);
 $router->add("check", "/check/{build}")->setValues(['action'=>'Bolt\Extensions\Action\TestBuildCheck']);

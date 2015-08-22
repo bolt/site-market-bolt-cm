@@ -101,7 +101,11 @@ class TestExtension
             }
             
         }
-        return new Response($this->renderer->render("extension-test.html", ['build'=>$build, 'tests'=>$tests]));
+        return new Response($this->renderer->render("extension-test.html", [
+            'build'=>$build, 
+            'tests'=>$tests,
+            'package' => $p
+        ]));
 
     }
     
