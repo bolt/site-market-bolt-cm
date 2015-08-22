@@ -42,14 +42,12 @@ class ViewPackage
         }
         
         $versions = ['dev'=>[],'stable'=>[]];               
-        $allowedit = false;
-        $readme = null;
+        $allowedit = $package->account === $request->get('user');
+        $readme = $this->packageManager->getReadme($package);
 
         try {
-            $allowedit = $package->account === $request->get('user');
             $repo = $this->em->getRepository(Entity\VersionBuild::class);
             $info = $this->packageManager->getInfo($package, false);
-            $readme = $this->packageManager->getReadme($package);
             foreach($info as $ver) {
                 $build = $repo->findOneBy(['package'=>$package->id, 'version'=>$ver['version']]);
                 if($build) {
