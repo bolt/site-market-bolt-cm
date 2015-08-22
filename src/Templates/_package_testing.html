@@ -26,7 +26,7 @@
                             <td class="collapsing">{{buildStatus(version.build)}}</td>
                             <td class="collapsing">{{ version.build.lastrun|humanTime(' ago') }}</td>
                             <td class="collapsing">
-                                <a class="ui button tiny" href="{{url('test', {package:package.id,version:version.version})}}">     
+                                <a class="ui button green" href="{{url('test', {package:package.id,version:version.version})}}">     
                                     TEST THIS VERSION
                                 </a>
                             </td>
