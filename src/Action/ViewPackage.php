@@ -38,6 +38,7 @@ class ViewPackage
         try {
             $repo = $this->em->getRepository(Entity\VersionBuild::class);
             $info = $this->packageManager->getInfo($package, false);
+            $readme = $this->packageManager->getReadme($package);
             foreach($info as $ver) {
                 $build = $repo->findOneBy(['package'=>$package->id, 'version'=>$ver['version']]);
                 if($build) {
@@ -54,7 +55,8 @@ class ViewPackage
                 "view.html", 
                 [
                     'package' => $package, 
-                    'versions' => $versions, 
+                    'versions' => $versions,
+                    'readme' => $readme, 
                     'allowedit' => $allowedit
                 ]
             )

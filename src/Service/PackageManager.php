@@ -97,11 +97,12 @@ class PackageManager
         $versions = $repo->getPackages();
         $dumper = new ArrayDumper();
         $releaseInfo = $this->getReleaseInfo($package);
+
         foreach($versions as $version) {
             if(!$boltVersion || $this->isCompatible($version, $boltVersion)) {
                 $data = $dumper->dump($version);
                 $data['stability'] = $version->getStability();
-                
+
                 if ($releaseInfo) {
                     foreach ($releaseInfo as $rel) {
                         if ($version->getPrettyVersion() == $rel['tag_name']) {
@@ -131,15 +132,38 @@ class PackageManager
         $io->loadConfiguration($this->config);
         $rfs = new RemoteFilesystem($io, $this->config);
 
-        $baseApiUrl = 'https://api.github.com/repos/'.str_replace("https://github.com/", "", $package->getSource())."/releases";
 
         try {
+            $baseApiUrl = 'https://api.github.com/repos/'.str_replace("https://github.com/", "", $package->getSource())."/releases";
             $repoData = JsonFile::parseJson($rfs->getContents('github.com', $baseApiUrl, false), $baseApiUrl);
         } catch (\Exception $e) {
             return;
         }
         
         return $repoData;
+        
+    }
+    
+    /**
+     * If we have a Github repo this gets the readme content for the package
+     * @param  string $package
+     * @return array         
+     */
+    public function getReadme($package)
+    {
+        $io = new NullIO();
+        $io->loadConfiguration($this->config);
+        $rfs = new RemoteFilesystem($io, $this->config);
+
+
+        try {
+            $baseApiUrl = 'https://api.github.com/repos/'.str_replace("https://github.com/", "", $package->getSource())."/readme";
+            $readme = JsonFile::parseJson($rfs->getContents('github.com', $baseApiUrl, false), $baseApiUrl);
+        } catch (\Exception $e) {
+            return;
+        }
+        
+        return $readme;
         
     }
     
