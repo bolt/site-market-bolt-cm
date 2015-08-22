@@ -27,9 +27,9 @@
                         <i class="download icon"> {{package.downloads|default(0)}}</i>
                     </a>
 
-                    <a class="bug popup icon item" data-content="Stars" href="#">
-                        <i class="star icon"> {{package.stars|default(0)}}</i>
-                    </a>
+                <a class="bug popup icon item" {% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}{% else %}href="{{url('star',{'package':package.id})}}"{% endif %}{% endif %} data-content="{% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}You have starred this package.{% else %}Star this package !{% endif %}{% else %}You must be login to star packages.{% endif %}">
+                    <i class="star icon"> {{package.stars|default(0)}}</i>
+                </a>
 
                     <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}">
                         {% if "github.com" in package.source %} 
@@ -90,11 +90,15 @@
                         <div class="description">{{package.versions[0]}}</div>
                     </div>
                 </div>
-                <div class="item">
-                    <i class="large history middle aligned icon"></i>
-                    <div class="content">
-                        <a class="header">Last Update</a>
-                        <div class="description">{{package.updated.date|date('jS M Y')}}</div>
+            </div>
+            <div class="item">
+                <i class="large history middle aligned icon"></i>
+                <div class="content">
+                    <a class="header">Last Update</a>
+                    <div class="description">
+                        {% for version in versions.stable |slice(0,1) %}
+                            {{ version.time|date('jS F Y') }}
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="item">
@@ -140,13 +144,12 @@
                         {% if version.release.body %}
                             <pre>{{ version.release.body }}</pre>
                         {% else %}
-                            <p><strong>No release information availble</strong></p>
+                            <p><strong>No release information available</strong></p>
                             <p><a href="{{version.support.source}}">View source code</a> for this release</p>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
-
         </div>
 
 
@@ -176,7 +179,9 @@
             </div>
         </div>
         
-        {% include '_package_testing.html' %}
+        <div class="sixteen wide column">
+            {% include '_package_testing.html' %}
+        </div>
 
     </div>
 
