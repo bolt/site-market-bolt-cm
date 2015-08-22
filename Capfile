@@ -3,7 +3,6 @@ require 'capistrano/setup'
 require 'capistrano/simpledeploy'
 
 set :application,   "bolt-extensions"
-set :password,      "bolt30080"
 set :deploy_to,     "domains/rosstest/private_html_real"
 set :repo_url,      "git@github.com:bolt/bolt-extensions.git"
 set :stage,         "production" ### Default stage
@@ -43,7 +42,16 @@ namespace :deploy do
     
 end
 
+namespace :composer do
+    task :symlink do 
+        on roles :web do
+           execute "cd #{fetch(:deploy_to)}; ln -fs ~/composer composer.phar" 
+        end
+    end
+end
+    
 before "deploy", "composer:install_executable"
+before "deploy", "composer:symlink"
 after "deploy", "deploy:symlink"
 #after "deploy", "deploy:start"
 
