@@ -56,7 +56,7 @@
         <div class="column">
             <div class="ui fluid card">
                 <a class="image" href="{{url('view',{'package':package.id})}}">
-                    <img src="/images/{{ package.type }}">
+                    <img src="/images/{{ package.type }}.png">
                 </a>
                 <div class="content">
                     <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title}}</a>
@@ -159,7 +159,7 @@
         <div class="column">
             <div class="ui fluid card">
                 <a class="image" href="{{url('view',{'package':package.id})}}">
-                    <img src="/images/{{ package.type }}">
+                    <img src="/images/{{ package.type }}.png">
                 </a>
                 <div class="content">
                     <a class="header" href="{{url('view',{'package':package.id})}}">{{package.title|slice(0, 20)}}{% if package.title|length > 20 %}&#8230;{% endif %}</a>
