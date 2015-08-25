@@ -137,6 +137,16 @@ input[type="password"] {
   height: 42px;
 }
 
+.ui.flowing.popup {
+  width: 500px;
+}
+
+@media (max-width: 540px) {
+  .ui.flowing.popup {
+    width: 100%;
+  }
+}
+
 .meta_package {
   overflow: hidden;
 }

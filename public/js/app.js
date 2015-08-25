@@ -26,9 +26,9 @@ jQuery(document).ready(function($) {
     });
     
     $('.browse').popup({
-        movePopup: false,
-        inline   : false,
+        inline   : true,
         hoverable: true,
+        setFluidWidth: false,
         position : 'bottom left',
         delay: {
             show: 300,
