@@ -55,7 +55,7 @@ class PackageManager
         }
         
         if (isset($information['extra']) && isset($information['extra']['bolt-icons'])) {
-            $package->setIcons(implode(',', $information['extra']['bolt-icons']) );
+            $package->setIcons(implode(',', (array)$information['extra']['bolt-icons']) );
         }
         
         $package->setRequirements(json_encode($information['require']));
