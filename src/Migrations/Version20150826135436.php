@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20150826134910 extends AbstractMigration
+class Version20150826135436 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -18,7 +18,7 @@ class Version20150826134910 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE Package ADD icon LONGTEXT DEFAULT NULL, ADD support LONGTEXT DEFAULT NULL');
+        $this->addSql('ALTER TABLE Package CHANGE icons icon LONGTEXT DEFAULT NULL');
     }
 
     /**
@@ -29,6 +29,6 @@ class Version20150826134910 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE Package DROP icon, DROP support');
+        $this->addSql('ALTER TABLE Package CHANGE icon icons LONGTEXT DEFAULT NULL COLLATE utf8_unicode_ci');
     }
 }
