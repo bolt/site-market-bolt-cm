@@ -27,6 +27,8 @@ class Package extends EntityBase {
     protected $stats;
     protected $builds;
     protected $screenshots;
+    protected $icons;
+    protected $support;
 
     
     public function setSource($value)
@@ -141,6 +143,8 @@ class Package extends EntityBase {
         $builder->addField('updated',       'datetime', ['nullable'=>true]);
         $builder->addField('token',         'string',   ['nullable'=>true]);
         $builder->addField('screenshots',   'text',     ['nullable'=>true]);
+        $builder->addField('icons',         'text',     ['nullable'=>true]);
+        $builder->addField('support',       'text',     ['nullable'=>true]);
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
         $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
         $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');

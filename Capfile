@@ -3,7 +3,7 @@ require 'capistrano/setup'
 require 'capistrano/simpledeploy'
 
 set :application,   "bolt-extensions"
-set :deploy_to,     "domains/new-extensions.bolt.cm/private_html_real"
+set :deploy_to,     "domains/extensions.bolt.cm/private_html_real"
 set :repo_url,      "git@github.com:bolt/bolt-extensions.git"
 set :stage,         "production" ### Default stage
 
