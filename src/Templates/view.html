@@ -7,7 +7,15 @@
     <div class="ui grid stackable">
         <div class="eight wide column">     
             <h2 class="ui header">
+                {% if package.icon %}
+                    {% if "//" in package.icon %}
+                        <img class="ui rounded image" src="{{package.icon}}">                    
+                    {% else %} 
+                        <img class="ui rounded image" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{package.icon}}">
+                    {% endif %}
+                {% else %}
                 <img class="ui rounded image" src="/images/{{ package.type }}.png">
+                {% endif %}
                 <div class="content">
                     {{package.title}}
                     <div class="sub header">by {{package.authors}}</div>
