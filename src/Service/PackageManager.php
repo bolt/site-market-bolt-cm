@@ -54,8 +54,8 @@ class PackageManager
             $package->setScreenshots(implode(',', $information['extra']['bolt-screenshots']) );
         }
         
-        if (isset($information['extra']) && isset($information['extra']['bolt-icons'])) {
-            $package->setIcons(implode(',', (array)$information['extra']['bolt-icons']) );
+        if (isset($information['extra']) && isset($information['extra']['bolt-icon'])) {
+            $package->setIcon($information['extra']['bolt-icon'] );
         }
         
         $package->setRequirements(json_encode($information['require']));
