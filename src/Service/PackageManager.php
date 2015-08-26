@@ -46,9 +46,16 @@ class PackageManager
             }
             $package->setAuthors(implode(',',$authors));
         }
+        if(isset($information['support'])) {
+            $package->setSupport($information['support']);
+        }
         
         if (isset($information['extra']) && isset($information['extra']['bolt-screenshots'])) {
             $package->setScreenshots(implode(',', $information['extra']['bolt-screenshots']) );
+        }
+        
+        if (isset($information['extra']) && isset($information['extra']['bolt-icons'])) {
+            $package->setIcons(implode(',', $information['extra']['bolt-icons']) );
         }
         
         $package->setRequirements(json_encode($information['require']));
