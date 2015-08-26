@@ -63,5 +63,5 @@ before "deploy", "composer:install_executable"
 before "deploy", "composer:symlink"
 after "deploy", "deploy:symlink"
 after "deploy", "deploy:secrets"
-#after "deploy", "deploy:start"
+after "deploy", "deploy:start"
 
