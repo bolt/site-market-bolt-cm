@@ -13,6 +13,7 @@ class Bolt extends \Twig_Extension
         return array(
             'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus',['is_safe' => ['html']]),
             'gravatar'  => new \Twig_Function_Method($this, 'gravatar',['is_safe' => ['html']]),
+            'packageIcon'  => new \Twig_Function_Method($this, 'packageIcon',['is_safe' => ['html']]),
             'dump'  => new \Twig_Function_Method($this, 'printDump',['is_safe' => ['html']])
         );
     }
@@ -88,6 +89,22 @@ class Bolt extends \Twig_Extension
             return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'').$suffix;
         }
 
+    }
+    
+    public function packageIcon($package)
+    {
+        if ($ico = $package->getIcon()) {
+            if (strpos("//", $ico)) {
+                return $package->getIcon();
+            } else {
+                $ico = str_replace('github.com', 'raw.githubusercontent.com', $package->getSource());
+                $ico = $ico . "/master/".$package->getIcon();
+                return $ico;
+            }
+            
+        }
+        
+        return "/images/".$package->getType().".png";
     }
 
     public function getName()
