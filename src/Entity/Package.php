@@ -51,6 +51,16 @@ class Package extends EntityBase {
         $this->name = strtolower($value);
     }
     
+    public function setSupport($value)
+    {
+        $this->support = json_encode($value);
+    }
+    
+    public function getSupport()
+    {
+        json_decode($this->support, true);
+    }
+    
     public function getKeywords()
     {
         return array_filter(explode(",",$this->keywords));
