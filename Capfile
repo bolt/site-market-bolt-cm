@@ -20,7 +20,7 @@ set :build_commands,    [
 
 
 task :production do
-    set :branch,        "feature/new-layout"
+    set :branch,        "master"
     server 'bolt.cm', user: 'bolt', roles: %w{web}
 end
 
