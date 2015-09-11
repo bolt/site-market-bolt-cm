@@ -34,7 +34,7 @@ class Package extends EntityRepository
     {
         $packages = $this->createQueryBuilder('p')
                 ->select("p, count(p.id) as hidden pcount")
-                ->innerJoin("p.stats", "s")
+                ->leftJoin("p.stats", "s")
                 ->where('p.approved = :status');
         
         if ($keyword !== null) {
@@ -72,12 +72,9 @@ class Package extends EntityRepository
         }
             
         $packages->groupBy('p.id');
-        
-        $results = $packages->setParameter('status', true)
-                ->getQuery()
-                ->getResult();
-                
-        return $results;
+        $packages->setParameter('status', true);
+
+        return $packages->getQuery()->getResult();           
     }
     
     public function fetchTags()
