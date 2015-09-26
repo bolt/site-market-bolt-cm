@@ -1,4 +1,5 @@
 <?php
+
 namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -10,15 +11,13 @@ use Symfony\Component\Form\FormFactory;
 use Aura\Router\Router;
 use Bolt\Extensions\Entity;
 
-
 class Register
 {
-    
     public $renderer;
     public $em;
     public $forms;
     public $router;
-    
+
     public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, Router $router)
     {
         $this->renderer = $renderer;
@@ -26,38 +25,38 @@ class Register
         $this->forms = $forms;
         $this->router = $router;
     }
-    
+
     public function __invoke(Request $request)
     {
-        
-        $entity = new Entity\Account;
+        $entity = new Entity\Account();
         $form = $this->forms->create('account', $entity);
-        
+
         $form->handleRequest();
 
         if ($form->isValid()) {
             $account = $form->getData();
 
             $repo = $this->em->getRepository(Entity\Account::class);
-            $existing = $repo->findOneBy(['username'=>$account->username]);
+            $existing = $repo->findOneBy(['username' => $account->username]);
             if ($existing) {
-                $request->getSession()->getFlashBag()->add('error', 'The username '.$account->username.' is already in use. Please try again with a different username');
-                return new RedirectResponse($this->router->generate('register'));
+                $request->getSession()
+                        ->getFlashBag()
+                        ->add('error', 'The username '.$account->username.' is already in use. Please try again with a different username');
+            } else {
+                $account->created = new \DateTime();
+                $account->approved = true;
+                $account->regenerateToken();
 
+                $this->em->persist($account);
+                $this->em->flush();
+                $request->getSession()
+                        ->getFlashBag()
+                        ->add('success', 'Your account has been created, you can now login.');
+
+                return new RedirectResponse($this->router->generate('login'));
             }
-            
-            $account->created = new \DateTime;
-            $account->approved = true;
-            $account->regenerateToken();
-           
-            $this->em->persist($account);
-            $this->em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Your account has been created, you can now login.');
-            return new RedirectResponse($this->router->generate('login'));
-
         }
-        
-        return new Response($this->renderer->render("register.html", ['form'=>$form->createView()]));
 
+        return new Response($this->renderer->render('register.html', ['form' => $form->createView()]));
     }
 }
