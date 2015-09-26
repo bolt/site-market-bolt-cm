@@ -49,12 +49,8 @@ class Register
 
                 $this->em->persist($account);
                 $this->em->flush();
-                $request->getSession()
-                        ->getFlashBag()
-                        ->add('success', 'Your account has been created, you can now login.');
-                $request->getSession()->save();
 
-                return new RedirectResponse($this->router->generate('login'));
+                return new RedirectResponse($this->router->generate('registered'));
             }
         }
 
