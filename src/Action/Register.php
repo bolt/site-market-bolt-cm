@@ -52,6 +52,7 @@ class Register
                 $request->getSession()
                         ->getFlashBag()
                         ->add('success', 'Your account has been created, you can now login.');
+                $request->getSession()->save();
 
                 return new RedirectResponse($this->router->generate('login'));
             }
