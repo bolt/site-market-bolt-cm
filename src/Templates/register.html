@@ -36,10 +36,13 @@
             <label>Username</label>
             {{form_row(form.username)}}
         </div>
-        <div class="field">
-            <label>Password</label>
-            {{form_row(form.password)}}
-        </div>
+        {% for passwordField in form.password %}
+            <div class="field">
+                {{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}
+                {{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}
+            </div>
+        {% endfor %}
+        
         {{form_row(form.create, {attr:{class:'ui fluid large green submit button'}})}}
     </form>
 </div>
