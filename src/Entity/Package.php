@@ -132,6 +132,11 @@ class Package extends EntityBase {
         }
         return $starred;
     }
+
+    public function serializeAccount()
+    {
+        return $this->account->id;
+    }
     
     
     public static function loadMetadata(ClassMetadata $metadata)
