@@ -3,7 +3,6 @@ use DI\ContainerBuilder;
 $router = include(__DIR__."/config/routes.php");
 
 $builder = new ContainerBuilder();
-$builder->useAnnotations(false);
 $builder->addDefinitions(__DIR__."/config/config.php");
 $container = $builder->build();
 $container->set("Aura\Router\Router", $router);

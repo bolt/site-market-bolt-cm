@@ -17,7 +17,8 @@
         "doctrine/orm": "^2.5",
         "fabpot/goutte": "^2.0",
         "forxer/gravatar": "^1.2",
-        "mnapoli/php-di": "^4.3",
+        "mandrill/mandrill": "~1.0",
+        "php-di/php-di": "^5.0",
         "rossriley/doctrine-migrations-helper": "^1.0",
         "rossriley/doctrine-entity-base": "^1.0",
         "rossriley/stack-aura-router": "^1.0@dev",
@@ -33,7 +34,8 @@
         "symfony/doctrine-bridge": "^2.5",
         "symfony/validator": "^2.5",
         "twig/twig": "^1.1",
-        "symfony/var-dumper": "^2.7"
+        "symfony/var-dumper": "^2.7",
+        "ircmaxell/random-lib": "^1.1"
     },
 
     "autoload": {
