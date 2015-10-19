@@ -16,12 +16,16 @@ class Account extends EntityBase {
     protected $admin;
     protected $approved;
     protected $created;
+    protected $token;
+    protected $tokenvalid;
     protected $packages;
 
     
     public function setPassword($password)
     {
-        if(substr($password,0,1) !== "$2") $this->password = password_hash($password, PASSWORD_DEFAULT);
+        if(substr($password,0,1) !== "$2") {
+            $this->password = password_hash($password, PASSWORD_DEFAULT);
+        }
     }
     
     
@@ -36,6 +40,8 @@ class Account extends EntityBase {
         $builder->addField('admin',         'boolean',  ['nullable'=>true, 'default'=>false]);
         $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
         $builder->addField('created',       'datetime', ['nullable'=>true]);
+        $builder->addField('token',         'string', ['nullable'=>true]);
+        $builder->addField('tokenvalid',    'datetime', ['nullable'=>true]);
         $builder->addOneToMany('packages',  'Bolt\Extensions\Entity\Package', 'account');
 
     }

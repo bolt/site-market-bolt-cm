@@ -25,23 +25,18 @@
 <div class="ui form">
     <form action="" method="post">
         <div class="field">
-            <label>Email</label>
             {{form_row(form.email)}}
         </div>
         <div class="field">
-            <label>Name</label>
             {{form_row(form.name)}}
         </div>
         <div class="field">
-            <label>Username</label>
             {{form_row(form.username)}}
         </div>
-        {% for passwordField in form.password %}
-            <div class="field">
-                {{ form_label(passwordField, null, { 'attr': {'class': 'form-label'} }) }}
-                {{ form_widget(passwordField, { 'attr': {'class': 'form-input'} }) }}
-            </div>
-        {% endfor %}
+        <div class="field">
+            {{form_row(form.password)}}
+        </div>
+
         
         {{form_row(form.create, {attr:{class:'ui fluid large green submit button'}})}}
     </form>
