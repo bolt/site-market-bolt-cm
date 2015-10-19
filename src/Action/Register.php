@@ -33,9 +33,12 @@ class Register
 
         $form->handleRequest();
 
-        if ($form->isValid()) {
+        if ($form->isValid() && !$form->get('password')->getData()) {
+            $request->getSession()
+                ->getFlashBag()
+                ->add('error', 'The passwords entered do not match, please check and try again.');
+        } elseif ($form->isValid()) {
             $account = $form->getData();
-
             $repo = $this->em->getRepository(Entity\Account::class);
             $existing = $repo->findOneBy(['username' => $account->username]);
             if ($existing) {
