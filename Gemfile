@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'capistrano', '~> 3.1'
-gem 'capistrano-docker'
+gem 'capistrano-simpledeploy'
