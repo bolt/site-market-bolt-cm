@@ -28,6 +28,7 @@ use Composer\Config\JsonConfigSource;
 use Bolt\Extensions\Application;
 use Bolt\Extensions\Firewall;
 use Bolt\Extensions\Action;
+use Bolt\Extensions\Service\MailService;
 
 
 Symfony\Component\Debug\Debug::enable();
@@ -40,9 +41,9 @@ return [
     Application::class => DI\object(),
 
     Firewall::class => DI\object()
-        ->constructorParameter('restrict', DI\link('userfirewall')),    
+        ->constructorParameter('restrict', DI\get('userfirewall')),
     
-    'db' => DI\factory(function($c){
+    'db' => function($c){
         return [
             'driver'     => 'pdo_mysql',
             'dbname'     => 'bolt_extensions',
@@ -50,7 +51,7 @@ return [
             'user'       => 'bolt_extensions',
             'password'   => getenv('APP_DB_PASSWORD')
         ];
-    }),
+    },
 
 
     DB::class => DI\factory(function($c) {
@@ -85,7 +86,17 @@ return [
         return $m;
     }),
 
- 
+    "mail.defaults" => [
+        'from_email' => 'extensions@bolt.cm',
+        'from_name'  => 'Bolt Extensions'
+    ],
+
+    Mandrill::class => DI\object()
+        ->constructor( getenv('MANDRILL_API')),
+
+    MailService::class => DI\object()
+        ->constructorParameter("mailDefaults", DI\get("mail.defaults")),
+
     Composer::class => DI\factory(function($c){
         // Beware changing or removing this can have bad effects, since the server may run as the home user
         // If this is the case, the composer library will output an .htaccess that will deny access to the server!
@@ -117,6 +128,8 @@ return [
         return Forms::createFormFactoryBuilder()
             ->addType(new Bolt\Extensions\Form\PackageForm)
             ->addType(new Bolt\Extensions\Form\AccountForm)
+            ->addType(new Bolt\Extensions\Form\ResetForm)
+            ->addType(new Bolt\Extensions\Form\ResetPasswordForm)
             ->getFormFactory();
     }),
     
