@@ -1,15 +1,27 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: rossriley
- * Date: 18/10/15
- * Time: 14:45
+ * A password reset form class
+ *
+ * @author Ross Riley, riley.ross@gmail.com
  */
+
 
 namespace Bolt\Extensions\Form;
 
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 
-class ResetForm
+class ResetForm extends AbstractType
 {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add("email",      'text',     ['label'=>"Your email address"])
+            ->add('submit',     'submit',   ['label'=>"Send Reset Request"]);
+    }
 
+    public function getName()
+    {
+        return 'passwordreset';
+    }
 }
