@@ -12,6 +12,7 @@ $router->add("submitted", "/submitted")->setValues(['action'=>'Bolt\Extensions\A
 
 $router->add("register", "/register")->setValues(['action'=>'Bolt\Extensions\Action\Register']);
 $router->add("registered", "/registered")->setValues(['action'=>'Bolt\Extensions\Action\Registered']);
+$router->add("reset", "/reset")->setValues(['action'=>'Bolt\Extensions\Action\PasswordReset']);
 $router->add("admin", "/admin")->setValues(['action'=>'Bolt\Extensions\Action\Admin']);
 $router->add("login", "/login")->setValues(['action'=>'Bolt\Extensions\Action\Login']);
 $router->add("logout", "/logout")->setValues(['action'=>'Bolt\Extensions\Action\Logout']);
