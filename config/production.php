@@ -31,7 +31,6 @@ use Bolt\Extensions\Action;
 use Bolt\Extensions\Service\MailService;
 
 
-Symfony\Component\Debug\Debug::enable();
 @include_once 'env.php';
 return [
 
