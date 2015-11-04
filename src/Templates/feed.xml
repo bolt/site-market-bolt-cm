@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+    <channel>
+        <title>Bolt Extensions Marketplace</title>
+        <link>https://extensions.bolt.cm</link>
+        <description>Extensions and Themes for Bolt CMS</description>
+        {% for package in packages %}
+            <item>
+                <title><![CDATA[{{ package.title }}]]></title>
+                <link><![CDATA[https://extensions.bolt.cm/view/{{package.id}}]]></link>
+                <description><![CDATA[{{ package.description }}]]></description>
+                <pubDate>{{ package.created|date(r) }}</pubDate>
+            </item>
+       {% endfor %}
+    </channel>
+
+</rss>

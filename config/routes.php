@@ -36,6 +36,9 @@ $router->add("check", "/check/{build}")->setValues(['action'=>'Bolt\Extensions\A
 
 $router->add("ping", "/ping")->setValues(['action'=>'Bolt\Extensions\Action\Ping']);
 
+$router->add("feed", "/feed.xml")->setValues(['action'=>'Bolt\Extensions\Action\Feed']);
+
+
 $router->add(
     "stat.install",
     "/stat/install{/package,version}")
