@@ -27,8 +27,9 @@ class Feed
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->search(null, null, 'date');
 
-        return new Response($this->renderer->render("feed.xml", ['packages'=>$packages]));
+        $response = new Response($this->renderer->render("feed.xml", ['packages'=>$packages]));
+        $response->headers->set('Content-Type', 'text/xml');
 
-        
+        return $response;
     }
 }
