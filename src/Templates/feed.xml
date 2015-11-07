@@ -9,11 +9,13 @@
             <item>
                 <title><![CDATA[{{ package.title }}]]></title>
                 <link><![CDATA[https://extensions.bolt.cm/view/{{package.id}}]]></link>
-                <description><![CDATA[{{ package.description }}]]></description>
+                <description><![CDATA[<img src="{{packageIcon(package)}}" width="100" align="right">
+Type: {% if "bolt-extension" == package.type %}plugin{% else %}theme{% endif %}<br>
+{{ package.description }}
+<br><br>
+Source: <a href="{{ package.source }}">{{ package.source }}</a>
+                ]]></description>
                 <pubDate>{{ package.created|date(r) }}</pubDate>
-                <icon><![CDATA[{{packageIcon(package)}}]]></icon>
-                <source><![CDATA[{{ package.source }}]]></source>
-                <type>{% if "bolt-extension" == package.type %}<![CDATA[plugin]]>{% else %}<![CDATA[theme]]>{% endif %}</type>
             </item>
        {% endfor %}
     </channel>
