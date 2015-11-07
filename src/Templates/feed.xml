@@ -11,6 +11,9 @@
                 <link><![CDATA[https://extensions.bolt.cm/view/{{package.id}}]]></link>
                 <description><![CDATA[{{ package.description }}]]></description>
                 <pubDate>{{ package.created|date(r) }}</pubDate>
+                <icon><![CDATA[{{packageIcon(package)}}]]></icon>
+                <source><![CDATA[{{ package.source }}]]></source>
+                <type>{% if "bolt-extension" == package.type %}<![CDATA[plugin]]>{% else %}<![CDATA[theme]]>{% endif %}</type>
             </item>
        {% endfor %}
     </channel>
