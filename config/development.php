@@ -10,7 +10,7 @@ return array_merge($main, [
         'driver'     => 'pdo_mysql',
         'dbname'     => 'bolt_extensions',
         'host'       => '127.0.0.1',
-        'user'       => 'root',
+        'user'       => getenv('APP_DB_USER'),
         'password'   => '',
     ],
 
