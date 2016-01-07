@@ -1,17 +1,8 @@
-.DS_*
-._.DS_*
 /vendor
-cache/
 config/config.php
-public/uploads/*
-public/cache/*
 node_modules
-public/files
 satis.json
 public/satis
-tmp/
 config/github.json
 config/github*
 config/env.php
-.idea
-/.idea
