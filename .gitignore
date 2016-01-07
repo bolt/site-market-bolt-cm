@@ -13,3 +13,5 @@ tmp/
 config/github.json
 config/github*
 config/env.php
+.idea
+/.idea
