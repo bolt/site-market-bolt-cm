@@ -31,7 +31,7 @@ class JsonSearch
 
         $result = [];
         foreach ($packages as $package) {
-            $result = $this->formatPackage($package);
+            $result[] = $this->formatPackage($package);
         }
 
         return new JsonResponse($result);
