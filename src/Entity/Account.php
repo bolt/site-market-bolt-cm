@@ -32,7 +32,7 @@ class Account extends EntityBase {
     public static function loadMetadata(ClassMetadata $metadata)
     {
         $builder = new ClassMetadataBuilder($metadata);
-        $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
+        $builder->createField('id',         'guid')->makePrimaryKey()->generatedValue("UUID")->build();
         $builder->addField('email',         'string',   ['nullable'=>true]);
         $builder->addField('username',      'string',   ['nullable'=>true]);
         $builder->addField('password',      'string',   ['nullable'=>true]);

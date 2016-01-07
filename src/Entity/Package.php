@@ -142,7 +142,7 @@ class Package extends EntityBase {
     public static function loadMetadata(ClassMetadata $metadata)
     {
         $builder = new ClassMetadataBuilder($metadata);
-        $builder->createField('id',         'guid')->isPrimaryKey()->generatedValue("UUID")->build();
+        $builder->createField('id',         'guid')->makePrimaryKey()->generatedValue("UUID")->build();
         $builder->addField('source',        'string',   ['nullable'=>true]);
         $builder->addField('title',         'string',   ['nullable'=>true]);
         $builder->addField('name',          'string',   ['nullable'=>true]);
