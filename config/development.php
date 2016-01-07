@@ -11,7 +11,7 @@ return array_merge($main, [
         'dbname'     => 'bolt_extensions',
         'host'       => '127.0.0.1',
         'user'       => getenv('APP_DB_USER'),
-        'password'   => '',
+        'password'   => getenv('APP_DB_PASSWORD'),
     ],
 
 
