@@ -23,6 +23,7 @@ $router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\A
 $router->add("disable", "/disable/{package}")->setValues(['action'=>'Bolt\Extensions\Action\DisablePackage']);
 
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'search']);
+$router->add("jsonsearch", "/search.json")->setValues(['action'=>'Bolt\Extensions\Action\JsonSearch']);
 $router->add("browse", "/browse")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'browse']);
 $router->add("list", "/list.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages']);
 $router->add("list.popular", "/list/downloaded.json")->setValues(['action'=>'Bolt\Extensions\Action\ListPackages', 'sort'=>'downloaded']);

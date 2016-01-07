@@ -11,46 +11,50 @@ use Doctrine\ORM\EntityManager;
 use Bolt\Extensions\Entity;
 
 
-
-class Satis extends Command {
+class Satis extends Command
+{
 
     public $em;
-    
- 
-    public function __construct(EntityManager $em) {
-        if(false !== $em) $this->em = $em;
+
+
+    public function __construct(EntityManager $em)
+    {
+        if (false !== $em) {
+            $this->em = $em;
+        }
         parent::__construct();
     }
 
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName("bolt:satis")
-                ->setDescription("Compiles a satis.json file from all registered packages");
+            ->setDescription("Compiles a satis.json file from all registered packages");
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
-        
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+
         $repo = $this->em->getRepository(Entity\Package::class);
-        $packages = $repo->findBy(['approved'=>true]);
+        $packages = $repo->findBy(['approved' => true]);
         $repo = [
-            'name'=> 'Bolt Extensions Repository',
+            'name' => 'Bolt Extensions Repository',
             'homepage' => 'http://extensions.bolt.cm/satis',
             'repositories' => [],
-            'output-dir' => getcwd().'/public/satis/'
+            'output-dir' => getcwd() . '/public/satis/',
         ];
-        foreach($packages as $package) {
-            $repo['repositories'][] = ['type'=>'vcs', 'url'=> $package->source];
+        foreach ($packages as $package) {
+            $repo['repositories'][] = ['type' => 'vcs', 'url' => $package->source];
         }
         $satis = json_encode($repo);
-        $file = getcwd()."/satis.json";
+        $file = getcwd() . "/satis.json";
         $result = file_put_contents($file, $satis);
-        if($result) {
+        if ($result) {
             $output->writeln("<info>Satis configuration written to $file</info>");
         } else {
             $output->writeln("<error>Could not write Satis configuration to $file check file or directory permissions.</error>");
         }
     }
-    
 
 
 }

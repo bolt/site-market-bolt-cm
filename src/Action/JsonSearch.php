@@ -3,14 +3,13 @@ namespace Bolt\Extensions\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManager;
 use Twig_Environment;
 use Bolt\Extensions\Entity;
 
 
-class Feed
+class JsonSearch
 {
     
     public $em;
@@ -24,12 +23,12 @@ class Feed
     
     public function __invoke(Request $request, $params)
     {
+        $search = $request->get('q');
+        $type = $request->get('type') ?: null;
+        $order = $request->get('order') ?: null;
         $repo = $this->em->getRepository(Entity\Package::class);
-        $packages = $repo->search(null, null, 'date');
+        $packages = $repo->search($search, $type, $order);
 
-        $response = new Response($this->renderer->render("feed.xml", ['packages'=>$packages]));
-        $response->headers->set('Content-Type', 'text/xml');
-
-        return $response;
+        return new JsonResponse($packages);
     }
 }
