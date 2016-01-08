@@ -26,8 +26,8 @@
     <div class="ui inverted menu small no_radius" id="top_bar">
         <a class="item" href="/">Home</a>
         {% if request.get('isLoggedIn') %}
-        <a class="item" href="{{url('profile')}}">Your Profile</a>
-        <a class="item" href="{{url('logout')}}">Logout ({{request.get('user').name}})</a>
+        <a class="item" href="{{url('profile')}}">Your Profile ({{request.get('user').name}})</a>
+        <a class="item" href="{{url('logout')}}">Logout</a>
         {% else %}
         <a class="item" href="{{url('login')}}">Login</a>
         {% endif %}
