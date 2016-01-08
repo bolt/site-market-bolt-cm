@@ -19,7 +19,7 @@
 
             <div class="buttons_header">
                 {% if boltthemes and boltthemes.active %}
-                    <a class="ui orange button" href="{{ boltthemes.preview_page }}">View Live Preview</a>
+                    <a class="ui orange button" href="{{ boltthemes.preview_page }}" target="_blank">View Live Preview</a>
                 {% endif %}
                 <button class="ui toggle button" id="copy-button" data-content="{{ package.name }}" data-title="Click to copy the package name" data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard</button>
                 <button class="ui green button">FREE</button>
