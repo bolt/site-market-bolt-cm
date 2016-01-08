@@ -2,6 +2,7 @@
 namespace Bolt\Extensions\Action;
 
 use Aura\Router\Router;
+use Bolt\Extensions\Service\BoltThemes;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,13 +22,15 @@ class ViewPackage
     public $em;
     public $packageManager;
     public $router;
+    public $themeservice;
     
-    public function __construct(Twig_Environment $renderer, EntityManager $em, PackageManager $packageManager, Router $router)
+    public function __construct(Twig_Environment $renderer, EntityManager $em, PackageManager $packageManager, Router $router, BoltThemes $themeservice)
     {
         $this->renderer = $renderer;
         $this->em = $em;
         $this->packageManager = $packageManager;
         $this->router = $router;
+        $this->themeservice = $themeservice;
     }
     
     public function __invoke(Request $request, $params)
@@ -66,7 +69,8 @@ class ViewPackage
                     'package' => $package, 
                     'versions' => $versions,
                     'readme' => $readme, 
-                    'allowedit' => $allowedit
+                    'allowedit' => $allowedit,
+                    'boltthemes' => $this->themeservice->info($package)
                 ]
             )
         );

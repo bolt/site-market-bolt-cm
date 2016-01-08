@@ -15,29 +15,32 @@
             </h2>
             <!-- <div>Last Update: 13/08/2015</div> -->
         </div>
-        <div class="right floated right aligned six wide column">
+        <div class="right floated right aligned eight wide column">
 
             <div class="buttons_header">
+                {% if boltthemes and boltthemes.active %}
+                    <a class="ui orange button" href="{{ boltthemes.preview_page }}">View Live Preview</a>
+                {% endif %}
                 <button class="ui toggle button" id="copy-button" data-content="{{ package.name }}" data-title="Click to copy the package name" data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard</button>
                 <button class="ui green button">FREE</button>
-                </div>
+            </div>
 
-                <div class="ui right floated main menu">
-                    <a class="bug popup icon item" data-content="Downloads" href="#">
-                        <i class="download icon"> {{package.downloads|default(0)}}</i>
-                    </a>
+            <div class="ui right floated main menu">
+                <a class="bug popup icon item" data-content="Downloads" href="#">
+                    <i class="download icon"> {{package.downloads|default(0)}}</i>
+                </a>
 
                 <a class="bug popup icon item" {% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}{% else %}href="{{url('star',{'package':package.id})}}"{% endif %}{% endif %} data-content="{% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}You have starred this package.{% else %}Star this package !{% endif %}{% else %}You must be login to star packages.{% endif %}">
                     <i class="star icon"> {{package.stars|default(0)}}</i>
                 </a>
 
-                    <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}">
-                        {% if "github.com" in package.source %} 
-                            <i class="alternate github icon"></i> 
-                        {% else %} 
-                            <i class="alternate code icon"></i>
-                        {% endif %}
-                    </a>
+                <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}">
+                    {% if "github.com" in package.source %}
+                        <i class="alternate github icon"></i>
+                    {% else %}
+                        <i class="alternate code icon"></i>
+                    {% endif %}
+                </a>
             </div>
         </div>
     </div>
