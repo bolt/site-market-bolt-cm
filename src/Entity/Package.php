@@ -38,6 +38,10 @@ class Package extends EntityBase {
     
     public function getSource()
     {
+        if(! $this->source){
+            return null;
+        }
+
         return dirname($this->source)."/".basename($this->source, '.git');
     }
     
