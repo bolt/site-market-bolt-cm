@@ -46,6 +46,8 @@ class Satis extends Command
         foreach ($packages as $package) {
             $repo['repositories'][] = ['type' => 'vcs', 'url' => $package->source];
         }
+        $repo['repositories'][] = ['type'=>'vcs', 'url'=> 'https://github.com/wikimedia/composer-merge-plugin.git'];
+
         $satis = json_encode($repo);
         $file = getcwd() . "/satis.json";
         $result = file_put_contents($file, $satis);
