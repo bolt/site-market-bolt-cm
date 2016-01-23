@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="ui grid stackable">
-        <div class="eight wide column">     
+        <div class="eight wide column">
             <h2 class="ui header">
                 <img class="ui rounded image" src="{{packageIcon(package)}}">
                 <div class="content">
@@ -55,8 +55,8 @@
             <div class="gallery" id="scroll_gallery">
                 {% for image in package.screenshots%}
                     {% if "//" in image %}
-                        <img class="image_gallery" src="{{image}}">                    
-                    {% else %} 
+                        <img class="image_gallery" src="{{image}}">
+                    {% else %}
                         <img class="image_gallery" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{image}}">
                     {% endif %}
                 {% endfor %}
@@ -137,13 +137,13 @@
         <div class="sixteen wide column">
             <h2 class="ui left floated header">Changelog &amp; Releases</h2>
             <div class="ui clearing divider"></div>
-            
+
 
             <div class="ui accordion styled fluid gbody">
                 {% for version in versions.stable %}
                     <div class="title">
-                        <i class="dropdown icon"></i>{{version.version}} Released: {{ version.time|date('jS F Y') }}
-                    </div> 
+                        <i class="dropdown icon"></i>{{version.version}} Released: {{ version.time|date('jS F Y') }} (for Bolt {{version.require['bolt/bolt']}})
+                    </div>
                     <div class="content">
                         {% if version.release.body %}
                             <pre>{{ version.release.body }}</pre>
