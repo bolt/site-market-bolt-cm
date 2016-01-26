@@ -61,7 +61,7 @@ class ExtensionTestRunner extends Command {
         $build->status = "building";
         $this->em->flush();
         
-        $command = "ssh boltrunner@bolt.rossriley.co.uk 'cap production docker:run package=".$build->package->name." version=".$build->version;
+        $command = "ssh boltrunner@bolt.rossriley.co.uk 'bundle exec cap production docker:run package=".$build->package->name." version=".$build->version;
         if ($build->phpTarget) {
            $command .= " php=".$build->phpTarget."'"; 
         } else {
