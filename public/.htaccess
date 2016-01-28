@@ -1,6 +1,9 @@
 
 RewriteEngine on
 
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://extensions.bolt.cm%{REQUEST_URI} [R=301,L,NE]
+
 Rewritebase /
 
 RewriteCond %{REQUEST_FILENAME} !-f
