@@ -89,10 +89,14 @@
                 <div class="item">
                     <i class="large flag outline middle aligned icon"></i>
                     <div class="content">
-                        {% if versions.stable %}
-                            <a class="header">Latest Version</a>
-                            <div class="description">{{ versions.stable|first.version }}</div>
-                        {% endif %}
+                        <a class="header">Latest Version</a>
+                        <div class="description">
+                            {% if versions.stable %}
+                                {{ versions.stable|first.version }}
+                            {% else %}
+                                {{ versions.dev|first.version }}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
 
