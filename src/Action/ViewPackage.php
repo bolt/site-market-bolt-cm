@@ -38,7 +38,6 @@ class ViewPackage
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package']]);
 
-
         if(!$package) {
             $request->getSession()->getFlashBag()->add('error', "There was a problem accessing this package");
             return new RedirectResponse($this->router->generate('profile'));
