@@ -13,7 +13,6 @@ jQuery(document).ready(function($) {
 	  	url: "/view/" + packageID + "/releases",
 	  	context: $('.releases-wrapper')
 	}).done(function(response) {
-		console.log(response);
 	  	$(this).html(response);
 	});
 });
