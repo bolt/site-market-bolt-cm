@@ -144,21 +144,8 @@
             <h2 class="ui left floated header">Changelog &amp; Releases</h2>
             <div class="ui clearing divider"></div>
 
-
-            <div class="ui accordion styled fluid gbody">
-                {% for version in versions.stable %}
-                    <div class="title">
-                        <i class="dropdown icon"></i>{{version.version}} Released: {{ version.time|date('jS F Y') }} (for Bolt {{version.require['bolt/bolt']}})
-                    </div>
-                    <div class="content">
-                        {% if version.release.body %}
-                            <pre>{{ version.release.body }}</pre>
-                        {% else %}
-                            <p><strong>No release information available</strong></p>
-                            <p><a href="{{version.support.source}}">View source code</a> for this release</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+            <div class="releases-wrapper">
+                Loading releases ...
             </div>
         </div>
 
@@ -195,6 +182,10 @@
 {% endblock %}
 
 {% block header_extra_scripts %}
+<script>
+    var packageID = "{{ package.id}}";
+</script>
+
 <script src="/js/jquery.scrollbar.min.js"></script>
 <script src="//cdn.jsdelivr.net/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
 <script src="/js/extension-extras.js"></script>
