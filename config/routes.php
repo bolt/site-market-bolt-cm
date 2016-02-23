@@ -22,6 +22,8 @@ $router->add("edit", "/edit/{package}")->setValues(['action'=>'Bolt\Extensions\A
 $router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\Action\ViewPackage']);
 $router->add("disable", "/disable/{package}")->setValues(['action'=>'Bolt\Extensions\Action\DisablePackage']);
 
+$router->add("releases", "/view/{package}/releases")->setValues(['action'=>'Bolt\Extensions\Action\Releases']);
+
 $router->add("search", "/search")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'search']);
 $router->add("jsonsearch", "/search.json")->setValues(['action'=>'Bolt\Extensions\Action\JsonSearch']);
 $router->add("browse", "/browse")->setValues(['action'=>'Bolt\Extensions\Action\Search', 'type'=>'browse']);
