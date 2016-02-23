@@ -14,5 +14,6 @@ jQuery(document).ready(function($) {
 	  	context: $('.releases-wrapper')
 	}).done(function(response) {
 	  	$(this).html(response);
+	  	$('.ui.accordion').accordion();
 	});
 });
