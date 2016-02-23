@@ -103,9 +103,7 @@
                     <div class="content">
                         <a class="header">Last Update</a>
                         <div class="description">
-                            {% for version in versions.stable |slice(0,1) %}
-                                {{ version.time|date('jS F Y') }}
-                            {% endfor %}
+                            {{ package.updated|date('jS F Y') }}
                         </div>
                     </div>
                 </div>
