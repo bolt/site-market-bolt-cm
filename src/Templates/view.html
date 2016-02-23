@@ -91,10 +91,8 @@
                     <div class="content">
                         <a class="header">Latest Version</a>
                         <div class="description">
-                            {% if versions.stable %}
-                                {{ versions.stable|first.version }}
-                            {% else %}
-                                {{ versions.dev|first.version }}
+                            {% if package.versions %}
+                                {{ package.versions|first }}
                             {% endif %}
                         </div>
                     </div>
