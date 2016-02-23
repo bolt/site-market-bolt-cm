@@ -43,30 +43,14 @@ class ViewPackage
             return new RedirectResponse($this->router->generate('profile'));
         }
 
-        $versions = ['dev'=>[],'stable'=>[]];
         $allowedit = $package->account === $request->get('user');
         $readme = $this->packageManager->getReadme($package);
-
-        try {
-            $repo = $this->em->getRepository(Entity\VersionBuild::class);
-            $info = $this->packageManager->getInfo($package, false);
-            foreach($info as $ver) {
-                $build = $repo->findOneBy(['package'=>$package->id, 'version'=>$ver['version']]);
-                if($build) {
-                    $ver['build'] = $build;
-                }
-                $versions[$ver['stability']][] = $ver;
-            }
-        } catch (\Exception $e) {
-            $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-        }
 
         return new Response(
             $this->renderer->render(
                 "view.html",
                 [
                     'package' => $package,
-                    'versions' => $versions,
                     'readme' => $readme,
                     'allowedit' => $allowedit,
                     'boltthemes' => $this->themeservice->info($package)
