@@ -9,6 +9,7 @@ use Composer\Repository\VcsRepository;
 use Composer\Package\Dumper\ArrayDumper;
 use Composer\Package\LinkConstraint\VersionConstraint;
 use Composer\Util\RemoteFilesystem;
+use DateTime;
 
 class PackageManager
 {
@@ -60,7 +61,7 @@ class PackageManager
 
         $package->setRequirements(json_encode($information['require']));
         $package->setVersions(implode(',', $pv));
-        $package->updated = new \DateTime;
+        $package->updated = new DateTime;
         return $package;
     }
 

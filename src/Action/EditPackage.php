@@ -31,6 +31,10 @@ class EditPackage
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package'], 'account'=>$request->get('user')]);
+        if (!$package->token) {
+            $package->regenrateToken();
+            $this->em->flush();
+        }
         if(!$package) {
             $request->getSession()->getFlashBag()->add('error', "There was a problem accessing this package");
             return new RedirectResponse($this->router->generate('profile'));
@@ -46,7 +50,14 @@ class EditPackage
 
         }
 
-        return new Response($this->renderer->render("submit.html", ['form'=>$form->createView()]));
+        return new Response(
+            $this->renderer->render(
+                "submit.html",
+                [
+                    'form'=>$form->createView(),
+                    'hook' => $this->router->generate('hook').'?token='.$package->token
+                ]
+            ));
 
 
     }
