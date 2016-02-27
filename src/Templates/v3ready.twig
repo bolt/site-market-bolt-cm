@@ -12,6 +12,9 @@
                 Note that an extension marked as compatible may still have some bugs or be incomplete, it just
                 shows whether the author has published a version compatible with Bolt 3.0 or later.
             </p>
+            <p>
+                <strong>The tests are real-time and may take a while to run.</strong>
+            </p>
         </div>
         <div class="twelve wide column">
             <table class="ui celled striped table">
@@ -29,7 +32,11 @@
                         <td class="collapsing">{{ package.title }}</td>
                         <td class="collapsing">{{ package.name }}</td>
                         <td class="collapsing">{{ package.updated|humanTime(' ago') }}</td>
-                        <td class="collapsing"><div class="v3status" data-name="{{ package.name }}"></div></td>
+                        <td class="collapsing">
+                            <div class="v3status ui active" data-name="{{ package.name }}">
+                                <div class="ui text loader">Checking</div>
+                            </div>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
