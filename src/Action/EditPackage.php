@@ -49,13 +49,13 @@ class EditPackage
             $request->getSession()->getFlashBag()->add('success', "Your package was succesfully updated");
 
         }
-
+        
         return new Response(
             $this->renderer->render(
                 "submit.html",
                 [
                     'form'=>$form->createView(),
-                    'hook' => ($package->token) ? $this->router->generate('hook').'?token='.$package->token : false,
+                    'hook' => ($package->token) ? $request->server->get('HTTP_HOST') . $this->router->generate('hook').'?token='.$package->token : false,
                 ]
             ));
 
