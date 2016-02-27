@@ -13,9 +13,8 @@ jQuery(document).ready(function($) {
                 if (response.version.length > 0) {
                     var stability = 'dev';
                     $.each(response.version, function(v){
-                        if (v.stability == 'stable') {
+                        if (stability == 'dev' && v.stability == 'stable') {
                             stability = 'stable';
-                            return false;
                         }
                     });
                     if (stability == 'dev') {
