@@ -12,11 +12,13 @@ jQuery(document).ready(function($) {
             .done(function(response) {
                 if (response.version.length > 0) {
                     var stability = 'dev';
-                    $.each(response.version, function(v){
+                    $.each(response.version, function(key, v){
                         if (stability == 'dev' && v.stability == 'stable') {
                             stability = 'stable';
                         }
                     });
+                    console.log(response.package.name);
+                    console.log(stability);
                     if (stability == 'dev') {
                         status = 'orange';
                         icon = 'checkmark';
