@@ -32,7 +32,7 @@ class EditPackage
         $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id'=>$params['package'], 'account'=>$request->get('user')]);
         if (!$package->token) {
-            $package->regenrateToken();
+            $package->regenerateToken();
             $this->em->flush();
         }
         if(!$package) {
@@ -55,7 +55,7 @@ class EditPackage
                 "submit.html",
                 [
                     'form'=>$form->createView(),
-                    'hook' => $this->router->generate('hook').'?token='.$package->token
+                    'hook' => ($package->token) ? $this->router->generate('hook').'?token='.$package->token : false,
                 ]
             ));
 
