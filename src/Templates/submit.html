@@ -2,23 +2,23 @@
 
 
 {% block content %}
+<div class="ui grid stackable">
+	{% if hook %}
+		<div class="right floated right aligned four wide column">
+			<h4>Auto-Update Webhook</h4>
+			<p>Add this token to your Git Host's webhook service if available.</p>
+			<p><code>{{ hook }}</code></p>
+		</div>
+	{% endif %}
 
-{% if hook %}
-	<div class="right floated right aligned four wide column">
-		<h4>Auto-Update Webhook</h4>
-		<p>Add this token to your Git Host's webhook service if available.</p>
-		<p><code>{{ hook }}</code></p>
+	<div class="ui form">
+		<form action="" method="post">
+			{{form_row(form.title)}}
+			{{form_row(form.source)}}
+			{{form_row(form.description)}}
+			{{form_row(form.submit, {attr:{class:'ui fluid large vk submit button'}})}}
+		</form>
 	</div>
-{% endif %}
-
-<div class="ui form">
-	<form action="" method="post">
-		{{form_row(form.title)}}
-		{{form_row(form.source)}}
-		{{form_row(form.description)}}
-		{{form_row(form.submit, {attr:{class:'ui fluid large vk submit button'}})}}
-	</form>
 </div>
-
 
 {% endblock %}
