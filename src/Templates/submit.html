@@ -10,14 +10,15 @@
 			<p><code>{{ hook }}</code></p>
 		</div>
 	{% endif %}
-
-	<div class="ui form">
-		<form action="" method="post">
-			{{form_row(form.title)}}
-			{{form_row(form.source)}}
-			{{form_row(form.description)}}
-			{{form_row(form.submit, {attr:{class:'ui fluid large vk submit button'}})}}
-		</form>
+	<div class="eight wide column">
+		<div class="ui form">
+			<form action="" method="post">
+				{{form_row(form.title)}}
+				{{form_row(form.source)}}
+				{{form_row(form.description)}}
+				{{form_row(form.submit, {attr:{class:'ui fluid large vk submit button'}})}}
+			</form>
+		</div>
 	</div>
 </div>
 
