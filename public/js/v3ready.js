@@ -11,9 +11,23 @@ jQuery(document).ready(function($) {
             })
             .done(function(response) {
                 if (response.version.length > 0) {
-                    status = 'green';
-                    icon = 'checkmark';
-                    message = 'Bolt 3.0 Ready'
+                    var stability = 'dev';
+                    $.each(response.version, function(v){
+                        if (v.stability == 'stable') {
+                            stability = 'stable';
+                            return false;
+                        }
+                    });
+                    if (stability == 'dev') {
+                        status = 'orange';
+                        icon = 'checkmark';
+                        message = 'Bolt 3.0 Ready (dev)'
+                    } else {
+                        status = 'green';
+                        icon = 'checkmark';
+                        message = 'Bolt 3.0 Ready'
+                    }
+
                 } else {
                     status = 'red';
                     icon = 'remove';
