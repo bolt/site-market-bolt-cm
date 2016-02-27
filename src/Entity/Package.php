@@ -141,6 +141,12 @@ class Package extends EntityBase {
     {
         return $this->account->id;
     }
+
+    public function serializeToken()
+    {
+        return '';
+    }
+
     
     
     public static function loadMetadata(ClassMetadata $metadata)

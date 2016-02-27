@@ -43,6 +43,9 @@ class UpdatePackage
             if ($package->account->approved) {
                 $package->approved = true;
             }
+            if (!$package->token) {
+                $package->regenerateToken();
+            }
         } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('error', "Package has an invalid composer.json and will be disabled!");
             $request->getSession()->getFlashBag()->add('warning', implode(" : ", [$e->getMessage(),$e->getFile(),$e->getLine()]));

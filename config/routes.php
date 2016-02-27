@@ -38,6 +38,7 @@ $router->add("retest", "/retest/{package}/{version}")->setValues(['action'=>'Bol
 $router->add("check", "/check/{build}")->setValues(['action'=>'Bolt\Extensions\Action\TestBuildCheck']);
 
 $router->add("ping", "/ping")->setValues(['action'=>'Bolt\Extensions\Action\Ping']);
+$router->add("hook", "/hook")->setValues(['action'=>'Bolt\Extensions\Action\Hook']);
 
 $router->add("feed", "/feed.xml")->setValues(['action'=>'Bolt\Extensions\Action\Feed']);
 $router->add("v3ready", "/bolt3-ready")->setValues(['action'=>'Bolt\Extensions\Action\V3Ready']);

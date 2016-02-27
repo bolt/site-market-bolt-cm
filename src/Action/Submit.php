@@ -43,6 +43,7 @@ class Submit
         if ($form->isValid()) {
             $package = $form->getData();            
             $package->created = new \DateTime;
+            $package->regenerateToken();
             $package->account = $this->accountUser;
             if ($this->accountUser->approved) {
                 $package->approved = true;
