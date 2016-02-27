@@ -3,13 +3,6 @@
 
 {% block content %}
 <div class="ui grid stackable">
-	{% if hook %}
-		<div class="right floated right aligned four wide column">
-			<h4>Auto-Update Webhook</h4>
-			<p>Add this token to your Git Host's webhook service if available.</p>
-			<p><code>{{ hook }}</code></p>
-		</div>
-	{% endif %}
 	<div class="eight wide column">
 		<div class="ui form">
 			<form action="" method="post">
@@ -20,6 +13,14 @@
 			</form>
 		</div>
 	</div>
+	{% if hook %}
+		<div class="right floated right aligned four wide column">
+			<h4>Auto-Update Webhook</h4>
+			<p>Add this token to your Git Host's webhook service if available.</p>
+			<p><code>{{ hook }}</code></p>
+		</div>
+	{% endif %}
+
 </div>
 
 {% endblock %}
