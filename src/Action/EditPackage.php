@@ -55,7 +55,7 @@ class EditPackage
                 "submit.html",
                 [
                     'form'=>$form->createView(),
-                    'hook' => ($package->token) ? $request->server->get('HTTP_HOST') . $this->router->generate('hook').'?token='.$package->token : false,
+                    'hook' => ($package->token) ? 'https://'.$request->server->get('HTTP_HOST') . $this->router->generate('hook').'?token='.$package->token : false,
                 ]
             ));
 
