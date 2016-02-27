@@ -49,7 +49,7 @@ class EditPackage
             $request->getSession()->getFlashBag()->add('success', "Your package was succesfully updated");
 
         }
-        
+
         return new Response(
             $this->renderer->render(
                 "submit.html",
