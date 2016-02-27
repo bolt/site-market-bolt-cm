@@ -2,6 +2,7 @@
 namespace Bolt\Extensions\Action;
 
 use Aura\Router\Router;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -44,16 +45,24 @@ class Releases
         try {
             $repo = $this->em->getRepository(Entity\VersionBuild::class);
             $info = $this->packageManager->getInfo($package, false);
+            $i = 0;
             foreach($info as $ver) {
+                if ($i == 0) {
+                    $package->updated = new DateTime($ver['time']);
+                }
                 $build = $repo->findOneBy(['package'=>$package->id, 'version'=>$ver['version']]);
                 if($build) {
                     $ver['build'] = $build;
                 }
                 $versions[$ver['stability']][] = $ver;
+                $i++;
             }
+            $this->em->flush();
         } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('error', $e->getMessage());
         }
+
+
 
         return new Response(
             $this->renderer->render(
