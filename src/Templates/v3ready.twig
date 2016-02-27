@@ -33,8 +33,13 @@
                         <td class="collapsing">{{ package.name }}</td>
                         <td class="collapsing">{{ package.updated|humanTime(' ago') }}</td>
                         <td class="collapsing">
-                            <div class="v3status ui active" data-name="{{ package.name }}">
-                                <div class="ui text loader">Checking</div>
+                            <div class="v3status" data-name="{{ package.name }}">
+                                <div class="ui segment">
+                                    <div class="ui active inverted dimmer">
+                                        <div class="ui text loader">Checking</div>
+                                    </div>
+                                    <p></p>
+                                </div>
                             </div>
                         </td>
                     </tr>
