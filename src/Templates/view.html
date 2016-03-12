@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
+{% block ga_extras %}
+    ga('set', 'page', '/view/<package-uuid>');
+    ga('set', 'dimension2', '{{package.id}}');
+    ga('set', 'dimension3', '{{package.title}}');
+{% endblock %}
 
 {% block header_title %} | {{package.title}}{% endblock %}
 
