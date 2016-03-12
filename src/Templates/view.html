@@ -24,7 +24,13 @@
 
             <div class="buttons_header">
                 {% if boltthemes and boltthemes.active %}
-                    <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank">View Live Preview</a>
+                    <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank" onclick="ga('send', 'event', {
+                        eventCategory: 'Live Preview',
+                        eventAction: 'click',
+                        eventLabel: '{{package.title}}'
+                      });">
+                        View Live Preview
+                    </a>
                 {% endif %}
                 <button class="ui toggle button" id="copy-button" data-content="{{ package.name }}" data-title="Click to copy the package name" data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard</button>
                 <button class="ui green button">FREE</button>
