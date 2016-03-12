@@ -46,6 +46,11 @@
                     {% if package.isStarredBy(request.get('user')) %}
                     {% else %}
                          href="{{url('star',{'package':package.id})}}"
+                         onclick="ga('send', 'event', {
+                            eventCategory: 'Star Package',
+                            eventAction: 'click',
+                            eventLabel: '{{package.title}}'
+                          });"
                     {% endif %}
                 {% endif %}
                 data-content="
@@ -53,7 +58,7 @@
                     {% if package.isStarredBy(request.get('user')) %}
                         You have starred this package.
                     {% else %}
-                        Star this package !
+                        Star this package!
                     {% endif %}
                 {% else %}
                     You must be login to star packages.
