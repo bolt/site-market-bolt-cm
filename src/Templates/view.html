@@ -41,7 +41,24 @@
                     <i class="download icon"> {{package.downloads|default(0)}}</i>
                 </a>
 
-                <a class="bug popup icon item" {% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}{% else %}href="{{url('star',{'package':package.id})}}"{% endif %}{% endif %} data-content="{% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}You have starred this package.{% else %}Star this package !{% endif %}{% else %}You must be login to star packages.{% endif %}">
+                <a class="bug popup icon item"
+                {% if request.get('isLoggedIn') %}
+                    {% if package.isStarredBy(request.get('user')) %}
+                    {% else %}
+                         href="{{url('star',{'package':package.id})}}"
+                    {% endif %}
+                {% endif %}
+                data-content="
+                {% if request.get('isLoggedIn') %}
+                    {% if package.isStarredBy(request.get('user')) %}
+                        You have starred this package.
+                    {% else %}
+                        Star this package !
+                    {% endif %}
+                {% else %}
+                    You must be login to star packages.
+                {% endif %}
+                ">
                     <i class="star icon"> {{package.stars|default(0)}}</i>
                 </a>
 
