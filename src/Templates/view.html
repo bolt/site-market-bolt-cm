@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 
+{% block ga_extras %}
+    ga('set', 'page', '/view/<package-uuid>');
+    ga('set', 'dimension2', '{{package.id}}');
+    ga('set', 'dimension3', '{{package.title}}');
+{% endblock %}
 
 {% block header_title %} | {{package.title}}{% endblock %}
 
@@ -19,7 +24,13 @@
 
             <div class="buttons_header">
                 {% if boltthemes and boltthemes.active %}
-                    <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank">View Live Preview</a>
+                    <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank" onclick="ga('send', 'event', {
+                        eventCategory: 'Live Preview',
+                        eventAction: 'click',
+                        eventLabel: '{{package.title}}'
+                      });">
+                        View Live Preview
+                    </a>
                 {% endif %}
                 <button class="ui toggle button" id="copy-button" data-content="{{ package.name }}" data-title="Click to copy the package name" data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard</button>
                 <button class="ui green button">FREE</button>
@@ -30,7 +41,29 @@
                     <i class="download icon"> {{package.downloads|default(0)}}</i>
                 </a>
 
-                <a class="bug popup icon item" {% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}{% else %}href="{{url('star',{'package':package.id})}}"{% endif %}{% endif %} data-content="{% if request.get('isLoggedIn') %}{% if package.isStarredBy(request.get('user')) %}You have starred this package.{% else %}Star this package !{% endif %}{% else %}You must be login to star packages.{% endif %}">
+                <a class="bug popup icon item"
+                {% if request.get('isLoggedIn') %}
+                    {% if package.isStarredBy(request.get('user')) %}
+                    {% else %}
+                         href="{{url('star',{'package':package.id})}}"
+                         onclick="ga('send', 'event', {
+                            eventCategory: 'Star Package',
+                            eventAction: 'click',
+                            eventLabel: '{{package.title}}'
+                          });"
+                    {% endif %}
+                {% endif %}
+                data-content="
+                {% if request.get('isLoggedIn') %}
+                    {% if package.isStarredBy(request.get('user')) %}
+                        You have starred this package.
+                    {% else %}
+                        Star this package!
+                    {% endif %}
+                {% else %}
+                    You must be login to star packages.
+                {% endif %}
+                ">
                     <i class="star icon"> {{package.stars|default(0)}}</i>
                 </a>
 
