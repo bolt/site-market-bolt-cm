@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 
 {% block ga_extras %}
-    ga('set', 'page', '/test/<package-uuid>/<package-version>');
+    {% if request.get('route')['_name'] == 'test' %}
+        ga('set', 'page', '/test/<package-uuid>/<package-version>');
+    {% elseif request.get('route')['_name'] == 'retest' %}
+        ga('set', 'page', '/retest/<package-uuid>/<package-version>');
+    {% endif %}
+
     ga('set', 'dimension2', '{{package.id}}');
     ga('set', 'dimension3', '{{package.title}}');
     ga('set', 'dimension4', '{{build.version}}');
