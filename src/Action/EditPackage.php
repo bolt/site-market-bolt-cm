@@ -13,12 +13,12 @@ use Bolt\Extensions\Entity;
 
 class EditPackage
 {
-    
+
     public $renderer;
     public $em;
     public $forms;
     public $router;
-    
+
     public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, Router $router)
     {
         $this->renderer = $renderer;
@@ -26,7 +26,7 @@ class EditPackage
         $this->forms = $forms;
         $this->router = $router;
     }
-    
+
     public function __invoke(Request $request, $params)
     {
         $repo = $this->em->getRepository(Entity\Package::class);
@@ -39,7 +39,7 @@ class EditPackage
             $request->getSession()->getFlashBag()->add('error', "There was a problem accessing this package");
             return new RedirectResponse($this->router->generate('profile'));
         }
-       
+
         $form = $this->forms->create('package', $package);
         $form->handleRequest();
 
@@ -56,6 +56,7 @@ class EditPackage
                 [
                     'form'=>$form->createView(),
                     'hook' => ($package->token) ? 'https://'.$request->server->get('HTTP_HOST') . $this->router->generate('hook').'?token='.$package->token : false,
+                    'package' => $package
                 ]
             ));
 
