@@ -1,11 +1,16 @@
 {% extends "layout.html" %}
 
+{% block ga_extras %}
+    ga('set', 'page', '/tests/<package-uuid>');
+    ga('set', 'dimension2', '{{package.id}}');
+    ga('set', 'dimension3', '{{package.title}}');
+{% endblock %}
 
 {% block header_title %} | {{package.title}}{% endblock %}
 
 {% block content %}
     <div class="ui grid stackable centered">
-        <div class="twelve wide column">     
+        <div class="twelve wide column">
             <h2 class="ui header">
                 <img class="ui rounded image" src="/images/{{ package.type }}.png">
                 <div class="content">
@@ -14,7 +19,7 @@
                 </div>
             </h2>
         </div>
-        
+
         {% include '_package_testing.html' %}
 
     </div>
