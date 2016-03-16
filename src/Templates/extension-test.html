@@ -1,8 +1,20 @@
 {% extends "layout.html" %}
 
+{% block ga_extras %}
+    {% if request.get('route')['_name'] == 'test' %}
+        ga('set', 'page', '/test/<package-uuid>/<package-version>');
+    {% elseif request.get('route')['_name'] == 'retest' %}
+        ga('set', 'page', '/retest/<package-uuid>/<package-version>');
+    {% endif %}
+
+    ga('set', 'dimension2', '{{package.id}}');
+    ga('set', 'dimension3', '{{package.title}}');
+    ga('set', 'dimension4', '{{build.version}}');
+{% endblock %}
+
 {% block content %}
     <div class="ui grid stackable centered">
-        <div class="twelve wide column">     
+        <div class="twelve wide column">
             <h2 class="ui header">
                 <img class="ui rounded image" src="/images/{{ package.type }}.png">
                 <div class="content">
@@ -11,22 +23,22 @@
                 </div>
             </h2>
         </div>
-        
+
         <div class="eight wide column">
             <h3 class="ui-header">
                 {{ buildStatus(build) }} Test Summary for: {{build.package.name}} <small>({{ build.version }})</small>
             </h3>
-            
-            
+
+
             {% if build.status != 'complete' %}
                 <h3 class="ui header">Hold tight while we get a test version running.</h5>
-                
+
                 <div class="ui icon message">
                     <i class="notched circle loading icon"></i>
                     <div class="content">
                         <div class="header">Preparing test build</div>
-                        <div data-alert class="" 
-                            data-build="{{ build.id }}" 
+                        <div data-alert class=""
+                            data-build="{{ build.id }}"
                             data-build-building
                             data-build-url="{{url('test', {'package':build.package.id,'version':build.version})}}"
                         >
@@ -34,8 +46,8 @@
                         </div>
                     </div>
                 </div>
-            {% endif %}            
-            
+            {% endif %}
+
             {% for url, test in build.testResult %}
                 <div class="ui message {% if test.status =='OK' %}positive{%else%}error{%endif%}">
                     <div class="header"><strong>Test:</strong> {{ test.title }}</div>
@@ -53,7 +65,7 @@
         </div>
         <div class="four wide column">
             <div class="ui message">
-                
+
                 {% if build.status == 'complete' %}
                     <h4 class="ui header">Test your extension here</h4>
                     <p><a class="ui button small green" href="{{ build.url }}/bolt/">Launch App</a></p>
@@ -62,7 +74,7 @@
                         <strong>Username:</strong> 'admin'<br>
                         <strong>Password:</strong> 'password'
                     </p>
-                    
+
                     <p>If the url above has expired then you can trigger a retest using the link below.</p>
                     <form class="ui form" action="{{url('retest',{package:build.package.id,version:build.version})}}" method="post">
                         <div class="field">
@@ -81,7 +93,7 @@
                 {% endif %}
             </div>
         </div>
-        
+
     </div>
 
 {% endblock %}

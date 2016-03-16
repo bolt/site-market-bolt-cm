@@ -14,7 +14,8 @@ class Bolt extends \Twig_Extension
             'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus',['is_safe' => ['html']]),
             'gravatar'  => new \Twig_Function_Method($this, 'gravatar',['is_safe' => ['html']]),
             'packageIcon'  => new \Twig_Function_Method($this, 'packageIcon',['is_safe' => ['html']]),
-            'dump'  => new \Twig_Function_Method($this, 'printDump',['is_safe' => ['html']])
+            'dump'  => new \Twig_Function_Method($this, 'printDump',['is_safe' => ['html']]),
+            'getenv'  => new \Twig_Function_Method($this, 'getenv',['is_safe' => ['html']])
         );
     }
 
@@ -66,13 +67,13 @@ class Bolt extends \Twig_Extension
         if ($time instanceof \DateTime) {
            $time = $time->getTimestamp();
         }
-        
+
         if (!$time) {
             return 'never';
         }
-        
+
         $time = time() - $time; // to get the time since that moment
-        
+
         $tokens = array (
             31536000 => 'year',
             2592000 => 'month',
@@ -90,7 +91,7 @@ class Bolt extends \Twig_Extension
         }
 
     }
-    
+
     public function packageIcon($package)
     {
         if ($ico = $package->getIcon()) {
@@ -101,10 +102,15 @@ class Bolt extends \Twig_Extension
                 $ico = $ico . "/master/".$package->getIcon();
                 return $ico;
             }
-            
+
         }
-        
+
         return "/images/".$package->getType().".png";
+    }
+
+    public function getenv($key)
+    {
+        return getenv($key);
     }
 
     public function getName()

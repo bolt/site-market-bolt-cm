@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 
+{% block ga_extras %}
+    {% if request.get('route')['_name'] == 'edit' %}
+    	ga('set', 'page', '/edit/<package-uuid>');
+	    ga('set', 'dimension2', '{{package.id}}');
+	    ga('set', 'dimension3', '{{package.title}}');
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="ui grid stackable">

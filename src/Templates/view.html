@@ -67,7 +67,13 @@
                     <i class="star icon"> {{package.stars|default(0)}}</i>
                 </a>
 
-                <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}">
+                <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}"
+                    onclick="ga('send', 'event', {
+                            eventCategory: 'View Package Source Code',
+                            eventAction: 'click',
+                            eventLabel: '{{package.title}}'
+                          });"
+                >
                     {% if "github.com" in package.source %}
                         <i class="alternate github icon"></i>
                     {% else %}
