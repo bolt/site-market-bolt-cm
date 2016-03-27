@@ -51,6 +51,10 @@ class PackageManager
             $package->setSupport($information['support']);
         }
 
+        if(isset($information['suggest'])) {
+            $package->setSuggested($information['suggest']);
+        }
+
         if (isset($information['extra']) && isset($information['extra']['bolt-screenshots'])) {
             $package->setScreenshots(implode(',', $information['extra']['bolt-screenshots']) );
         }
