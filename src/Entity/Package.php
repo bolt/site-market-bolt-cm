@@ -29,13 +29,14 @@ class Package extends EntityBase {
     protected $screenshots;
     protected $icon;
     protected $support;
+    protected $suggested;
 
-    
+
     public function setSource($value)
     {
         $this->source = rtrim($value, "/");
     }
-    
+
     public function getSource()
     {
         if(! $this->source){
@@ -44,54 +45,54 @@ class Package extends EntityBase {
 
         return dirname($this->source)."/".basename($this->source, '.git');
     }
-    
+
     public function getRawSource()
     {
         return $this->source;
     }
-    
+
     public function setName($value)
     {
         $this->name = strtolower($value);
     }
-    
+
     public function setSupport($value)
     {
         $this->support = json_encode($value);
     }
-    
+
     public function getSupport()
     {
         json_decode($this->support, true);
     }
-    
+
     public function getKeywords()
     {
         return array_filter(explode(",",$this->keywords));
     }
-    
+
     public function getVersions()
     {
         return array_filter(explode(",",$this->versions));
     }
-    
+
     public function getRequirements()
     {
         return json_decode($this->requirements, true);
     }
-    
+
     public function getScreenshots()
     {
         return array_filter(explode(",",$this->screenshots));
     }
-    
-    
-    
+
+
+
     public function regenerateToken()
     {
         $this->token = bin2hex(openssl_random_pseudo_bytes(16));
     }
-    
+
     public function getDownloads($version = false)
     {
         $downloads = [];
@@ -109,12 +110,12 @@ class Package extends EntityBase {
         if($version && isset($downloads[$version])) {
             return $downloads[$version];
         }
-        
-        
+
+
         return $dcount;
-        
+
     }
-    
+
     public function getStars()
     {
         $stars = 0;
@@ -125,7 +126,7 @@ class Package extends EntityBase {
         }
         return $stars;
     }
-    
+
     public function isStarredBy($user)
     {
         $starred = false;
@@ -147,8 +148,8 @@ class Package extends EntityBase {
         return '';
     }
 
-    
-    
+
+
     public static function loadMetadata(ClassMetadata $metadata)
     {
         $builder = new ClassMetadataBuilder($metadata);
@@ -170,6 +171,7 @@ class Package extends EntityBase {
         $builder->addField('screenshots',   'text',     ['nullable'=>true]);
         $builder->addField('icon',          'text',     ['nullable'=>true]);
         $builder->addField('support',       'text',     ['nullable'=>true]);
+        $builder->addField('suggested',     'json_array',     ['nullable'=>true]);
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
         $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
         $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');
