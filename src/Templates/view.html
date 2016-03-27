@@ -193,6 +193,25 @@
         </div>
 
         <div class="six wide column">
+            {% if package.suggested %}
+                <h2 class="ui left floated header">Suggested Packages</h2>
+                <div class="ui clearing divider"></div>
+
+                <div class="ui relaxed large divided vertical list related_list">
+                    {% for suggest in suggested %}
+                        {% if suggest.package != package %}
+                            <div class="item">
+                                <img class="ui avatar image" src="/images/{{ suggest.package.type }}.png">
+                                <div class="content">
+                                    <a class="header" href="{{url('view',{'package':suggest.package.id})}}">{{suggest.package.title}}</a>
+                                    {{suggest.description}}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <h2 class="ui left floated header">Related</h2>
             <div class="ui clearing divider"></div>
 
