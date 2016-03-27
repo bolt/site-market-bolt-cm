@@ -66,6 +66,20 @@ class Package extends EntityBase {
         json_decode($this->support, true);
     }
 
+    public function setSuggested($value)
+    {
+        $this->suggested = json_encode($value);
+    }
+
+    public function getSuggested()
+    {
+        if ($this->suggested) {
+            return json_decode($this->suggested, true);
+        }
+
+        return [];
+    }
+
     public function getKeywords()
     {
         return array_filter(explode(",",$this->keywords));
