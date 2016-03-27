@@ -46,6 +46,18 @@ class ViewPackage
         $allowedit = $package->account === $request->get('user');
         $readme = $this->packageManager->getReadme($package);
 
+        $suggested = [];
+
+        foreach($package->suggested as $name => $description) {
+            $suggestedPackage = $repo->findOneBy(['name'=>$name]);
+            if ($suggestedPackage) {
+                $suggested[] = [
+                    'package' => $suggestedPackage,
+                    'description' => $description
+                ];
+            }
+        }
+
         return new Response(
             $this->renderer->render(
                 "view.html",
@@ -53,7 +65,8 @@ class ViewPackage
                     'package' => $package,
                     'readme' => $readme,
                     'allowedit' => $allowedit,
-                    'boltthemes' => $this->themeservice->info($package)
+                    'boltthemes' => $this->themeservice->info($package),
+                    'suggested' => $suggested
                 ]
             )
         );
