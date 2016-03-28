@@ -25,8 +25,8 @@
             <div class="buttons_header">
                 {% if boltthemes and boltthemes.active %}
                     <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank" onclick="ga('send', 'event', {
-                        eventCategory: 'Live Preview',
-                        eventAction: 'click',
+                        eventCategory: 'Package',
+                        eventAction: 'Live Preview',
                         eventLabel: '{{package.title}}'
                       });">
                         View Live Preview
@@ -47,8 +47,8 @@
                     {% else %}
                          href="{{url('star',{'package':package.id})}}"
                          onclick="ga('send', 'event', {
-                            eventCategory: 'Star Package',
-                            eventAction: 'click',
+                            eventCategory: 'Package',
+                            eventAction: 'Star',
                             eventLabel: '{{package.title}}'
                           });"
                     {% endif %}
@@ -69,8 +69,8 @@
 
                 <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}"
                     onclick="ga('send', 'event', {
-                            eventCategory: 'View Package Source Code',
-                            eventAction: 'click',
+                            eventCategory: 'Package',
+                            eventAction: 'View Source',
                             eventLabel: '{{package.title}}'
                           });"
                 >
