@@ -25,7 +25,7 @@
             <div class="buttons_header">
 
                 {% if request.get('isLoggedIn') and request.get('user').id == package.account.id %}
-                    <div class="buttons_header">
+                    <div style="margin-bottom: 10px;">
                         <a href="{{url('edit',{'package':package.id})}}" class="ui primary button">
                             Edit
                             <i class="right wrench icon"></i>
