@@ -23,6 +23,20 @@
         <div class="right floated right aligned eight wide column">
 
             <div class="buttons_header">
+
+                {% if request.get('isLoggedIn') and request.get('user').id == package.account.id %}
+                    <div style="margin-bottom: 10px;">
+                        <a href="{{url('edit',{'package':package.id})}}" class="ui primary button">
+                            Edit
+                            <i class="right wrench icon"></i>
+                        </a>
+                        <a href="{{url('update',{'package':package.id})}}" class="ui orange button">
+                            Update
+                            <i class="right repeat icon"></i>
+                        </a>
+                    </div>
+                {% endif %}
+
                 {% if boltthemes and boltthemes.active %}
                     <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank" onclick="ga('send', 'event', {
                         eventCategory: 'Package',
