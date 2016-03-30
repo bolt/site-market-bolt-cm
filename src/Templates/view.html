@@ -23,6 +23,20 @@
         <div class="right floated right aligned eight wide column">
 
             <div class="buttons_header">
+
+                {% if request.get('isLoggedIn') and request.get('user').id == package.account.id %}
+                    <div style="margin-bottom: 10px;">
+                        <a href="{{url('edit',{'package':package.id})}}" class="ui primary button">
+                            Edit
+                            <i class="right wrench icon"></i>
+                        </a>
+                        <a href="{{url('update',{'package':package.id})}}" class="ui orange button">
+                            Update
+                            <i class="right repeat icon"></i>
+                        </a>
+                    </div>
+                {% endif %}
+
                 {% if boltthemes and boltthemes.active %}
                     <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank" onclick="ga('send', 'event', {
                         eventCategory: 'Package',
@@ -121,14 +135,14 @@
                 <div class="item">
                     <i class="large file code outline middle aligned icon"></i>
                     <div class="content">
-                        <a class="header">Created</a>
+                        <span class="header">Created</span>
                         <div class="description">{{package.created.date|date('jS M Y')}}</div>
                     </div>
                 </div>
                 <div class="item">
                     <i class="large flag outline middle aligned icon"></i>
                     <div class="content">
-                        <a class="header">Latest Version</a>
+                        <span class="header">Latest Version</span>
                         <div class="description">
                             {% if package.versions %}
                                 {{ package.versions|first }}
@@ -140,7 +154,7 @@
                 <div class="item">
                     <i class="large history middle aligned icon"></i>
                     <div class="content">
-                        <a class="header">Last Update</a>
+                        <span class="header">Last Update</span>
                         <div class="description">
                             {{ package.updated|date('jS F Y') }}
                         </div>
@@ -149,7 +163,7 @@
                 <div class="item">
                     <i class="large folder outline middle aligned icon"></i>
                     <div class="content">
-                        <a class="header">Category</a>
+                        <span class="header">Category</span>
                         <div class="description">
                             {% if "bolt-extension" == package.type %}
                             Plugin
@@ -163,7 +177,7 @@
                 <div class="item">
                     <i class="large tags middle aligned icon"></i>
                     <div class="content">
-                        <a class="header">Tags</a>
+                        <span class="header">Tags</span>
                         <div class="description">
                             {% for tag in package.keywords %}
                                 <a href="{{url('browse')}}?q={{tag}}"><span class="label tags">{{tag}}</span></a>
