@@ -20,6 +20,9 @@ $router->add("profile", "/profile")->setValues(['action'=>'Bolt\Extensions\Actio
 $router->add("update", "/update/{package}")->setValues(['action'=>'Bolt\Extensions\Action\UpdatePackage']);
 $router->add("edit", "/edit/{package}")->setValues(['action'=>'Bolt\Extensions\Action\EditPackage']);
 $router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\Action\ViewPackage']);
+
+$router->add("api-stats", "/api/stats/{package}")->setValues(['action'=>'Bolt\Extensions\Action\PackageStatsApi']);
+
 $router->add("disable", "/disable/{package}")->setValues(['action'=>'Bolt\Extensions\Action\DisablePackage']);
 
 $router->add("releases", "/view/{package}/releases")->setValues(['action'=>'Bolt\Extensions\Action\Releases']);
