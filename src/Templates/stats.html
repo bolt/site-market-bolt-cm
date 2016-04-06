@@ -10,7 +10,7 @@
 
 <style>
 	.package-statistics {
-		margin-top: 20px;
+		margin-top: 40px;
 	}
 
 	.package-statistics .legend .line-legend {
@@ -44,7 +44,11 @@
 </div>
 <template id="chart-template">
 	<div class="package-statistics">
-		<h3>Foo</h3>
+		<h2>
+			{% raw %}
+			   {{ title }}
+			{% endraw %}
+		</h2>
 		<canvas v-el:canvas></canvas>
 		<div class="legend">
 			{% raw %}
@@ -65,6 +69,7 @@
 		new Vue({
 		  el: '#chart-template',
 		  data: {
+		  	title: '',
 		  	labels: [],
 		  	datasets: [],
 		  	legend: ''
@@ -77,6 +82,7 @@
 		  methods: {
 		  	loadData: function(){
 		  		this.$http.get('/api/stats/' + packageID, [], []).then(function (response) {
+		  			this.title = response.data.title;
 		         	this.labels = response.data.labels;
 		         	this.datasets = response.data.datasets;
 		         	this.makeChart();
