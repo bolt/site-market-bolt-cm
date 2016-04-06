@@ -44,7 +44,7 @@ class PackageStatsApi
 	    	'253, 243, 211',
 	    	'232, 232, 230',
 	    	'247, 247, 246',
-	    ]);
+	    ]); // http://www.milkpaint.com/color.html
 
 	    shuffle($this->colors);
     }
