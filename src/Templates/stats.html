@@ -12,6 +12,22 @@
 	.package-statistics {
 		margin-top: 20px;
 	}
+
+	.package-statistics .legend .line-legend {
+		list-style-type: none;
+	}
+
+	.package-statistics .legend .line-legend li{
+		display: inline;
+		margin-right: 20px;
+	}
+
+	.package-statistics .legend .line-legend span {
+		width: 10px;
+		height: 10px;
+		display: inline-block;
+		margin-right: 10px;
+	}
 </style>
 
 <div class="ui grid stackable">
@@ -26,9 +42,66 @@
         <!-- <div>Last Update: 13/08/2015</div> -->
     </div>
 </div>
+<template id="chart-template">
+	<div class="package-statistics">
+		<h3>Foo</h3>
+		<canvas v-el:canvas></canvas>
+		<div class="legend">
+			{% raw %}
+			   {{{ legend }}}
+			{% endraw %}
+		</div>
+	</div>
+</template>
 
-<div class="package-statistics">
-	<h3>Foo</h3>
-</div>
+{% endblock %}
 
+{% block footer_extra_scripts %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.20/vue.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
+	<script>
+		var packageID = "{{ package.id }}";
+		new Vue({
+		  el: '#chart-template',
+		  data: {
+		  	labels: [],
+		  	datasets: [],
+		  	legend: ''
+		  },
+
+		  ready: function(){
+		  	this.loadData();
+		  },
+
+		  methods: {
+		  	loadData: function(){
+		  		this.$http.get('/api/stats/' + packageID, [], []).then(function (response) {
+		         	this.labels = response.data.labels;
+		         	this.datasets = response.data.datasets;
+		         	this.makeChart();
+		      }, function (response) {
+		          // error callback
+		      });
+		  	},
+
+		  	makeChart: function(){
+
+		  		Chart.defaults.global.multiTooltipTemplate = "<%= value %> (<%=datasetLabel%>)";
+
+		  		var chart = new Chart(
+				    this.$els.canvas.getContext('2d')
+				).Line({
+					labels: this.labels,
+					datasets: this.datasets
+				},{
+				    maintainAspectRatio: true,
+				    responsive: true
+				});
+
+				this.legend = chart.generateLegend();
+		  	}
+		  }
+		});
+	</script>
 {% endblock %}

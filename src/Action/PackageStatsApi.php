@@ -17,11 +17,36 @@ class PackageStatsApi
     public $renderer;
     public $em;
     public $router;
+    protected $colors = [];
 
     public function __construct(EntityManager $em, Router $router)
     {
         $this->em = $em;
         $this->router = $router;
+        $this->colors = ([
+	    	'206, 148, 140',
+	    	'230, 181, 166',
+	    	'247, 198, 165',
+	    	'241, 201, 150',
+	    	'253, 231, 174',
+	    	'241, 215, 154',
+	    	'207, 203, 174',
+	    	'200, 212, 188',
+	    	'224, 227, 224',
+	    	'198, 203, 199',
+	    	'190, 205, 224',
+	    	'183, 196, 204',
+	    	'226, 230, 232',
+	    	'131, 140, 155',
+	    	'214, 198, 173',
+	    	'231, 214, 198',
+	    	'223, 208, 169',
+	    	'253, 243, 211',
+	    	'232, 232, 230',
+	    	'247, 247, 246',
+	    ]);
+
+	    shuffle($this->colors);
     }
 
     public function __invoke(Request $request, $params)
@@ -41,20 +66,6 @@ class PackageStatsApi
 
 		$data = $this->getAllTimeMonths($stats);
 
-
-
-        //foreach($months as $month) {
-        //	$labels[] = $month['date']->format('F Y');
-        //	foreach($month['stats'] as $version => $stats) {
-        //		$values[$month['date']->format('Y-m')][$version] = count($stats);
-        //	}
-        //}
-
-
-        //foreach($downloads as $ver=>$hits) {
-            //$downloads[$ver] = count($hits);
-        //}
-        // $stats[0]->recorded->format('F')
         return new JsonResponse($data);
     }
 
@@ -65,8 +76,6 @@ class PackageStatsApi
 		foreach ($stats as $stat) {
             if($stat->type == 'install') {
             	$months[$stat->recorded->format('Y-m')]['date'] = $stat->recorded;
-            	//$months[$stat->recorded->format('Y-m')]['stats'][$stat->version][] = $stat;
-                //$downloads[$stat->version][] = $stat->ip;
             }
         }
 
@@ -90,9 +99,24 @@ class PackageStatsApi
         	$labels[] = $month['date']->format('F Y');
         }
 
+        $colorIndex = 0;
         // get download counts for each months for each version
         foreach ($versions as $version) {
         	$item['label'] = $version;
+
+        	if(!isset($this->colors[$colorIndex])){
+        		$colorIndex = 0;
+        	}
+
+        	$item['fillColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
+        	$item['strokeColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        	$item['pointColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        	$item['pointStrokeColor'] = "#fff";
+        	$item['pointHighlightFill'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        	$item['pointHighlightStroke'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+
+        	$colorIndex++;
+
         	$item['data'] = [];
         	foreach($months as $month => $value) {
         		$item['data'][] = count($this->getInstallsByVersionAndDate($stats, $version, $month, 'Y-m'));
@@ -104,7 +128,7 @@ class PackageStatsApi
         	//'versions' => $versions,
         	//'months' => $months,
         	'labels' => $labels,
-        	'values' => $values
+        	'datasets' => $values
         ];
     }
 
@@ -119,4 +143,25 @@ class PackageStatsApi
 
         return $installs;
     }
+
+    /*
+	 * Found here: http://lab.clearpixel.com.au/2008/06/darken-or-lighten-colours-dynamically-using-php/
+     */
+    private function colourBrightness($colourstr, $steps) {
+		$colourstr = str_replace('#','',$colourstr);
+		  $rhex = substr($colourstr,0,2);
+		  $ghex = substr($colourstr,2,2);
+		  $bhex = substr($colourstr,4,2);
+
+		  $r = hexdec($rhex);
+		  $g = hexdec($ghex);
+		  $b = hexdec($bhex);
+
+		  $r = max(0,min(255,$r + $steps));
+		  $g = max(0,min(255,$g + $steps));
+		  $b = max(0,min(255,$b + $steps));
+
+		  return '#'.dechex($r).dechex($g).dechex($b);
+	}
+
 }
