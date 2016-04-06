@@ -16,7 +16,6 @@ class PackageStatsApi
 
     public $renderer;
     public $em;
-    public $forms;
     public $router;
 
     public function __construct(EntityManager $em, Router $router)
