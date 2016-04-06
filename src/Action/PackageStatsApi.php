@@ -144,24 +144,4 @@ class PackageStatsApi
         return $installs;
     }
 
-    /*
-	 * Found here: http://lab.clearpixel.com.au/2008/06/darken-or-lighten-colours-dynamically-using-php/
-     */
-    private function colourBrightness($colourstr, $steps) {
-		$colourstr = str_replace('#','',$colourstr);
-		  $rhex = substr($colourstr,0,2);
-		  $ghex = substr($colourstr,2,2);
-		  $bhex = substr($colourstr,4,2);
-
-		  $r = hexdec($rhex);
-		  $g = hexdec($ghex);
-		  $b = hexdec($bhex);
-
-		  $r = max(0,min(255,$r + $steps));
-		  $g = max(0,min(255,$g + $steps));
-		  $b = max(0,min(255,$b + $steps));
-
-		  return '#'.dechex($r).dechex($g).dechex($b);
-	}
-
 }
