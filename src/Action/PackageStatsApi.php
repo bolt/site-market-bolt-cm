@@ -62,9 +62,27 @@ class PackageStatsApi
             	]
             ]);
         }
-		$stats = $package->stats;
 
-		$data = $this->getAllTimeMonths($stats);
+        $group = $request->get('group');
+        $from = $request->get('from');
+        $to = $request->get('to');
+
+        $stats = $package->stats;
+
+        if($from != null && $to != null) {
+        	if($group === "months") {
+        		$stats = $this->filterByFromTo($stats, $from, $to, 'Y-m');
+        	}elseif ($group === "days") {
+        		$stats = $this->filterByFromTo($stats, $from, $to, 'Y-m');
+        	}
+        }
+
+		if($group === "months") {
+			$data = $this->getAllTimeMonths($stats);
+		}else{
+			$data = [];
+		}
+
 
         return new JsonResponse($data);
     }
@@ -131,6 +149,18 @@ class PackageStatsApi
         	'labels' => $labels,
         	'datasets' => $values
         ];
+    }
+
+    private function filterByFromTo($stats, $from, $to, $dateFormat)
+    {
+    	$filteredStats = [];
+    	foreach ($stats as $stat) {
+    		if ($stat->recorded->format($dateFormat) >= $from && $stat->recorded->format($dateFormat) <= $to) {
+    			$filteredStats[] = $stat;
+    		}
+    	}
+
+    	return $filteredStats;
     }
 
     private function getInstallsByVersionAndDate($stats, $version, $date, $dateFormat)
