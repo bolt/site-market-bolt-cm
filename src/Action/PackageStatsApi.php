@@ -84,7 +84,7 @@ class PackageStatsApi
         // get all the different downloaded package versions
         $versions = [];
         foreach($stats as $stat) {
-        	if($stat->version != null && $stat->version != ''){
+        	if($stat->type == 'install' && $stat->version != null && $stat->version != ''){
         		$versions[$stat->version] = 1;
         	}
         }
