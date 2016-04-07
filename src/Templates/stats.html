@@ -45,11 +45,76 @@
 <template id="chart-template">
 	<div class="package-statistics">
 
-		<h2>
-			{% raw %}
-			   {{ title }}
-			{% endraw %}
-		</h2>
+		<div class="ui grid stackable">
+	        <div class="eight wide column">
+				<h2>
+					{% raw %}
+					   {{ title }}
+					{% endraw %}
+				</h2>
+			</div>
+			<div class="right floated right aligned eight wide column">
+
+				<div style="display: inline-block;">
+					Group by: <br>
+					<select v-model="group">
+						<option value="months">Months</option>
+						<option value="days">Days</option>
+					</select>
+				</div>
+
+				<div style="display: inline-block;">
+					From: <br>
+					<select v-model="from.year">
+						<option value="2013">2013</option>
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+						<option value="2016">2016</option>
+					</select> <br>
+					<select v-model="from.month">
+						<option value="01">01</option>
+						<option value="02">02</option>
+						<option value="03">03</option>
+						<option value="04">04</option>
+						<option value="05">05</option>
+						<option value="06">06</option>
+						<option value="07">07</option>
+						<option value="08">08</option>
+						<option value="09">09</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+					</select>
+				</div>
+
+
+				<div style="display: inline-block;">
+					To: <br>
+					<select v-model="to.year">
+						<option value="2013">2013</option>
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+						<option value="2016">2016</option>
+					</select> <br>
+					<select v-model="to.month">
+						<option value="01">01</option>
+						<option value="02">02</option>
+						<option value="03">03</option>
+						<option value="04">04</option>
+						<option value="05">05</option>
+						<option value="06">06</option>
+						<option value="07">07</option>
+						<option value="08">08</option>
+						<option value="09">09</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+					</select>
+				</div>
+
+				<button @click="refresh()">Update</button>
+			</div>
+		</div>
 
 		<div class="loading" v-show="loading">
 			loading data ...
@@ -78,6 +143,7 @@
 		  	title: '',
 		  	labels: [],
 		  	datasets: [],
+		  	chart: null,
 		  	legend: '',
 		  	loading: true,
 		  	group: 'months',
@@ -109,6 +175,13 @@
 		  },
 
 		  methods: {
+
+		  	refresh: function(){
+		  		this.loading = true;
+		  		this.chart.destroy();
+		  		this.loadData();
+		  	},
+
 		  	loadData: function(){
 
 		  		var from = '';
@@ -137,7 +210,7 @@
 
 		  		Chart.defaults.global.multiTooltipTemplate = "<%= value %> (<%=datasetLabel%>)";
 
-		  		var chart = new Chart(
+			  	this.chart = new Chart(
 				    this.$els.canvas.getContext('2d')
 				).Line({
 					labels: this.labels,
@@ -147,7 +220,7 @@
 				    responsive: true
 				});
 
-				this.legend = chart.generateLegend();
+				this.legend = this.chart.generateLegend();
 		  	},
 
 		  	str_pad: function(n) {
