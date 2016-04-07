@@ -81,7 +81,7 @@
 
 		  methods: {
 		  	loadData: function(){
-		  		this.$http.get('/api/stats/' + packageID, [], []).then(function (response) {
+		  		this.$http.get('/api/stats/' + packageID + '?group=months', [], []).then(function (response) {
 		  			this.title = response.data.title;
 		         	this.labels = response.data.labels;
 		         	this.datasets = response.data.datasets;
