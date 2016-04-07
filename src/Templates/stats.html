@@ -44,11 +44,17 @@
 </div>
 <template id="chart-template">
 	<div class="package-statistics">
+
 		<h2>
 			{% raw %}
 			   {{ title }}
 			{% endraw %}
 		</h2>
+
+		<div class="loading" v-show="loading">
+			loading data ...
+		</div>
+
 		<canvas v-el:canvas></canvas>
 		<div class="legend">
 			{% raw %}
@@ -72,19 +78,55 @@
 		  	title: '',
 		  	labels: [],
 		  	datasets: [],
-		  	legend: ''
+		  	legend: '',
+		  	loading: true,
+		  	group: 'months',
+		  	from: {
+		  		year: '2015',
+		  		month: '01',
+		  		day: '01'
+		  	},
+		  	to: {
+		  		year: '2016',
+		  		month: '05',
+		  		day: '01'
+		  	}
+
 		  },
 
 		  ready: function(){
+		  	var today = new Date();
+
+		  	this.from.year = today.getFullYear() - 1;
+		  	this.from.month = this.str_pad(today.getMonth()+1);
+		  	this.from.day = this.str_pad(today.getDate());
+
+		  	this.to.year = today.getFullYear();
+		  	this.to.month = this.str_pad(today.getMonth()+1);
+		  	this.to.day = this.str_pad(today.getDate());
+
 		  	this.loadData();
 		  },
 
 		  methods: {
 		  	loadData: function(){
-		  		this.$http.get('/api/stats/' + packageID + '?group=months', [], []).then(function (response) {
+
+		  		var from = '';
+		  		var to = '';
+
+		  		if(this.group == 'months') {
+		  			from = this.from.year + '-' + this.from.month;
+		  			to = this.to.year + '-' + this.to.month;
+		  		}else if(this.group == 'days') {
+		  			from = this.from.year + '-' + this.from.month + '-' + this.from.day;
+		  			to = this.to.year + '-' + this.to.month + '-' + this.to.day;
+		  		}
+
+		  		this.$http.get('/api/stats/' + packageID + '?group=' + this.group + '&from=' + from + '&to=' + to, [], []).then(function (response) {
 		  			this.title = response.data.title;
 		         	this.labels = response.data.labels;
 		         	this.datasets = response.data.datasets;
+		         	this.loading = false;
 		         	this.makeChart();
 		      }, function (response) {
 		          // error callback
@@ -106,7 +148,11 @@
 				});
 
 				this.legend = chart.generateLegend();
-		  	}
+		  	},
+
+		  	str_pad: function(n) {
+			    return String("00" + n).slice(-2);
+			}
 		  }
 		});
 	</script>
