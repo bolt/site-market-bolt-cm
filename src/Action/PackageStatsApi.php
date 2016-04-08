@@ -66,8 +66,11 @@ class PackageStatsApi
         $group = $request->get('group');
         $from = $request->get('from');
         $to = $request->get('to');
+        $version = $request->get('version');
 
         $stats = $package->stats;
+
+        $allVersions = $this->getVersions($stats);
 
         if($from != null && $to != null) {
         	if($group === "months") {
@@ -78,6 +81,10 @@ class PackageStatsApi
         	}
         }
 
+        if($version != null && $version != ''){
+        	$stats = $this->filterByVersion($stats, $version);
+        }
+
 		if($group === "months") {
 			$data = $this->getAllTimeMonths($stats);
 		}elseif ($group === "days"){
@@ -86,7 +93,12 @@ class PackageStatsApi
 		}
 
 
-        return new JsonResponse($data);
+        return new JsonResponse(array_merge(
+        	$data,
+        	[
+        		'allVersions' => $allVersions
+        	]
+        ));
     }
 
     private function getAllTimeMonths($stats)
@@ -102,14 +114,7 @@ class PackageStatsApi
         ksort($months);
 
         // get all the different downloaded package versions
-        $versions = [];
-        foreach($stats as $stat) {
-        	if($stat->type == 'install' && $stat->version != null && $stat->version != ''){
-        		$versions[$stat->version] = 1;
-        	}
-        }
-        ksort($versions);
-        $versions = array_keys($versions);
+        $versions = $this->getVersions($stats);
 
         $labels = [];
         $values = [];
@@ -162,6 +167,32 @@ class PackageStatsApi
     	}
 
     	return $filteredStats;
+    }
+
+    private function filterByVersion($stats, $version)
+    {
+    	$filteredStats = [];
+    	foreach ($stats as $stat) {
+    		if ($stat->version == $version) {
+    			$filteredStats[] = $stat;
+    		}
+    	}
+
+    	return $filteredStats;
+    }
+
+    private function getVersions($stats)
+    {
+    	$versions = [];
+        foreach($stats as $stat) {
+        	if($stat->type == 'install' && $stat->version != null && $stat->version != ''){
+        		$versions[$stat->version] = 1;
+        	}
+        }
+        ksort($versions);
+        $versions = array_keys($versions);
+
+        return $versions;
     }
 
     private function getInstallsByVersionAndDate($stats, $version, $date, $dateFormat)

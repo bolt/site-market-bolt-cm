@@ -57,6 +57,15 @@
 					<option value="days">Days</option>
 				</select> <br> -->
 
+				Version:
+				<select v-model="version">
+					<option v-for="v in versions" :value="v">
+						{% raw %}
+						   {{ v ? v: 'All Versions' }}
+						{% endraw %}
+					</option>
+				</select> <br>
+
 				From:
 				<select v-model="from.year">
 					<option value="2013">2013</option>
@@ -132,6 +141,7 @@
 		  	title: '',
 		  	labels: [],
 		  	datasets: [],
+		  	versions: [],
 		  	chart: null,
 		  	legend: '',
 		  	loading: true,
@@ -145,7 +155,8 @@
 		  		year: '2016',
 		  		month: '05',
 		  		day: '01'
-		  	}
+		  	},
+		  	version: ''
 
 		  },
 
@@ -185,10 +196,14 @@
 		  			to = this.to.year + '-' + this.to.month + '-' + this.to.day;
 		  		}
 
-		  		this.$http.get('/api/stats/' + packageID + '?group=' + this.group + '&from=' + from + '&to=' + to, [], []).then(function (response) {
+		  		this.$http.get('/api/stats/' + packageID + '?group=' + this.group + '&from=' + from + '&to=' + to + '&version=' + this.version, [], []).then(function (response) {
 		  			this.title = response.data.title;
 		         	this.labels = response.data.labels;
 		         	this.datasets = response.data.datasets;
+		         	this.versions = response.data.allVersions;
+
+		         	this.versions.unshift('');
+
 		         	this.loading = false;
 		         	this.makeChart();
 		      }, function (response) {
