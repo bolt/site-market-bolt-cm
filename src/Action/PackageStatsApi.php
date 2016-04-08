@@ -73,13 +73,15 @@ class PackageStatsApi
         	if($group === "months") {
         		$stats = $this->filterByFromTo($stats, $from, $to, 'Y-m');
         	}elseif ($group === "days") {
-        		$stats = $this->filterByFromTo($stats, $from, $to, 'Y-m');
+        		// doing that sometime later
+        		//$stats = $this->filterByFromTo($stats, $from, $to, 'Y-m');
         	}
         }
 
 		if($group === "months") {
 			$data = $this->getAllTimeMonths($stats);
-		}else{
+		}elseif ($group === "days"){
+			// doing that sometime later
 			$data = [];
 		}
 
