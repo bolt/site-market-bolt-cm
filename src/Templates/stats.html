@@ -55,62 +55,55 @@
 			</div>
 			<div class="right floated right aligned eight wide column">
 
-				<div style="display: inline-block;">
-					Group by: <br>
-					<select v-model="group">
-						<option value="months">Months</option>
-						<option value="days">Days</option>
-					</select>
-				</div>
+				Group by:
+				<select v-model="group">
+					<option value="months">Months</option>
+					<option value="days">Days</option>
+				</select> <br>
 
-				<div style="display: inline-block;">
-					From: <br>
-					<select v-model="from.year">
-						<option value="2013">2013</option>
-						<option value="2014">2014</option>
-						<option value="2015">2015</option>
-						<option value="2016">2016</option>
-					</select> <br>
-					<select v-model="from.month">
-						<option value="01">01</option>
-						<option value="02">02</option>
-						<option value="03">03</option>
-						<option value="04">04</option>
-						<option value="05">05</option>
-						<option value="06">06</option>
-						<option value="07">07</option>
-						<option value="08">08</option>
-						<option value="09">09</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-					</select>
-				</div>
+				From:
+				<select v-model="from.year">
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+				</select>
+				<select v-model="from.month">
+					<option value="01">01</option>
+					<option value="02">02</option>
+					<option value="03">03</option>
+					<option value="04">04</option>
+					<option value="05">05</option>
+					<option value="06">06</option>
+					<option value="07">07</option>
+					<option value="08">08</option>
+					<option value="09">09</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select> <br>
 
-
-				<div style="display: inline-block;">
-					To: <br>
-					<select v-model="to.year">
-						<option value="2013">2013</option>
-						<option value="2014">2014</option>
-						<option value="2015">2015</option>
-						<option value="2016">2016</option>
-					</select> <br>
-					<select v-model="to.month">
-						<option value="01">01</option>
-						<option value="02">02</option>
-						<option value="03">03</option>
-						<option value="04">04</option>
-						<option value="05">05</option>
-						<option value="06">06</option>
-						<option value="07">07</option>
-						<option value="08">08</option>
-						<option value="09">09</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-					</select>
-				</div>
+				To:
+				<select v-model="to.year">
+					<option value="2013">2013</option>
+					<option value="2014">2014</option>
+					<option value="2015">2015</option>
+					<option value="2016">2016</option>
+				</select>
+				<select v-model="to.month">
+					<option value="01">01</option>
+					<option value="02">02</option>
+					<option value="03">03</option>
+					<option value="04">04</option>
+					<option value="05">05</option>
+					<option value="06">06</option>
+					<option value="07">07</option>
+					<option value="08">08</option>
+					<option value="09">09</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select> <br>
 
 				<button @click="refresh()">Update</button>
 			</div>
