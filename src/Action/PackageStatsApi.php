@@ -147,7 +147,6 @@ class PackageStatsApi
         return [
         	//'versions' => $versions,
         	//'months' => $months,
-        	'title' => 'Downloads grouped by month and version',
         	'labels' => $labels,
         	'datasets' => $values
         ];
