@@ -72,21 +72,12 @@ class PackageStatsApi
 
         $allVersions = $this->getVersions($stats);
 
-        if($from != null && $to != null) {
-        	if($group === "months") {
-        		$stats = $this->filterByFromTo($stats, $from, $to, 'Y-m');
-        	}elseif ($group === "days") {
-        		// doing that sometime later
-        		//$stats = $this->filterByFromTo($stats, $from, $to, 'Y-m');
-        	}
-        }
-
         if($version != null && $version != ''){
         	$stats = $this->filterByVersion($stats, $version);
         }
 
 		if($group === "months") {
-			$data = $this->getAllTimeMonths($stats);
+			$data = $this->getAllTimeMonths($stats, $from, $to);
 		}elseif ($group === "days"){
 			// doing that sometime later
 			$data = [];
@@ -101,17 +92,22 @@ class PackageStatsApi
         ));
     }
 
-    private function getAllTimeMonths($stats)
+    private function getAllTimeMonths($stats, $from, $to)
     {
-    	// getting all months with downloads
-		$months = [];
-		foreach ($stats as $stat) {
-            if($stat->type == 'install') {
-            	$months[$stat->recorded->format('Y-m')]['date'] = $stat->recorded;
-            }
-        }
+    	$months = [];
 
-        ksort($months);
+        if($from != null && $to != null) {
+        	$months = $this->getMonthsFromRange($from, $to);
+        }else{
+        	// getting all months with downloads
+			foreach ($stats as $stat) {
+	            if($stat->type == 'install') {
+	            	$months[$stat->recorded->format('Y-m')]['date'] = $stat->recorded;
+	            }
+	        }
+
+	        ksort($months);
+        }
 
         // get all the different downloaded package versions
         $versions = $this->getVersions($stats);
@@ -143,6 +139,7 @@ class PackageStatsApi
         	$colorIndex++;
 
         	$item['data'] = [];
+
         	foreach($months as $month => $value) {
         		$item['data'][] = count($this->getInstallsByVersionAndDate($stats, $version, $month, 'Y-m'));
         	}
@@ -205,6 +202,21 @@ class PackageStatsApi
         }
 
         return $installs;
+    }
+
+    private function getMonthsFromRange($from, $to)
+    {
+    	$months = [];
+    	$start    = (new \DateTime($from))->modify('first day of this month');
+		$end      = (new \DateTime($to))->modify('first day of next month');
+		$interval = \DateInterval::createFromDateString('1 month');
+		$period   = new \DatePeriod($start, $interval, $end);
+
+		foreach ($period as $dt) {
+		    $months[$dt->format('Y-m')]['date'] = $dt;
+		}
+
+		return $months;
     }
 
 }
