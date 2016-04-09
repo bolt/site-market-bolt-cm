@@ -52,8 +52,8 @@ class PackageStatsApi
     public function __invoke(Request $request, $params)
     {
         $repo = $this->em->getRepository(Entity\Package::class);
-        //$package = $repo->findOneBy(['id'=>$params['package'], 'account'=>$request->get('user')]);
-        $package = $repo->findOneBy(['id'=>$params['package']]);
+        $package = $repo->findOneBy(['id'=>$params['package'], 'account'=>$request->get('user')]);
+        //$package = $repo->findOneBy(['id'=>$params['package']]);
 
         if(!$package) {
             return new JsonResponse([

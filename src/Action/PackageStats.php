@@ -29,8 +29,8 @@ class PackageStats
     public function __invoke(Request $request, $params)
     {
         $repo = $this->em->getRepository(Entity\Package::class);
-        //$package = $repo->findOneBy(['id'=>$params['package'], 'account'=>$request->get('user')]);
-        $package = $repo->findOneBy(['id'=>$params['package']]);
+        $package = $repo->findOneBy(['id'=>$params['package'], 'account'=>$request->get('user')]);
+        //$package = $repo->findOneBy(['id'=>$params['package']]);
 
         if(!$package) {
             $request->getSession()->getFlashBag()->add('error', "There was a problem accessing this package");
