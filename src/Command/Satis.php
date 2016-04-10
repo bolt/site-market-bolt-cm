@@ -44,7 +44,7 @@ class Satis extends Command
             $repo['repositories'][] = ['type' => 'vcs', 'url' => $package->source];
         }
 
-        $repoFile = sprintf('%s/config/repos.yml', dirname(__DIR__));
+        $repoFile = sprintf('%s/config/repos.yml', dirname(dirname(__DIR__)));
         $repoConfig = Yaml::parse(file_get_contents($repoFile));
         foreach (array_keys($repoConfig) as $type) {
             foreach ($repoConfig[$type] as $url) {
