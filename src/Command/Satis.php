@@ -1,15 +1,13 @@
 <?php
+
 namespace Bolt\Extensions\Command;
 
+use Bolt\Extensions\Entity;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-
-use Doctrine\ORM\EntityManager;
-use Bolt\Extensions\Entity;
-
+use Symfony\Component\Yaml\Yaml;
 
 class Satis extends Command
 {
@@ -34,7 +32,6 @@ class Satis extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->findBy(['approved' => true]);
         $repo = [
@@ -46,7 +43,14 @@ class Satis extends Command
         foreach ($packages as $package) {
             $repo['repositories'][] = ['type' => 'vcs', 'url' => $package->source];
         }
-        $repo['repositories'][] = ['type'=>'vcs', 'url'=> 'https://github.com/wikimedia/composer-merge-plugin.git'];
+
+        $repoFile = sprintf('%s/config/repos.yml', dirname(__DIR__));
+        $repoConfig = Yaml::parse(file_get_contents($repoFile));
+        foreach (array_keys($repoConfig) as $type) {
+            foreach ($repoConfig[$type] as $url) {
+                $repo['repositories'][] = ['type' => $type, 'url'=> $url];
+            }
+        }
 
         $satis = json_encode($repo);
         $file = getcwd() . "/satis.json";
@@ -57,6 +61,4 @@ class Satis extends Command
             $output->writeln("<error>Could not write Satis configuration to $file check file or directory permissions.</error>");
         }
     }
-
-
 }
