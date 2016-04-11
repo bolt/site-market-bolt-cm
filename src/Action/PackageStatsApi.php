@@ -77,7 +77,7 @@ class PackageStatsApi
         }
 
 		if($group === "months") {
-			$data = $this->getAllTimeMonths($stats, $from, $to);
+			$data = $this->getDataGroupedByMonths($stats, $from, $to);
 		}elseif ($group === "days"){
 			// doing that sometime later
 			$data = [];
@@ -92,7 +92,7 @@ class PackageStatsApi
         ));
     }
 
-    private function getAllTimeMonths($stats, $from, $to)
+    private function getDataGroupedByMonths($stats, $from, $to)
     {
     	$months = [];
 
