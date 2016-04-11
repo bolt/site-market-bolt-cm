@@ -80,7 +80,7 @@ class PackageStatsApi
 			$data = $this->getDataGroupedByMonths($stats, $from, $to);
 		}elseif ($group === "days"){
 			// doing that sometime later
-			$data = [];
+			$data = $this->getDataGroupedByDays($stats, $from, $to);
 		}
 
 
@@ -154,6 +154,68 @@ class PackageStatsApi
         ];
     }
 
+    private function getDataGroupedByDays($stats, $from, $to)
+    {
+        $days = [];
+
+        if($from != null && $to != null) {
+            $days = $this->getDaysFromRange($from, $to);
+        }else{
+            // getting all months with downloads
+            foreach ($stats as $stat) {
+                if($stat->type == 'install') {
+                    $months[$stat->recorded->format('Y-m-d')]['date'] = $stat->recorded;
+                }
+            }
+
+            ksort($days);
+        }
+
+        // get all the different downloaded package versions
+        $versions = $this->getVersions($stats);
+
+        $labels = [];
+        $values = [];
+
+        // build the labels for the months
+        foreach($days as $day) {
+            $labels[] = $day['date']->format('Y.m.d');
+        }
+
+        $colorIndex = 0;
+        // get download counts for each months for each version
+        foreach ($versions as $version) {
+            $item['label'] = $version;
+
+            if(!isset($this->colors[$colorIndex])){
+                $colorIndex = 0;
+            }
+
+            $item['fillColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
+            $item['strokeColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+            $item['pointColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+            $item['pointStrokeColor'] = "#fff";
+            $item['pointHighlightFill'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+            $item['pointHighlightStroke'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+
+            $colorIndex++;
+
+            $item['data'] = [];
+
+            foreach($days as $day => $value) {
+                $item['data'][] = count($this->getInstallsByVersionAndDate($stats, $version, $day, 'Y-m-d'));
+            }
+            $values[] = $item;
+        }
+
+        return [
+            //'versions' => $versions,
+            //'months' => $months,
+            'labels' => $labels,
+            'datasets' => $values
+        ];
+    }
+
     private function filterByFromTo($stats, $from, $to, $dateFormat)
     {
     	$filteredStats = [];
@@ -217,6 +279,21 @@ class PackageStatsApi
 		}
 
 		return $months;
+    }
+
+    private function getDaysFromRange($from, $to)
+    {
+        $days = [];
+        $start    = (new \DateTime($from));
+        $end      = (new \DateTime($to))->modify('next day');
+        $interval = \DateInterval::createFromDateString('1 day');
+        $period   = new \DatePeriod($start, $interval, $end);
+
+        foreach ($period as $dt) {
+            $days[$dt->format('Y-m-d')]['date'] = $dt;
+        }
+
+        return $days;
     }
 
 }
