@@ -179,7 +179,7 @@ class PackageStatsApi
 
         // build the labels for the months
         foreach($days as $day) {
-            $labels[] = $day['date']->format('Y.m.d');
+            $labels[] = $day['date']->format('d F Y');
         }
 
         $colorIndex = 0;
