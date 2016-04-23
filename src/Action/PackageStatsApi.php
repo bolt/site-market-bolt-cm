@@ -68,18 +68,28 @@ class PackageStatsApi
         $to = $request->get('to');
         $version = $request->get('version');
 
-        $stats = $package->stats;
+        //$stats = $package->stats;
+
+        $fromDT = null;
+        $toDT = null;
+
+        if($from != null && $to != null) {
+            if($group === "months") {
+                $fromDT= (new \DateTime($from))->modify('first day of this month');
+                $toDT = (new \DateTime($to))->modify('first day of next month');
+            }elseif ($group === "days"){
+                $fromDT = (new \DateTime($from));
+                $toDT = (new \DateTime($to))->modify('next day');
+            }
+        }
+
+        $stats = $this->getStats($package, $version, $fromDT, $toDT);
 
         $allVersions = $this->getVersions($stats);
-
-        if($version != null && $version != ''){
-        	$stats = $this->filterByVersion($stats, $version);
-        }
 
 		if($group === "months") {
 			$data = $this->getDataGroupedByMonths($stats, $from, $to);
 		}elseif ($group === "days"){
-			// doing that sometime later
 			$data = $this->getDataGroupedByDays($stats, $from, $to);
 		}
 
@@ -92,6 +102,40 @@ class PackageStatsApi
         ));
     }
 
+    private function getStats($package, $version, $from = null, $to = null)
+    {
+        $repo = $this->em->getRepository(Entity\Stat::class);
+
+        $qb = $repo->createQueryBuilder('s')
+              ->where('s.type = :type')
+              ->andWhere('s.package = :package')
+              ->setParameter('type', 'install')
+              ->setParameter('package', $package->id);
+
+        if($from != null && $to != null) {
+            $from =$from->format("Y-m-d H:i:s");
+            $to =$to->format("Y-m-d H:i:s");
+
+            $qb = $qb
+                ->andWhere('s.recorded >= :from')
+                ->andWhere('s.recorded < :to')
+                ->setParameter('from', $from)
+                ->setParameter('to', $to);
+        }
+
+        if($version != null && $version != ''){
+            $qb = $qb
+                ->andWhere('s.version = :version')
+                ->setParameter('version', $version);
+        }
+
+        $q = $qb->getQuery();
+
+        $stats = $q->execute();
+
+        return $stats;
+    }
+
     private function getDataGroupedByMonths($stats, $from, $to)
     {
     	$months = [];
@@ -101,9 +145,7 @@ class PackageStatsApi
         }else{
         	// getting all months with downloads
 			foreach ($stats as $stat) {
-	            if($stat->type == 'install') {
-	            	$months[$stat->recorded->format('Y-m')]['date'] = $stat->recorded;
-	            }
+            	$months[$stat->recorded->format('Y-m')]['date'] = $stat->recorded;
 	        }
 
 	        ksort($months);
@@ -163,9 +205,7 @@ class PackageStatsApi
         }else{
             // getting all months with downloads
             foreach ($stats as $stat) {
-                if($stat->type == 'install') {
-                    $months[$stat->recorded->format('Y-m-d')]['date'] = $stat->recorded;
-                }
+                $days[$stat->recorded->format('Y-m-d')]['date'] = $stat->recorded;
             }
 
             ksort($days);
@@ -214,30 +254,6 @@ class PackageStatsApi
             'labels' => $labels,
             'datasets' => $values
         ];
-    }
-
-    private function filterByFromTo($stats, $from, $to, $dateFormat)
-    {
-    	$filteredStats = [];
-    	foreach ($stats as $stat) {
-    		if ($stat->recorded->format($dateFormat) >= $from && $stat->recorded->format($dateFormat) <= $to) {
-    			$filteredStats[] = $stat;
-    		}
-    	}
-
-    	return $filteredStats;
-    }
-
-    private function filterByVersion($stats, $version)
-    {
-    	$filteredStats = [];
-    	foreach ($stats as $stat) {
-    		if ($stat->version == $version) {
-    			$filteredStats[] = $stat;
-    		}
-    	}
-
-    	return $filteredStats;
     }
 
     private function getVersions($stats)
