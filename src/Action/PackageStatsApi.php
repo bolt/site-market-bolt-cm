@@ -68,8 +68,6 @@ class PackageStatsApi
         $to = $request->get('to');
         $version = $request->get('version');
 
-        //$stats = $package->stats;
-
         $fromDT = null;
         $toDT = null;
 
@@ -85,7 +83,7 @@ class PackageStatsApi
 
         $stats = $this->getStats($package, $version, $fromDT, $toDT);
 
-        $allVersions = $this->getVersions($stats);
+        $allVersions = $this->getAllVersions($package);
 
 		if($group === "months") {
 			$data = $this->getDataGroupedByMonths($stats, $from, $to);
@@ -266,6 +264,30 @@ class PackageStatsApi
         }
         ksort($versions);
         $versions = array_keys($versions);
+
+        return $versions;
+    }
+
+    private function getAllVersions($package)
+    {
+        $repo = $this->em->getRepository(Entity\Stat::class);
+
+        $qb = $repo->createQueryBuilder('s')
+              ->where('s.type = :type')
+              ->andWhere('s.package = :package')
+              ->setParameter('type', 'install')
+              ->setParameter('package', $package->id)
+              ->groupBy('s.version');
+
+        $q = $qb->getQuery();
+
+        $results = $q->execute();
+
+        $versions = [];
+
+        foreach($results as $result){
+            $versions[] = $result->version;
+        }
 
         return $versions;
     }
