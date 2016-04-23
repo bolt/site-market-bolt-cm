@@ -169,12 +169,7 @@ class PackageStatsApi
         		$colorIndex = 0;
         	}
 
-        	$item['fillColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
-        	$item['strokeColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-        	$item['pointColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-        	$item['pointStrokeColor'] = "#fff";
-        	$item['pointHighlightFill'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-        	$item['pointHighlightStroke'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        	$item = $this->applyColors($item, $colorIndex);
 
         	$colorIndex++;
 
@@ -229,12 +224,7 @@ class PackageStatsApi
                 $colorIndex = 0;
             }
 
-            $item['fillColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
-            $item['strokeColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-            $item['pointColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-            $item['pointStrokeColor'] = "#fff";
-            $item['pointHighlightFill'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-            $item['pointHighlightStroke'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+            $item = $this->applyColors($item, $colorIndex);
 
             $colorIndex++;
 
@@ -332,6 +322,18 @@ class PackageStatsApi
         }
 
         return $days;
+    }
+
+    private function applyColors($item, $colorIndex)
+    {
+        $item['fillColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
+        $item['strokeColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        $item['pointColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        $item['pointStrokeColor'] = "#fff";
+        $item['pointHighlightFill'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        $item['pointHighlightStroke'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+
+        return $item;
     }
 
 }
