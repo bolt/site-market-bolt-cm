@@ -21,7 +21,7 @@ $router->add("update", "/update/{package}")->setValues(['action'=>'Bolt\Extensio
 $router->add("edit", "/edit/{package}")->setValues(['action'=>'Bolt\Extensions\Action\EditPackage']);
 $router->add("view", "/view/{package}")->setValues(['action'=>'Bolt\Extensions\Action\ViewPackage']);
 
-$router->add("api-stats", "/api/stats/{package}")->setValues(['action'=>'Bolt\Extensions\Action\PackageStatsApi']);
+$router->add("api-stats", "/api/stats/{package}/downloads")->setValues(['action'=>'Bolt\Extensions\Action\PackageStatsApiDownloads']);
 $router->add("stats", "/stats/{package}")->setValues(['action'=>'Bolt\Extensions\Action\PackageStats']);
 
 $router->add("disable", "/disable/{package}")->setValues(['action'=>'Bolt\Extensions\Action\DisablePackage']);

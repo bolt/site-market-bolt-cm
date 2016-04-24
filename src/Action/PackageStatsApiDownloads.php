@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormFactory;
 use Bolt\Extensions\Entity;
 
 
-class PackageStatsApi
+class PackageStatsApiDownloads
 {
 
     public $renderer;
@@ -89,7 +89,9 @@ class PackageStatsApi
 			$data = $this->getDataGroupedByMonths($stats, $from, $to);
 		}elseif ($group === "days"){
 			$data = $this->getDataGroupedByDays($stats, $from, $to);
-		}
+		}else{
+            $data = $this->getDataGroupedByMonths($stats, $from, $to);
+        }
 
 
         return new JsonResponse(array_merge(

@@ -210,7 +210,7 @@
 		  			to = this.to.year + '-' + this.to.month + '-' + this.to.day;
 		  		}
 
-		  		this.$http.get('/api/stats/' + packageID + '?group=' + this.group + '&from=' + from + '&to=' + to + '&version=' + this.version, [], []).then(function (response) {
+		  		this.$http.get('/api/stats/' + packageID + '/downloads?group=' + this.group + '&from=' + from + '&to=' + to + '&version=' + this.version, [], []).then(function (response) {
 		  			this.title = response.data.title;
 		         	this.labels = response.data.labels;
 		         	this.datasets = response.data.datasets;
