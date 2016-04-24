@@ -656,3 +656,19 @@ th {
   height: 150px;
   overflow: hidden;
 }
+.package-statistics {
+  margin-top: 40px;
+}
+.package-statistics .legend .line-legend {
+  list-style-type: none;
+}
+.package-statistics .legend .line-legend li {
+  display: inline;
+  margin-right: 20px;
+}
+.package-statistics .legend .line-legend span {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-right: 10px;
+}
