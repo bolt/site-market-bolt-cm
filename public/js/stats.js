@@ -94,17 +94,43 @@ Vue.component('download-statistics', {
 
   	makeChart: function(){
 
-  		Chart.defaults.global.multiTooltipTemplate = "<%= value %> (<%=datasetLabel%>)";
+		Chart.defaults.global.legend.display = false;
+		//Chart.defaults.global.tooltips.mode = 'label';
 
-	  	this.chart = new Chart(
-		    this.$els.canvas.getContext('2d')
-		).Line({
-			labels: this.labels,
-			datasets: this.datasets
-		},{
-		    maintainAspectRatio: true,
-		    responsive: true
-		});
+		this.chart = new Chart(
+			this.$els.canvas.getContext('2d'),
+			{
+				type: "line",
+    			data: {
+    				labels: this.labels,
+    				datasets: this.datasets
+    			},
+    			options: {
+    				maintainAspectRatio: true,
+		    		responsive: true,
+		    		elements: {
+		    			point: {
+		    				radius: 3,
+		    			},
+		    			line: {
+		    				borderWidth: 2
+		    			}
+		    		},
+		    		legendCallback: function(chart){
+
+		    			var html = '<ul class="chart-0-legend">';
+
+		    			chart.legend.legendItems.forEach(function(item){
+		    				html += '<li><span style="background-color:' + item.strokeStyle + '"></span>' + item.text + '</li>';
+		    			});
+
+		    			html += '</ul>';
+
+		    			return html;
+		    		}
+    			}
+			}
+		);
 
 		this.legend = this.chart.generateLegend();
   	},

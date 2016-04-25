@@ -773,20 +773,43 @@ th {
   margin-top: 40px;
 }
 
-.package-statistics .legend .line-legend {
+.package-statistics .legend ul {
   list-style-type: none;
+  padding-left: 0px;
 }
 
-.package-statistics .legend .line-legend li {
-  display: inline;
+.package-statistics .legend ul li {
+  display: inline-block;
   margin-right: 20px;
+  min-width: 50px;
+  /*@media (max-width: 767px) {
+        display: inline;
+    }*/
 }
 
-.package-statistics .legend .line-legend span {
+.package-statistics .legend ul span {
   width: 10px;
   height: 10px;
   display: inline-block;
   margin-right: 5px;
+}
+
+.package-statistics .control .control_group {
+  margin-bottom: 10px;
+}
+
+.package-statistics .control .control_group select {
+  background: white;
+}
+
+.package-statistics .control .control_group.group_by select,
+.package-statistics .control .control_group.version select {
+  width: 100%;
+}
+
+.package-statistics .control .control_group.from select,
+.package-statistics .control .control_group.to select {
+  width: 31%;
 }
 /*!
  * # Semantic UI x.x - Site

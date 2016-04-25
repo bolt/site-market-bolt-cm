@@ -328,12 +328,17 @@ class PackageStatsApiDownloads
 
     private function applyColors($item, $colorIndex)
     {
-        $item['fillColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
-        $item['strokeColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-        $item['pointColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-        $item['pointStrokeColor'] = "#fff";
-        $item['pointHighlightFill'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
-        $item['pointHighlightStroke'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        $item['backgroundColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
+        $item['borderColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        $item['pointColor'] = '#fff';
+        $item['pointBackgroundColor'] = '#fff';
+        $item['pointBorderColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        $item['pointHoverBackgroundColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+        $item['pointHoverBorderColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
+
+        $item['pointBorderWidth'] = 2;
+        $item['pointHoverBorderWidth'] = 3;
+        $item['pointHitRadius'] = 10;
 
         return $item;
     }
