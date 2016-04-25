@@ -1,0 +1,111 @@
+<template id="package-download-statistics-template">
+	<div class="package-statistics">
+
+		<h2>Downloads</h2>
+		<div class="ui grid stackable">
+
+	        <div class="twelve wide column">
+	            <div class="loading" v-show="loading && !chart">
+					loading data ...
+				</div>
+
+				<div>
+					<canvas v-el:canvas></canvas>
+				</div>
+
+				<div class="legend">
+					{% raw %}
+					   {{{ legend }}}
+					{% endraw %}
+				</div>
+	        </div>
+
+	        <div class="four wide column">
+
+				<div class="control">
+					<div class="control_group group_by">
+						Group by: <br>
+						<select v-model="group" class="ui dropdown">
+							<option value="months">Months</option>
+							<option value="days">Days</option>
+						</select>
+					</div>
+
+					<div class="control_group version">
+						Version: <br>
+						<select v-model="version" class="ui dropdown">
+							<option v-for="v in versions" :value="v">
+								{% raw %}
+								   {{ v ? v : 'All Versions' }}
+								{% endraw %}
+							</option>
+						</select>
+					</div>
+
+					<div class="control_group from">
+						From: <br>
+						<select v-model="from.year" class="ui dropdown">
+							<option v-for='number in ["2013","2014","2015","2016"]' :value="number">
+								{% raw %}
+								   {{ number }}
+								{% endraw %}
+							</option>
+						</select>
+						<select v-model="from.month" class="ui dropdown">
+							<option v-for='number in ["01","02","03","04","05","06","07","08","09","10","11","12"]' :value="number">
+								{% raw %}
+								   {{ number }}
+								{% endraw %}
+							</option>
+						</select>
+						<select v-model="from.day" v-show="group == 'days'" class="ui dropdown">
+							<option v-for='number in ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]' :value="number">
+								{% raw %}
+								   {{ number }}
+								{% endraw %}
+							</option>
+						</select>
+					</div>
+
+					<div class="control_group to">
+						To: <br>
+						<select v-model="to.year" class="ui dropdown">
+							<option v-for='number in ["2013","2014","2015","2016"]' :value="number">
+								{% raw %}
+								   {{ number }}
+								{% endraw %}
+							</option>
+						</select>
+						<select v-model="to.month" class="ui dropdown">
+							<option v-for='number in ["01","02","03","04","05","06","07","08","09","10","11","12"]' :value="number">
+								{% raw %}
+								   {{ number }}
+								{% endraw %}
+							</option>
+						</select>
+						<select v-model="to.day" v-show="group == 'days'" class="ui dropdown">
+							<option v-for='number in ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"]' :value="number">
+								{% raw %}
+								   {{ number }}
+								{% endraw %}
+							</option>
+						</select>
+					</div>
+
+					<div class="control_group submit">
+						<button class="ui button primary"
+								@click="refresh()"
+								:disabled="loading"
+								{# :class="[(loading && chart) ? 'loading': '']" #}
+						>
+							<i class="spinner loading icon" v-show="loading && chart"></i>
+							Update
+						</button>
+					</div>
+				</div>
+
+	        </div>
+	     </div>
+
+	</div>
+</template>
