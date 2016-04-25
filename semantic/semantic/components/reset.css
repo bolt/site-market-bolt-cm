@@ -659,11 +659,11 @@ th {
 .package-statistics {
   margin-top: 40px;
 }
-.package-statistics .legend .line-legend {
+.package-statistics .legend ul {
   list-style-type: none;
   padding-left: 0px;
 }
-.package-statistics .legend .line-legend li {
+.package-statistics .legend ul li {
   display: inline-block;
   margin-right: 20px;
   min-width: 50px;
@@ -671,7 +671,7 @@ th {
         display: inline;
     }*/
 }
-.package-statistics .legend .line-legend span {
+.package-statistics .legend ul span {
   width: 10px;
   height: 10px;
   display: inline-block;
