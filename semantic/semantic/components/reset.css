@@ -664,17 +664,30 @@ th {
   padding-left: 0px;
 }
 .package-statistics .legend .line-legend li {
-  display: block;
+  display: inline-block;
   margin-right: 20px;
-}
-@media (max-width: 767px) {
-  .package-statistics .legend .line-legend li {
-    display: inline;
-  }
+  min-width: 50px;
+  /*@media (max-width: 767px) {
+        display: inline;
+    }*/
 }
 .package-statistics .legend .line-legend span {
   width: 10px;
   height: 10px;
   display: inline-block;
   margin-right: 5px;
+}
+.package-statistics .control .control_group {
+  margin-bottom: 10px;
+}
+.package-statistics .control .control_group select {
+  background: white;
+}
+.package-statistics .control .control_group.group_by select,
+.package-statistics .control .control_group.version select {
+  width: 100%;
+}
+.package-statistics .control .control_group.from select,
+.package-statistics .control .control_group.to select {
+  width: 31%;
 }
