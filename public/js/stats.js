@@ -59,7 +59,6 @@ Vue.component('download-statistics', {
 		}
 
   		this.loading = true;
-  		this.chart.destroy();
 
   		this.loadData();
   	},
@@ -86,6 +85,7 @@ Vue.component('download-statistics', {
          	this.versions.unshift('');
 
          	this.loading = false;
+
          	this.makeChart();
       }, function (response) {
           // error callback
@@ -96,6 +96,14 @@ Vue.component('download-statistics', {
 
 		Chart.defaults.global.legend.display = false;
 		//Chart.defaults.global.tooltips.mode = 'label';
+
+		if(this.chart){
+     		this.chart.data.labels = this.labels;
+     		this.chart.data.datasets = this.datasets;
+     		this.chart.update();
+     		this.legend = this.chart.generateLegend();
+     		return;
+     	}
 
 		this.chart = new Chart(
 			this.$els.canvas.getContext('2d'),
