@@ -5,7 +5,7 @@
 		<div class="ui grid stackable">
 
 	        <div class="twelve wide column">
-	            <div class="loading" v-show="loading">
+	            <div class="loading" v-show="loading && !chart">
 					loading data ...
 				</div>
 
@@ -93,7 +93,14 @@
 					</div>
 
 					<div class="control_group submit">
-						<button class="ui button primary" @click="refresh()">Update</button>
+						<button class="ui button primary"
+								@click="refresh()"
+								:disabled="loading"
+								{# :class="[(loading && chart) ? 'loading': '']" #}
+						>
+							<i class="spinner loading icon" v-show="loading && chart"></i>
+							Update
+						</button>
 					</div>
 				</div>
 
