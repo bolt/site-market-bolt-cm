@@ -6,11 +6,16 @@
         {
             "name": "Ross Riley",
             "email": "riley.ross@gmail.com"
+        },
+        {
+            "name": "Gawain Lynch",
+            "email": "gawain.lynch@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "require": {
-        "composer/composer": "^1.0@dev",
+        "bolt/bolt": "^3.0",
+        "composer/composer": "1.0.*@dev",
         "composer/satis": "^1.0@dev",
         "doctrine/orm": "^2.5",
         "fabpot/goutte": "^2.0",
@@ -18,27 +23,10 @@
         "mandrill/mandrill": "~1.0",
         "php-di/php-di": "^5.0",
         "rossriley/doctrine-migrations-helper": "^1.0",
-        "rossriley/doctrine-entity-base": "^1.0",
-        "rossriley/stack-aura-router": "^1.0@dev",
-        "stack/builder" : "^1.0",
-        "stack/url-map" : "^1.0",
-        "stack/run"     : "^1.0",
-        "stack/session": "^1.0@dev",
-        "symfony/debug": "^2.5",
-        "symfony/form": "^2.5",
-        "symfony/process": "^2.5",
-        "symfony/twig-bridge": "^2.5",
-        "symfony/doctrine-bridge": "^2.5",
-        "symfony/validator": "^2.5",
-        "symfony/var-dumper": "^2.7",
-        "twig/twig": "^1.1",
-        "ircmaxell/random-lib": "^1.1"
+        "rossriley/doctrine-entity-base": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "Bolt\\Extensions\\": "src",
-            "Bolt\\Extensions\\Tests\\": "tests"
         }
     }
-
 }
