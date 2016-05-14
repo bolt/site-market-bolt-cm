@@ -1,8 +1,9 @@
-/vendor
+app/cache/
 config/config.php
-node_modules
-satis.json
-public/satis
-config/github.json
+config/env.phpvendor
 config/github*
-config/env.php
+config/github.json
+node_modules
+public/satis
+satis.json
+vendor
