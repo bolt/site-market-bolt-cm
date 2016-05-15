@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extensions\Helper;
+namespace Bolt\Extension\Bolt\ExtensionSite\Twig;
 
 use forxer\Gravatar\Gravatar;
 use Twig_Extension as TwigExtension;
