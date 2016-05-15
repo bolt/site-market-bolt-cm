@@ -6,19 +6,21 @@
 #
 # If you're trying out Bolt, just keep it set to SQLite for now.
 database:
-    driver: sqlite
-    databasename: bolt
+    driver: mysql
+    databasename: bolt_extensions
+    username: bolt_extensions
+    password: bolt_extensions
 
 # The name of the website
-sitename: A sample site
-payoff: The amazing payoff goes here
+sitename:
+payoff:
 
 # The theme to use. Be sure to copy the {theme_path}/base-2016 folder, and
 # change the name here accordingly.
 #
 # Don't edit the templates in theme/base-2016, because they _will_ get updated
 # in next releases
-theme: base-2016
+theme: market-place
 
 # The locale that'll be used by the application. If no locale is set the
 # fallback locale is 'en_GB'. For available options, see:
@@ -272,7 +274,7 @@ debuglog:
 
 # Use strict variables. This will make Bolt complain if you use {{ foo }},
 # when foo doesn't exist.
-strict_variables: false
+strict_variables: true
 
 # There are several options for giving editors more options to insert images,
 # video, etc in the WYSIWYG areas. But, as you give them more options, that
