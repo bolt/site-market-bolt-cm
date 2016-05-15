@@ -1,11 +1,13 @@
 <?php
+
 namespace Bolt\Extensions\Helper;
+
 use forxer\Gravatar\Gravatar;
 use Symfony\Component\VarDumper\VarDumper;
+use Twig_Extension as TwigExtension;
 
-class Bolt extends \Twig_Extension
+class Extension extends TwigExtension
 {
-
     public $statusTemplate = '<div class="buildstatus ui icon label %s" data-content="%s"><i class="icon %s"></i> %s <span class="version">%s</span></div>';
 
     public function getFunctions()
