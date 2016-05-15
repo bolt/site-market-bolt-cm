@@ -3,7 +3,6 @@
 namespace Bolt\Extensions\Helper;
 
 use forxer\Gravatar\Gravatar;
-use Symfony\Component\VarDumper\VarDumper;
 use Twig_Extension as TwigExtension;
 use Twig_Markup as TwigMarkup;
 use Twig_SimpleFilter as TwigSimpleFilter;
@@ -12,6 +11,11 @@ use Twig_SimpleFunction as TwigSimpleFunction;
 class Extension extends TwigExtension
 {
     public $statusTemplate = '<div class="buildstatus ui icon label %s" data-content="%s"><i class="icon %s"></i> %s <span class="version">%s</span></div>';
+
+    public function getName()
+    {
+        return 'bolt_helper';
+    }
 
     /**
      * {@inheritdoc}
@@ -24,7 +28,6 @@ class Extension extends TwigExtension
             new  TwigSimpleFunction('buildStatus', [$this, 'buildStatus'], $safe),
             new  TwigSimpleFunction('gravatar',    [$this, 'gravatar'],    $safe),
             new  TwigSimpleFunction('packageIcon', [$this, 'packageIcon'], $safe),
-            new  TwigSimpleFunction('dump',        [$this, 'printDump'],   $safe),
             new  TwigSimpleFunction('getenv',      [$this, 'getenv'],      $safe),
         ];
     }
@@ -65,11 +68,6 @@ class Extension extends TwigExtension
     public function gravatar($email, $options = [])
     {
         return Gravatar::image($email);
-    }
-
-    public function printDump($var)
-    {
-        return VarDumper::dump($var);
     }
 
     public function humanTime($time, $suffix = '')
@@ -123,10 +121,5 @@ class Extension extends TwigExtension
     public function getenv($key)
     {
         return getenv($key);
-    }
-
-    public function getName()
-    {
-        return 'bolt_helper';
     }
 }
