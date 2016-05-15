@@ -12,44 +12,42 @@ class Extension extends TwigExtension
 
     public function getFunctions()
     {
-        return array(
-            'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus',['is_safe' => ['html']]),
-            'gravatar'  => new \Twig_Function_Method($this, 'gravatar',['is_safe' => ['html']]),
-            'packageIcon'  => new \Twig_Function_Method($this, 'packageIcon',['is_safe' => ['html']]),
-            'dump'  => new \Twig_Function_Method($this, 'printDump',['is_safe' => ['html']]),
-            'getenv'  => new \Twig_Function_Method($this, 'getenv',['is_safe' => ['html']])
-        );
+        return [
+            'buildStatus'  => new \Twig_Function_Method($this, 'buildStatus', ['is_safe' => ['html']]),
+            'gravatar'     => new \Twig_Function_Method($this, 'gravatar', ['is_safe' => ['html']]),
+            'packageIcon'  => new \Twig_Function_Method($this, 'packageIcon', ['is_safe' => ['html']]),
+            'dump'         => new \Twig_Function_Method($this, 'printDump', ['is_safe' => ['html']]),
+            'getenv'       => new \Twig_Function_Method($this, 'getenv', ['is_safe' => ['html']]),
+        ];
     }
 
     public function getFilters()
     {
-        return array(
-            'humanTime'  => new \Twig_SimpleFilter('humanTime', [$this, 'humanTime'])
-        );
+        return [
+            'humanTime'  => new \Twig_SimpleFilter('humanTime', [$this, 'humanTime']),
+        ];
     }
-
 
     public function buildStatus($build, $options = [])
     {
-        if(!$build || $build->testStatus === 'pending') {
-            return sprintf($this->statusTemplate, 'orange', "This version is currently awaiting a test result", 'wait', "not setup", '');
+        if (!$build || $build->testStatus === 'pending') {
+            return sprintf($this->statusTemplate, 'orange', 'This version is currently awaiting a test result', 'wait', 'not setup', '');
         }
 
-        if($build->phpTarget) {
+        if ($build->phpTarget) {
             $php = str_replace('php', '', $build->phpTarget);
-            $php = substr_replace($php, ".", 1, 0);
-            $php .= "+";
+            $php = substr_replace($php, '.', 1, 0);
+            $php .= '+';
         } else {
-            $php = "5.6";
+            $php = '5.6';
         }
 
-
-        if($build->testStatus === 'approved') {
-            return sprintf($this->statusTemplate, 'green', "This version is an approved build", 'checkmark', $build->testStatus, "for PHP ". $php);
+        if ($build->testStatus === 'approved') {
+            return sprintf($this->statusTemplate, 'green', 'This version is an approved build', 'checkmark', $build->testStatus, 'for PHP ' . $php);
         }
 
-        if($build->testStatus === 'failed') {
-            return sprintf($this->statusTemplate, 'red', "This version is not an approved build", 'remove', $build->testStatus, "for PHP ".$php);
+        if ($build->testStatus === 'failed') {
+            return sprintf($this->statusTemplate, 'red', 'This version is not an approved build', 'remove', $build->testStatus, 'for PHP ' . $php);
         }
     }
 
@@ -58,16 +56,15 @@ class Extension extends TwigExtension
         return Gravatar::image($email);
     }
 
-
     public function printDump($var)
     {
         return VarDumper::dump($var);
     }
 
-    public function humanTime($time, $suffix='')
+    public function humanTime($time, $suffix = '')
     {
         if ($time instanceof \DateTime) {
-           $time = $time->getTimestamp();
+            $time = $time->getTimestamp();
         }
 
         if (!$time) {
@@ -76,38 +73,40 @@ class Extension extends TwigExtension
 
         $time = time() - $time; // to get the time since that moment
 
-        $tokens = array (
+        $tokens = [
             31536000 => 'year',
-            2592000 => 'month',
-            604800 => 'week',
-            86400 => 'day',
-            3600 => 'hour',
-            60 => 'minute',
-            1 => 'second'
-        );
+            2592000  => 'month',
+            604800   => 'week',
+            86400    => 'day',
+            3600     => 'hour',
+            60       => 'minute',
+            1        => 'second',
+        ];
 
         foreach ($tokens as $unit => $text) {
-            if ($time < $unit) continue;
+            if ($time < $unit) {
+                continue;
+            }
             $numberOfUnits = floor($time / $unit);
-            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'').$suffix;
-        }
 
+            return $numberOfUnits . ' ' . $text . (($numberOfUnits > 1) ? 's' : '') . $suffix;
+        }
     }
 
     public function packageIcon($package)
     {
         if ($ico = $package->getIcon()) {
-            if (strpos("//", $ico)) {
+            if (strpos('//', $ico)) {
                 return $package->getIcon();
             } else {
                 $ico = str_replace('github.com', 'raw.githubusercontent.com', $package->getSource());
-                $ico = $ico . "/master/".$package->getIcon();
+                $ico = $ico . '/master/' . $package->getIcon();
+
                 return $ico;
             }
-
         }
 
-        return "/images/".$package->getType().".png";
+        return '/images/' . $package->getType() . '.png';
     }
 
     public function getenv($key)
@@ -119,5 +118,4 @@ class Extension extends TwigExtension
     {
         return 'bolt_helper';
     }
-
 }
