@@ -4,7 +4,6 @@ namespace Bolt\Extension\Bolt\MarketPlace\Twig;
 
 use forxer\Gravatar\Gravatar;
 use Twig_Extension as TwigExtension;
-use Twig_Markup as TwigMarkup;
 use Twig_SimpleFilter as TwigSimpleFilter;
 use Twig_SimpleFunction as TwigSimpleFunction;
 

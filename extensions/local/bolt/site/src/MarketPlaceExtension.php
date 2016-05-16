@@ -43,7 +43,7 @@ class MarketPlaceExtension extends SimpleExtension
         $app = $this->getContainer();
         
         return [
-            '/' => $app['extension_site.controller.frontend']
+            '/' => $app['extension_site.controller.frontend'],
         ];
     }
 }

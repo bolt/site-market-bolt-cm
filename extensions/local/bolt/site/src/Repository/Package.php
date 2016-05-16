@@ -5,7 +5,6 @@ use Doctrine\ORM\EntityRepository;
 
 class Package extends EntityRepository
 {
-
     public function mostDownloaded($limit = 10)
     {
         return $this->statCount('install', $limit);
@@ -18,28 +17,29 @@ class Package extends EntityRepository
     
     protected function statCount($type, $limit)
     {
-        $qb = $this->createQueryBuilder("p");
-        $qb->select("p, count(p.id) as hidden pcount")
-            ->innerJoin("p.stats", "s")
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p, count(p.id) as hidden pcount')
+            ->innerJoin('p.stats', 's')
             ->where('s.type = :type')
             ->andWhere('p.approved = true')
             ->groupBy('p.id')
-            ->orderBy('pcount',"DESC")
+            ->orderBy('pcount', 'DESC')
             ->setParameter('type', $type)
             ->setMaxResults($limit);
+
         return $qb->getQuery()->getResult();
     }
     
     public function search($keyword, $type = null, $order = null)
     {
         $packages = $this->createQueryBuilder('p')
-                ->select("p, count(p.id) as hidden pcount")
-                ->leftJoin("p.stats", "s")
+                ->select('p, count(p.id) as hidden pcount')
+                ->leftJoin('p.stats', 's')
                 ->where('p.approved = :status');
         
         if ($keyword !== null) {
             $packages->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search OR p.authors LIKE :search');
-            $packages->setParameter('search', "%".$keyword."%");
+            $packages->setParameter('search', '%' . $keyword . '%');
         }
         
         if ($type !== null) {
@@ -54,7 +54,7 @@ class Package extends EntityRepository
             case 'modified':
                 $packages->orderBy('p.updated', 'DESC');
                 break;
-			case 'name':
+            case 'name':
                     $packages->orderBy('p.title', 'ASC');
                     break;
             case 'downloads':
@@ -74,7 +74,7 @@ class Package extends EntityRepository
         $packages->groupBy('p.id');
         $packages->setParameter('status', true);
 
-        return $packages->getQuery()->getResult();           
+        return $packages->getQuery()->getResult();
     }
     
     public function fetchTags()
@@ -84,6 +84,7 @@ class Package extends EntityRepository
             ->where('p.approved = true')
             ->getQuery()
             ->getResult();
+
         return $packages;
     }
     
@@ -91,8 +92,8 @@ class Package extends EntityRepository
     {
         $allTags = $this->fetchTags();
         $tagList = [];
-        foreach($allTags as $tag) {
-            $tagList = array_merge($tagList, explode(",", $tag['keywords']) );
+        foreach ($allTags as $tag) {
+            $tagList = array_merge($tagList, explode(',', $tag['keywords']));
         }
         $tagList = array_filter($tagList);
         $tagList = array_diff($tagList, ['bolt']);
@@ -104,5 +105,4 @@ class Package extends EntityRepository
         // get the top frequent words
         return array_slice($tagList, 0, 10);
     }
-
 }

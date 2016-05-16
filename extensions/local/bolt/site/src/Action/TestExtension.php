@@ -1,23 +1,17 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
-use Doctrine\ORM\EntityManager;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Command\TestExtension as TestCommand;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Process\Process;
+use Doctrine\ORM\EntityManager;
 use Goutte\Client;
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\RequestException;
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Twig_Environment;
 
 class TestExtension
 {
-    
     public $renderer;
     public $em;
     
@@ -36,17 +30,17 @@ class TestExtension
        
         
         $repo = $this->em->getRepository(Entity\Package::class);
-        $p = $repo->findOneBy(['id'=>$package]);
+        $p = $repo->findOneBy(['id' => $package]);
         
         if (!$p) {
-            throw new \InvalidArgumentException("The extension provided does not exist", 1);
+            throw new \InvalidArgumentException('The extension provided does not exist', 1);
         }
         
         $repo = $this->em->getRepository(Entity\VersionBuild::class);
-        $build = $repo->findOneBy(['package'=>$p->id, 'version'=>$version]);
+        $build = $repo->findOneBy(['package' => $p->id, 'version' => $version]);
         
         if (!$build) {
-            $build = new Entity\VersionBuild;
+            $build = new Entity\VersionBuild();
             $build->package = $p;
             $build->version = $version;
             $build->status = 'waiting';
@@ -55,7 +49,7 @@ class TestExtension
         }
         
         if ($retest) {
-            if($request->request->get('phpTarget')) {
+            if ($request->request->get('phpTarget')) {
                 $build->phpTarget = $request->request->get('phpTarget');
             }
             $build->status = 'waiting';
@@ -67,13 +61,13 @@ class TestExtension
 
         
         $tests = [];
-        if($build->url) {
+        if ($build->url) {
             $canConnect = true;
             try {
                 $client = new Guzzle(['base_url' => $build->url]);
                 $response = $client->get('/');
             } catch (RequestException $e) {
-                if($e->getCode() == '502') {
+                if ($e->getCode() == '502') {
                     $canConnect = false;
                     $build->status = 'complete';
                     $build->testStatus = 'failed';
@@ -84,29 +78,25 @@ class TestExtension
                     $build->testResult = '';
                 }
                 $this->em->flush();
-
-                
             }
             
             if ($canConnect) {
                 try {
-                   $tests = $this->testFunctionality($build); 
+                    $tests = $this->testFunctionality($build);
                 } catch (\Exception $e) {
                     $build->status = 'failed';
                     $this->em->flush();
                 }
                 $build->status = 'complete';
                 $this->em->flush();
-
             }
-            
         }
-        return new Response($this->renderer->render("extension-test.twig", [
-            'build'=>$build, 
-            'tests'=>$tests,
-            'package' => $p
-        ]));
 
+        return new Response($this->renderer->render('extension-test.twig', [
+            'build'   => $build,
+            'tests'   => $tests,
+            'package' => $p,
+        ]));
     }
     
     protected function testFunctionality($build)
@@ -125,44 +115,46 @@ class TestExtension
     protected function testHomepage($build)
     {
         $client = new Client();
-        $crawler = $client->request('GET', $build->url.'/');
+        $crawler = $client->request('GET', $build->url . '/');
         $test['homepage'] = [
-            'title' => 'Can load site home page',
-            'response'=> $client->getResponse()->getStatus(),
-            'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
+            'title'    => 'Can load site home page',
+            'response' => $client->getResponse()->getStatus(),
+            'status'   => $client->getResponse()->getStatus() == '200' ? 'OK' : 'FAIL',
         ];
+
         return $test;
     }
     
     protected function testDashboard($build)
     {
         $client = new Client();
-        $crawler = $client->request('GET', $build->url.'/bolt');
+        $crawler = $client->request('GET', $build->url . '/bolt');
         $form = $crawler->selectButton('Log on')->form();
-        $crawler = $client->submit($form, array('username' => 'admin', 'password' => 'password'));
+        $crawler = $client->submit($form, ['username' => 'admin', 'password' => 'password']);
         $test['dashboard'] = [
-            'title' => 'Can login to admin dashboard',
-            'response'=> $client->getResponse()->getStatus(),
-            'status' => $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL"
+            'title'    => 'Can login to admin dashboard',
+            'response' => $client->getResponse()->getStatus(),
+            'status'   => $client->getResponse()->getStatus() == '200' ? 'OK' : 'FAIL',
         ];
 
         if (strpos($client->getRequest()->getUri(), 'login') !== false) {
-           $test['dashboard']['status'] = "FAIL"; 
+            $test['dashboard']['status'] = 'FAIL';
         }
+
         return $test;
     }
     
     protected function testExtensionLoaded($build)
     {
         $test['extension'] = [
-            'title' => 'Extension is loaded, appears in installed list',
-            'status' => 'FAIL'
+            'title'  => 'Extension is loaded, appears in installed list',
+            'status' => 'FAIL',
         ];
         $client = new Client();
-        $crawler = $client->request('GET', $build->url.'/bolt');
+        $crawler = $client->request('GET', $build->url . '/bolt');
         $form = $crawler->selectButton('Log on')->form();
-        $crawler = $client->submit($form, array('username' => 'admin', 'password' => 'password'));
-        $crawler = $client->request('GET', $build->url.'/bolt/extend/installed');
+        $crawler = $client->submit($form, ['username' => 'admin', 'password' => 'password']);
+        $crawler = $client->request('GET', $build->url . '/bolt/extend/installed');
         try {
             $json = $client->getResponse()->getContent()->getContents();
             $test['extension']['response'] = $client->getResponse()->getStatus();
@@ -170,10 +162,9 @@ class TestExtension
             $extensions = json_decode($json, true);
             foreach ($extensions['installed'] as $ext) {
                 if ($ext['name'] === $build->package->name && $ext['version'] === $build->version) {
-                    $test['extension']['status'] = $client->getResponse()->getStatus() == '200' ? "OK" : "FAIL";
-                }    
+                    $test['extension']['status'] = $client->getResponse()->getStatus() == '200' ? 'OK' : 'FAIL';
+                }
             }
-            
         } catch (\Exception $e) {
             return $test;
         }
@@ -187,14 +178,11 @@ class TestExtension
             return 'pending';
         }
         $status = 'approved';
-        foreach($build->testResult as $test) {
-            if ($test['status'] !== 'OK' ) {
+        foreach ($build->testResult as $test) {
+            if ($test['status'] !== 'OK') {
                 $status = 'failed';
             }
         }
         $build->testStatus = $status;
     }
-    
-    
-
 }

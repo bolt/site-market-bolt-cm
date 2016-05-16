@@ -1,22 +1,18 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Composer\Package\Loader\ArrayLoader;
-use Composer\Package\Loader\ValidatingArrayLoader;
-use Composer\Package\Loader\InvalidPackageException;
-use Twig_Environment;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\FormFactory;
+use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Aura\Router\Router;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Twig_Environment;
 
-class Submit 
+class Submit
 {
-    
     public $renderer;
     public $em;
     public $forms;
@@ -33,16 +29,15 @@ class Submit
     
     public function __invoke(Request $request)
     {
-
         $error = false;
         $this->accountUser = $request->get('user');
-        $entity = new Entity\Package;
+        $entity = new Entity\Package();
         $form = $this->forms->create('package', $entity);
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $package = $form->getData();            
-            $package->created = new \DateTime;
+            $package = $form->getData();
+            $package->created = new \DateTime();
             $package->regenerateToken();
             $package->account = $this->accountUser;
             if ($this->accountUser->approved) {
@@ -54,20 +49,16 @@ class Submit
                 $package = $this->packageManager->syncPackage($package);
                 $this->em->persist($package);
                 $this->em->flush();
-                return new RedirectResponse($this->router->generate('submitted')); 
+
+                return new RedirectResponse($this->router->generate('submitted'));
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('error', "Package has an invalid composer.json!");
+                $request->getSession()->getFlashBag()->add('error', 'Package has an invalid composer.json!');
                 $request->getSession()->getFlashBag()->add('warning', $e->getMessage());
-                $package->approved = false; 
+                $package->approved = false;
                 $error = 'invalid';
             }
-            
-            
         }
-        return new Response($this->renderer->render("submit.twig", ['form'=>$form->createView(), 'error'=>$error]));
 
+        return new Response($this->renderer->render('submit.twig', ['form' => $form->createView(), 'error' => $error]));
     }
-    
-    
-
 }

@@ -1,16 +1,14 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Bolt\Extension\Bolt\MarketPlace\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManager;
-use Bolt\Extension\Bolt\MarketPlace\Entity;
-
 
 class Hook
 {
-
     public $em;
     public $packageManager;
 
@@ -29,7 +27,7 @@ class Hook
 
         if ($package) {
             $package = $this->packageManager->syncPackage($package);
-            $response = ['status'=>'ok', 'response' => $package];
+            $response = ['status' => 'ok', 'response' => $package];
         } else {
             $response = ['status' => 'error', 'response' => 'package not found'];
         }
@@ -37,4 +35,3 @@ class Hook
         return new JsonResponse($response);
     }
 }
-

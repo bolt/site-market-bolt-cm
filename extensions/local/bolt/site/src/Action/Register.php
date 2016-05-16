@@ -2,14 +2,14 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Twig_Environment;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\FormFactory;
 use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Twig_Environment;
 
 class Register
 {
@@ -44,7 +44,7 @@ class Register
             if ($existing) {
                 $request->getSession()
                         ->getFlashBag()
-                        ->add('error', 'The username '.$account->username.' is already in use. Please try again with a different username');
+                        ->add('error', 'The username ' . $account->username . ' is already in use. Please try again with a different username');
             } else {
                 $account->created = new \DateTime();
                 $account->approved = true;

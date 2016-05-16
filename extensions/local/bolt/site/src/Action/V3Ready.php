@@ -1,16 +1,14 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Bolt\Extension\Bolt\MarketPlace\Entity;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Doctrine\ORM\EntityManager;
-use Bolt\Extension\Bolt\MarketPlace\Entity;
 use Twig_Environment;
-
 
 class V3Ready
 {
-
     public $em;
     public $renderer;
 
@@ -24,10 +22,8 @@ class V3Ready
     {
         $repo = $this->em->getRepository(Entity\Package::class);
 
-        $packages = $repo->findBy([],['title' => 'ASC']);
+        $packages = $repo->findBy([], ['title' => 'ASC']);
 
-        return new Response($this->renderer->render("v3ready.twig", ['packages' => $packages]));
-
+        return new Response($this->renderer->render('v3ready.twig', ['packages' => $packages]));
     }
 }
-

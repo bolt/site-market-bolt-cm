@@ -1,17 +1,14 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\EntityManager;
-use Twig_Environment;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Twig_Environment;
 
 class JsonSearch
 {
-
     public $em;
     public $renderer;
 
@@ -40,35 +37,35 @@ class JsonSearch
     private function formatPackage($package)
     {
         return [
-            'id' => $package->id,
-            'title' => $package->title,
-            'source' => $package->source,
-            'name' => $package->name,
-            'keywords' => $package->keywords,
-            'type' => $package->type,
+            'id'          => $package->id,
+            'title'       => $package->title,
+            'source'      => $package->source,
+            'name'        => $package->name,
+            'keywords'    => $package->keywords,
+            'type'        => $package->type,
             'description' => $package->description,
             //'documentation' => $package->documentation,
-            'approved' => $package->approved,
+            'approved'     => $package->approved,
             'requirements' => $package->requirements,
-            'versions' => $package->versions,
-            'created' => $package->created,
-            'updated' => $package->updated,
-            'authors' => $package->authors,
-            'user' => [
-                'id' => $package->account->id,
-                'username' => $package->account->username,
-                'name' => $package->account->name,
+            'versions'     => $package->versions,
+            'created'      => $package->created,
+            'updated'      => $package->updated,
+            'authors'      => $package->authors,
+            'user'         => [
+                'id'         => $package->account->id,
+                'username'   => $package->account->username,
+                'name'       => $package->account->name,
                 'email_hash' => [
                     'type' => 'md5',
-                    'hash' => md5($package->account->email)
-                ]
+                    'hash' => md5($package->account->email),
+                ],
             ],
             //'token' => $package->token,
             //'stats' => $package->stats,
             //'builds' => $package->builds,
             'screenshots' => $package->screenshots,
-            'icon' => $package->icon,
-            'support' => $package->support,
+            'icon'        => $package->icon,
+            'support'     => $package->support,
         ];
     }
 }

@@ -21,8 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Environment;
 
-
-
 class PasswordReset
 {
     public $renderer;
@@ -52,8 +50,8 @@ class PasswordReset
                 $request->getSession()
                     ->getFlashBag()
                     ->add('error', 'The passwords entered do not match, please check and try again.');
-                return new Response($this->renderer->render('reset-password.twig', ['tokenValid'=> true, 'form' => $form->createView()]));
 
+                return new Response($this->renderer->render('reset-password.twig', ['tokenValid' => true, 'form' => $form->createView()]));
             } elseif ($tokenAccount && $form->isValid()) {
                 $tokenAccount = $repo->findOneBy(['token' => $request->get('token')]);
                 $tokenAccount->setPassword($form->get('password')->getData());
@@ -62,12 +60,11 @@ class PasswordReset
                 $this->em->persist($tokenAccount);
                 $this->em->flush();
 
-                return new Response($this->renderer->render('reset-password.twig', ['resetSuccessful'=> true]));
+                return new Response($this->renderer->render('reset-password.twig', ['resetSuccessful' => true]));
             } elseif ($tokenAccount && ($current < $tokenAccount->tokenvalid)) {
-
-                return new Response($this->renderer->render('reset-password.twig', ['tokenValid'=> true, 'form' => $form->createView()]));
+                return new Response($this->renderer->render('reset-password.twig', ['tokenValid' => true, 'form' => $form->createView()]));
             } else {
-                return new Response($this->renderer->render('reset-password.twig', ['tokenValid'=> false]));
+                return new Response($this->renderer->render('reset-password.twig', ['tokenValid' => false]));
             }
         }
 
@@ -78,10 +75,9 @@ class PasswordReset
         if ($form->isValid()) {
             $account = $form->getData();
 
-
             $account = $repo->findOneBy(['email' => $account['email']]);
 
-            $factory = new Factory;
+            $factory = new Factory();
             $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
             $token = $generator->generateString(32, Generator::CHAR_ALNUM);
             $account->token = $token;
@@ -93,15 +89,12 @@ class PasswordReset
             $this->em->persist($account);
             $this->em->flush();
 
-            $response = $this->mailservice->sendTemplate('reset', $account->email, $account->name, ['account'=>$account]);
+            $response = $this->mailservice->sendTemplate('reset', $account->email, $account->name, ['account' => $account]);
             if (isset($response[0]['status']) && $response[0]['status']) {
                 return new Response($this->renderer->render('reset-requested.twig'));
             }
-
-
         }
 
         return new Response($this->renderer->render('reset.twig', ['form' => $form->createView()]));
     }
-
 }

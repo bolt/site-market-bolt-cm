@@ -6,8 +6,8 @@ use Doctrine\Entity\Base as EntityBase;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
-class Package extends EntityBase {
-
+class Package extends EntityBase
+{
     protected $id;
     protected $title;
     protected $source;
@@ -31,19 +31,18 @@ class Package extends EntityBase {
     protected $support;
     protected $suggested;
 
-
     public function setSource($value)
     {
-        $this->source = rtrim($value, "/");
+        $this->source = rtrim($value, '/');
     }
 
     public function getSource()
     {
-        if(! $this->source){
+        if (! $this->source) {
             return null;
         }
 
-        return dirname($this->source)."/".basename($this->source, '.git');
+        return dirname($this->source) . '/' . basename($this->source, '.git');
     }
 
     public function getRawSource()
@@ -82,12 +81,12 @@ class Package extends EntityBase {
 
     public function getKeywords()
     {
-        return array_filter(explode(",",$this->keywords));
+        return array_filter(explode(',', $this->keywords));
     }
 
     public function getVersions()
     {
-        return array_filter(explode(",",$this->versions));
+        return array_filter(explode(',', $this->versions));
     }
 
     public function getRequirements()
@@ -97,10 +96,8 @@ class Package extends EntityBase {
 
     public function getScreenshots()
     {
-        return array_filter(explode(",",$this->screenshots));
+        return array_filter(explode(',', $this->screenshots));
     }
-
-
 
     public function regenerateToken()
     {
@@ -112,32 +109,31 @@ class Package extends EntityBase {
         $downloads = [];
         $dcount = 0;
         foreach ($this->stats as $stat) {
-            if($stat->type == 'install') {
+            if ($stat->type == 'install') {
                 $downloads[$stat->version][$stat->ip] = 1;
-                $dcount ++ ;
+                $dcount ++;
             }
         }
-        foreach($downloads as $ver=>$hits) {
+        foreach ($downloads as $ver => $hits) {
             $downloads[$ver] = count($hits);
         }
 
-        if($version && isset($downloads[$version])) {
+        if ($version && isset($downloads[$version])) {
             return $downloads[$version];
         }
 
-
         return $dcount;
-
     }
 
     public function getStars()
     {
         $stars = 0;
         foreach ($this->stats as $stat) {
-            if($stat->type == 'star') {
+            if ($stat->type == 'star') {
                 $stars ++;
             }
         }
+
         return $stars;
     }
 
@@ -145,10 +141,11 @@ class Package extends EntityBase {
     {
         $starred = false;
         foreach ($this->stats as $stat) {
-            if($stat->type == 'star' && $stat->account === $user) {
+            if ($stat->type == 'star' && $stat->account === $user) {
                 $starred = true;
             }
         }
+
         return $starred;
     }
 
@@ -162,35 +159,36 @@ class Package extends EntityBase {
         return '';
     }
 
-
-
     public static function loadMetadata(ClassMetadata $metadata)
     {
         $builder = new ClassMetadataBuilder($metadata);
-        $builder->createField('id',         'guid')->makePrimaryKey()->generatedValue("UUID")->build();
-        $builder->addField('source',        'string',   ['nullable'=>true]);
-        $builder->addField('title',         'string',   ['nullable'=>true]);
-        $builder->addField('name',          'string',   ['nullable'=>true]);
-        $builder->addField('keywords',      'string',   ['nullable'=>true]);
-        $builder->addField('type',          'string',   ['nullable'=>true]);
-        $builder->addField('description',   'text',     ['nullable'=>true]);
-        $builder->addField('documentation', 'text',     ['nullable'=>true]);
-        $builder->addField('approved',      'boolean',  ['nullable'=>true, 'default'=>true]);
-        $builder->addField('versions',      'string',   ['nullable'=>true]);
-        $builder->addField('requirements',  'string',   ['nullable'=>true]);
-        $builder->addField('authors',       'string',   ['nullable'=>true]);
-        $builder->addField('created',       'datetime', ['nullable'=>true]);
-        $builder->addField('updated',       'datetime', ['nullable'=>true]);
-        $builder->addField('token',         'string',   ['nullable'=>true]);
-        $builder->addField('screenshots',   'text',     ['nullable'=>true]);
-        $builder->addField('icon',          'text',     ['nullable'=>true]);
-        $builder->addField('support',       'text',     ['nullable'=>true]);
-        $builder->addField('suggested',     'json_array',     ['nullable'=>true]);
+
+        $builder->createField('id',         'guid')->makePrimaryKey()->generatedValue('UUID')->build();
+
+        $builder->addField('source',        'string',     ['nullable' => true]);
+        $builder->addField('title',         'string',     ['nullable' => true]);
+        $builder->addField('name',          'string',     ['nullable' => true]);
+        $builder->addField('keywords',      'string',     ['nullable' => true]);
+        $builder->addField('type',          'string',     ['nullable' => true]);
+        $builder->addField('description',   'text',       ['nullable' => true]);
+        $builder->addField('documentation', 'text',       ['nullable' => true]);
+        $builder->addField('approved',      'boolean',    ['nullable' => true, 'default' => true]);
+        $builder->addField('versions',      'string',     ['nullable' => true]);
+        $builder->addField('requirements',  'string',     ['nullable' => true]);
+        $builder->addField('authors',       'string',     ['nullable' => true]);
+        $builder->addField('created',       'datetime',   ['nullable' => true]);
+        $builder->addField('updated',       'datetime',   ['nullable' => true]);
+        $builder->addField('token',         'string',     ['nullable' => true]);
+        $builder->addField('screenshots',   'text',       ['nullable' => true]);
+        $builder->addField('icon',          'text',       ['nullable' => true]);
+        $builder->addField('support',       'text',       ['nullable' => true]);
+        $builder->addField('suggested',     'json_array', ['nullable' => true]);
+
         $builder->addManyToOne('account',   'Bolt\Extensions\Entity\Account');
+
         $builder->addOneToMany('stats',     'Bolt\Extensions\Entity\Stat', 'package');
-        $builder->addOneToMany('builds',     'Bolt\Extensions\Entity\VersionBuild', 'package');
+        $builder->addOneToMany('builds',    'Bolt\Extensions\Entity\VersionBuild', 'package');
+
         $builder->setCustomRepositoryClass('Bolt\Extensions\Repository\Package');
     }
-
-
 }

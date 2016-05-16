@@ -2,22 +2,17 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Aura\Router\Router;
+use Bolt\Extension\Bolt\MarketPlace\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\BoltThemes;
+use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Composer\Util\ConfigValidator;
-use Composer\IO\NullIO;
 use Twig_Environment;
-use Doctrine\ORM\EntityManager;
-use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-
-
 
 class ViewPackage
 {
-
     public $renderer;
     public $em;
     public $packageManager;
@@ -36,10 +31,11 @@ class ViewPackage
     public function __invoke(Request $request, $params)
     {
         $repo = $this->em->getRepository(Entity\Package::class);
-        $package = $repo->findOneBy(['id'=>$params['package']]);
+        $package = $repo->findOneBy(['id' => $params['package']]);
 
-        if(!$package) {
-            $request->getSession()->getFlashBag()->add('error', "There was a problem accessing this package");
+        if (!$package) {
+            $request->getSession()->getFlashBag()->add('error', 'There was a problem accessing this package');
+
             return new RedirectResponse($this->router->generate('profile'));
         }
 
@@ -48,28 +44,27 @@ class ViewPackage
 
         $suggested = [];
 
-        foreach($package->suggested as $name => $description) {
-            $suggestedPackage = $repo->findOneBy(['name'=>$name]);
+        foreach ($package->suggested as $name => $description) {
+            $suggestedPackage = $repo->findOneBy(['name' => $name]);
             if ($suggestedPackage) {
                 $suggested[] = [
-                    'package' => $suggestedPackage,
-                    'description' => $description
+                    'package'     => $suggestedPackage,
+                    'description' => $description,
                 ];
             }
         }
 
         return new Response(
             $this->renderer->render(
-                "view.twig",
+                'view.twig',
                 [
-                    'package' => $package,
-                    'readme' => $readme,
-                    'allowedit' => $allowedit,
+                    'package'    => $package,
+                    'readme'     => $readme,
+                    'allowedit'  => $allowedit,
                     'boltthemes' => $this->themeservice->info($package),
-                    'suggested' => $suggested
+                    'suggested'  => $suggested,
                 ]
             )
         );
-
     }
 }

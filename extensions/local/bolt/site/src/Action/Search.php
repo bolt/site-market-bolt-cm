@@ -1,18 +1,14 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Bolt\Extension\Bolt\MarketPlace\Entity;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\ORM\EntityManager;
 use Twig_Environment;
-use Bolt\Extension\Bolt\MarketPlace\Entity;
-
 
 class Search
 {
-    
     public $em;
     public $renderer;
     
@@ -30,10 +26,8 @@ class Search
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->search($search, $type, $order);
         
-        $layout = $params['type']=='browse' ? 'layout.twig' : 'ajax.twig';
+        $layout = $params['type'] == 'browse' ? 'layout.twig' : 'ajax.twig';
 
-        return new Response($this->renderer->render("search.twig", ['results'=>$packages, 'term'=>$search, 'layout'=>$layout]));
-
-        
+        return new Response($this->renderer->render('search.twig', ['results' => $packages, 'term' => $search, 'layout' => $layout]));
     }
 }

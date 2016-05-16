@@ -1,10 +1,10 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig_Environment;
-use Doctrine\ORM\EntityManager;
 
 class Ping
 {
