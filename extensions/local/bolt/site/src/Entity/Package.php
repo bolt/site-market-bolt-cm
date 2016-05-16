@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extensions\Entity;
+namespace Bolt\Extension\Bolt\MarketPlace\Entity;
 
 use Doctrine\Entity\Base as EntityBase;
 use Doctrine\ORM\Mapping\Builder\ClassMetadataBuilder;
