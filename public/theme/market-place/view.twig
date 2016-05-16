@@ -215,7 +215,7 @@
                     {% for suggest in suggested %}
                         {% if suggest.package != package %}
                             <div class="item">
-                                <img class="ui avatar image" src="/images/{{ suggest.package.type }}.png">
+                                <img class="ui avatar image" src="/files/{{ suggest.package.type }}.png">
                                 <div class="content">
                                     <a class="header"
                                        href="{{ url('view',{'package':suggest.package.id}) }}">{{ suggest.package.title }}</a>
@@ -234,7 +234,7 @@
                 {% for related in package.account.packages |slice(0, 7) %}
                     {% if related != package %}
                         <div class="item">
-                            <img class="ui avatar image" src="/images/{{ related.type }}.png">
+                            <img class="ui avatar image" src="/files/{{ related.type }}.png">
                             <div class="content">
                                 <a class="header"
                                    href="{{ url('view',{'package':related.id}) }}">{{ related.title }}</a>
@@ -256,7 +256,7 @@
         var packageID = "{{ package.id }}";
     </script>
 
-    <script src="/js/jquery.scrollbar.min.js"></script>
+    <script src="/theme/market-place/js/jquery.scrollbar.min.js"></script>
     <script src="//cdn.jsdelivr.net/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
-    <script src="/js/extension-extras.js"></script>
+    <script src="/theme/market-place/js/extension-extras.js"></script>
 {% endblock %}
