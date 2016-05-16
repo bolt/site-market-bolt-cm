@@ -36,9 +36,9 @@
 
         ga('create', '{{ getenv('GA_CODE') }}', 'auto');
 
-        {% if request.get('isLoggedIn') %}
+        {% if app.request.get('isLoggedIn') %}
         ga('set', 'dimension1', '1');
-        ga('set', 'userId', '{{ request.get('user').id }}');
+        ga('set', 'userId', '{{ app.request.get('user').id }}');
         {% else %}
         ga('set', 'dimension1', '0');
         {% endif %}
@@ -55,8 +55,8 @@
 
 <div class="ui inverted menu small no_radius" id="top_bar">
     <a class="item" href="/">Home</a>
-    {% if request.get('isLoggedIn') %}
-        <a class="item" href="{{ url('profile') }}">Your Profile ({{ request.get('user').name }})</a>
+    {% if app.request.get('isLoggedIn') %}
+        <a class="item" href="{{ url('profile') }}">Your Profile ({{ app.request.get('user').name }})</a>
         <a class="item" href="{{ url('logout') }}">Logout</a>
     {% else %}
         <a class="item" href="{{ url('login') }}">Login</a>
