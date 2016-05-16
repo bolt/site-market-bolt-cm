@@ -27,5 +27,23 @@ class ExtensionSiteExtension extends SimpleExtension
                 }
             )
         );
+
+        $app['extension_site.controller.frontend'] = $app->share(
+            function () {
+                return new Controller\Frontend();
+            }
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function registerFrontendControllers()
+    {
+        $app = $this->getContainer();
+        
+        return [
+            '/' => $app['extension_site.controller.frontend']
+        ];
     }
 }
