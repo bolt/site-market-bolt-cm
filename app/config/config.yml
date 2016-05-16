@@ -316,11 +316,11 @@ liveeditor: false
 # Protip: If your webhost does not support SMTP, sign up for a (free) Sendgrid
 # account at https://sendgrid.com/free for sending emails reliably.
 
-# mailoptions:
-#     transport: smtp
-#     spool: true
-#     host: localhost
-#     port: 25
+mailoptions:
+    transport: smtp
+    spool: true
+    host: localhost
+    port: 25
 #     username: username
 #     password: password
 #     encryption: null
