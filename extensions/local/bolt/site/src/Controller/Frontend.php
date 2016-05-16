@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\ExtensionSite\Controller;
+namespace Bolt\Extension\Bolt\MarketPlace\Controller;
 
 use Silex\Application;
 use Silex\ControllerCollection;

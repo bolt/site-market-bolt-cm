@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\ExtensionSite;
+namespace Bolt\Extension\Bolt\MarketPlace;
 
 use Bolt\Extension\SimpleExtension;
 use Silex\Application;
@@ -10,7 +10,7 @@ use Silex\Application;
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class ExtensionSiteExtension extends SimpleExtension
+class MarketPlaceExtension extends SimpleExtension
 {
     /**
      * {@inheritdoc}

@@ -1,5 +1,5 @@
 {
-    "name": "bolt/extension-site",
+    "name": "bolt/marketplace",
     "description": "",
     "type": "bolt-extension",
     "keywords": [
@@ -16,7 +16,7 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Bolt\\Extension\\Bolt\\ExtensionSite\\": "src"
+            "Bolt\\Extension\\Bolt\\MarketPlace\\": "src"
         }
     },
     "autoload-dev": {
@@ -25,6 +25,6 @@
     },
     "extra": {
         "bolt-assets": "web",
-        "bolt-class": "Bolt\\Extension\\Bolt\\ExtensionSite\\ExtensionSiteExtension"
+        "bolt-class": "Bolt\\Extension\\Bolt\\MarketPlace\\MarketPlaceExtension"
     }
 }
