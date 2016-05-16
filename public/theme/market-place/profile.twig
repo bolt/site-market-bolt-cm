@@ -2,59 +2,49 @@
 
 {% block content %}
 
-<h2>Profile for {{user.name}}</h2>
-<p class="small-text-center">{{user.email}}</p>
+    <h2>Profile for {{ user.name }}</h2>
+    <p class="small-text-center">{{ user.email }}</p>
 
     <h3>Your Registered Bolt Extensions</h3>
     <hr />
 
-<div class="ui divided items">
-    {% for package in packages %}
-    <div class="item">
-        <div class="ui tiny image">
-            <img src="{{packageIcon(package)}}">
-        </div>
-        <div class="content">
-            <a href="{{url('view',{'package':package.id})}}" class="header">{{package.title}}</a>
-            <div class="meta">
-                <span class="cinema">by {{package.authors}}</span>
-            </div>
-            <div class="description">
-                <em>{{package.name}}</em><br>
-                <p>{{package.description}}</p>
-            </div>
-            <div class="extra">
-                <a href="{{url('view',{'package':package.id})}}" class="ui right floated primary button">
-                    View
-                    <i class="right chevron icon"></i>
-                </a>
-                <a href="{{url('stats',{'package':package.id})}}" class="ui right floated purple button">
-                    Stats
-                    <i class="right bar chart icon"></i>
-                </a>
-                <a href="{{url('edit',{'package':package.id})}}" class="ui right floated button">
-                    Edit
-                    <i class="right wrench icon"></i>
-                </a>
-                <a href="{{url('update',{'package':package.id})}}" class="ui right floated orange button">
-                    Update
-                    <i class="right repeat icon"></i>
-                </a>
-                <a href="{{url('tests',{'package':package.id})}}" class="ui right floated green button">
-                    Run Tests
-                    <i class="right chevron icon"></i>
-                </a>
-                <div class="ui label">
-                    {% if "bolt-extension" == package.type %}
-                    Extension
-                    {% else %}
-                    Theme
-                    {% endif %}
+    <div class="ui divided items">
+        {% for package in packages %}
+            <div class="item">
+                <div class="ui tiny image">
+                    <img src="{{ packageIcon(package) }}">
+                </div>
+                <div class="content">
+                    <a href="{{ url('view',{'package':package.id}) }}" class="header">{{ package.title }}</a>
+                    <div class="meta">
+                        <span class="cinema">by {{ package.authors }}</span>
+                    </div>
+                    <div class="description">
+                        <em>{{ package.name }}</em><br>
+                        <p>{{ package.description }}</p>
+                    </div>
+                    <div class="extra">
+                        <a href="{{ url('view',{'package':package.id}) }}" class="ui right floated primary button"> View
+                            <i class="right chevron icon"></i> </a> <a href="{{ url('stats',{'package':package.id}) }}"
+                                                                       class="ui right floated purple button"> Stats <i
+                                    class="right bar chart icon"></i> </a>
+                        <a href="{{ url('edit',{'package':package.id}) }}" class="ui right floated button"> Edit <i
+                                    class="right wrench icon"></i> </a>
+                        <a href="{{ url('update',{'package':package.id}) }}" class="ui right floated orange button">
+                            Update <i class="right repeat icon"></i> </a>
+                        <a href="{{ url('tests',{'package':package.id}) }}" class="ui right floated green button"> Run
+                            Tests <i class="right chevron icon"></i> </a>
+                        <div class="ui label">
+                            {% if "bolt-extension" == package.type %}
+                                Extension
+                            {% else %}
+                                Theme
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
 {% endblock %}

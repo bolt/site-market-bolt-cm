@@ -1,34 +1,32 @@
 {% extends "layout.twig" %}
 
 {% block ga_extras %}
-    ga('set', 'page', '/stats/<package-uuid>');
-    ga('set', 'dimension2', '{{package.id}}');
-    ga('set', 'dimension3', '{{package.title}}');
+    ga('set', 'page', '/stats/<package-uuid>'); ga('set', 'dimension2', '{{ package.id }}'); ga('set', 'dimension3', '{{ package.title }}');
 {% endblock %}
 
 {% block content %}
 
-<div class="ui grid stackable">
-	<div class="twelve wide column">
-        <h2 class="ui header">
-            <img class="ui rounded image" src="{{packageIcon(package)}}">
-            <div class="content">
-                {{package.title}}
-                <div class="sub header">Statistics</div>
-            </div>
-        </h2>
-        <!-- <div>Last Update: 13/08/2015</div> -->
+    <div class="ui grid stackable">
+        <div class="twelve wide column">
+            <h2 class="ui header">
+                <img class="ui rounded image" src="{{ packageIcon(package) }}">
+                <div class="content">
+                    {{ package.title }}
+                    <div class="sub header">Statistics</div>
+                </div>
+            </h2>
+            <!-- <div>Last Update: 13/08/2015</div> -->
+        </div>
     </div>
-</div>
 
-{% include 'partials/_package_download_statistics_template.twig' %}
-<download-statistics package-id="{{ package.id }}"></download-statistics>
+    {% include 'partials/_package_download_statistics_template.twig' %}
+    <download-statistics package-id="{{ package.id }}"></download-statistics>
 
 {% endblock %}
 
 {% block footer_extra_scripts %}
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.2/Chart.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.20/vue.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
-	<script src="/js/stats.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.2/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.20/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
+    <script src="/js/stats.js"></script>
 {% endblock %}

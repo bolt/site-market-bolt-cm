@@ -3,45 +3,45 @@
     <script src="/js/v3ready.js"></script>
 {% endblock %}
 {% block content %}
-<div class="ui grid stackable builds-list">
-    <div class="ui grid centered">
-        <div class="twelve wide column">
-            <h3>Which Extensions Are Compatible with Bolt 3.0</h3>
-            <p>
-                The list below shows a status for each extension listed on the Extensions Marketplace.
-                Note that an extension marked as compatible may still have some bugs or be incomplete, it just
-                shows whether the author has published a version compatible with Bolt 3.0 or later.
-            </p>
-            <p>
+    <div class="ui grid stackable builds-list">
+        <div class="ui grid centered">
+            <div class="twelve wide column">
+                <h3>Which Extensions Are Compatible with Bolt 3.0</h3>
+                <p>
+                The list below shows a status for each extension listed on the Extensions Marketplace. Note that an
+                extension marked as compatible may still have some bugs or be incomplete, it just shows whether the
+                author has published a version compatible with Bolt 3.0 or later.
+                </p>
+                <p>
                 <strong>The tests are real-time and may take a while to run.</strong>
-            </p>
-        </div>
-        <div class="twelve wide column">
-            <table class="ui celled striped table">
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Extension Name</th>
-                    <th>Last Release</th>
-                    <th>Bolt 3 Compatibility</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for package in packages %}
+                </p>
+            </div>
+            <div class="twelve wide column">
+                <table class="ui celled striped table">
+                    <thead>
                     <tr>
-                        <td class="collapsing">{{ package.title }}</td>
-                        <td class="collapsing">{{ package.name }}</td>
-                        <td class="collapsing">{{ package.updated|humanTime(' ago') }}</td>
-                        <td class="collapsing">
-                            <div class="v3status" data-name="{{ package.name }}">
-                                <div class="ui active small inline loader mini"></div>
-                            </div>
-                        </td>
+                        <th>Title</th>
+                        <th>Extension Name</th>
+                        <th>Last Release</th>
+                        <th>Bolt 3 Compatibility</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for package in packages %}
+                        <tr>
+                            <td class="collapsing">{{ package.title }}</td>
+                            <td class="collapsing">{{ package.name }}</td>
+                            <td class="collapsing">{{ package.updated|humanTime(' ago') }}</td>
+                            <td class="collapsing">
+                                <div class="v3status" data-name="{{ package.name }}">
+                                    <div class="ui active small inline loader mini"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

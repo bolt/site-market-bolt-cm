@@ -3,35 +3,35 @@
         <div class="twelve wide column">
             <h3>Build Tests</h3>
             <p>
-                We recommend you run tests for all your stable versions, once the tests pass versions will receive
-                an 'approved build' label, in future this may also become a requirement to allow user installs
+            We recommend you run tests for all your stable versions, once the tests pass versions will receive an
+            'approved build' label, in future this may also become a requirement to allow user installs
             </p>
         </div>
         <div class="twelve wide column">
             <table class="ui celled striped table">
                 <thead>
-                    <tr>
-                        <th>Version</th>
-                        <th>Type</th>
-                        <th>Current Status</th>
-                        <th>Last Run</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Version</th>
+                    <th>Type</th>
+                    <th>Current Status</th>
+                    <th>Last Run</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% for version in versions.stable %}
-                        <tr>
-                            <td class="collapsing">{{version.version}}</td>
-                            <td class="collapsing">{{version.type|replace({'bolt-':''})}}</td>
-                            <td class="collapsing">{{buildStatus(version.build)}}</td>
-                            <td class="collapsing">{{ version.build.lastrun|humanTime(' ago') }}</td>
-                            <td class="collapsing">
-                                <a class="ui button teal small" href="{{url('test', {package:package.id,version:version.version})}}">     
-                                    TEST THIS VERSION <i class="right chevron icon"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                {% for version in versions.stable %}
+                    <tr>
+                        <td class="collapsing">{{ version.version }}</td>
+                        <td class="collapsing">{{ version.type|replace({'bolt-':''}) }}</td>
+                        <td class="collapsing">{{ buildStatus(version.build) }}</td>
+                        <td class="collapsing">{{ version.build.lastrun|humanTime(' ago') }}</td>
+                        <td class="collapsing">
+                            <a class="ui button teal small"
+                               href="{{ url('test', {package:package.id,version:version.version}) }}"> TEST THIS VERSION
+                                <i class="right chevron icon"></i> </a>
+                        </td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>

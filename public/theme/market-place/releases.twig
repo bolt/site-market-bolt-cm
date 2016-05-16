@@ -1,14 +1,15 @@
 <div class="ui accordion styled fluid gbody">
     {% for version in versions.stable %}
         <div class="title">
-            <i class="dropdown icon"></i>{{version.version}} Released: {{ version.time|date('jS F Y') }} (for Bolt {{version.require['bolt/bolt']}})
+            <i class="dropdown icon"></i>{{ version.version }} Released: {{ version.time|date('jS F Y') }} (for
+            Bolt {{ version.require['bolt/bolt'] }})
         </div>
         <div class="content">
             {% if version.release.body %}
                 <pre>{{ version.release.body }}</pre>
             {% else %}
                 <p><strong>No release information available</strong></p>
-                <p><a href="{{version.support.source}}">View source code</a> for this release</p>
+                <p><a href="{{ version.support.source }}">View source code</a> for this release</p>
             {% endif %}
         </div>
     {% endfor %}

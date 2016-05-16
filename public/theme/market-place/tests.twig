@@ -6,7 +6,7 @@
     ga('set', 'dimension3', '{{package.title}}');
 {% endblock %}
 
-{% block header_title %} | {{package.title}}{% endblock %}
+{% block header_title %} | {{ package.title }}{% endblock %}
 
 {% block content %}
     <div class="ui grid stackable centered">
@@ -14,8 +14,8 @@
             <h2 class="ui header">
                 <img class="ui rounded image" src="/images/{{ package.type }}.png">
                 <div class="content">
-                    {{package.title}}
-                    <div class="sub header">by {{package.authors}}</div>
+                    {{ package.title }}
+                    <div class="sub header">by {{ package.authors }}</div>
                 </div>
             </h2>
         </div>

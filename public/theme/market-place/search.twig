@@ -2,13 +2,14 @@
 
 {% block content %}
 
-{% if results is empty %}
+    {% if results is empty %}
         <div data-alert class="ui red message">No extensions were found to match your search</div>
-{% else %}
+    {% else %}
 
-    {% if term %}<div data-alert class="ui blue message">Results for your search: '{{term}}'</div>{% endif %}
-    
-    {% include 'partials/_packages.twig' with {'packages':results} %}
+        {% if term %}
+            <div data-alert class="ui blue message">Results for your search: '{{ term }}'</div>{% endif %}
 
-{% endif %}
+        {% include 'partials/_packages.twig' with {'packages':results} %}
+
+    {% endif %}
 {% endblock %}

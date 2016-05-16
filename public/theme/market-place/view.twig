@@ -6,16 +6,16 @@
     ga('set', 'dimension3', '{{package.title}}');
 {% endblock %}
 
-{% block header_title %} | {{package.title}}{% endblock %}
+{% block header_title %} | {{ package.title }}{% endblock %}
 
 {% block content %}
     <div class="ui grid stackable">
         <div class="eight wide column">
             <h2 class="ui header">
-                <img class="ui rounded image" src="{{packageIcon(package)}}">
+                <img class="ui rounded image" src="{{ packageIcon(package) }}">
                 <div class="content">
-                    {{package.title}}
-                    <div class="sub header">by {{package.authors}}</div>
+                    {{ package.title }}
+                    <div class="sub header">by {{ package.authors }}</div>
                 </div>
             </h2>
             <!-- <div>Last Update: 13/08/2015</div> -->
@@ -26,48 +26,49 @@
 
                 {% if request.get('isLoggedIn') and request.get('user').id == package.account.id %}
                     <div class="buttons_header">
-                        <a href="{{url('edit',{'package':package.id})}}" class="ui primary button">
-                            Edit
-                            <i class="right wrench icon"></i>
-                        </a>
-                        <a href="{{url('update',{'package':package.id})}}" class="ui orange button">
-                            Update
-                            <i class="right repeat icon"></i>
-                        </a>
+                        <a href="{{ url('edit',{'package':package.id}) }}" class="ui primary button"> Edit
+                            <i class="right wrench icon"></i> </a> <a href="{{ url('update',{'package':package.id}) }}"
+                                                                      class="ui orange button"> Update
+                            <i class="right repeat icon"></i> </a>
                     </div>
                 {% endif %}
 
                 {% if boltthemes and boltthemes.active %}
-                    <a class="ui orange button" href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}" target="_blank" onclick="ga('send', 'event', {
-                        eventCategory: 'Package',
-                        eventAction: 'Live Preview',
-                        eventLabel: '{{package.title}}'
-                      });">
-                        View Live Preview
-                    </a>
+                    <a class="ui orange button"
+                       href="{{ boltthemes.preview_page }}?utm_source=bolt-extension-store&utm_medium=detailpage&utm_term=livepreview&utm_content=theme-livepreview&utm_campaign={{ package.title|url_encode }}"
+                       target="_blank"
+                       onclick="ga('send', 'event', {
+                               eventCategory: 'Package',
+                               eventAction: 'Live Preview',
+                               eventLabel: '{{ package.title }}'
+                               });"> View Live Preview </a>
                 {% endif %}
-                <button class="ui toggle button" id="copy-button" data-content="{{ package.name }}" data-title="Click to copy the package name" data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard</button>
+                <button class="ui toggle button"
+                        id="copy-button"
+                        data-content="{{ package.name }}"
+                        data-title="Click to copy the package name"
+                        data-clipboard-text="{{ package.name }}"><i class="alternate copy icon"></i> Copy to clipboard
+                </button>
                 <button class="ui green button">FREE</button>
             </div>
 
             <div class="ui right floated main menu">
                 <a class="bug popup icon item" data-content="Downloads" href="#">
-                    <i class="download icon"> {{package.downloads|default(0)}}</i>
-                </a>
+                    <i class="download icon"> {{ package.downloads|default(0) }}</i> </a>
 
                 <a class="bug popup icon item"
-                {% if request.get('isLoggedIn') %}
-                    {% if package.isStarredBy(request.get('user')) %}
-                    {% else %}
-                         href="{{url('star',{'package':package.id})}}"
-                         onclick="ga('send', 'event', {
-                            eventCategory: 'Package',
-                            eventAction: 'Star',
-                            eventLabel: '{{package.title}}'
-                          });"
-                    {% endif %}
-                {% endif %}
-                data-content="
+                        {% if request.get('isLoggedIn') %}
+                            {% if package.isStarredBy(request.get('user')) %}
+                            {% else %}
+                                href="{{ url('star',{'package':package.id}) }}"
+                                onclick="ga('send', 'event', {
+                                        eventCategory: 'Package',
+                                        eventAction: 'Star',
+                                        eventLabel: '{{ package.title }}'
+                                        });"
+                            {% endif %}
+                        {% endif %}
+                   data-content="
                 {% if request.get('isLoggedIn') %}
                     {% if package.isStarredBy(request.get('user')) %}
                         You have starred this package.
@@ -77,16 +78,17 @@
                 {% else %}
                     You must be logged in to star packages.
                 {% endif %}
-                ">
-                    <i class="star icon"> {{package.stars|default(0)}}</i>
-                </a>
+                "> <i class="star icon"> {{ package.stars|default(0) }}</i> </a>
 
-                <a class="github popup icon item" data-content="View source code" target="_blank" href="{{package.source}}"
-                    onclick="ga('send', 'event', {
-                            eventCategory: 'Package',
-                            eventAction: 'View Source',
-                            eventLabel: '{{package.title}}'
-                          });"
+                <a class="github popup icon item"
+                   data-content="View source code"
+                   target="_blank"
+                   href="{{ package.source }}"
+                   onclick="ga('send', 'event', {
+                           eventCategory: 'Package',
+                           eventAction: 'View Source',
+                           eventLabel: '{{ package.title }}'
+                           });"
                 >
                     {% if "github.com" in package.source %}
                         <i class="alternate github icon"></i>
@@ -106,11 +108,12 @@
         <div class="ui clearing divider"></div>
         <div class="slide_gallery scrollbar-inner">
             <div class="gallery" id="scroll_gallery">
-                {% for image in package.screenshots%}
+                {% for image in package.screenshots %}
                     {% if "//" in image %}
-                        <img class="image_gallery" src="{{image}}">
+                        <img class="image_gallery" src="{{ image }}">
                     {% else %}
-                        <img class="image_gallery" src="{{package.source|replace({ ('github.com'): 'raw.githubusercontent.com'})}}/master/{{image}}">
+                        <img class="image_gallery"
+                             src="{{ package.source|replace({ ('github.com'): 'raw.githubusercontent.com'}) }}/master/{{ image }}">
                     {% endif %}
                 {% endfor %}
             </div>
@@ -124,7 +127,7 @@
         <div class="ten wide column">
             <h2 class="ui left floated header">Description</h2>
             <div class="ui clearing divider"></div>
-            <p style="font-size: 110%;">{{package.description}}</p>
+            <p style="font-size: 110%;">{{ package.description }}</p>
         </div>
 
         <div class="six wide column">
@@ -136,7 +139,7 @@
                     <i class="large file code outline middle aligned icon"></i>
                     <div class="content">
                         <span class="header">Created</span>
-                        <div class="description">{{package.created.date|date('jS M Y')}}</div>
+                        <div class="description">{{ package.created.date|date('jS M Y') }}</div>
                     </div>
                 </div>
                 <div class="item">
@@ -166,9 +169,9 @@
                         <span class="header">Category</span>
                         <div class="description">
                             {% if "bolt-extension" == package.type %}
-                            Plugin
+                                Plugin
                             {% else %}
-                            Theme
+                                Theme
                             {% endif %}
                         </div>
                     </div>
@@ -180,14 +183,13 @@
                         <span class="header">Tags</span>
                         <div class="description">
                             {% for tag in package.keywords %}
-                                <a href="{{url('browse')}}?q={{tag}}"><span class="label tags">{{tag}}</span></a>
+                                <a href="{{ url('browse') }}?q={{ tag }}"><span class="label tags">{{ tag }}</span></a>
                             {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <div class="sixteen wide column">
             <h2 class="ui left floated header">Changelog &amp; Releases</h2>
@@ -197,8 +199,6 @@
                 Loading releases ...
             </div>
         </div>
-
-
 
         <div class="ten wide column">
             <h2 class="ui left floated header">Comments</h2>
@@ -217,8 +217,9 @@
                             <div class="item">
                                 <img class="ui avatar image" src="/images/{{ suggest.package.type }}.png">
                                 <div class="content">
-                                    <a class="header" href="{{url('view',{'package':suggest.package.id})}}">{{suggest.package.title}}</a>
-                                    {{suggest.description}}
+                                    <a class="header"
+                                       href="{{ url('view',{'package':suggest.package.id}) }}">{{ suggest.package.title }}</a>
+                                    {{ suggest.description }}
                                 </div>
                             </div>
                         {% endif %}
@@ -235,8 +236,9 @@
                         <div class="item">
                             <img class="ui avatar image" src="/images/{{ related.type }}.png">
                             <div class="content">
-                                <a class="header" href="{{url('view',{'package':related.id})}}">{{related.title}}</a>
-                                {{related.name}}
+                                <a class="header"
+                                   href="{{ url('view',{'package':related.id}) }}">{{ related.title }}</a>
+                                {{ related.name }}
                             </div>
                         </div>
                     {% endif %}
@@ -250,11 +252,11 @@
 {% endblock %}
 
 {% block header_extra_scripts %}
-<script>
-    var packageID = "{{package.id}}";
-</script>
+    <script>
+        var packageID = "{{ package.id }}";
+    </script>
 
-<script src="/js/jquery.scrollbar.min.js"></script>
-<script src="//cdn.jsdelivr.net/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
-<script src="/js/extension-extras.js"></script>
+    <script src="/js/jquery.scrollbar.min.js"></script>
+    <script src="//cdn.jsdelivr.net/zeroclipboard/2.2.0/ZeroClipboard.min.js"></script>
+    <script src="/js/extension-extras.js"></script>
 {% endblock %}

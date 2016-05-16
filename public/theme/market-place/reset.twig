@@ -1,35 +1,32 @@
 {% extends "layout.twig" %}
 
-
-
 {% block splash %}
-<h2>Password reset request</h2>
+    <h2>Password reset request</h2>
 {% endblock %}
 
 {% block content %}
-<br>
-<div class="ui two column centered grid">
-    <div class="column">
-        <div class="">
-            <h3>Password reset request</h3>
-            <p>
-                If you would like to request a password reset, you can use the form below to send a link to the email address you
-                registered with. Please note that the link in the email is only valid for 10 minutes, after which you'll
-                need to make a new request.
-            </p>
-        </div>
-        <br>
-        <div class="ui form">
-            <form action="" method="post">
-                {{form_row(form.email)}}
+    <br>
 
-                {{form_row(form.submit, {attr:{class:'ui fluid large green submit button'}})}}
-            </form>
+    <div class="ui two column centered grid">
+        <div class="column">
+            <div class="">
+                <h3>Password reset request</h3>
+                <p>
+                If you would like to request a password reset, you can use the form below to send a link to the email
+                address you registered with. Please note that the link in the email is only valid for 10 minutes, after
+                which you'll need to make a new request.
+                </p>
+            </div>
+            <br>
+            <div class="ui form">
+                <form action="" method="post">
+                    {{ form_row(form.email) }}
+
+                    {{ form_row(form.submit, {attr:{class:'ui fluid large green submit button'}}) }}
+                </form>
+            </div>
         </div>
+
     </div>
-
-</div>
-
-
 
 {% endblock %}
