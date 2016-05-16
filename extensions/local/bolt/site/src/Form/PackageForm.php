@@ -1,5 +1,5 @@
 <?php
-namespace Bolt\Extensions\Form;
+namespace Bolt\Extension\Bolt\MarketPlace\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
