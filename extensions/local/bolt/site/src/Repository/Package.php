@@ -1,5 +1,5 @@
 <?php
-namespace Bolt\Extensions\Repository;
+namespace Bolt\Extension\Bolt\MarketPlace\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
