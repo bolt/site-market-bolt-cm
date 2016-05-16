@@ -39,7 +39,7 @@ class PackageStats
 
         return new Response(
             $this->renderer->render(
-                "stats.html",
+                "stats.twig",
                 [
                     'package' => $package
                 ]

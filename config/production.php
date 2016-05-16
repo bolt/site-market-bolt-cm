@@ -113,7 +113,7 @@ return [
     Twig_Environment::class => DI\factory(function ($c) {
         $loader = new Twig_Loader_Filesystem(__DIR__ . '/../src/Templates');
         $twig = new Twig_Environment($loader);
-        $formEngine = new TwigRendererEngine(["forms.html"]);
+        $formEngine = new TwigRendererEngine(["forms.twig"]);
         $formEngine->setEnvironment($twig);
         $twig->addExtension(new FormExtension(new TwigRenderer($formEngine)));
         $twig->addExtension(new Bolt\Extensions\Helper\Url($c->get(Router::class)));

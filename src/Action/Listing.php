@@ -27,7 +27,7 @@ class Home
         $starred = $repo->mostStarred(5);
         $downloaded = $repo->mostDownloaded(6);
         $latest_themes = $repo->findBy(['approved'=>true, 'type'=>'bolt-theme'], ['created'=>'DESC'], 3);
-        return new Response($this->renderer->render("index.html", [
+        return new Response($this->renderer->render("index.twig", [
             'latest' => $latest,
             'starred' => $starred,
             'downloaded' => $downloaded,

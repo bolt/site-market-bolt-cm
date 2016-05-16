@@ -19,7 +19,7 @@ class Submitted
     
     public function __invoke(Request $request)
     {
-        return new Response($this->renderer->render("submitted.html"));
+        return new Response($this->renderer->render("submitted.twig"));
 
     }
 }

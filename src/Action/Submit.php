@@ -64,7 +64,7 @@ class Submit
             
             
         }
-        return new Response($this->renderer->render("submit.html", ['form'=>$form->createView(), 'error'=>$error]));
+        return new Response($this->renderer->render("submit.twig", ['form'=>$form->createView(), 'error'=>$error]));
 
     }
     

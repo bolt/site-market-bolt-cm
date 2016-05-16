@@ -52,7 +52,7 @@ class PasswordReset
                 $request->getSession()
                     ->getFlashBag()
                     ->add('error', 'The passwords entered do not match, please check and try again.');
-                return new Response($this->renderer->render('reset-password.html', ['tokenValid'=> true, 'form' => $form->createView()]));
+                return new Response($this->renderer->render('reset-password.twig', ['tokenValid'=> true, 'form' => $form->createView()]));
 
             } elseif ($tokenAccount && $form->isValid()) {
                 $tokenAccount = $repo->findOneBy(['token' => $request->get('token')]);
@@ -62,12 +62,12 @@ class PasswordReset
                 $this->em->persist($tokenAccount);
                 $this->em->flush();
 
-                return new Response($this->renderer->render('reset-password.html', ['resetSuccessful'=> true]));
+                return new Response($this->renderer->render('reset-password.twig', ['resetSuccessful'=> true]));
             } elseif ($tokenAccount && ($current < $tokenAccount->tokenvalid)) {
 
-                return new Response($this->renderer->render('reset-password.html', ['tokenValid'=> true, 'form' => $form->createView()]));
+                return new Response($this->renderer->render('reset-password.twig', ['tokenValid'=> true, 'form' => $form->createView()]));
             } else {
-                return new Response($this->renderer->render('reset-password.html', ['tokenValid'=> false]));
+                return new Response($this->renderer->render('reset-password.twig', ['tokenValid'=> false]));
             }
         }
 
@@ -95,13 +95,13 @@ class PasswordReset
 
             $response = $this->mailservice->sendTemplate('reset', $account->email, $account->name, ['account'=>$account]);
             if (isset($response[0]['status']) && $response[0]['status']) {
-                return new Response($this->renderer->render('reset-requested.html'));
+                return new Response($this->renderer->render('reset-requested.twig'));
             }
 
 
         }
 
-        return new Response($this->renderer->render('reset.html', ['form' => $form->createView()]));
+        return new Response($this->renderer->render('reset.twig', ['form' => $form->createView()]));
     }
 
 }

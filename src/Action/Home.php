@@ -30,7 +30,7 @@ class Home
         $latest_plugins = $repo->findBy(['approved'=>true, 'type'=>'bolt-extension'], ['created'=>'DESC'], 12);
         $mdownloaded_themes = $repo->search(null, 'bolt-theme', 'downloads');
         $mdownloaded_plugins = $repo->search(null, 'bolt-extension', 'downloads');
-        return new Response($this->renderer->render("index.html", [
+        return new Response($this->renderer->render("index.twig", [
             'latest' => $latest, 
             'starred' => $starred,
             'downloaded' => $downloaded,

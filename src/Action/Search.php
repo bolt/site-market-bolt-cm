@@ -30,9 +30,9 @@ class Search
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->search($search, $type, $order);
         
-        $layout = $params['type']=='browse' ? 'layout.html' : 'ajax.html';
+        $layout = $params['type']=='browse' ? 'layout.twig' : 'ajax.twig';
 
-        return new Response($this->renderer->render("search.html", ['results'=>$packages, 'term'=>$search, 'layout'=>$layout]));
+        return new Response($this->renderer->render("search.twig", ['results'=>$packages, 'term'=>$search, 'layout'=>$layout]));
 
         
     }

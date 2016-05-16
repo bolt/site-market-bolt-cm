@@ -1,4 +1,4 @@
-{% extends "emails/layout.html" %}
+{% extends "emails/layout.twig" %}
 {% block subject %}Your Password Reset Request{% endblock %}
 {% block content %}
 <h1>Hi {{ account.name|default('Bolt User') }}</h1>

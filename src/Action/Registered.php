@@ -19,7 +19,7 @@ class Registered
     
     public function __invoke(Request $request)
     {
-        return new Response($this->renderer->render("registered.html"));
+        return new Response($this->renderer->render("registered.twig"));
 
     }
 }

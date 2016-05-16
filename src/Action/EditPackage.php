@@ -52,7 +52,7 @@ class EditPackage
 
         return new Response(
             $this->renderer->render(
-                "submit.html",
+                "submit.twig",
                 [
                     'form'=>$form->createView(),
                     'hook' => ($package->token) ? 'https://'.$request->server->get('HTTP_HOST') . $this->router->generate('hook').'?token='.$package->token : false,

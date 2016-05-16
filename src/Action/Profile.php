@@ -23,7 +23,7 @@ class Profile
         $user = $request->attributes->get('user');
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->findBy(['account'=>$user], ['created'=>'DESC']);
-        return new Response($this->renderer->render("profile.html", ['packages'=>$packages, 'user'=>$user]));
+        return new Response($this->renderer->render("profile.twig", ['packages'=>$packages, 'user'=>$user]));
 
     }
 }

@@ -57,6 +57,6 @@ class Register
             }
         }
 
-        return new Response($this->renderer->render('register.html', ['form' => $form->createView()]));
+        return new Response($this->renderer->render('register.twig', ['form' => $form->createView()]));
     }
 }

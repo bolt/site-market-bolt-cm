@@ -101,7 +101,7 @@ class TestExtension
             }
             
         }
-        return new Response($this->renderer->render("extension-test.html", [
+        return new Response($this->renderer->render("extension-test.twig", [
             'build'=>$build, 
             'tests'=>$tests,
             'package' => $p

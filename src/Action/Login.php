@@ -52,7 +52,7 @@ class Login
             }
         }
         
-        return new Response( $this->renderer->render("login.html", ['form'=>$form->createView()]) );
+        return new Response( $this->renderer->render("login.twig", ['form'=>$form->createView()]) );
 
     }
 }

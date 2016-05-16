@@ -24,7 +24,7 @@ class Admin
     {
         $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->findAll();
-        return new Response($this->renderer->render("admin.html", ['packages'=>$packages]));
+        return new Response($this->renderer->render("admin.twig", ['packages'=>$packages]));
 
     }
 }

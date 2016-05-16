@@ -60,7 +60,7 @@ class ViewPackage
 
         return new Response(
             $this->renderer->render(
-                "view.html",
+                "view.twig",
                 [
                     'package' => $package,
                     'readme' => $readme,

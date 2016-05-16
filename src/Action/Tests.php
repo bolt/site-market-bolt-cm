@@ -51,7 +51,7 @@ class Tests
             $request->getSession()->getFlashBag()->add('error', $e->getMessage());
         }
 
-        return new Response($this->renderer->render('tests.html', [
+        return new Response($this->renderer->render('tests.twig', [
             'package' => $package,
             'versions' => $versions
         ]));

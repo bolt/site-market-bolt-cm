@@ -66,7 +66,7 @@ class Releases
 
         return new Response(
             $this->renderer->render(
-                "releases.html",
+                "releases.twig",
                 [
                     'package' => $package,
                     'versions' => $versions
