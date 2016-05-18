@@ -1,64 +1,72 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class Submit
+class Submit extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    public $forms;
-    public $packageManager;
-    
-    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, PackageManager $packageManager, Router $router)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-        $this->forms = $forms;
-        $this->packageManager = $packageManager;
-        $this->router = $router;
-    }
-    
-    public function __invoke(Request $request)
-    {
-        $error = false;
-        $this->accountUser = $request->get('user');
         $entity = new Entity\Package();
-        $form = $this->forms->create('package', $entity);
+        $error = false;
+        $accountUser = $request->get('user');
+
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        /** @var Session $session */
+        $session = $this->getAppService('session');
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        $repo = $em->getRepository(Entity\Package::class);
+        $services = $this->getAppService('marketplace.services');
+        /** @var PackageManager $packageManager */
+        $packageManager = $services['package_manager'];
+        /** @var FormFactory $forms */
+        $forms = $this->getAppService('form.factory');
+        $form = $forms->create('package', $entity);
         $form->handleRequest();
 
         if ($form->isValid()) {
             $package = $form->getData();
             $package->created = new \DateTime();
             $package->regenerateToken();
-            $package->account = $this->accountUser;
-            if ($this->accountUser->approved) {
+            $package->account = $accountUser;
+            if ($accountUser->approved) {
                 $package->approved = true;
             }
 
             try {
-                $this->packageManager->validate($package, $this->accountUser->admin);
-                $package = $this->packageManager->syncPackage($package);
-                $this->em->persist($package);
-                $this->em->flush();
+                $packageManager->validate($package, $accountUser->admin);
+                $package = $packageManager->syncPackage($package);
+                $repo->save($package);
+                $route = $urlGen->generate('submitted');
 
-                return new RedirectResponse($this->router->generate('submitted'));
+                return new RedirectResponse($route);
             } catch (\Exception $e) {
-                $request->getSession()->getFlashBag()->add('error', 'Package has an invalid composer.json!');
-                $request->getSession()->getFlashBag()->add('warning', $e->getMessage());
+                $session->getFlashBag()->add('error', 'Package has an invalid composer.json!');
+                $session->getFlashBag()->add('warning', $e->getMessage());
                 $package->approved = false;
                 $error = 'invalid';
             }
         }
 
-        return new Response($this->renderer->render('submit.twig', ['form' => $form->createView(), 'error' => $error]));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $context = ['form' => $form->createView(), 'error' => $error];
+        $html = $twig->render('submit.twig', $context);
+
+        return new Response($html);
     }
 }
