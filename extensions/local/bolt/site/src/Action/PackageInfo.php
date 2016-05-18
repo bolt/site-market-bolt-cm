@@ -1,37 +1,41 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Repository;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class PackageInfo
+class PackageInfo extends AbstractAction
 {
-    public $em;
-    
-    public function __construct(EntityManager $em, PackageManager $packageManager)
-    {
-        $this->em = $em;
-        $this->packageManager = $packageManager;
-    }
-    
-    public function __invoke(Request $request, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
         $p = $request->get('package');
         $bolt = $request->get('bolt');
-        
-        $repo = $this->em->getRepository(Entity\Package::class);
+
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Repository\Package $repo */
+
+        $repo = $em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['approved' => true, 'name' => $p]);
-        
+
         if (!$package) {
             return new JsonResponse(['package' => false, 'version' => false]);
         }
-        
-        $allVersions = $this->packageManager->getInfo($package, $bolt);
-        $buildRepo = $this->em->getRepository(Entity\VersionBuild::class);
 
+        $services = $this->getAppService('marketplace.services');
+        /** @var PackageManager $packageManager */
+        $packageManager = $services['package_manager'];
+        $allVersions = $packageManager->getInfo($package, $bolt);
+
+        $buildRepo = $em->getRepository(Entity\VersionBuild::class);
         foreach ($allVersions as &$version) {
             $build = $buildRepo->findOneBy(['package' => $package->id, 'version' => $version['version']]);
             if ($build) {
