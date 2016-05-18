@@ -4,6 +4,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Provider;
 
 use Bolt\Extension\Bolt\MarketPlace\Controller;
 use Bolt\Extension\Bolt\MarketPlace\Twig;
+use Bolt\Extension\Bolt\MarketPlace\Service;
 use Pimple as Container;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -19,6 +20,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
             $app->extend(
                 'twig',
                 function (\Twig_Environment $twig) {
+                    /** @var \Twig_Environment $twig */
                     $twig->addExtension(new Twig\Extension());
 
                     return $twig;
@@ -29,6 +31,19 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
         $app['marketplace.controller.frontend'] = $app->share(
             function () {
                 return new Controller\Frontend();
+            }
+        );
+
+        $app['marketplace.services'] = $app->share(
+            function ($app) {
+                $container = new Container([
+                    'bolt_themes'     => $app->share(function () use ($app) { return new Service\BoltThemes(); }),
+                    'email'           => $app->share(function () use ($app) { return new Service\Email(); }),
+                    'mail'            => $app->share(function () use ($app) { return new Service\MailService(); }),
+                    'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager(); }),
+                ]);
+
+                return $container;
             }
         );
     }
