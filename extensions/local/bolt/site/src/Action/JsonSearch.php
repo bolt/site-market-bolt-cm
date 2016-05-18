@@ -1,29 +1,28 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Twig_Environment;
 
-class JsonSearch
+class JsonSearch extends AbstractAction
 {
-    public $em;
-    public $renderer;
-
-    public function __construct(Twig_Environment $renderer, EntityManager $em)
-    {
-        $this->em = $em;
-        $this->renderer = $renderer;
-    }
-
-    public function __invoke(Request $request, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
         $search = $request->get('q');
         $type = $request->get('type') ?: null;
         $order = $request->get('order') ?: null;
-        $repo = $this->em->getRepository(Entity\Package::class);
+
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Repository\Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
         $packages = $repo->search($search, $type, $order);
 
         $result = [];
@@ -34,38 +33,44 @@ class JsonSearch
         return new JsonResponse($result);
     }
 
-    private function formatPackage($package)
+    /**
+     * @param Entity\Package $package
+     *
+     * @return array
+     */
+    private function formatPackage(Entity\Package $package)
     {
         return [
-            'id'          => $package->id,
-            'title'       => $package->title,
-            'source'      => $package->source,
-            'name'        => $package->name,
-            'keywords'    => $package->keywords,
-            'type'        => $package->type,
-            'description' => $package->description,
-            //'documentation' => $package->documentation,
-            'approved'     => $package->approved,
-            'requirements' => $package->requirements,
-            'versions'     => $package->versions,
-            'created'      => $package->created,
-            'updated'      => $package->updated,
-            'authors'      => $package->authors,
+            'id'          => $package->getId(),
+            'title'       => $package->getTitle(),
+            'source'      => $package->getSource(),
+            'name'        => $package->getName(),
+            'keywords'    => $package->getKeywords(),
+            'type'        => $package->getType(),
+            'description' => $package->getDescription(),
+            //'documentation' => $package->getDocumentation(),
+            'approved'     => $package->getApproved(),
+            'requirements' => $package->getRequirements(),
+            'versions'     => $package->getVersions(),
+            'created'      => $package->getCreated(),
+            'updated'      => $package->getUpdated(),
+            'authors'      => $package->getAuthors(),
+//@TODO 'user' key needs to be fixed
             'user'         => [
-                'id'         => $package->account->id,
-                'username'   => $package->account->username,
-                'name'       => $package->account->name,
+                'id'         => $package->getAccount()->getId(),
+                'username'   => $package->getAccount()->getUsername(),
+                'name'       => $package->getAccount()->getName(),
                 'email_hash' => [
                     'type' => 'md5',
-                    'hash' => md5($package->account->email),
+                    'hash' => md5($package->getAccount()->getEmail()),
                 ],
             ],
-            //'token' => $package->token,
-            //'stats' => $package->stats,
-            //'builds' => $package->builds,
-            'screenshots' => $package->screenshots,
-            'icon'        => $package->icon,
-            'support'     => $package->support,
+            //'token' => $package->getToken(),
+            //'stats' => $package->getStats(),
+            //'builds' => $package->getBuilds(),
+            'screenshots' => $package->getScreenshots(),
+            'icon'        => $package->getIcon(),
+            'support'     => $package->getSupport(),
         ];
     }
 }
