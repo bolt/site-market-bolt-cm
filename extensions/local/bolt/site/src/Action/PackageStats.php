@@ -1,46 +1,46 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class PackageStats
+class PackageStats extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    public $forms;
-    public $router;
-
-    public function __construct(Twig_Environment $renderer, EntityManager $em, Router $router)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-        $this->router = $router;
-    }
-
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
         //$package = $repo->findOneBy(['id'=>$params['package']]);
 
         if (!$package) {
-            $request->getSession()->getFlashBag()->add('error', 'There was a problem accessing this package');
+            /** @var Session $session */
+            $session = $this->getAppService('session');
+            $session->getFlashBag()->add('error', 'There was a problem accessing this package');
+            $route = $urlGen->generate('profile');
 
-            return new RedirectResponse($this->router->generate('profile'));
+            return new RedirectResponse($route);
         }
 
-        return new Response(
-            $this->renderer->render(
-                'stats.twig',
-                [
-                    'package' => $package,
-                ]
-            ));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $context = ['package' => $package,];
+        $html = $twig->render('stats.twig', $context);
+
+        return new Response($html);
     }
 }
