@@ -1,37 +1,40 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
 
-class Listing
+class Listing extends AbstractAction
 {
-    public $renderer;
-    public $em;
-
-    public function __construct(Twig_Environment $renderer, EntityManager $em)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-    }
-
-    public function __invoke(Request $request)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
         $latest = $repo->findBy(['approved' => true], ['created' => 'DESC'], 10);
         $starred = $repo->mostStarred(5);
         $downloaded = $repo->mostDownloaded(6);
         $latest_themes = $repo->findBy(['approved' => true, 'type' => 'bolt-theme'], ['created' => 'DESC'], 3);
 
-        return new Response($this->renderer->render('index.twig', [
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $context = [
             'latest'        => $latest,
             'starred'       => $starred,
             'downloaded'    => $downloaded,
             'latest_themes' => $latest_themes,
             'popular'       => $repo->popularTags(),
-        ]));
+        ];
+        $html = $twig->render('index.twig', $context);
+
+        return new Response($html);
     }
 }
