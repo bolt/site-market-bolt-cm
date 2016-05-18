@@ -5,9 +5,7 @@
  * @author Ross Riley, riley.ross@gmail.com
  */
 
-
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
-
 
 class Email
 {
@@ -38,8 +36,8 @@ class Email
     public $attachments = [];
     public $images = [];
 
-
-    public function addTo($email, $name, $type = 'to') {
+    public function addTo($email, $name, $type = 'to')
+    {
         $this->to[] = ['email' => $email, 'name' => $name, 'type' => $type];
     }
 }

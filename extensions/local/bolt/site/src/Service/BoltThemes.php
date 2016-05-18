@@ -16,7 +16,7 @@ class BoltThemes
     public $defaults;
 
     public $api = [
-        'theme' => 'http://boltthem.es/api/theme/%s'
+        'theme' => 'http://boltthem.es/api/theme/%s',
     ];
 
     public function __construct($defaults = [])
@@ -34,12 +34,12 @@ class BoltThemes
 
         $url = sprintf($this->api['theme'], $theme->getId());
 
-        $opts = array('http' =>
-            array(
-                'method'=>"GET",
-                'timeout' => 3
-            )
-        );
+        $opts = ['http' =>
+            [
+                'method'  => 'GET',
+                'timeout' => 3,
+            ],
+        ];
 
         $context  = stream_context_create($opts);
 
@@ -55,7 +55,4 @@ class BoltThemes
 
         return false;
     }
-
-
-
 }

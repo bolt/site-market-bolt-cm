@@ -3,12 +3,17 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Provider;
 
 use Bolt\Extension\Bolt\MarketPlace\Controller;
-use Bolt\Extension\Bolt\MarketPlace\Twig;
 use Bolt\Extension\Bolt\MarketPlace\Service;
+use Bolt\Extension\Bolt\MarketPlace\Twig;
 use Pimple as Container;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
+/**
+ * Market Place Service Provider.
+ *
+ * @author Gawain Lynch <gawain.lynch@gmail.com>
+ */
 class MarketPlaceServiceProvider implements ServiceProviderInterface
 {
     /**

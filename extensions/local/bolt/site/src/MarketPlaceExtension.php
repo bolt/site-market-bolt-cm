@@ -3,7 +3,6 @@
 namespace Bolt\Extension\Bolt\MarketPlace;
 
 use Bolt\Extension\SimpleExtension;
-use Silex\Application;
 
 /**
  * Extension site extension loader
