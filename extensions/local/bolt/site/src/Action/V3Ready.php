@@ -1,29 +1,31 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
 
-class V3Ready
+class V3Ready extends AbstractAction
 {
-    public $em;
-    public $renderer;
-
-    public function __construct(EntityManager $em, Twig_Environment $renderer)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->em = $em;
-        $this->renderer = $renderer;
-    }
-
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
 
         $packages = $repo->findBy([], ['title' => 'ASC']);
 
-        return new Response($this->renderer->render('v3ready.twig', ['packages' => $packages]));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $html = $twig->render('v3ready.twig', ['packages' => $packages]);
+
+        return new Response($html);
     }
 }
