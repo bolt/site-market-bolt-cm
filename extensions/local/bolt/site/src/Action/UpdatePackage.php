@@ -1,32 +1,33 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Twig_Environment;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class UpdatePackage
+class UpdatePackage extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    public $router;
-    public $packageManager;
-    
-    public function __construct(Twig_Environment $renderer, EntityManager $em, Router $router, PackageManager $packageManager)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-        $this->router = $router;
-        $this->packageManager = $packageManager;
-    }
-    
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        /** @var Session $session */
+        $session = $this->getAppService('session');
+        $services = $this->getAppService('marketplace.services');
+        /** @var PackageManager $packageManager */
+        $packageManager = $services['package_manager'];
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        $repo = $em->getRepository(Entity\Package::class);
+
         $package = $repo->findOneBy(['id' => $params['package']]);
         if ($package->account->admin) {
             $isAdmin = true;
@@ -34,9 +35,9 @@ class UpdatePackage
             $isAdmin = false;
         }
         try {
-            $this->packageManager->validate($package, $isAdmin);
-            $package = $this->packageManager->syncPackage($package);
-            $request->getSession()->getFlashBag()->add('success', 'Package ' . $package->name . ' has been updated');
+            $packageManager->validate($package, $isAdmin);
+            $package = $packageManager->syncPackage($package);
+            $session->getFlashBag()->add('success', 'Package ' . $package->name . ' has been updated');
             if ($package->account->approved) {
                 $package->approved = true;
             }
@@ -44,13 +45,16 @@ class UpdatePackage
                 $package->regenerateToken();
             }
         } catch (\Exception $e) {
-            $request->getSession()->getFlashBag()->add('error', 'Package has an invalid composer.json and will be disabled!');
-            $request->getSession()->getFlashBag()->add('warning', implode(' : ', [$e->getMessage(), $e->getFile(), $e->getLine()]));
+            $session->getFlashBag()->add('error', 'Package has an invalid composer.json and will be disabled!');
+            $session->getFlashBag()->add('warning', implode(' : ', [$e->getMessage(), $e->getFile(), $e->getLine()]));
             $package->approved = false;
         }
-        
-        $this->em->flush();
 
-        return new RedirectResponse($this->router->generate('profile'));
+//@TODO update
+//$this->em->flush();
+
+        $route = $urlGen->generate('profile');
+
+        return new RedirectResponse($route);
     }
 }
