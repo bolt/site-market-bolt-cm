@@ -1,32 +1,33 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class Hook
+class Hook extends AbstractAction
 {
-    public $em;
-    public $packageManager;
-
-    public function __construct(EntityManager $em, PackageManager $packageManager)
-    {
-        $this->em = $em;
-        $this->packageManager = $packageManager;
-    }
-
-    public function __invoke(Request $request, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
         $token = $request->get('token');
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
 
         $package = $repo->findOneBy(['token' => $token]);
-
         if ($package) {
-            $package = $this->packageManager->syncPackage($package);
+            $services = $this->getAppService('marketplace.services');
+            /** @var PackageManager $packageManager */
+            $packageManager = $services['package_manager'];
+            $package = $packageManager->syncPackage($package);
             $response = ['status' => 'ok', 'response' => $package];
         } else {
             $response = ['status' => 'error', 'response' => 'package not found'];
