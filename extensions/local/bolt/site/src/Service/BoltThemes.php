@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extensions\Service;
+namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
-use Bolt\Extensions\Entity\Package;
+use Bolt\Extension\Bolt\MarketPlace\Entity\Package;
 use Exception;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extensions\Service;
+namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Composer\Config;
 use Composer\IO\NullIO;

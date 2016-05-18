@@ -6,7 +6,7 @@
  */
 
 
-namespace Bolt\Extensions\Service;
+namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Twig_Environment;
 use Mandrill;

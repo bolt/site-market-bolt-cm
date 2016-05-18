@@ -6,7 +6,7 @@
  */
 
 
-namespace Bolt\Extensions\Service;
+namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 
 class Email
