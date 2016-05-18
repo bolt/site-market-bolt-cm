@@ -2,44 +2,46 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class Tests
+class Tests extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    public $router;
-
-    public function __construct(Twig_Environment $renderer, EntityManager $em, Router $router, PackageManager $packageManager)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-        $this->router = $router;
-        $this->packageManager = $packageManager;
-    }
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        /** @var Session $session */
+        $session = $this->getAppService('session');
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        $repo = $em->getRepository(Entity\Package::class);
+        $services = $this->getAppService('marketplace.services');
+        /** @var PackageManager $packageManager */
+        $packageManager = $services['package_manager'];
 
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
         $allowedit = $package->account === $request->get('user');
 
         if (!$package || !$allowedit) {
-            $request->getSession()->getFlashBag()->add('error', 'There was a problem accessing this package');
+            $session->getFlashBag()->add('error', 'There was a problem accessing this package');
+            $route = $urlGen->generate('profile');
 
-            return new RedirectResponse($this->router->generate('profile'));
+            return new RedirectResponse($route);
         }
-        
+
         try {
-            $repo = $this->em->getRepository(Entity\VersionBuild::class);
-            $info = $this->packageManager->getInfo($package, false);
+            $repo = $em->getRepository(Entity\VersionBuild::class);
+            $info = $packageManager->getInfo($package, false);
             foreach ($info as $ver) {
                 $build = $repo->findOneBy(['package' => $package->id, 'version' => $ver['version']]);
                 if ($build) {
@@ -48,12 +50,18 @@ class Tests
                 $versions[$ver['stability']][] = $ver;
             }
         } catch (\Exception $e) {
-            $request->getSession()->getFlashBag()->add('error', $e->getMessage());
+            $session->getFlashBag()->add('error', $e->getMessage());
         }
 
-        return new Response($this->renderer->render('tests.twig', [
+
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $context = [
             'package'  => $package,
             'versions' => $versions,
-        ]));
+        ];
+        $html = $twig->render('tests.twig', $context);
+
+        return new Response($html);
     }
 }
