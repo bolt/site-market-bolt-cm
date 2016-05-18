@@ -1,36 +1,44 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
+use Bolt\Storage\Repository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StarPackage
+class StarPackage extends AbstractAction
 {
-    public $em;
-    public $router;
-
-    public function __construct(EntityManager $em, Router $router)
-    {
-        $this->em = $em;
-        $this->router = $router;
-    }
-    
-    public function __invoke(Request $request, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
         $package = $params['package'];
-        $repo = $this->em->getRepository(Entity\Package::class);
+
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        $route = $urlGen->generate('view', ['package' => $package->id]);
+        /** @var Session $session */
+        $session = $this->getAppService('session');
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id' => $package]);
-        
-        $account = $this->em->find(Entity\Account::class, $request->getSession()->get('bolt.account.id'));
-        
-        $statRepo = $this->em->getRepository(Entity\Stat::class);
+
+        $account = $em->find(Entity\Account::class, $request->getSession()->get('bolt.account.id'));
+
+        /** @var Repository $statRepo */
+        $statRepo = $em->getRepository(Entity\Stat::class);
         $existing = $statRepo->findOneBy(['package' => $package, 'account' => $account]);
-        
+
         if ($existing) {
-            $request->getSession()->getFlashBag()->add('error', 'Your have already starred this package');
+            $session->getFlashBag()->add('error', 'Your have already starred this package');
         } else {
             $stat = new Entity\Stat([
                 'source'   => $request->server->get('HTTP_REFERER'),
@@ -40,12 +48,11 @@ class StarPackage
                 'type'     => 'star',
                 'account'  => $account,
             ]);
-            
-            $this->em->persist($stat);
-            $this->em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Your have starred this package');
+
+            $statRepo->save($stat);
+            $session->getFlashBag()->add('success', 'Your have starred this package');
         }
-        
-        return new RedirectResponse($this->router->generate('view', ['package' => $package->id]));
+
+        return new RedirectResponse($route);
     }
 }
