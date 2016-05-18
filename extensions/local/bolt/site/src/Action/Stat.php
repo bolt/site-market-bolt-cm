@@ -1,33 +1,33 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class Stat
+class Stat extends AbstractAction
 {
-    public $em;
-    public $router;
-
-    public function __construct(EntityManager $em, Router $router)
-    {
-        $this->em = $em;
-        $this->router = $router;
-    }
-    
-    public function __invoke(Request $request, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
         $type = $params['id'];
         $package = $params['package'];
         $version = isset($params['version']) ? $params['version'] : false;
-        $repo = $this->em->getRepository(Entity\Package::class);
-        
+
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        $repo = $em->getRepository(Entity\Package::class);
+
         $package = $repo->findOneBy(['name' => $package]);
-        
+
         $stat = new Entity\Stat([
             'source'   => $request->server->get('HTTP_REFERER'),
             'ip'       => $request->server->get('REMOTE_ADDR'),
@@ -36,12 +36,13 @@ class Stat
             'version'  => $version,
             'type'     => $type,
         ]);
-        
-        $this->em->persist($stat);
-        $this->em->flush();
-        
+
+        $repo->save($stat);
+
         if ($type == 'star') {
-            return new RedirectResponse($this->router->generate('view', ['package' => $package->id]));
+            $route = $urlGen->generate('view', ['package' => $package->id]);
+
+            return new RedirectResponse($route);
         }
         $response = new JsonResponse(['status' => 'OK', 'package' => $package->id]);
         $response->setCallback($request->get('callback'));
