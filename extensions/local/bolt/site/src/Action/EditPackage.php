@@ -1,61 +1,66 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Environment;
 
-class EditPackage
+class EditPackage extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    public $forms;
-    public $router;
-
-    public function __construct(Twig_Environment $renderer, EntityManager $em, FormFactory $forms, Router $router)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-        $this->forms = $forms;
-        $this->router = $router;
-    }
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        /** @var Session $session */
+        $session = $this->getAppService('session');
+                /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
 
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        $repo = $em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
-        if (!$package->token) {
+//@TODO Check this
+        if (!$package->getToken()) {
             $package->regenerateToken();
-            $this->em->flush();
+            //$this->em->flush();
         }
+
         if (!$package) {
-            $request->getSession()->getFlashBag()->add('error', 'There was a problem accessing this package');
+            $session->getFlashBag()->add('error', 'There was a problem accessing this package');
+            $route = $urlGen->generate('profile');
 
-            return new RedirectResponse($this->router->generate('profile'));
+            return new RedirectResponse($route);
         }
 
-        $form = $this->forms->create('package', $package);
+        /** @var FormFactory $forms */
+        $forms = $this->getAppService('form.factory');
+        $form = $forms->create('package', $package);
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $this->em->persist($package);
-            $this->em->flush();
-            $request->getSession()->getFlashBag()->add('success', 'Your package was succesfully updated');
+            $repo->save($package);
+
+            $session->getFlashBag()->add('success', 'Your package was successfully updated');
         }
 
-        return new Response(
-            $this->renderer->render(
-                'submit.twig',
-                [
-                    'form'    => $form->createView(),
-                    'hook'    => ($package->token) ? 'https://' . $request->server->get('HTTP_HOST') . $this->router->generate('hook') . '?token=' . $package->token : false,
-                    'package' => $package,
-                ]
-            ));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $context = [
+            'form'    => $form->createView(),
+            'hook'    => ($package->token) ? 'https://' . $request->server->get('HTTP_HOST') . $urlGen->generate('hook') . '?token=' . $package->token : false,
+            'package' => $package,
+        ];
+        $html = $twig->render('submit.twig', $context);
+
+        return new Response($html);
     }
 }
