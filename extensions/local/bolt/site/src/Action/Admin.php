@@ -1,28 +1,28 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
 
-class Admin
+class Admin extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    
-    public function __construct(Twig_Environment $renderer, EntityManager $em)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-    }
-    
-    public function __invoke(Request $request)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        $repo = $em->getRepository(Entity\Package::class);
         $packages = $repo->findAll();
 
-        return new Response($this->renderer->render('admin.twig', ['packages' => $packages]));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $html = $twig->render('admin.twig', ['packages' => $packages]);
+
+        return new Response($html);
     }
 }
