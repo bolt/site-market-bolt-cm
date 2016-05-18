@@ -15,24 +15,12 @@ class MarketPlaceExtension extends SimpleExtension
     /**
      * {@inheritdoc}
      */
-    protected function registerServices(Application $app)
+    public function getServiceProviders()
     {
-        $app['twig'] = $app->share(
-            $app->extend(
-                'twig',
-                function (\Twig_Environment $twig) {
-                    $twig->addExtension(new Twig\Extension());
+        $providers = parent::getServiceProviders();
+        $providers[] = new Provider\MarketPlaceServiceProvider();
 
-                    return $twig;
-                }
-            )
-        );
-
-        $app['extension_site.controller.frontend'] = $app->share(
-            function () {
-                return new Controller\Frontend();
-            }
-        );
+        return $providers;
     }
 
     /**
@@ -41,9 +29,9 @@ class MarketPlaceExtension extends SimpleExtension
     protected function registerFrontendControllers()
     {
         $app = $this->getContainer();
-        
+
         return [
-            '/' => $app['extension_site.controller.frontend'],
+            '/' => $app['marketplace.controller.frontend'],
         ];
     }
 }
