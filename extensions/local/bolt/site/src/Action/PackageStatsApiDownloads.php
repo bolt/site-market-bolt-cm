@@ -1,23 +1,26 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class PackageStatsApiDownloads
+class PackageStatsApiDownloads extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    public $router;
     protected $colors = [];
 
-    public function __construct(EntityManager $em, Router $router)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(Application $app)
     {
-        $this->em = $em;
-        $this->router = $router;
+        parent::__construct($app);
+
         $this->colors = ([
             '206, 148, 140',
             '230, 181, 166',
@@ -44,9 +47,15 @@ class PackageStatsApiDownloads
         shuffle($this->colors);
     }
 
-    public function __invoke(Request $request, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
         $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
         //$package = $repo->findOneBy(['id'=>$params['package']]);
 
@@ -96,15 +105,18 @@ class PackageStatsApiDownloads
         ));
     }
 
-    private function getStats($package, $version, $from = null, $to = null)
+    private function getStats($package, $version, \DateTime $from = null, \DateTime $to = null)
     {
-        $repo = $this->em->getRepository(Entity\Stat::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        $repo = $em->getRepository(Entity\Stat::class);
 
+        /** @var QueryBuilder $qb */
         $qb = $repo->createQueryBuilder('s')
               ->where('s.type = :type')
               ->andWhere('s.package = :package')
               ->setParameter('type', 'install')
-              ->setParameter('package', $package->id);
+              ->setParameter('package', $package->getId());
 
         if ($from != null && $to != null) {
             $from = $from->format('Y-m-d H:i:s');
@@ -123,9 +135,7 @@ class PackageStatsApiDownloads
                 ->setParameter('version', $version);
         }
 
-        $q = $qb->getQuery();
-
-        $stats = $q->execute();
+        $stats = $qb->execute();
 
         return $stats;
     }
@@ -256,7 +266,10 @@ class PackageStatsApiDownloads
 
     private function getAllVersions($package)
     {
-        $repo = $this->em->getRepository(Entity\Stat::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Stat::class);
 
         $qb = $repo->createQueryBuilder('s')
               ->where('s.type = :type')
@@ -298,6 +311,7 @@ class PackageStatsApiDownloads
         $interval = \DateInterval::createFromDateString('1 month');
         $period   = new \DatePeriod($start, $interval, $end);
 
+        /** @var \DateTime $dt */
         foreach ($period as $dt) {
             $months[$dt->format('Y-m')]['date'] = $dt;
         }
@@ -313,6 +327,7 @@ class PackageStatsApiDownloads
         $interval = \DateInterval::createFromDateString('1 day');
         $period   = new \DatePeriod($start, $interval, $end);
 
+        /** @var \DateTime $dt */
         foreach ($period as $dt) {
             $days[$dt->format('Y-m-d')]['date'] = $dt;
         }
