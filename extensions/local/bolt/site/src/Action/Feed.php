@@ -1,29 +1,31 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
 
-class Feed
+class Feed extends AbstractAction
 {
-    public $em;
-    public $renderer;
-    
-    public function __construct(Twig_Environment $renderer, EntityManager $em)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->em = $em;
-        $this->renderer = $renderer;
-    }
-    
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
         $packages = $repo->search(null, null, 'date');
 
-        $response = new Response($this->renderer->render('feed.xml', ['packages' => $packages]));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $html = $twig->render('feed.xml', ['packages' => $packages]);
+
+        $response = new Response($html);
         $response->headers->set('Content-Type', 'text/xml');
 
         return $response;
