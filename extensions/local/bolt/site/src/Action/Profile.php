@@ -1,26 +1,33 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
 
-class Profile
+class Profile extends AbstractAction
 {
-    public function __construct(Twig_Environment $renderer, EntityManager $em)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-        $this->em = $em;
-    }
-    
-    public function __invoke(Request $request)
-    {
+        $token = $request->get('token');
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
+
         $user = $request->attributes->get('user');
-        $repo = $this->em->getRepository(Entity\Package::class);
         $packages = $repo->findBy(['account' => $user], ['created' => 'DESC']);
 
-        return new Response($this->renderer->render('profile.twig', ['packages' => $packages, 'user' => $user]));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $html = $twig->render('profile.twig', ['packages' => $packages, 'user' => $user]);
+
+        return new Response($html);
     }
 }
