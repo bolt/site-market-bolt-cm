@@ -1,25 +1,31 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class TestBuildCheck
+class TestBuildCheck extends AbstractAction
 {
-    public $em;
-    
-    public function __construct(EntityManager $em)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->em = $em;
-    }
-    
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\VersionBuild::class);
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\VersionBuild::class);
+
         $build = $repo->findOneBy(['id' => $params['build']]);
-        $response = ['status' => $build->getStatus(), 'url' => $build->getUrl(), 'testStatus' => $build->getTestStatus()];
+        $response = [
+            'status'     => $build->getStatus(),
+            'url'        => $build->getUrl(),
+            'testStatus' => $build->getTestStatus()
+        ];
 
         return new JsonResponse($response);
     }
