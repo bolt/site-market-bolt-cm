@@ -1,40 +1,42 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Aura\Router\Router;
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class DisablePackage
+class DisablePackage extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    public $forms;
-    
-    public function __construct(EntityManager $em, Router $router)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->em = $em;
-        $this->router = $router;
-    }
-    
-    public function __invoke(Request $request, $params)
-    {
-        $repo = $this->em->getRepository(Entity\Package::class);
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        $route = $urlGen->generate('homepage');
+        /** @var Session $session */
+        $session = $this->getAppService('session');
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        $repo = $em->getRepository(Entity\Package::class);
+
         $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
-        if (!$package) {
-            $request->getSession()->getFlashBag()->add('error', 'There was a problem accessing this package');
+        if ($package === false) {
+            $session->getFlashBag()->add('error', 'There was a problem accessing this package');
 
-            return new RedirectResponse($this->router->generate('profile'));
+            return new RedirectResponse($route);
         }
-       
-        $package->approved = false;
-        $this->em->persist($package);
-        $this->em->flush();
 
-        $request->getSession()->getFlashBag()->add('info', 'This extension has been disabled.');
+        $package->setApproved(false);
+        $repo->save($package);
 
-        return new RedirectResponse($this->router->generate('profile'));
+        $session->getFlashBag()->add('info', 'This extension has been disabled.');
+
+        return new RedirectResponse($route);
     }
 }
