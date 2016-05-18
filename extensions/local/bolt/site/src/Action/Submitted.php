@@ -1,21 +1,21 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
 
-class Submitted
+class Submitted extends AbstractAction
 {
-    public $renderer;
-    
-    public function __construct(Twig_Environment $renderer)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
-        $this->renderer = $renderer;
-    }
-    
-    public function __invoke(Request $request)
-    {
-        return new Response($this->renderer->render('submitted.twig'));
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $html = $twig->render('submitted.twig');
+
+        return new Response($html);
     }
 }
