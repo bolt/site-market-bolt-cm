@@ -1,53 +1,50 @@
 <?php
+
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Doctrine\ORM\EntityManager;
+use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Storage\EntityManager;
+use Bolt\Storage\Repository;
 use Goutte\Client;
-use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Twig_Environment;
 
-class TestExtension
+
+class TestExtension extends AbstractAction
 {
-    public $renderer;
-    public $em;
-    
-    public function __construct(Twig_Environment $renderer, EntityManager $em)
-    {
-        $this->renderer = $renderer;
-        $this->em = $em;
-    }
-    
-    
-    public function __invoke(Request $request, $params)
+    /**
+     * {@inheritdoc}
+     */
+    public function execute(Request $request, array $params)
     {
         $version = $params['version'];
         $package = $params['package'];
         $retest = isset($params['retest']) ? true : false;
-       
-        
-        $repo = $this->em->getRepository(Entity\Package::class);
+
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
         $p = $repo->findOneBy(['id' => $package]);
-        
+
         if (!$p) {
             throw new \InvalidArgumentException('The extension provided does not exist', 1);
         }
-        
-        $repo = $this->em->getRepository(Entity\VersionBuild::class);
+
+        /** @var Repository $repo */
+        $repo = $em->getRepository(Entity\VersionBuild::class);
         $build = $repo->findOneBy(['package' => $p->id, 'version' => $version]);
-        
+
         if (!$build) {
             $build = new Entity\VersionBuild();
             $build->package = $p;
             $build->version = $version;
             $build->status = 'waiting';
-            $this->em->persist($build);
-            $this->em->flush();
+            $repo->save($build);
         }
-        
+
         if ($retest) {
             if ($request->request->get('phpTarget')) {
                 $build->phpTarget = $request->request->get('phpTarget');
@@ -56,18 +53,19 @@ class TestExtension
             $build->testStatus = 'pending';
             $build->testResult = '';
             $build->url = '';
-            $this->em->flush();
+//@TODO Finish this
+$this->em->flush();
         }
 
-        
+
         $tests = [];
         if ($build->url) {
             $canConnect = true;
             try {
-                $client = new Guzzle(['base_url' => $build->url]);
-                $response = $client->get('/');
+                $client = $this->getAppService('guzzle.client');
+                $response = $client->get($build->url);
             } catch (RequestException $e) {
-                if ($e->getCode() == '502') {
+                if ($e->getCode() == Response::HTTP_BAD_GATEWAY) {
                     $canConnect = false;
                     $build->status = 'complete';
                     $build->testStatus = 'failed';
@@ -77,41 +75,50 @@ class TestExtension
                     $build->testStatus = 'pending';
                     $build->testResult = '';
                 }
-                $this->em->flush();
+//@TODO Finish this
+$this->em->flush();
             }
-            
+
             if ($canConnect) {
                 try {
                     $tests = $this->testFunctionality($build);
                 } catch (\Exception $e) {
                     $build->status = 'failed';
-                    $this->em->flush();
+//@TODO Finish this
+$this->em->flush();
                 }
                 $build->status = 'complete';
-                $this->em->flush();
+//@TODO Finish this
+$this->em->flush();
             }
         }
 
-        return new Response($this->renderer->render('extension-test.twig', [
+        /** @var \Twig_Environment $twig */
+        $twig = $this->getAppService('twig');
+        $context = [
             'build'   => $build,
             'tests'   => $tests,
             'package' => $p,
-        ]));
+        ];
+        $html = $twig->render('extension-test.twig', $context);
+
+        return new Response($html);
     }
-    
+
     protected function testFunctionality($build)
     {
         $test = [];
         $test = array_merge($test, $this->testDashboard($build));
         $test = array_merge($test, $this->testHomepage($build));
         $test = array_merge($test, $this->testExtensionLoaded($build));
-        
-        
+
+
         $build->testResult = json_encode($test);
         $this->approvedStatus($build);
-        $this->em->flush();
+//@TODO Finish this
+$this->em->flush();
     }
-    
+
     protected function testHomepage($build)
     {
         $client = new Client();
@@ -124,7 +131,7 @@ class TestExtension
 
         return $test;
     }
-    
+
     protected function testDashboard($build)
     {
         $client = new Client();
@@ -143,7 +150,7 @@ class TestExtension
 
         return $test;
     }
-    
+
     protected function testExtensionLoaded($build)
     {
         $test['extension'] = [
@@ -168,14 +175,15 @@ class TestExtension
         } catch (\Exception $e) {
             return $test;
         }
-        
+
         return $test;
     }
-    
+
     protected function approvedStatus($build)
     {
         if (!count($build->testResult)) {
-            return 'pending';
+            $build->url = 'pending';
+            return;
         }
         $status = 'approved';
         foreach ($build->testResult as $test) {
@@ -183,6 +191,6 @@ class TestExtension
                 $status = 'failed';
             }
         }
-        $build->testStatus = $status;
+        $build->url = $status;
     }
 }
