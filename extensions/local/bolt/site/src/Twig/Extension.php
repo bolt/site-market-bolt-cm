@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Twig;
 
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use forxer\Gravatar\Gravatar;
 use Twig_Extension as TwigExtension;
 use Twig_SimpleFilter as TwigSimpleFilter;
@@ -101,7 +102,12 @@ class Extension extends TwigExtension
         }
     }
 
-    public function packageIcon($package)
+    /**
+     * @param Entity\Package $package
+     *
+     * @return string
+     */
+    public function packageIcon(Entity\Package $package)
     {
         if ($ico = $package->getIcon()) {
             if (strpos('//', $ico)) {
@@ -114,7 +120,7 @@ class Extension extends TwigExtension
             }
         }
 
-        return '/images/' . $package->getType() . '.png';
+        return '/files/' . $package->getType() . '.png';
     }
 
     public function getenv($key)
