@@ -2,7 +2,13 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace;
 
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Schema\Table;
+use Bolt\Extension\DatabaseSchemaTrait;
 use Bolt\Extension\SimpleExtension;
+use Bolt\Extension\StorageTrait;
+use Silex\Application;
 
 /**
  * Extension site extension loader
@@ -11,6 +17,9 @@ use Bolt\Extension\SimpleExtension;
  */
 class MarketPlaceExtension extends SimpleExtension
 {
+    use DatabaseSchemaTrait;
+    use StorageTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -25,12 +34,45 @@ class MarketPlaceExtension extends SimpleExtension
     /**
      * {@inheritdoc}
      */
+    protected function registerServices(Application $app)
+    {
+        $this->extendDatabaseSchemaServices();
+        $this->extendRepositoryMapping();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function registerFrontendControllers()
     {
         $app = $this->getContainer();
 
         return [
             '/' => $app['marketplace.controller.frontend'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function registerExtensionTables()
+    {
+        return [
+            'marketplace_package'       => Table\Package::class,
+            'marketplace_stat'          => Table\Stat::class,
+            'marketplace_version_build' => Table\VersionBuild::class,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function registerRepositoryMappings()
+    {
+        return [
+            'marketplace_package'       => [Entity\Package::class      => Repository\Package::class],
+            'marketplace_stat'          => [Entity\Stat::class         => Repository\Stat::class],
+            'marketplace_version_build' => [Entity\VersionBuild::class => Repository\VersionBuild::class],
         ];
     }
 }
