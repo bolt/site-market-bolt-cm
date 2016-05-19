@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Controller;
 
+use Bolt\Extension\Bolt\MarketPlace\Action\ActionInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
@@ -145,7 +146,7 @@ class Frontend implements ControllerProviderInterface
      */
     public function home(Application $app, Request $request)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        return $this->getAction($app, 'home')->execute($request, []);
     }
 
     /**
@@ -256,5 +257,20 @@ class Frontend implements ControllerProviderInterface
     public function view(Application $app, Request $request)
     {
         return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+    }
+
+    /**
+     * @param Application $app
+     * @param string      $name
+     *
+     * @return ActionInterface
+     */
+    private function getAction(Application $app, $name)
+    {
+        if (!isset($app['marketplace.actions'][$name])) {
+            throw new \BadMethodCallException(sprintf('Action "%s" does not exist', $name));
+        }
+
+        return $app['marketplace.actions'][$name];
     }
 }
