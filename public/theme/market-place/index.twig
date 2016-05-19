@@ -28,14 +28,14 @@
 
     <br>
 
-    <div class="module_mdownloaded_plugins">
+    <div class="module_most_downloaded_plugins">
 
         <h2 class="ui left floated header">Most Downloaded Extensions</h2>
         <div class="ui clearing divider"></div>
 
         <div class="ui six column grid doubling">
 
-            {% for package in mdownloaded_plugins |slice(0, 6) %}
+            {% for package in most_downloaded_plugins |slice(0, 6) %}
                 <div class="column">
                     <div class="ui fluid card">
                         <a class="image" href="{{ url('view',{'package':package.id}) }}">
@@ -109,7 +109,7 @@
         <div class="ui three column grid doubling"
         ">
 
-        {% for package in mdownloaded_themes |slice(0, 6) %}
+        {% for package in most_downloaded_themes |slice(0, 6) %}
             <div class="column">
                 <div class="ui fluid card">
                     <a class="image image_card" href="{{ url('view',{'package':package.id}) }}">
