@@ -2,7 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
-use Bolt\Extension\Bolt\MarketPlace\Entity\Package;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity\Package;
 use Exception;
 
 /**
