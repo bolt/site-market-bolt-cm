@@ -256,7 +256,11 @@ class Frontend implements ControllerProviderInterface
      */
     public function view(Application $app, Request $request)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        $params = [
+            'package' => $request->query->get('package')
+        ];
+
+        return $this->getAction($app, 'package_view')->execute($request, $params);
     }
 
     /**

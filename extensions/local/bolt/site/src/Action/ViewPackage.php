@@ -2,7 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,33 +18,33 @@ class ViewPackage extends AbstractAction
      */
     public function execute(Request $request, array $params)
     {
-        /** @var UrlGeneratorInterface $urlGen */
-        $urlGen = $this->getAppService('url_generator');
-        /** @var Session $session */
-        $session = $this->getAppService('session');
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
         $repo = $em->getRepository(Entity\Package::class);
 
         $package = $repo->findOneBy(['id' => $params['package']]);
-
         if (!$package) {
+            /** @var Session $session */
+            $session = $this->getAppService('session');
             $session->getFlashBag()->add('error', 'There was a problem accessing this package');
+
+            /** @var UrlGeneratorInterface $urlGen */
+            $urlGen = $this->getAppService('url_generator');
             $route = $urlGen->generate('profile');
 
             return new RedirectResponse($route);
         }
 
         $suggested = [];
-        foreach ($package->suggested as $name => $description) {
-            $suggestedPackage = $repo->findOneBy(['name' => $name]);
-            if ($suggestedPackage) {
-                $suggested[] = [
-                    'package'     => $suggestedPackage,
-                    'description' => $description,
-                ];
-            }
-        }
+        //foreach ($package->getSuggested() as $name => $description) {
+        //    $suggestedPackage = $repo->findOneBy(['name' => $name]);
+        //    if ($suggestedPackage) {
+        //        $suggested[] = [
+        //            'package'     => $suggestedPackage,
+        //            'description' => $description,
+        //        ];
+        //    }
+        //}
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
