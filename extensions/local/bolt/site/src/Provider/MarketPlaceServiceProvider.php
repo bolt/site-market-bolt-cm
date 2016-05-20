@@ -6,6 +6,11 @@ use Bolt\Extension\Bolt\MarketPlace\Action;
 use Bolt\Extension\Bolt\MarketPlace\Controller;
 use Bolt\Extension\Bolt\MarketPlace\Service;
 use Bolt\Extension\Bolt\MarketPlace\Twig;
+use Composer\Config as ComposerConfig;
+use Composer\Config\JsonConfigSource;
+use Composer\Factory;
+use Composer\IO\NullIO;
+use Composer\Json\JsonFile;
 use Pimple as Container;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -37,6 +42,30 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
         $app['marketplace.controller.frontend'] = $app->share(
             function () {
                 return new Controller\Frontend();
+            }
+        );
+
+        $app['marketplace.composer.config'] = $app->share(
+            function ($app) {
+                /** @var \Bolt\Composer\Action\Options $options */
+                $options = $app['extend.action.options'];
+                putenv('COMPOSER_HOME=' . $options->baseDir());
+
+                $io = new NullIO();
+
+                /** @var ComposerConfig $config */
+                $config = Factory::createConfig($io);
+
+                foreach (['auth.json', 'github.json'] as $jsonFile) {
+                    $jsonFilePath = $app['resources']->getPath('config/satis/' .  $jsonFile);
+                    $file = new JsonFile($jsonFilePath);
+                    if ($file->exists()) {
+                        $config->merge(['config' => $file->read()]);
+                        $config->setAuthConfigSource(new JsonConfigSource($file, true));
+                    }
+                }
+
+                return $config;
             }
         );
 
@@ -81,7 +110,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'bolt_themes'     => $app->share(function () use ($app) { return new Service\BoltThemes(); }),
                     'email'           => $app->share(function () use ($app) { return new Service\Email(); }),
                     'mail'            => $app->share(function () use ($app) { return new Service\MailService(); }),
-                    'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager(); }),
+                    'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager($app['marketplace.composer.config']); }),
                 ]);
 
                 return $container;
