@@ -9,9 +9,11 @@ class Package extends Entity
     /** @var string */
     protected $id;
     /** @var string */
-    protected $title;
+    protected $account_id;
     /** @var string */
     protected $source;
+    /** @var string */
+    protected $title;
     /** @var string */
     protected $name;
     /** @var string */
@@ -63,6 +65,22 @@ class Package extends Entity
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountId()
+    {
+        return $this->account_id;
+    }
+
+    /**
+     * @param string $account_id
+     */
+    public function setAccountId($account_id)
+    {
+        $this->account_id = $account_id;
     }
 
     /**
