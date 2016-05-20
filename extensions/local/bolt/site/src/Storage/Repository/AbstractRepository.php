@@ -19,4 +19,16 @@ abstract class AbstractRepository extends Repository
         return $this->em->createQueryBuilder()
             ->from($this->getTableName(), $alias);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getLoadQuery()
+    {
+        $qb = $this->createQueryBuilder(strtolower(end(explode('\\', $this->entityName))));
+        $qb->select('*');
+        $this->load($qb);
+
+        return $qb;
+    }
 }
