@@ -11,10 +11,11 @@ debug: false
 # The template names that you wish to use in your theme to override the default
 #
 templates:
-#    profile:
-#        parent: profile.twig
+    profile:
+        parent: partials/_profile.twig
 #        associate: _register.twig
 #        edit: _edit.twig
+        register: partials/_profile_register.twig
 #        verify: _verify.twig
 #        view: _view.twig
     authentication:
