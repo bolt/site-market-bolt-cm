@@ -10,17 +10,18 @@ debug: false
 #
 # The template names that you wish to use in your theme to override the default
 #
-#templates:
+templates:
 #    profile:
 #        parent: profile.twig
 #        associate: _register.twig
 #        edit: _edit.twig
 #        verify: _verify.twig
 #        view: _view.twig
-#    authentication:
-#        parent: authentication.twig
+    authentication:
+        parent: partials/_authentication.twig
 #        associate: _associate.twig
-#        login: _login.twig
+        login: partials/_auth_login.twig
+        recovery: partials/_auth_recovery.twig
 #        logout: _logout.twig
 #        feedback: _feedback.twig
 #    error:
@@ -65,8 +66,8 @@ registration:
 ## Notification email addresses ###############################################
 #
 notification:
-    name: Site Admin              # Display name used as the sender name
-    email: no-reply@example.com   # Email address as the sender address
+    name: Bolt Market Place   # Display name used as the sender name
+    email: no-reply@bolt.cm   # Email address as the sender address
 
 # URLs ########################################################################
 #

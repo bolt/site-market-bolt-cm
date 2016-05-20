@@ -1,4 +1,4 @@
-{% extends "layout.twig" %}
+{% extends twigparent %}
 
 {% block content %}
 
@@ -10,27 +10,10 @@
                     Log-in to your account
                 </div>
             </h2>
-            <form class="ui large form" action="" method="post">
-                <div class="ui stacked segment">
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.password) }}
 
-                    {{ form_row(form.login, {attr:{class:'ui fluid large vk submit button'}}) }}
-                </div>
+            {{ members_auth_login() }}
 
-                <div class="ui error message"></div>
-
-            </form>
-
-            <div class="ui message">
-                <p>
-                Don't have an account yet? <a href="{{ url('register') }}">Register for one here</a>
-                </p>
-                <p>
-                Forgotten Password? <a href="{{ url('reset') }}">Reset your password here</a>
-                </p>
-            </div>
         </div>
     </div>
 
-{% endblock %}
+{% endblock content %}
