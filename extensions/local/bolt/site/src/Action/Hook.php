@@ -16,23 +16,22 @@ class Hook extends AbstractAction
      */
     public function execute(Request $request, array $params)
     {
-        $token = $request->get('token');
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
         /** @var Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
 
-        $package = $repo->findOneBy(['token' => $token]);
+        $package = $repo->findOneBy(['token' => $request->query->get('token')]);
         if ($package) {
             $services = $this->getAppService('marketplace.services');
             /** @var PackageManager $packageManager */
             $packageManager = $services['package_manager'];
+            /** @var Entity\Package $package */
             $package = $packageManager->syncPackage($package);
-            $response = ['status' => 'ok', 'response' => $package];
-        } else {
-            $response = ['status' => 'error', 'response' => 'package not found'];
+
+            return new JsonResponse(['status' => 'ok', 'response' => $package]);
         }
 
-        return new JsonResponse($response);
+        return new JsonResponse(['status' => 'error', 'response' => 'package not found']);
     }
 }

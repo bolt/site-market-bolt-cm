@@ -43,6 +43,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
+        $ctr->match('/hook', [$this, 'hook'])
+            ->bind('hook')
+            ->method('GET')
+        ;
+
         $ctr->match('/profile', [$this, 'profile'])
             ->bind('profile')
             ->method('GET|POST')
@@ -178,6 +183,20 @@ class Frontend implements ControllerProviderInterface
     public function home(Application $app, Request $request)
     {
         return $this->getAction($app, 'home')->execute($request, []);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function hook(Application $app, Request $request)
+    {
+
+        $params = [];
+
+        return $this->getAction($app, 'hook')->execute($request, $params);
     }
 
     /**
