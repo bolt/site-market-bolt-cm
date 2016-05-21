@@ -2,8 +2,8 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Repository\Package;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
 use Bolt\Storage\EntityManager;
 use Bolt\Storage\Repository;
 use Goutte\Client;
