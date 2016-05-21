@@ -58,6 +58,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
+        $ctr->match('/register', [$this, 'register'])
+            ->bind('register')
+            ->method('GET|POST')
+        ;
+
         $ctr->match('/reset', [$this, 'reset'])
             ->bind('reset')
             ->method('GET|POST')
@@ -187,7 +192,11 @@ class Frontend implements ControllerProviderInterface
      */
     public function login(Application $app, Request $request)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $app['url_generator'];
+        $route = $urlGen->generate('authenticationLogin');
+
+        return new RedirectResponse($route);
     }
 
     /**
@@ -198,7 +207,11 @@ class Frontend implements ControllerProviderInterface
      */
     public function logout(Application $app, Request $request)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $app['url_generator'];
+        $route = $urlGen->generate('authenticationLogout');
+
+        return new RedirectResponse($route);
     }
 
     /**
@@ -209,7 +222,27 @@ class Frontend implements ControllerProviderInterface
      */
     public function reset(Application $app, Request $request)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $app['url_generator'];
+        $route = $urlGen->generate('authenticationPasswordReset');
+
+        return new RedirectResponse($route);
+    }
+
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function register(Application $app, Request $request)
+    {
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $app['url_generator'];
+        $route = $urlGen->generate('membersProfileRegister');
+
+        return new RedirectResponse($route);
     }
 
     /**
