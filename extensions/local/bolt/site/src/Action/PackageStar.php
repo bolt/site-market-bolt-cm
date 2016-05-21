@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class StarPackage extends AbstractAction
+class PackageStar extends AbstractAction
 {
     /**
      * {@inheritdoc}

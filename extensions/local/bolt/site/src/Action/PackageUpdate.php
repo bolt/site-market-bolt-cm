@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class UpdatePackage extends AbstractAction
+class PackageUpdate extends AbstractAction
 {
     /**
      * {@inheritdoc}

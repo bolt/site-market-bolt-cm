@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class ViewPackage extends AbstractAction
+class PackageView extends AbstractAction
 {
     /**
      * {@inheritdoc}

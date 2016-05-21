@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Environment;
 
-class EditPackage extends AbstractAction
+class PackageEdit extends AbstractAction
 {
     /**
      * {@inheritdoc}
