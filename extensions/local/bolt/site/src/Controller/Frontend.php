@@ -3,11 +3,15 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Controller;
 
 use Bolt\Extension\Bolt\MarketPlace\Action\ActionInterface;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Ramsey\Uuid\Uuid;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Frontend controller.
@@ -261,8 +265,29 @@ class Frontend implements ControllerProviderInterface
      */
     public function view(Application $app, Request $request)
     {
+        $guid = $request->query->get('package');
+        if (Uuid::isValid($guid)) {
+            $repo = $app['storage']->getRepository(Entity\Package::class);
+            $package = $repo->findOneBy(['id' => $guid]);
+            if ($package === false) {
+                $html = $app['twig']->render('not-found.twig', ['reason' => 'Package does not exist.']);
+
+                return new Response($html, Response::HTTP_NOT_FOUND);
+            }
+
+            $parts = explode('/', $package->getName());
+            /** @var UrlGeneratorInterface $urlGen */
+            $urlGen = $app['url_generator'];
+            $route = $urlGen->generate('viewPackage', [
+                'packageAuthor' => $parts[0],
+                'packageName'   => $parts[1],
+            ]);
+
+            return new RedirectResponse($route);
+        }
+
         $params = [
-            'package' => $request->query->get('package')
+            'package' => $guid,
         ];
 
         return $this->getAction($app, 'package_view')->execute($request, $params);
