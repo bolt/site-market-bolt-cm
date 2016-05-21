@@ -93,6 +93,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET')
         ;
 
+        $ctr->match('/view/releases/{packageId}', [$this, 'viewPackageReleases'])
+            ->bind('viewPackageReleases')
+            ->method('GET')
+        ;
+
         $ctr->match('/view/{packageAuthor}', [$this, 'viewPackagesByAuthor'])
             ->bind('viewPackagesByAuthor')
             ->method('GET')
@@ -314,6 +319,22 @@ class Frontend implements ControllerProviderInterface
         ];
 
         return $this->getAction($app, 'package_view')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     * @param string      $packageId
+     *
+     * @return Response
+     */
+    public function viewPackageReleases(Application $app, Request $request, $packageId)
+    {
+        $params = [
+            'package' => $packageId,
+        ];
+
+        return $this->getAction($app, 'package_releases')->execute($request, $params);
     }
 
     /**
