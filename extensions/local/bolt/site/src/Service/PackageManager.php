@@ -136,16 +136,17 @@ class PackageManager
     /**
      * @param Entity\Package $package
      * @param string         $boltVersion
+     * @param string         $token
      *
      * @return array
      */
-    public function getInfo(Entity\Package $package, $boltVersion)
+    public function getInfo(Entity\Package $package, $boltVersion, $token = null)
     {
         $info = [];
         $repo = $this->loadRepository($package);
         $versions = $repo->getPackages();
         $dumper = new ArrayDumper();
-        $releaseInfo = $this->getReleaseInfo($package);
+        $releaseInfo = $this->getReleaseInfo($package, $token);
 
         foreach ($versions as $version) {
             if (!$boltVersion || $this->isCompatible($version, $boltVersion)) {
@@ -154,7 +155,7 @@ class PackageManager
 
                 if ($releaseInfo) {
                     foreach ($releaseInfo as $rel) {
-                        if ($version->getPrettyVersion() == $rel['tag_name']) {
+                        if ($version->getPrettyVersion() === $rel['tag_name']) {
                             $data['release'] = $rel;
                         }
                     }
@@ -171,17 +172,22 @@ class PackageManager
      * If we have a GitHub repo this gets some extra information about the version
      *
      * @param Entity\Package $package
+     * @param string         $token
      *
      * @return array
      */
-    public function getReleaseInfo(Entity\Package $package)
+    public function getReleaseInfo(Entity\Package $package, $token = null)
     {
         $io = new NullIO();
         $io->loadConfiguration($this->config);
         $rfs = new RemoteFilesystem($io, $this->config);
 
         try {
-            $baseApiUrl = 'https://api.github.com/repos/' . str_replace('https://github.com/', '', $package->getSource()) . '/releases';
+            $baseApiUrl = sprintf(
+                'https://api.github.com/repos/%s/releases?access_token=%s',
+                str_replace('https://github.com/', '', $package->getSource()),
+                $token
+            );
             $repoData = JsonFile::parseJson($rfs->getContents('github.com', $baseApiUrl, false), $baseApiUrl);
         } catch (\Exception $e) {
             return [];
