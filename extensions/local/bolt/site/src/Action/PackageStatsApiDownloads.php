@@ -3,9 +3,8 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,17 +53,13 @@ class PackageStatsApiDownloads extends AbstractAction
     {
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Package $repo */
+        /** @var Repository\Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
-        $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
-        //$package = $repo->findOneBy(['id'=>$params['package']]);
+        /** @var Entity\Package $package */
+        $package = $repo->findOneBy(['id' => $params['package'], 'account_id' => $params['user']->getGuid()]);
 
         if (!$package) {
-            return new JsonResponse([
-                'error' => [
-                    'message' => 'No package found or you don\'t own it',
-                ],
-            ]);
+            return new JsonResponse(['error' => ['message' => 'No package found or you do not own it']]);
         }
 
         $group = $request->get('group');
@@ -85,8 +80,11 @@ class PackageStatsApiDownloads extends AbstractAction
             }
         }
 
-        $stats = $this->getStats($package, $version, $fromDT, $toDT);
-
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Repository\Stat $repo */
+        $repo = $em->getRepository(Entity\Stat::class);
+        $stats = $repo->getStats($package, $version, $fromDT, $toDT);
         $allVersions = $this->getAllVersions($package);
 
         if ($group === 'months') {
@@ -105,40 +103,6 @@ class PackageStatsApiDownloads extends AbstractAction
         ));
     }
 
-    private function getStats($package, $version, \DateTime $from = null, \DateTime $to = null)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getAppService('storage');
-        $repo = $em->getRepository(Entity\Stat::class);
-
-        /** @var QueryBuilder $qb */
-        $qb = $repo->createQueryBuilder('s')
-              ->where('s.type = :type')
-              ->andWhere('s.package = :package')
-              ->setParameter('type', 'install')
-              ->setParameter('package', $package->getId());
-
-        if ($from != null && $to != null) {
-            $from = $from->format('Y-m-d H:i:s');
-            $to = $to->format('Y-m-d H:i:s');
-
-            $qb = $qb
-                ->andWhere('s.recorded >= :from')
-                ->andWhere('s.recorded < :to')
-                ->setParameter('from', $from)
-                ->setParameter('to', $to);
-        }
-
-        if ($version != null && $version != '') {
-            $qb = $qb
-                ->andWhere('s.version = :version')
-                ->setParameter('version', $version);
-        }
-
-        $stats = $qb->execute();
-
-        return $stats;
-    }
 
     private function getDataGroupedByMonths($stats, $from, $to)
     {
@@ -268,27 +232,10 @@ class PackageStatsApiDownloads extends AbstractAction
     {
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Package $repo */
+        /** @var Repository\Stat $repo */
         $repo = $em->getRepository(Entity\Stat::class);
 
-        $qb = $repo->createQueryBuilder('s')
-              ->where('s.type = :type')
-              ->andWhere('s.package = :package')
-              ->setParameter('type', 'install')
-              ->setParameter('package', $package->id)
-              ->groupBy('s.version');
-
-        $q = $qb->getQuery();
-
-        $results = $q->execute();
-
-        $versions = [];
-
-        foreach ($results as $result) {
-            $versions[] = $result->version;
-        }
-
-        return $versions;
+        return $repo->getAllVersions($package->id);
     }
 
     private function getInstallsByVersionAndDate($stats, $version, $date, $dateFormat)

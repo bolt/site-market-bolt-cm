@@ -24,8 +24,7 @@ class PackageStats extends AbstractAction
         $em = $this->getAppService('storage');
         /** @var Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
-        $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
-        //$package = $repo->findOneBy(['id'=>$params['package']]);
+        $package = $repo->findOneBy(['id' => $params['package'], 'account_id' => $params['user']->getGuid()]);
 
         if (!$package) {
             /** @var Session $session */

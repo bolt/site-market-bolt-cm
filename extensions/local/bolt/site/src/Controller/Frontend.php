@@ -78,7 +78,12 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
-        $ctr->match('/stats', [$this, 'stats'])
+        $ctr->match('/stats/api/{package}', [$this, 'statsApi'])
+            ->bind('statsApi')
+            ->method('GET')
+        ;
+
+        $ctr->match('/stats/{package}', [$this, 'stats'])
             ->bind('stats')
             ->method('GET')
         ;
@@ -289,12 +294,35 @@ class Frontend implements ControllerProviderInterface
     /**
      * @param Application $app
      * @param Request     $request
+     * @param string      $package
      *
      * @return Response
      */
-    public function stats(Application $app, Request $request)
+    public function stats(Application $app, Request $request, $package)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        $params = [
+            'user'    => $app['members.session']->getAuthorisation(),
+            'package' => $package,
+        ];
+
+        return $this->getAction($app, 'package_stats')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     * @param string      $package
+     *
+     * @return Response
+     */
+    public function statsApi(Application $app, Request $request, $package)
+    {
+        $params = [
+            'user'    => $app['members.session']->getAuthorisation(),
+            'package' => $package,
+        ];
+
+        return $this->getAction($app, 'package_stats_api')->execute($request, $params);
     }
 
     /**
@@ -322,6 +350,7 @@ class Frontend implements ControllerProviderInterface
     /**
      * @param Application $app
      * @param Request     $request
+     * @param string      $package
      *
      * @return Response
      */
