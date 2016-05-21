@@ -76,7 +76,7 @@ class PackageView extends AbstractAction
             'boltthemes' => $services['bolt_themes']->info($package),
             'suggested'  => $suggested,
         ];
-        $html = $twig->render('view.twig', $context);
+        $html = $twig->render('package.twig', $context);
 
         $stopwatch->stop('marketplace.action.view');
 
