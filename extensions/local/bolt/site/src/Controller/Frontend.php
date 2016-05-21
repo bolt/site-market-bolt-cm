@@ -93,7 +93,7 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
-        $ctr->match('/update', [$this, 'update'])
+        $ctr->match('/update/{package}', [$this, 'update'])
             ->bind('update')
             ->method('GET|POST')
         ;
@@ -325,9 +325,13 @@ class Frontend implements ControllerProviderInterface
      *
      * @return Response
      */
-    public function update(Application $app, Request $request)
+    public function update(Application $app, Request $request, $package)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        $params = [
+            'package' => $package
+        ];
+
+        return $this->getAction($app, 'package_update')->execute($request, $params);
     }
 
     /**

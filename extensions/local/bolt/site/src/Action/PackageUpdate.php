@@ -2,8 +2,10 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bolt\Extension\Bolt\Members\Storage\Entity\Account;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +21,8 @@ class PackageUpdate extends AbstractAction
     {
         /** @var UrlGeneratorInterface $urlGen */
         $urlGen = $this->getAppService('url_generator');
+        $route = $urlGen->generate('profile');
+
         /** @var Session $session */
         $session = $this->getAppService('session');
         $services = $this->getAppService('marketplace.services');
@@ -26,10 +30,22 @@ class PackageUpdate extends AbstractAction
         $packageManager = $services['package_manager'];
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        $repo = $em->getRepository(Entity\Package::class);
+        /** @var Repository\Package $packageRepo */
+        $packageRepo = $em->getRepository(Entity\Package::class);
 
-        $package = $repo->findOneBy(['id' => $params['package']]);
-        if ($package->account->admin) {
+        /** @var Entity\Package $package */
+        $package = $packageRepo->findOneBy(['id' => $params['package']]);
+        if (!$package) {
+            $session->getFlashBag()->add('error', 'Package account is invalid!');
+
+            return new RedirectResponse($route);
+        }
+
+        $membersRecords = $this->getAppService('members.records');
+        /** @var Account $account */
+        $account = $membersRecords->getAccountByGuid($package->getAccountId());
+        $roles = (array) $account->getRoles();
+        if (in_array('admin', $roles)) {
             $isAdmin = true;
         } else {
             $isAdmin = false;
@@ -37,23 +53,21 @@ class PackageUpdate extends AbstractAction
         try {
             $packageManager->validate($package, $isAdmin);
             $package = $packageManager->syncPackage($package);
-            $session->getFlashBag()->add('success', 'Package ' . $package->name . ' has been updated');
-            if ($package->account->approved) {
-                $package->approved = true;
+            $session->getFlashBag()->add('success', 'Package ' . $package->getName() . ' has been updated');
+
+            if ($account->isEnabled()) {
+                $package->setApproved(true);
             }
-            if (!$package->token) {
+            if (!$package->getToken()) {
                 $package->regenerateToken();
             }
         } catch (\Exception $e) {
             $session->getFlashBag()->add('error', 'Package has an invalid composer.json and will be disabled!');
             $session->getFlashBag()->add('warning', implode(' : ', [$e->getMessage(), $e->getFile(), $e->getLine()]));
-            $package->approved = false;
+            $package->setApproved(false);
         }
 
-//@TODO update
-//$this->em->flush();
-
-        $route = $urlGen->generate('profile');
+        $packageRepo->save($package);
 
         return new RedirectResponse($route);
     }
