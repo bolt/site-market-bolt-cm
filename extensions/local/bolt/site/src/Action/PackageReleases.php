@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class Releases extends AbstractAction
+class PackageReleases extends AbstractAction
 {
     /**
      * {@inheritdoc}
