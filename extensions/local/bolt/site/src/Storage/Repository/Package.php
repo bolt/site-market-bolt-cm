@@ -103,7 +103,11 @@ class Package extends AbstractRepository
     {
         $qb = $this->createQueryBuilder('p')
             //->select('count(p.id) AS HIDDEN pcount')
-            ->select('*, p.source as source, count(p.id) AS pcount')
+            ->select('*')
+            ->addSelect('p.id as id')
+            ->addSelect('p.account_id as account_id')
+            ->addSelect('p.source as source')
+            ->addSelect('count(p.id) AS pcount')
             ->leftJoin('p' , 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('p.approved = :status')
         ;
