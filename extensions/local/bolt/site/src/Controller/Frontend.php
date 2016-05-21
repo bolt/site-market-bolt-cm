@@ -33,7 +33,7 @@ class Frontend implements ControllerProviderInterface
             ->method('GET')
         ;
 
-        $ctr->match('/edit', [$this, 'edit'])
+        $ctr->match('/edit/{package}', [$this, 'edit'])
             ->bind('edit')
             ->method('GET|POST')
         ;
@@ -154,12 +154,19 @@ class Frontend implements ControllerProviderInterface
     /**
      * @param Application $app
      * @param Request     $request
+     * @param string      $package
      *
      * @return Response
      */
-    public function edit(Application $app, Request $request)
+    public function edit(Application $app, Request $request, $package)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+
+        $params = [
+            'user'    => $app['members.session']->getAuthorisation(),
+            'package' => $package,
+        ];
+
+        return $this->getAction($app, 'package_edit')->execute($request, $params);
     }
 
     /**

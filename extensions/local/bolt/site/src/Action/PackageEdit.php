@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Bolt\Extension\Bolt\MarketPlace\Form;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\Form\FormFactory;
@@ -25,13 +26,13 @@ class PackageEdit extends AbstractAction
         $session = $this->getAppService('session');
                 /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-
         $repo = $em->getRepository(Entity\Package::class);
-        $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
-//@TODO Check this
+        /** @var Entity\Package $package */
+        $package = $repo->findOneBy(['id' => $params['package'], 'account_id' => $params['user']->getGuid()]);
+
         if (!$package->getToken()) {
             $package->regenerateToken();
-            //$this->em->flush();
+            $repo->save($package);
         }
 
         if (!$package) {
@@ -43,8 +44,8 @@ class PackageEdit extends AbstractAction
 
         /** @var FormFactory $forms */
         $forms = $this->getAppService('form.factory');
-        $form = $forms->create('package', $package);
-        $form->handleRequest();
+        $form = $forms->create(Form\PackageForm::class, $package);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $repo->save($package);
@@ -56,7 +57,7 @@ class PackageEdit extends AbstractAction
         $twig = $this->getAppService('twig');
         $context = [
             'form'    => $form->createView(),
-            'hook'    => ($package->token) ? 'https://' . $request->server->get('HTTP_HOST') . $urlGen->generate('hook') . '?token=' . $package->token : false,
+            'hook'    => $package->getToken() ? $urlGen->generate('hook', ['token' => $package->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
             'package' => $package,
         ];
         $html = $twig->render('submit.twig', $context);

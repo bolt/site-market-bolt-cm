@@ -1,7 +1,7 @@
 {% extends "layout.twig" %}
 
 {% block ga_extras %}
-    {% if request.get('route')['_name'] == 'edit' %}
+    {% if app.request.attributes.get('_route') == 'edit' %}
     ga('set', 'page', '/edit/<package-uuid>');
     ga('set', 'dimension2', '{{package.id}}');
     ga('set', 'dimension3', '{{package.title}}');
@@ -10,16 +10,18 @@
 
 {% block content %}
     <div class="ui grid stackable">
+
         <div class="nine wide column">
             <div class="ui form">
-                <form action="" method="post">
+                {{ form_start(form) }}
                     {{ form_row(form.title) }}
                     {{ form_row(form.source) }}
                     {{ form_row(form.description) }}
                     {{ form_row(form.submit, {attr:{class:'ui fluid large vk submit button'}}) }}
-                </form>
+                {{ form_end(form) }}
             </div>
         </div>
+
         {% if hook %}
             <div class="right floated seven wide column">
                 <div class="ui segment">
