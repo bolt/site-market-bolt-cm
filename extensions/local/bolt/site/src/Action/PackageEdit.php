@@ -30,16 +30,16 @@ class PackageEdit extends AbstractAction
         /** @var Entity\Package $package */
         $package = $repo->findOneBy(['id' => $params['package'], 'account_id' => $params['user']->getGuid()]);
 
-        if (!$package->getToken()) {
-            $package->regenerateToken();
-            $repo->save($package);
-        }
-
         if (!$package) {
             $session->getFlashBag()->add('error', 'There was a problem accessing this package');
             $route = $urlGen->generate('profile');
 
             return new RedirectResponse($route);
+        }
+
+        if (!$package->getToken()) {
+            $package->regenerateToken();
+            $repo->save($package);
         }
 
         /** @var FormFactory $forms */
