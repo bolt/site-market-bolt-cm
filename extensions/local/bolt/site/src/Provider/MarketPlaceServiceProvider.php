@@ -4,6 +4,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Provider;
 
 use Bolt\Extension\Bolt\MarketPlace\Action;
 use Bolt\Extension\Bolt\MarketPlace\Controller;
+use Bolt\Extension\Bolt\MarketPlace\Form;
 use Bolt\Extension\Bolt\MarketPlace\Service;
 use Bolt\Extension\Bolt\MarketPlace\Twig;
 use Composer\Config as ComposerConfig;
@@ -112,6 +113,19 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'email'           => $app->share(function () use ($app) { return new Service\Email(); }),
                     'mail'            => $app->share(function () use ($app) { return new Service\MailService(); }),
                     'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager($app['marketplace.composer.config']); }),
+                ]);
+
+                return $container;
+            }
+        );
+
+        $app['marketplace.forms'] = $app->share(
+            function ($app) {
+                $container = new Container([
+                    'account'        => $app->share(function () use ($app) { return new Form\AccountForm(); }),
+                    'package'        => $app->share(function () use ($app) { return new Form\PackageForm(); }),
+                    'reset'          => $app->share(function () use ($app) { return new Form\ResetForm(); }),
+                    'reset_password' => $app->share(function () use ($app) { return new Form\ResetPasswordForm(); }),
                 ]);
 
                 return $container;
