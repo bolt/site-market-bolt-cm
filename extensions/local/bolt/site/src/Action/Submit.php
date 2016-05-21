@@ -2,8 +2,10 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Bolt\Extension\Bolt\MarketPlace\Form;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
+use Bolt\Extension\Bolt\Members\AccessControl\Authorisation;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,7 +23,8 @@ class Submit extends AbstractAction
     {
         $entity = new Entity\Package();
         $error = false;
-        $accountUser = $request->get('user');
+        /** @var Authorisation $accountUser */
+        $accountUser = $params['user'];
 
         /** @var UrlGeneratorInterface $urlGen */
         $urlGen = $this->getAppService('url_generator');
@@ -35,36 +38,42 @@ class Submit extends AbstractAction
         $packageManager = $services['package_manager'];
         /** @var FormFactory $forms */
         $forms = $this->getAppService('form.factory');
-        $form = $forms->create('package', $entity);
-        $form->handleRequest();
+        $form = $forms->create(Form\PackageForm::class, $entity);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $package = $form->getData();
-            $package->created = new \DateTime();
+            $package->setCreated(new \DateTime());
             $package->regenerateToken();
-            $package->account = $accountUser;
-            if ($accountUser->approved) {
-                $package->approved = true;
+            $package->setAccountId($accountUser->getGuid());
+            if ($accountUser->getAccount()->isEnabled()) {
+                $package->setApproved(true);
             }
 
+            $route = $urlGen->generate('submitted');
+            $roles = $accountUser->getAccount()->getRoles();
+
             try {
-                $packageManager->validate($package, $accountUser->admin);
+                $packageManager->validate($package, in_array('admin', $roles));
                 $package = $packageManager->syncPackage($package);
                 $repo->save($package);
-                $route = $urlGen->generate('submitted');
 
                 return new RedirectResponse($route);
             } catch (\Exception $e) {
                 $session->getFlashBag()->add('error', 'Package has an invalid composer.json!');
                 $session->getFlashBag()->add('warning', $e->getMessage());
-                $package->approved = false;
+                $package->setApproved(false);
                 $error = 'invalid';
             }
         }
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
-        $context = ['form' => $form->createView(), 'error' => $error];
+        $context = [
+            'form'  => $form->createView(),
+            'hook'  => $package && $package->getToken() ? $urlGen->generate('hook', ['token' => $package->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
+            'error' => $error
+        ];
         $html = $twig->render('submit.twig', $context);
 
         return new Response($html);

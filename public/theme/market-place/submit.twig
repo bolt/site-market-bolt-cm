@@ -9,9 +9,10 @@
 {% endblock %}
 
 {% block content %}
+
     <div class="ui grid stackable">
 
-        <div class="nine wide column">
+        <div class="wide column">
             <div class="ui form">
                 {{ form_start(form) }}
                     {{ form_row(form.title) }}
@@ -21,19 +22,6 @@
                 {{ form_end(form) }}
             </div>
         </div>
-
-        {% if hook %}
-            <div class="right floated seven wide column">
-                <div class="ui segment">
-                    <h2 class="ui header">Auto-Update Webhook</h2>
-                    <p>
-                    Add this token to your Git Host's webhook service if available and we will run an update whenever
-                    you push a new version of your extension.
-                    </p>
-                    <div class="ui inverted segment"><code>{{ hook }}</code></div>
-                </div>
-            </div>
-        {% endif %}
 
     </div>
 
