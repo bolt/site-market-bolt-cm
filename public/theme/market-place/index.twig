@@ -35,7 +35,7 @@
 
         <div class="ui six column grid doubling">
 
-            {% for package in most_downloaded_plugins |slice(0, 6) %}
+            {% for package in most_downloaded_plugins %}
                 <div class="column">
                     <div class="ui fluid card">
                         <a class="image" href="{{ url('view',{'package':package.id}) }}">
@@ -44,7 +44,6 @@
                             <a class="header" href="{{ url('view',{'package':package.id}) }}">{{ package.title }}</a>
                             <div class="meta meta_package">
                                 <p>{{ package.name|slice(0, 19) }}{% if package.title|length > 19 %}&#8230;{% endif %}</p>
-
                             </div>
                         </div>
                     </div>
@@ -109,7 +108,7 @@
         <div class="ui three column grid doubling"
         ">
 
-        {% for package in most_downloaded_themes |slice(0, 6) %}
+        {% for package in most_downloaded_themes %}
             <div class="column">
                 <div class="ui fluid card">
                     <a class="image image_card" href="{{ url('view',{'package':package.id}) }}">

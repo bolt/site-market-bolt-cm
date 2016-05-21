@@ -34,8 +34,8 @@ class Home extends AbstractAction
             'downloaded'              => $repo->mostDownloaded(6),
             'latest_themes'           => $repo->getLatest(3, 'bolt-theme'),
             'latest_plugins'          => $repo->getLatest(12, 'bolt-extension'),
-            'most_downloaded_themes'  => $repo->search(null, 'bolt-theme', 'downloads'),
-            'most_downloaded_plugins' => $repo->search(null, 'bolt-extension', 'downloads'),
+            'most_downloaded_themes'  => $repo->search(null, 'bolt-theme', 'downloads', 6),
+            'most_downloaded_plugins' => $repo->search(null, 'bolt-extension', 'downloads', 6),
             'popular'                 => $repo->popularTags(),
         ];
         $html = $twig->render('index.twig', $context);

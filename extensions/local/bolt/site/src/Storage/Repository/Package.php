@@ -89,17 +89,18 @@ class Package extends AbstractRepository
      * @param string $keyword
      * @param string $type
      * @param string $order
+     * @param int    $limit
      *
      * @return Entity\Package[]|false
      */
-    public function search($keyword, $type = null, $order = null)
+    public function search($keyword, $type = null, $order = null, $limit = null)
     {
-        $query = $this->getSearchQuery($keyword, $type, $order);
+        $query = $this->getSearchQuery($keyword, $type, $order, $limit);
 
         return $this->findWith($query);
     }
 
-    public function getSearchQuery($keyword, $type, $order)
+    public function getSearchQuery($keyword, $type, $order, $limit)
     {
         $qb = $this->createQueryBuilder('p')
             //->select('count(p.id) AS HIDDEN pcount')
@@ -120,6 +121,10 @@ class Package extends AbstractRepository
         if ($type !== null) {
             $qb->andWhere('p.type = :type');
             $qb->setParameter('type', $type);
+        }
+        
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
         }
 
         switch ($order) {
