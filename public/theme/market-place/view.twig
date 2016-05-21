@@ -24,13 +24,16 @@
 
             <div class="buttons_header">
 
-                {% if request.get('isLoggedIn') and request.get('user').id == package.account.id %}
-                    <div class="buttons_header">
-                        <a href="{{ url('edit',{'package':package.id}) }}" class="ui primary button"> Edit
-                            <i class="right wrench icon"></i> </a> <a href="{{ url('update',{'package':package.id}) }}"
-                                                                      class="ui orange button"> Update
-                            <i class="right repeat icon"></i> </a>
-                    </div>
+                {% if is_member() %}
+                    {% set member = member() %}
+                    {% if member.guid == package.account_id %}
+                        <div class="buttons_header">
+                            <a href="{{ url('edit',{'package':package.id}) }}" class="ui primary button"> Edit
+                                <i class="right wrench icon"></i> </a> <a href="{{ url('update',{'package':package.id}) }}"
+                                                                          class="ui orange button"> Update
+                                <i class="right repeat icon"></i> </a>
+                        </div>
+                    {% endif %}
                 {% endif %}
 
                 {% if boltthemes and boltthemes.active %}
@@ -57,8 +60,8 @@
                     <i class="download icon"> {{ package.downloads|default(0) }}</i> </a>
 
                 <a class="bug popup icon item"
-                        {% if request.get('isLoggedIn') %}
-                            {% if package.isStarredBy(request.get('user')) %}
+                        {% if is_member() %}
+                            {% if package.isStarredBy(member.guid) %}
                             {% else %}
                                 href="{{ url('star',{'package':package.id}) }}"
                                 onclick="ga('send', 'event', {
@@ -69,8 +72,8 @@
                             {% endif %}
                         {% endif %}
                    data-content="
-                {% if request.get('isLoggedIn') %}
-                    {% if package.isStarredBy(request.get('user')) %}
+                {% if is_member() %}
+                    {% if package.isStarredBy(member.guid) %}
                         You have starred this package.
                     {% else %}
                         Star this package!
@@ -101,7 +104,6 @@
     </div>
 
     <br>
-
 
     {% if package.screenshots %}
         <h2 class="ui left floated header">Screenshots</h2>
@@ -231,14 +233,13 @@
             <div class="ui clearing divider"></div>
 
             <div class="ui relaxed large divided vertical list related_list">
-                {% for related in package.account.packages |slice(0, 7) %}
-                    {% if related != package %}
+                {% for relation in related %}
+                    {% if relation != package %}
                         <div class="item">
-                            <img class="ui avatar image" src="/files/{{ related.type }}.png">
+                            <img class="ui avatar image" src="/files/{{ relation.type }}.png">
                             <div class="content">
-                                <a class="header"
-                                   href="{{ url('view',{'package':related.id}) }}">{{ related.title }}</a>
-                                {{ related.name }}
+                                <a class="header" href="{{ url('view',{ 'package': relation.id }) }}">{{ relation.title }}</a>
+                                {{ relation.name }}
                             </div>
                         </div>
                     {% endif %}

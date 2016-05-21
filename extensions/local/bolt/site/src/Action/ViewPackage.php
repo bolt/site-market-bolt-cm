@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 class ViewPackage extends AbstractAction
 {
@@ -18,11 +19,18 @@ class ViewPackage extends AbstractAction
      */
     public function execute(Request $request, array $params)
     {
+        /** @var Stopwatch $stopwatch */
+        $stopwatch = $this->getAppService('stopwatch');
+        $stopwatch->start('marketplace.action.view');
+
+        $stopwatch->start('marketplace.action.view.package');
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
         $repo = $em->getRepository(Entity\Package::class);
 
         $package = $repo->findOneBy(['id' => $params['package']]);
+        $stopwatch->stop('marketplace.action.view.package');
+
         if (!$package) {
             /** @var Session $session */
             $session = $this->getAppService('session');
@@ -30,21 +38,25 @@ class ViewPackage extends AbstractAction
 
             /** @var UrlGeneratorInterface $urlGen */
             $urlGen = $this->getAppService('url_generator');
-            $route = $urlGen->generate('profile');
+            $route = $urlGen->generate('home');
+
+            $stopwatch->stop('marketplace.action.view');
 
             return new RedirectResponse($route);
         }
 
+        $stopwatch->start('marketplace.action.view.suggested');
         $suggested = [];
-        //foreach ($package->getSuggested() as $name => $description) {
-        //    $suggestedPackage = $repo->findOneBy(['name' => $name]);
-        //    if ($suggestedPackage) {
-        //        $suggested[] = [
-        //            'package'     => $suggestedPackage,
-        //            'description' => $description,
-        //        ];
-        //    }
-        //}
+        foreach ($package->getSuggested() as $name => $description) {
+            $suggestedPackage = $repo->findOneBy(['name' => $name]);
+            if ($suggestedPackage) {
+                $suggested[] = [
+                    'package'     => $suggestedPackage,
+                    'description' => $description,
+                ];
+            }
+        }
+        $stopwatch->stop('marketplace.action.view.suggested');
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
@@ -53,12 +65,15 @@ class ViewPackage extends AbstractAction
         $packageManager = $services['package_manager'];
         $context = [
             'package'    => $package,
+            'related'    => $repo->findBy(['account_id' => $package->getAccountId()], null, 8),
             'readme'     => $packageManager->getReadme($package),
             'allowedit'  => $package->account === $request->get('user'),
             'boltthemes' => $services['bolt_themes']->info($package),
             'suggested'  => $suggested,
         ];
         $html = $twig->render('view.twig', $context);
+
+        $stopwatch->stop('marketplace.action.view');
 
         return new Response($html);
     }
