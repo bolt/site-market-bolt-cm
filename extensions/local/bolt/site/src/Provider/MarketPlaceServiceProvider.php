@@ -72,6 +72,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
         $app['marketplace.actions'] = $app->share(
             function ($app) {
                 $container = new Container([
+                    'account_profile'   => $app->share(function () use ($app) { return new Action\AccountProfile($app); }),
                     'admin'             => $app->share(function () use ($app) { return new Action\Admin($app); }),
                     'feed'              => $app->share(function () use ($app) { return new Action\Feed($app); }),
                     'home'              => $app->share(function () use ($app) { return new Action\Home($app); }),
@@ -90,7 +91,6 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'package_view'      => $app->share(function () use ($app) { return new Action\PackageView($app); }),
                     'packages_author'   => $app->share(function () use ($app) { return new Action\PackagesByAuthor($app); }),
                     'ping'              => $app->share(function () use ($app) { return new Action\Ping($app); }),
-                    'profile'           => $app->share(function () use ($app) { return new Action\Profile($app); }),
                     'search'            => $app->share(function () use ($app) { return new Action\Search($app); }),
                     'stat'              => $app->share(function () use ($app) { return new Action\Stat($app); }),
                     'submit'            => $app->share(function () use ($app) { return new Action\Submit($app); }),

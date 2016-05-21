@@ -181,7 +181,11 @@ class Frontend implements ControllerProviderInterface
      */
     public function profile(Application $app, Request $request)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        $params = [
+            'user' => $app['members.session']->getAuthorisation(),
+        ];
+
+        return $this->getAction($app, 'account_profile')->execute($request, $params);
     }
 
     /**

@@ -4,11 +4,12 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
+use Bolt\Extension\Bolt\Members\AccessControl\Authorisation;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Profile extends AbstractAction
+class AccountProfile extends AbstractAction
 {
     /**
      * {@inheritdoc}
@@ -21,12 +22,13 @@ class Profile extends AbstractAction
         /** @var Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
 
-        $user = $request->attributes->get('user');
-        $packages = $repo->findBy(['account' => $user], ['created' => 'DESC']);
+        /** @var Authorisation $user */
+        $user = $params['user'];
+        $packages = $repo->findBy(['account_id' => $user->getGuid()], ['created', 'DESC']);
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
-        $html = $twig->render('profile.twig', ['packages' => $packages, 'user' => $user]);
+        $html = $twig->render('account-profile.twig', ['packages' => $packages, 'user' => $user]);
 
         return new Response($html);
     }
