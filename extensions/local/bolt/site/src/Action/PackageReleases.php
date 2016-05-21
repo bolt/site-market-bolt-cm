@@ -28,6 +28,7 @@ class PackageReleases extends AbstractAction
         $em = $this->getAppService('storage');
         /** @var Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
+        /** @var Entity\Package $package */
         $package = $repo->findOneBy(['id' => $params['package']]);
 
         if (!$package) {
@@ -42,26 +43,25 @@ class PackageReleases extends AbstractAction
         $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
         $packageManager = $services['package_manager'];
-        try {
-            $repo = $em->getRepository(Entity\VersionBuild::class);
-            $info = $packageManager->getInfo($package, false);
-            $i = 0;
-            foreach ($info as $ver) {
-                if ($i == 0) {
-                    $package->updated = new DateTime($ver['time']);
-                }
-                $build = $repo->findOneBy(['package' => $package->id, 'version' => $ver['version']]);
-                if ($build) {
-                    $ver['build'] = $build;
-                }
-                $versions[$ver['stability']][] = $ver;
-                $i++;
+
+        $token = $this->getAppService('config')->get('general/token/github');
+        $repo = $em->getRepository(Entity\VersionBuild::class);
+        $info = $packageManager->getInfo($package, false, $token);
+
+        $i = 0;
+        foreach ($info as $ver) {
+            if ($i === 0) {
+                $package->setUpdated(new DateTime($ver['time']));
             }
-//@TODO Update this
-//$this->em->flush();
-        } catch (\Exception $e) {
-            $session->getFlashBag()->add('error', $e->getMessage());
+            $build = $repo->findOneBy(['package_id' => $package->getId(), 'version' => $ver['version']]);
+            if ($build) {
+                $ver['build'] = $build;
+            }
+            $versions[$ver['stability']][] = $ver;
+            $i++;
         }
+
+        $repo->save($package);
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
