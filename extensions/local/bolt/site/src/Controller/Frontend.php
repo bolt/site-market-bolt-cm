@@ -103,7 +103,7 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
-        $ctr->match('/view', [$this, 'view'])
+        $ctr->match('/view/{package}', [$this, 'view'])
             ->bind('view')
             ->method('GET')
         ;
@@ -366,22 +366,22 @@ class Frontend implements ControllerProviderInterface
     /**
      * @param Application $app
      * @param Request     $request
+     * @param string      $package
      *
      * @return Response
      */
-    public function view(Application $app, Request $request)
+    public function view(Application $app, Request $request, $package)
     {
-        $guid = $request->query->get('package');
-        if (Uuid::isValid($guid)) {
+        if (Uuid::isValid($package)) {
             $repo = $app['storage']->getRepository(Entity\Package::class);
-            $package = $repo->findOneBy(['id' => $guid]);
-            if ($package === false) {
+            $packageEntity = $repo->findOneBy(['id' => $package]);
+            if ($packageEntity === false) {
                 $html = $app['twig']->render('not-found.twig', ['reason' => 'Package does not exist.']);
 
                 return new Response($html, Response::HTTP_NOT_FOUND);
             }
 
-            $parts = explode('/', $package->getName());
+            $parts = explode('/', $packageEntity->getName());
             /** @var UrlGeneratorInterface $urlGen */
             $urlGen = $app['url_generator'];
             $route = $urlGen->generate('viewPackage', [
@@ -393,7 +393,7 @@ class Frontend implements ControllerProviderInterface
         }
 
         $params = [
-            'package' => $guid,
+            'package' => $package,
         ];
 
         return $this->getAction($app, 'package_view')->execute($request, $params);

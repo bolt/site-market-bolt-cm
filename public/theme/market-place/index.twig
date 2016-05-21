@@ -38,10 +38,10 @@
             {% for package in most_downloaded_plugins %}
                 <div class="column">
                     <div class="ui fluid card">
-                        <a class="image" href="{{ url('view',{'package':package.id}) }}">
+                        <a class="image" href="{{ url('view', {'package': package.id}) }}">
                             <img src="{{ packageIcon(package) }}"> </a>
                         <div class="content">
-                            <a class="header" href="{{ url('view',{'package':package.id}) }}">{{ package.title }}</a>
+                            <a class="header" href="{{ url('view', {'package':package.id}) }}">{{ package.title }}</a>
                             <div class="meta meta_package">
                                 <p>{{ package.name|slice(0, 19) }}{% if package.title|length > 19 %}&#8230;{% endif %}</p>
                             </div>
