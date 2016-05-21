@@ -89,6 +89,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET')
         ;
 
+        $ctr->match('/view/{packageAuthor}/{packageName}', [$this, 'viewPackage'])
+            ->bind('viewPackage')
+            ->method('GET')
+        ;
+
         $ctr->before([$this, 'before']);
         $ctr->after([$this, 'after']);
 
@@ -258,6 +263,24 @@ class Frontend implements ControllerProviderInterface
     {
         $params = [
             'package' => $request->query->get('package')
+        ];
+
+        return $this->getAction($app, 'package_view')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     * @param string      $packageAuthor
+     * @param string      $packageName
+     *
+     * @return Response
+     */
+    public function viewPackage(Application $app, Request $request, $packageAuthor, $packageName)
+    {
+        $params = [
+            'package_author' => $packageAuthor,
+            'package_name' => $packageName,
         ];
 
         return $this->getAction($app, 'package_view')->execute($request, $params);

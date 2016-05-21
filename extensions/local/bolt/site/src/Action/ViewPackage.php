@@ -28,7 +28,12 @@ class ViewPackage extends AbstractAction
         $em = $this->getAppService('storage');
         $repo = $em->getRepository(Entity\Package::class);
 
-        $package = $repo->findOneBy(['id' => $params['package']]);
+        if (isset($params['package'])) {
+            $package = $repo->findOneBy(['id' => $params['package']]);
+        } else {
+            $package = $repo->findOneBy(['name' => $params['package_author'] . '/' . $params['package_name']]);
+        }
+
         $stopwatch->stop('marketplace.action.view.package');
 
         if (!$package) {
