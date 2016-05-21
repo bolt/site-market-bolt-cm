@@ -2,11 +2,15 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Composer\Config;
 use Composer\IO\NullIO;
 use Composer\Json\JsonFile;
 use Composer\Package\Dumper\ArrayDumper;
+use Composer\Package\Link;
 use Composer\Package\LinkConstraint\VersionConstraint;
+use Composer\Package\PackageInterface;
+use Composer\Repository\Vcs\VcsDriverInterface;
 use Composer\Repository\VcsRepository;
 use Composer\Util\RemoteFilesystem;
 use DateTime;
@@ -15,12 +19,22 @@ class PackageManager
 {
     public $config;
 
+    /**
+     * Constructor.
+     *
+     * @param Config $config
+     */
     public function __construct(Config $config)
     {
         $this->config = $config;
     }
 
-    public function syncPackage($package)
+    /**
+     * @param Entity\Package $package
+     *
+     * @return Entity\Package
+     */
+    public function syncPackage(Entity\Package $package)
     {
         $repository = $this->loadRepository($package);
         $information = $this->loadInformation($package);
@@ -63,12 +77,18 @@ class PackageManager
 
         $package->setRequirements(json_encode($information['require']));
         $package->setVersions(implode(',', $pv));
-        $package->updated = new DateTime();
+        $package->setUpdated(new DateTime());
 
         return $package;
     }
 
-    public function loadInformation($package, $identifier = null)
+    /**
+     * @param Entity\Package          $package
+     * @param VcsDriverInterface|null $identifier
+     *
+     * @return array|false
+     */
+    public function loadInformation(Entity\Package $package, VcsDriverInterface $identifier = null)
     {
         $repository = $this->loadRepository($package);
         $driver = $repository->getDriver();
@@ -76,15 +96,18 @@ class PackageManager
             return false;
         }
 
-        if (null === $identifier) {
+        if ($identifier === null) {
             $identifier = $driver->getRootIdentifier();
         }
-        $information = $driver->getComposerInformation($identifier);
-
-        return $information;
+        return $driver->getComposerInformation($identifier);
     }
 
-    public function loadRepository($package)
+    /**
+     * @param Entity\Package $package
+     *
+     * @return VcsRepository
+     */
+    public function loadRepository(Entity\Package $package)
     {
         $io = new NullIO();
         $io->loadConfiguration($this->config);
@@ -93,8 +116,14 @@ class PackageManager
         return $repository;
     }
 
-    public function getVersions($package)
+    /**
+     * @param Entity\Package $package
+     *
+     * @return array
+     */
+    public function getVersions(Entity\Package $package)
     {
+        $info = [];
         $rep = $this->loadRepository($package);
         $versions = $rep->getPackages();
         foreach ($versions as $version) {
@@ -104,7 +133,13 @@ class PackageManager
         return $info;
     }
 
-    public function getInfo($package, $boltVersion)
+    /**
+     * @param Entity\Package $package
+     * @param string         $boltVersion
+     *
+     * @return array
+     */
+    public function getInfo(Entity\Package $package, $boltVersion)
     {
         $info = [];
         $repo = $this->loadRepository($package);
@@ -133,14 +168,13 @@ class PackageManager
     }
 
     /**
-     * If we have a Github repo this gets some extra information about the version
+     * If we have a GitHub repo this gets some extra information about the version
      *
-     * @param string $package
-     * @param array  $version
+     * @param Entity\Package $package
      *
      * @return array
      */
-    public function getReleaseInfo($package)
+    public function getReleaseInfo(Entity\Package $package)
     {
         $io = new NullIO();
         $io->loadConfiguration($this->config);
@@ -150,20 +184,20 @@ class PackageManager
             $baseApiUrl = 'https://api.github.com/repos/' . str_replace('https://github.com/', '', $package->getSource()) . '/releases';
             $repoData = JsonFile::parseJson($rfs->getContents('github.com', $baseApiUrl, false), $baseApiUrl);
         } catch (\Exception $e) {
-            return;
+            return [];
         }
 
         return $repoData;
     }
 
     /**
-     * If we have a Github repo this gets the readme content for the package
+     * If we have a GitHub repo this gets the readme content for the package
      *
-     * @param string $package
+     * @param Entity\Package|string $package
      *
      * @return array
      */
-    public function getReadme($package)
+    public function getReadme(Entity\Package $package)
     {
         $io = new NullIO();
         $io->loadConfiguration($this->config);
@@ -173,14 +207,21 @@ class PackageManager
             $baseApiUrl = 'https://api.github.com/repos/' . str_replace('https://github.com/', '', $package->getSource()) . '/readme';
             $readme = JsonFile::parseJson($rfs->getContents('github.com', $baseApiUrl, false), $baseApiUrl);
         } catch (\Exception $e) {
-            return;
+            return [];
         }
 
         return $readme;
     }
 
-    public function isCompatible($version, $boltVersion)
+    /**
+     * @param PackageInterface $version
+     * @param string           $boltVersion
+     *
+     * @return bool
+     */
+    public function isCompatible(PackageInterface $version, $boltVersion)
     {
+        /** @var Link $require */
         $require = $version->getRequires();
         if (!isset($require['bolt/bolt'])) {
             return false;
@@ -191,7 +232,13 @@ class PackageManager
         return $constraint->matches($v);
     }
 
-    public function validate($package, $isAdmin = false)
+    /**
+     * @param Entity\Package $package
+     * @param bool           $isAdmin
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function validate(Entity\Package $package, $isAdmin = false)
     {
         $valid = true;
         $errors = [];
@@ -224,7 +271,7 @@ class PackageManager
             }
         }
 
-        if (false === $valid) {
+        if ($valid === false) {
             throw new \InvalidArgumentException(join("\n\n", $errors));
         }
     }
