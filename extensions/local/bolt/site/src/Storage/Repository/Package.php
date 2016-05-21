@@ -122,7 +122,7 @@ class Package extends AbstractRepository
             $qb->andWhere('p.type = :type');
             $qb->setParameter('type', $type);
         }
-        
+
         if ($limit !== null) {
             $qb->setMaxResults($limit);
         }
@@ -195,6 +195,42 @@ class Package extends AbstractRepository
             ->select('*')
             ->where('p.approved = :approved')
             ->setParameter('approved', true)
+            ->orderBy('created', 'DESC')
+            ->setMaxResults($limit)
+        ;
+
+        if ($type !== null) {
+            $qb
+                ->andWhere('p.type = :type')
+                ->setParameter('type', $type)
+            ;
+        }
+
+        return $qb;
+    }
+
+    /**
+     * @param string $author
+     * @param int    $limit
+     * @param string $type
+     *
+     * @return Entity\Package[]|false
+     */
+    public function getAllByComposerAuthor($author, $limit = null, $type = null)
+    {
+        $query = $this->getAllByComposerAuthorQuery($author, $limit, $type);
+
+        return $this->findWith($query);
+    }
+
+    public function getAllByComposerAuthorQuery($author, $limit, $type)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('*')
+            ->where('p.approved = :approved')
+            ->andWhere('p.name LIKE :author')
+            ->setParameter('approved', true)
+            ->setParameter('author', $author . '/%')
             ->orderBy('created', 'DESC')
             ->setMaxResults($limit)
         ;
