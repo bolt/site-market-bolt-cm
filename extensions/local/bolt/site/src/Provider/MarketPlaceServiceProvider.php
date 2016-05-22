@@ -95,7 +95,6 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'search'            => $app->share(function () use ($app) { return new Action\Search($app); }),
                     'stat'              => $app->share(function () use ($app) { return new Action\Stat($app); }),
                     'submit'            => $app->share(function () use ($app) { return new Action\Submit($app); }),
-                    'submitted'         => $app->share(function () use ($app) { return new Action\Submitted($app); }),
                     'test_build_check'  => $app->share(function () use ($app) { return new Action\TestBuildCheck($app); }),
                     'test_extension'    => $app->share(function () use ($app) { return new Action\TestExtension($app); }),
                     'tests'             => $app->share(function () use ($app) { return new Action\Tests($app); }),

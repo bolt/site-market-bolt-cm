@@ -93,11 +93,6 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
-        $ctr->match('/submitted', [$this, 'submitted'])
-            ->bind('submitted')
-            ->method('GET|POST')
-        ;
-
         $ctr->match('/tests', [$this, 'tests'])
             ->bind('tests')
             ->method('GET|POST')
@@ -343,19 +338,6 @@ class Frontend implements ControllerProviderInterface
         ];
 
         return $this->getAction($app, 'submit')->execute($request, $params);
-    }
-
-    /**
-     * @param Application $app
-     * @param Request     $request
-     *
-     * @return Response
-     */
-    public function submitted(Application $app, Request $request)
-    {
-        $params = [];
-
-        return $this->getAction($app, 'submitted')->execute($request, $params);
     }
 
     /**

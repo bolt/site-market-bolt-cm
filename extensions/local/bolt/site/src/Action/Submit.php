@@ -4,6 +4,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Form;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\Members\AccessControl\Authorisation;
 use Bolt\Storage\EntityManager;
@@ -32,6 +33,7 @@ class Submit extends AbstractAction
         $session = $this->getAppService('session');
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
+        /** @var Repository\Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
         $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
@@ -50,13 +52,20 @@ class Submit extends AbstractAction
                 $package->setApproved(true);
             }
 
-            $route = $urlGen->generate('submitted');
-            $roles = $accountUser->getAccount()->getRoles();
-
             try {
+                $roles = $accountUser->getAccount()->getRoles();
                 $packageManager->validate($package, in_array('admin', $roles));
                 $package = $packageManager->syncPackage($package);
                 $repo->save($package);
+
+                $session->getFlashBag()->add('info', 'Thanks for submitting an Extension!');
+                $session->getFlashBag()->add('info', 'It is now being processed and will shortly be available for searching…');
+
+                $parts = explode('/', $package->getName());
+                $route = $urlGen->generate('viewPackage', [
+                    'packageAuthor' => $parts[0],
+                    'packageName'   =>  $parts[1],
+                ]);
 
                 return new RedirectResponse($route);
             } catch (\Exception $e) {
@@ -71,7 +80,6 @@ class Submit extends AbstractAction
         $twig = $this->getAppService('twig');
         $context = [
             'form'  => $form->createView(),
-            'hook'  => $package && $package->getToken() ? $urlGen->generate('hook', ['token' => $package->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
             'error' => $error
         ];
         $html = $twig->render('submit.twig', $context);
