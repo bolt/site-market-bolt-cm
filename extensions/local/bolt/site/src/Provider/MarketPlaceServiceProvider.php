@@ -121,10 +121,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
         $app['marketplace.forms'] = $app->share(
             function ($app) {
                 $container = new Container([
-                    'account'        => $app->share(function () use ($app) { return new Form\AccountForm(); }),
-                    'package'        => $app->share(function () use ($app) { return new Form\PackageForm(); }),
-                    'reset'          => $app->share(function () use ($app) { return new Form\ResetForm(); }),
-                    'reset_password' => $app->share(function () use ($app) { return new Form\ResetPasswordForm(); }),
+                    'package' => $app->share(function () use ($app) { return new Form\PackageForm(); }),
                 ]);
 
                 return $container;
