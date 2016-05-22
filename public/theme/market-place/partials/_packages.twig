@@ -7,7 +7,7 @@
             <div class="content">
                 <a class="header" href="{{ url('view',{'package':package.id}) }}">{{ package.title }}</a>
                 <div class="meta">
-                    <span class="cinema">by {{ package.authors }}</span>
+                    <span class="cinema">by {{ package.authors|join(', ') }}</span>
                 </div>
                 <div class="description">
                     <em>{{ package.name }}</em><br>

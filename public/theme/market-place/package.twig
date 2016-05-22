@@ -15,7 +15,7 @@
                 <img class="ui rounded image" src="{{ packageIcon(package) }}">
                 <div class="content">
                     {{ package.title }}
-                    <div class="sub header">by {{ package.authors }}</div>
+                    <div class="sub header">by {{ package.authors|join(', ') }}</div>
                 </div>
             </h2>
             <!-- <div>Last Update: 13/08/2015</div> -->
