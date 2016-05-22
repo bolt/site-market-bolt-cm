@@ -69,7 +69,8 @@ class TestListing extends AbstractAction
             'package'  => $package,
             'versions' => $versions,
         ];
-        $html = $twig->render('tests.twig', $context);
+
+        $html = $twig->render('extension-test-listing.twig', $context);
 
         return new Response($html);
     }
