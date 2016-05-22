@@ -43,11 +43,11 @@ class Package extends BaseTable
      */
     protected function addIndexes()
     {
-        $this->table->addIndex(['account_id']);
-
         $this->table->addUniqueIndex(['source']);
         $this->table->addUniqueIndex(['name']);
         $this->table->addUniqueIndex(['title']);
+
+        $this->table->addIndex(['account_id']);
     }
 
     /**
@@ -63,6 +63,6 @@ class Package extends BaseTable
      */
     protected function addForeignKeyConstraints()
     {
-        $this->table->addForeignKeyConstraint('bolt_members_account', ['account_id'], ['guid']);
+        $this->table->addForeignKeyConstraint($this->tablePrefix . 'members_account', ['account_id'], ['guid']);
     }
 }

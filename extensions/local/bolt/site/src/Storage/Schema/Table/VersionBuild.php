@@ -49,6 +49,6 @@ class VersionBuild extends BaseTable
      */
     protected function addForeignKeyConstraints()
     {
-        $this->table->addForeignKeyConstraint('bolt_marketplace_package', ['package_id'], ['id']);
+        $this->table->addForeignKeyConstraint($this->tablePrefix . 'marketplace_package', ['package_id'], ['id']);
     }
 }
