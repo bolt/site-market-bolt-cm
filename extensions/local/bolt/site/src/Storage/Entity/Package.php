@@ -47,10 +47,6 @@ class Package extends Entity
     /** @var array */
     protected $suggested;
 
-    protected $account;
-    protected $stats;
-    protected $builds;
-
     /**
      * @return string
      */
@@ -228,7 +224,7 @@ class Package extends Entity
      */
     public function getRequirements()
     {
-        return json_decode($this->requirements, true);
+        return $this->requirements;
     }
 
     /**
@@ -356,7 +352,7 @@ class Package extends Entity
      */
     public function getSupport()
     {
-        return json_decode($this->support, true);
+        return $this->support;
     }
 
     /**
@@ -364,7 +360,7 @@ class Package extends Entity
      */
     public function setSupport($support)
     {
-        $this->support = json_encode($support);
+        $this->support = $support;
     }
 
     /**
@@ -376,7 +372,7 @@ class Package extends Entity
             return [];
         }
 
-        return json_decode($this->suggested, true);
+        return $this->suggested;
     }
 
     /**
@@ -384,66 +380,11 @@ class Package extends Entity
      */
     public function setSuggested($suggested)
     {
-        $this->suggested = json_encode($suggested);
+        $this->suggested = $suggested;
     }
 
     public function regenerateToken()
     {
         $this->token = bin2hex(openssl_random_pseudo_bytes(16));
-    }
-
-    public function getDownloads($version = false)
-    {
-        $downloads = [];
-        $dcount = 0;
-        foreach ($this->stats as $stat) {
-            if ($stat->type == 'install') {
-                $downloads[$stat->version][$stat->ip] = 1;
-                $dcount ++;
-            }
-        }
-        foreach ($downloads as $ver => $hits) {
-            $downloads[$ver] = count($hits);
-        }
-
-        if ($version && isset($downloads[$version])) {
-            return $downloads[$version];
-        }
-
-        return $dcount;
-    }
-
-    public function getStars()
-    {
-        $stars = 0;
-        foreach ($this->stats as $stat) {
-            if ($stat->type == 'star') {
-                $stars ++;
-            }
-        }
-
-        return $stars;
-    }
-
-    public function isStarredBy($user)
-    {
-        $starred = false;
-        foreach ($this->stats as $stat) {
-            if ($stat->type == 'star' && $stat->account === $user) {
-                $starred = true;
-            }
-        }
-
-        return $starred;
-    }
-
-    public function serializeAccount()
-    {
-        return $this->account->id;
-    }
-
-    public function serializeToken()
-    {
-        return '';
     }
 }
