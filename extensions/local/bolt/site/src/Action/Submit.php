@@ -38,9 +38,10 @@ class Submit extends AbstractAction
         $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
         $packageManager = $services['package_manager'];
+        $formsService = $this->getAppService('marketplace.forms');
         /** @var FormFactory $forms */
         $forms = $this->getAppService('form.factory');
-        $form = $forms->create(Form\PackageForm::class, $entity);
+        $form = $forms->create($formsService['package'], $entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {

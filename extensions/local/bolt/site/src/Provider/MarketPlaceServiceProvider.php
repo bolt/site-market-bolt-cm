@@ -5,7 +5,10 @@ namespace Bolt\Extension\Bolt\MarketPlace\Provider;
 use Bolt\Extension\Bolt\MarketPlace\Action;
 use Bolt\Extension\Bolt\MarketPlace\Controller;
 use Bolt\Extension\Bolt\MarketPlace\Form;
+use Bolt\Extension\Bolt\MarketPlace\Form\Validator\Constraint;
 use Bolt\Extension\Bolt\MarketPlace\Service;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Extension\Bolt\MarketPlace\Twig;
 use Composer\Config as ComposerConfig;
 use Composer\Config\JsonConfigSource;
@@ -118,10 +121,22 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
             }
         );
 
+        $app['marketplace.forms.constraints'] = $app->share(
+            function ($app) {
+                /** @var Repository\Package $packageRepository */
+                $packageRepository = $app['storage']->getRepository(Entity\Package::class);
+                $container = new Container([
+                    'unique_source_url' => $app->share(function () use ($app, $packageRepository) { return new Constraint\UniqueSourceUrl($packageRepository); }),
+                ]);
+
+                return $container;
+            }
+        );
+
         $app['marketplace.forms'] = $app->share(
             function ($app) {
                 $container = new Container([
-                    'package' => $app->share(function () use ($app) { return new Form\PackageForm(); }),
+                    'package' => $app->share(function () use ($app) { return new Form\PackageForm($app['marketplace.forms.constraints']['unique_source_url']); }),
                 ]);
 
                 return $container;
