@@ -73,7 +73,7 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
-        $ctr->match('/star', [$this, 'star'])
+        $ctr->match('/star/{package}', [$this, 'star'])
             ->bind('star')
             ->method('GET|POST')
         ;
@@ -288,9 +288,13 @@ class Frontend implements ControllerProviderInterface
      *
      * @return Response
      */
-    public function star(Application $app, Request $request)
+    public function star(Application $app, Request $request, $package)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        $params = [
+            'package' => $package,
+        ];
+
+        return $this->getAction($app, 'package_star')->execute($request, $params);
     }
 
     /**

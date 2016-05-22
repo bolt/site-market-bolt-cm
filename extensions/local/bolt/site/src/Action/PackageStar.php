@@ -3,9 +3,10 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bolt\Extension\Bolt\Members\Storage\Entity\Account;
+use Bolt\Extension\Bolt\Members\Storage\Records;
 use Bolt\Storage\EntityManager;
-use Bolt\Storage\Repository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -18,40 +19,47 @@ class PackageStar extends AbstractAction
      */
     public function execute(Request $request, array $params)
     {
-        $package = $params['package'];
+        $packageId = $params['package'];
 
-        /** @var UrlGeneratorInterface $urlGen */
-        $urlGen = $this->getAppService('url_generator');
-        $route = $urlGen->generate('view', ['package' => $package->id]);
         /** @var Session $session */
         $session = $this->getAppService('session');
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Package $repo */
-        $repo = $em->getRepository(Entity\Package::class);
-        $package = $repo->findOneBy(['id' => $package]);
 
-        $account = $em->find(Entity\Account::class, $request->getSession()->get('bolt.account.id'));
+        /** @var Repository\Package $packageRepo */
+        $packageRepo = $em->getRepository(Entity\Package::class);
+        /** @var Entity\Package $package */
+        $package = $packageRepo->findOneBy(['id' => $packageId]);
 
-        /** @var Repository $statRepo */
+        /** @var Records $records */
+        $records = $this->getAppService('members.records');
+        /** @var Account $account */
+        $account = $records->getAccountByGuid($package->getAccountId());
+
+        /** @var Repository\Stat $statRepo */
         $statRepo = $em->getRepository(Entity\Stat::class);
-        $existing = $statRepo->findOneBy(['package' => $package, 'account' => $account]);
+        /** @var Entity\Stat $existing */
+        $existing = $statRepo->findOneBy(['package_id' => $package, 'account_id' => $account->getGuid()]);
 
         if ($existing) {
             $session->getFlashBag()->add('error', 'Your have already starred this package');
         } else {
             $stat = new Entity\Stat([
-                'source'   => $request->server->get('HTTP_REFERER'),
-                'ip'       => $request->server->get('REMOTE_ADDR'),
-                'recorded' => new \DateTime(),
-                'package'  => $package,
-                'type'     => 'star',
-                'account'  => $account,
+                'source'     => $request->server->get('HTTP_REFERER'),
+                'ip'         => $request->server->get('REMOTE_ADDR'),
+                'recorded'   => new \DateTime(),
+                'package_id' => $package,
+                'type'       => 'star',
+                'account_id' => $account->getGuid(),
             ]);
 
             $statRepo->save($stat);
             $session->getFlashBag()->add('success', 'Your have starred this package');
         }
+
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
+        $route = $urlGen->generate('view', ['package' => $packageId]);
 
         return new RedirectResponse($route);
     }
