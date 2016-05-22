@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Twig_Environment;
 
 class PackageEdit extends AbstractAction
 {
@@ -24,7 +23,7 @@ class PackageEdit extends AbstractAction
         $urlGen = $this->getAppService('url_generator');
         /** @var Session $session */
         $session = $this->getAppService('session');
-                /** @var EntityManager $em */
+        /** @var EntityManager $em */
         $em = $this->getAppService('storage');
         $repo = $em->getRepository(Entity\Package::class);
         /** @var Entity\Package $package */

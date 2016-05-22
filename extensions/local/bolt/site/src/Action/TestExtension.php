@@ -11,7 +11,6 @@ use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class TestExtension extends AbstractAction
 {
     /**
@@ -56,7 +55,6 @@ class TestExtension extends AbstractAction
 //@TODO Finish this
 $this->em->flush();
         }
-
 
         $tests = [];
         if ($build->url) {
@@ -111,7 +109,6 @@ $this->em->flush();
         $test = array_merge($test, $this->testDashboard($build));
         $test = array_merge($test, $this->testHomepage($build));
         $test = array_merge($test, $this->testExtensionLoaded($build));
-
 
         $build->testResult = json_encode($test);
         $this->approvedStatus($build);
@@ -183,6 +180,7 @@ $this->em->flush();
     {
         if (!count($build->testResult)) {
             $build->url = 'pending';
+
             return;
         }
         $status = 'approved';

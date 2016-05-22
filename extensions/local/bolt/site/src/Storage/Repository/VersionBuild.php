@@ -2,7 +2,6 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\Repository;
 
 /**

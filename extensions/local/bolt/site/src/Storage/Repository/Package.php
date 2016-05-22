@@ -73,7 +73,7 @@ class Package extends AbstractRepository
         $qb
             //->select('count(p.id) AS HIDDEN pcount')
             ->select('count(p.id) AS pcount')
-            ->innerJoin('p' , 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+            ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('s.type = :type')
             ->andWhere('p.approved = true')
             ->groupBy('p.id')
@@ -109,7 +109,7 @@ class Package extends AbstractRepository
             ->addSelect('p.account_id as account_id')
             ->addSelect('p.source as source')
             ->addSelect('count(p.id) AS pcount')
-            ->leftJoin('p' , 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+            ->leftJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('p.approved = :status')
         ;
 

@@ -170,7 +170,6 @@ class Frontend implements ControllerProviderInterface
      */
     public function edit(Application $app, Request $request, $package)
     {
-
         $params = [
             'user'    => $app['members.session']->getAuthorisation(),
             'package' => $package,
@@ -198,7 +197,6 @@ class Frontend implements ControllerProviderInterface
      */
     public function hook(Application $app, Request $request)
     {
-
         $params = [];
 
         return $this->getAction($app, 'hook')->execute($request, $params);
@@ -263,7 +261,6 @@ class Frontend implements ControllerProviderInterface
 
         return new RedirectResponse($route);
     }
-
 
     /**
      * @param Application $app
@@ -361,7 +358,7 @@ class Frontend implements ControllerProviderInterface
     public function update(Application $app, Request $request, $package)
     {
         $params = [
-            'package' => $package
+            'package' => $package,
         ];
 
         return $this->getAction($app, 'package_update')->execute($request, $params);
@@ -415,7 +412,7 @@ class Frontend implements ControllerProviderInterface
     {
         $params = [
             'package_author' => $packageAuthor,
-            'package_name' => $packageName,
+            'package_name'   => $packageName,
         ];
 
         return $this->getAction($app, 'package_view')->execute($request, $params);

@@ -3,9 +3,9 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Form;
+use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\Members\AccessControl\Authorisation;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\Form\FormFactory;
@@ -64,7 +64,7 @@ class Submit extends AbstractAction
                 $parts = explode('/', $package->getName());
                 $route = $urlGen->generate('viewPackage', [
                     'packageAuthor' => $parts[0],
-                    'packageName'   =>  $parts[1],
+                    'packageName'   => $parts[1],
                 ]);
 
                 return new RedirectResponse($route);
@@ -80,7 +80,7 @@ class Submit extends AbstractAction
         $twig = $this->getAppService('twig');
         $context = [
             'form'  => $form->createView(),
-            'error' => $error
+            'error' => $error,
         ];
         $html = $twig->render('submit.twig', $context);
 

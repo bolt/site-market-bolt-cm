@@ -2,9 +2,9 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
+use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\Members\Storage\Entity\Account as MembersAccountEntity;
 use Bolt\Extension\Bolt\Members\Storage\Repository\Account as MembersAccountRepository;
 use Bolt\Nut\BaseCommand;

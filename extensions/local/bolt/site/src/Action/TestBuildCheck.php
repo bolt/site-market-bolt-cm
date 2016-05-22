@@ -24,7 +24,7 @@ class TestBuildCheck extends AbstractAction
         $response = [
             'status'     => $build->getStatus(),
             'url'        => $build->getUrl(),
-            'testStatus' => $build->getTestStatus()
+            'testStatus' => $build->getTestStatus(),
         ];
 
         return new JsonResponse($response);

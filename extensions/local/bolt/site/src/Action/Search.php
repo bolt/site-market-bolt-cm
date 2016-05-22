@@ -30,7 +30,7 @@ class Search extends AbstractAction
         $context = [
             'results' => $packages,
             'term'    => $search,
-            'layout'  => $params['type'] === 'browse' ? 'layout.twig' : 'ajax.twig'
+            'layout'  => $params['type'] === 'browse' ? 'layout.twig' : 'ajax.twig',
         ];
         $html = $twig->render('search.twig', $context);
 

@@ -37,7 +37,7 @@ class PackageStats extends AbstractAction
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
-        $context = ['package' => $package,];
+        $context = ['package' => $package];
         $html = $twig->render('stats.twig', $context);
 
         return new Response($html);

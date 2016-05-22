@@ -99,6 +99,7 @@ class PackageManager
         if ($identifier === null) {
             $identifier = $driver->getRootIdentifier();
         }
+
         return $driver->getComposerInformation($identifier);
     }
 

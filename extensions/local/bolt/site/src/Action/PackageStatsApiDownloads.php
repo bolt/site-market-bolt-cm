@@ -103,7 +103,6 @@ class PackageStatsApiDownloads extends AbstractAction
         ));
     }
 
-
     private function getDataGroupedByMonths($stats, $from, $to)
     {
         $months = [];
