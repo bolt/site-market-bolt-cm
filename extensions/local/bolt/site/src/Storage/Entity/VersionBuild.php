@@ -20,7 +20,7 @@ class VersionBuild extends EntityBase
     protected $url;
     /** @var string */
     protected $hash;
-    /** @var string */
+    /** @var array */
     protected $testResult;
     /** @var string */
     protected $testStatus;
@@ -143,17 +143,17 @@ class VersionBuild extends EntityBase
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getTestResult()
     {
-        return json_decode($this->testResult, true);
+        return $this->testResult;
     }
 
     /**
-     * @param string $testResult
+     * @param array $testResult
      */
-    public function setTestResult($testResult)
+    public function setTestResult(array $testResult)
     {
         $this->testResult = $testResult;
     }

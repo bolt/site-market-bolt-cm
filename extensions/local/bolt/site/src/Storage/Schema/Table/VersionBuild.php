@@ -16,16 +16,16 @@ class VersionBuild extends BaseTable
      */
     protected function addColumns()
     {
-        $this->table->addColumn('id',         'guid',     []);
-        $this->table->addColumn('package_id', 'guid',     []);
-        $this->table->addColumn('version',    'string',   ['notnull' => false]);
-        $this->table->addColumn('status',     'string',   ['notnull' => false]);
-        $this->table->addColumn('lastrun',    'datetime', ['notnull' => false]);
-        $this->table->addColumn('url',        'string',   ['notnull' => false]);
-        $this->table->addColumn('hash',       'string',   ['notnull' => false]);
-        $this->table->addColumn('testResult', 'text',     ['notnull' => false]);
-        $this->table->addColumn('testStatus', 'string',   ['notnull' => false, 'default' => 'pending']);
-        $this->table->addColumn('phpTarget',  'string',   ['notnull' => false]);
+        $this->table->addColumn('id',         'guid',       []);
+        $this->table->addColumn('package_id', 'guid',       []);
+        $this->table->addColumn('version',    'string',     ['notnull' => false]);
+        $this->table->addColumn('status',     'string',     ['notnull' => false]);
+        $this->table->addColumn('lastrun',    'datetime',   ['notnull' => false]);
+        $this->table->addColumn('url',        'string',     ['notnull' => false]);
+        $this->table->addColumn('hash',       'string',     ['notnull' => false]);
+        $this->table->addColumn('testResult', 'json_array', ['notnull' => false]);
+        $this->table->addColumn('testStatus', 'string',     ['notnull' => false, 'default' => 'pending']);
+        $this->table->addColumn('phpTarget',  'string',     ['notnull' => false]);
     }
 
     /**
