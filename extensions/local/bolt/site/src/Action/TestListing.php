@@ -4,6 +4,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\Members\AccessControl\Authorisation;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,33 +25,42 @@ class TestListing extends AbstractAction
         $session = $this->getAppService('session');
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        $repo = $em->getRepository(Entity\Package::class);
+        $packageRepo = $em->getRepository(Entity\Package::class);
+        $versionBuildRepo = $em->getRepository(Entity\VersionBuild::class);
         $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
         $packageManager = $services['package_manager'];
-
-        $package = $repo->findOneBy(['id' => $params['package'], 'account' => $request->get('user')]);
-        $allowedit = $package->account === $request->get('user');
-
-        if (!$package || !$allowedit) {
+        /** @var Authorisation $member */
+        $member = $this->getAppService('members.session')->getAuthorisation();
+        /** @var Entity\Package $package */
+        $package = $packageRepo->findOneBy(['id' => $params['package'], 'account_id' => $member->getGuid()]);
+        if (!$package || $package->getAccountId() !== $member->getGuid()) {
             $session->getFlashBag()->add('error', 'There was a problem accessing this package');
             $route = $urlGen->generate('profile');
 
             return new RedirectResponse($route);
         }
 
+        $versions = [
+            'dev'    => null,
+            'beta'   => null,
+            'rc'     => null,
+            'stable' => null,
+        ];
+
         try {
-            $repo = $em->getRepository(Entity\VersionBuild::class);
             $info = $packageManager->getInfo($package, false);
-            foreach ($info as $ver) {
-                $build = $repo->findOneBy(['package' => $package->id, 'version' => $ver['version']]);
-                if ($build) {
-                    $ver['build'] = $build;
-                }
-                $versions[$ver['stability']][] = $ver;
-            }
         } catch (\Exception $e) {
+            $info = null;
             $session->getFlashBag()->add('error', $e->getMessage());
+        }
+
+        foreach ($info as $ver) {
+            $build = $versionBuildRepo->findOneBy(['package_id' => $package->getId(), 'version' => $ver['version']]);
+            if ($build) {
+                $ver['build'] = $build;
+            }
+            $versions[$ver['stability']][] = $ver;
         }
 
         /** @var \Twig_Environment $twig */

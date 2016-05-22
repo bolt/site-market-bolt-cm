@@ -352,7 +352,10 @@ class Frontend implements ControllerProviderInterface
      */
     public function testExtension(Application $app, Request $request, $package, $version)
     {
-        $params = [];
+        $params = [
+            'package' => $package,
+            'version' => $version,
+        ];
 
         return $this->getAction($app, 'test_extension')->execute($request, $params);
     }
@@ -366,7 +369,9 @@ class Frontend implements ControllerProviderInterface
      */
     public function testListing(Application $app, Request $request, $package)
     {
-        $params = [];
+        $params = [
+            'package' => $package,
+        ];
 
         return $this->getAction($app, 'test_listing')->execute($request, $params);
     }

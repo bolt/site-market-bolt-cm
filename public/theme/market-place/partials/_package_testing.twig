@@ -7,6 +7,7 @@
             'approved build' label, in future this may also become a requirement to allow user installs
             </p>
         </div>
+
         <div class="twelve wide column">
             <table class="ui celled striped table">
                 <thead>
@@ -22,13 +23,13 @@
                 {% for version in versions.stable %}
                     <tr>
                         <td class="collapsing">{{ version.version }}</td>
-                        <td class="collapsing">{{ version.type|replace({'bolt-':''}) }}</td>
-                        <td class="collapsing">{{ buildStatus(version.build) }}</td>
-                        <td class="collapsing">{{ version.build.lastrun|humanTime(' ago') }}</td>
+                        <td class="collapsing">{{ version.type|replace({ 'bolt-': '' }) }}</td>
+                        <td class="collapsing">{{ buildStatus(version.build|default(null)) }}</td>
+                        <td class="collapsing">{{ version.build.lastrun|default(false)|humanTime(' ago') }}</td>
                         <td class="collapsing">
-                            <a class="ui button teal small"
-                               href="{{ url('test', {package:package.id,version:version.version}) }}"> TEST THIS VERSION
-                                <i class="right chevron icon"></i> </a>
+                            <a class="ui button teal small" href="{{ url('testExtension', { package: package.id, version: version.version }) }}">
+                                TEST THIS VERSION <i class="right chevron icon"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
