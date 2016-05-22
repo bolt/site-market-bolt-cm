@@ -21,20 +21,20 @@ class Package extends BaseTable
         $this->table->addColumn('source',        'string',     ['notnull' => false]);
         $this->table->addColumn('title',         'string',     ['notnull' => false]);
         $this->table->addColumn('name',          'string',     ['notnull' => false]);
-        $this->table->addColumn('keywords',      'string',     ['notnull' => false]);
+        $this->table->addColumn('keywords',      'json_array', ['notnull' => false]);
         $this->table->addColumn('type',          'string',     ['notnull' => false]);
         $this->table->addColumn('description',   'text',       ['notnull' => false]);
         $this->table->addColumn('documentation', 'text',       ['notnull' => false]);
         $this->table->addColumn('approved',      'boolean',    ['notnull' => false, 'default' => true]);
-        $this->table->addColumn('versions',      'string',     ['notnull' => false]);
-        $this->table->addColumn('requirements',  'string',     ['notnull' => false]);
-        $this->table->addColumn('authors',       'string',     ['notnull' => false]);
+        $this->table->addColumn('versions',      'json_array', ['notnull' => false]);
+        $this->table->addColumn('requirements',  'json_array', ['notnull' => false]);
+        $this->table->addColumn('authors',       'json_array', ['notnull' => false]);
         $this->table->addColumn('created',       'datetime',   ['notnull' => false]);
         $this->table->addColumn('updated',       'datetime',   ['notnull' => false]);
         $this->table->addColumn('token',         'string',     ['notnull' => false]);
-        $this->table->addColumn('screenshots',   'text',       ['notnull' => false]);
+        $this->table->addColumn('screenshots',   'json_array', ['notnull' => false]);
         $this->table->addColumn('icon',          'text',       ['notnull' => false]);
-        $this->table->addColumn('support',       'text',       ['notnull' => false]);
+        $this->table->addColumn('support',       'json_array', ['notnull' => false]);
         $this->table->addColumn('suggested',     'json_array', ['notnull' => false]);
     }
 
