@@ -148,7 +148,7 @@ class Package extends Entity
      */
     public function getKeywords()
     {
-        return array_filter(explode(',', $this->keywords));
+        return $this->keywords;
     }
 
     /**
@@ -244,7 +244,7 @@ class Package extends Entity
      */
     public function getVersions()
     {
-        return array_filter(explode(',', $this->versions));
+        return $this->versions;
     }
 
     /**
@@ -324,7 +324,7 @@ class Package extends Entity
      */
     public function getScreenshots()
     {
-        return array_filter(explode(',', $this->screenshots));
+        return $this->screenshots;
     }
 
     /**

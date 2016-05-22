@@ -50,14 +50,14 @@ class PackageManager
             $package->setType($information['type']);
         }
         if (isset($information['keywords'])) {
-            $package->setKeywords(implode(',', $information['keywords']));
+            $package->setKeywords($information['keywords']);
         }
         if (isset($information['authors'])) {
             $authors = [];
             foreach ($information['authors'] as $author) {
                 $authors[] = $author['name'];
             }
-            $package->setAuthors(implode(',', $authors));
+            $package->setAuthors($authors);
         }
         if (isset($information['support'])) {
             $package->setSupport($information['support']);
@@ -68,7 +68,7 @@ class PackageManager
         }
 
         if (isset($information['extra']) && isset($information['extra']['bolt-screenshots'])) {
-            $package->setScreenshots(implode(',', $information['extra']['bolt-screenshots']));
+            $package->setScreenshots($information['extra']['bolt-screenshots']);
         }
 
         if (isset($information['extra']) && isset($information['extra']['bolt-icon'])) {
@@ -76,7 +76,7 @@ class PackageManager
         }
 
         $package->setRequirements(json_encode($information['require']));
-        $package->setVersions(implode(',', $pv));
+        $package->setVersions($pv);
         $package->setUpdated(new DateTime());
 
         return $package;
