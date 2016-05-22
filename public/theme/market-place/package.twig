@@ -9,6 +9,7 @@
 {% block header_title %} | {{ package.title }}{% endblock %}
 
 {% block content %}
+
     <div class="ui grid stackable">
         <div class="eight wide column">
             <h2 class="ui header">
@@ -57,13 +58,13 @@
 
             <div class="ui right floated main menu">
                 <a class="bug popup icon item" data-content="Downloads" href="#">
-                    <i class="download icon"> {{ package.downloads|default(0) }}</i> </a>
+                    <i class="download icon"> {{ statistics.downloads(package.id)|default(0) }}</i> </a>
 
                 <a class="bug popup icon item"
                         {% if is_member() %}
-                            {% if package.isStarredBy(member.guid) %}
+                            {% if statistics.isStarredBy(package.id, member.guid) %}
                             {% else %}
-                                href="{{ url('star',{'package':package.id}) }}"
+                                href="{{ url('star', { 'package': package.id }) }}"
                                 onclick="ga('send', 'event', {
                                         eventCategory: 'Package',
                                         eventAction: 'Star',
@@ -73,7 +74,7 @@
                         {% endif %}
                    data-content="
                 {% if is_member() %}
-                    {% if package.isStarredBy(member.guid) %}
+                    {% if statistics.isStarredBy(package.id, member.guid) %}
                         You have starred this package.
                     {% else %}
                         Star this package!
@@ -81,7 +82,7 @@
                 {% else %}
                     You must be logged in to star packages.
                 {% endif %}
-                "> <i class="star icon"> {{ package.stars|default(0) }}</i> </a>
+                "> <i class="star icon"> {{ statistics.stars(package.id)|default(0) }}</i> </a>
 
                 <a class="github popup icon item"
                    data-content="View source code"
@@ -220,7 +221,7 @@
                                 <img class="ui avatar image" src="/files/{{ suggest.package.type }}.png">
                                 <div class="content">
                                     <a class="header"
-                                       href="{{ url('view',{'package':suggest.package.id}) }}">{{ suggest.package.title }}</a>
+                                       href="{{ url('view', { 'package': suggest.package.id }) }}">{{ suggest.package.title }}</a>
                                     {{ suggest.description }}
                                 </div>
                             </div>

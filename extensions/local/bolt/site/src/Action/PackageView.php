@@ -75,6 +75,7 @@ class PackageView extends AbstractAction
             'allowedit'  => $package->account === $request->get('user'),
             'boltthemes' => $services['bolt_themes']->info($package),
             'suggested'  => $suggested,
+            'statistics' => $this->getAppService('marketplace.services')['statistics'],
         ];
         $html = $twig->render('package.twig', $context);
 
