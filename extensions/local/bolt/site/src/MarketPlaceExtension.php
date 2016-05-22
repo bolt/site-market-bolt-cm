@@ -2,12 +2,14 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace;
 
+use Bolt\Extension\Bolt\MarketPlace\Command;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Schema\Table;
 use Bolt\Extension\DatabaseSchemaTrait;
 use Bolt\Extension\SimpleExtension;
 use Bolt\Extension\StorageTrait;
+use Pimple as Container;
 use Silex\Application;
 
 /**
@@ -49,6 +51,16 @@ class MarketPlaceExtension extends SimpleExtension
 
         return [
             '/' => $app['marketplace.controller.frontend'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function registerNutCommands(Container $container)
+    {
+        return [
+            new Command\UpdatePackage($container),
         ];
     }
 
