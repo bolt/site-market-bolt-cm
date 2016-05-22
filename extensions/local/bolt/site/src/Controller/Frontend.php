@@ -73,6 +73,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
+        $ctr->match('/search', [$this, 'search'])
+            ->bind('search')
+            ->method('GET')
+        ;
+        
         $ctr->match('/star/{package}', [$this, 'star'])
             ->bind('star')
             ->method('GET|POST')
@@ -163,7 +168,26 @@ class Frontend implements ControllerProviderInterface
      */
     public function browse(Application $app, Request $request)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        $params = [
+            'type' => 'browse',
+        ];
+
+        return $this->getAction($app, 'search')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function search(Application $app, Request $request)
+    {
+        $params = [
+            'type' => 'search',
+        ];
+
+        return $this->getAction($app, 'search')->execute($request, $params);
     }
 
     /**
