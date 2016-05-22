@@ -44,6 +44,10 @@ class Package extends BaseTable
     protected function addIndexes()
     {
         $this->table->addIndex(['account_id']);
+
+        $this->table->addUniqueIndex(['source']);
+        $this->table->addUniqueIndex(['name']);
+        $this->table->addUniqueIndex(['title']);
     }
 
     /**
