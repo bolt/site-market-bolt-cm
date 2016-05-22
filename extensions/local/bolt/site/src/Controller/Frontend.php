@@ -93,8 +93,13 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
-        $ctr->match('/tests', [$this, 'tests'])
-            ->bind('tests')
+        $ctr->match('/test/{package}/{version}', [$this, 'testExtension'])
+            ->bind('testExtension')
+            ->method('GET|POST')
+        ;
+
+        $ctr->match('/test/{package}', [$this, 'testListing'])
+            ->bind('testListing')
             ->method('GET|POST')
         ;
 
@@ -340,12 +345,30 @@ class Frontend implements ControllerProviderInterface
     /**
      * @param Application $app
      * @param Request     $request
+     * @param string      $package
+     * @param string      $version
      *
      * @return Response
      */
-    public function tests(Application $app, Request $request)
+    public function testExtension(Application $app, Request $request, $package, $version)
     {
-        return new Response(sprintf('Not yet implemented: %s::%s', __CLASS__, __FUNCTION__));
+        $params = [];
+
+        return $this->getAction($app, 'test_extension')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     * @param string      $package
+     *
+     * @return Response
+     */
+    public function testListing(Application $app, Request $request, $package)
+    {
+        $params = [];
+
+        return $this->getAction($app, 'test_listing')->execute($request, $params);
     }
 
     /**

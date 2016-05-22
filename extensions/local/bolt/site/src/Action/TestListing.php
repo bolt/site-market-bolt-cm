@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class Tests extends AbstractAction
+class TestListing extends AbstractAction
 {
     /**
      * {@inheritdoc}
