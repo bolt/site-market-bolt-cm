@@ -3,9 +3,8 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
-use Bolt\Storage\Repository;
 use Goutte\Client;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,126 +18,148 @@ class TestExtension extends AbstractAction
     public function execute(Request $request, array $params)
     {
         $version = $params['version'];
-        $package = $params['package'];
+        $packageId = $params['package'];
         $retest = isset($params['retest']) ? true : false;
 
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Package $repo */
-        $repo = $em->getRepository(Entity\Package::class);
-        $p = $repo->findOneBy(['id' => $package]);
+        /** @var Repository\Package $packageRepo */
+        $packageRepo = $em->getRepository(Entity\Package::class);
+        $package = $packageRepo->findOneBy(['id' => $packageId]);
 
-        if (!$p) {
+        if (!$package) {
             throw new \InvalidArgumentException('The extension provided does not exist', 1);
         }
 
-        /** @var Repository $repo */
-        $repo = $em->getRepository(Entity\VersionBuild::class);
-        $build = $repo->findOneBy(['package' => $p->id, 'version' => $version]);
+        /** @var Repository\VersionBuild $versionBuildRepo */
+        $versionBuildRepo = $em->getRepository(Entity\VersionBuild::class);
+        /** @var Entity\VersionBuild $build */
+        $build = $versionBuildRepo->findOneBy(['package_id' => $package->getId(), 'version' => $version]);
 
         if (!$build) {
             $build = new Entity\VersionBuild();
-            $build->package = $p;
-            $build->version = $version;
-            $build->status = 'waiting';
-            $repo->save($build);
+            $build->setPackageId($packageId);
+            $build->setVersion($version);
+            $build->setStatus('waiting');
+
+            $versionBuildRepo->save($build);
         }
 
         if ($retest) {
-            if ($request->request->get('phpTarget')) {
-                $build->phpTarget = $request->request->get('phpTarget');
-            }
-            $build->status = 'waiting';
-            $build->testStatus = 'pending';
-            $build->testResult = '';
-            $build->url = '';
-//@TODO Finish this
-$this->em->flush();
-        }
+            $build->setPhpTarget($request->request->get('phpTarget'));
+            $build->setStatus('waiting');
+            $build->setTestStatus('pending');
+            $build->setTestResult(null);
+            $build->setUrl(null);
 
-        $tests = [];
-        if ($build->url) {
-            $canConnect = true;
-            try {
-                $client = $this->getAppService('guzzle.client');
-                $response = $client->get($build->url);
-            } catch (RequestException $e) {
-                if ($e->getCode() == Response::HTTP_BAD_GATEWAY) {
-                    $canConnect = false;
-                    $build->status = 'complete';
-                    $build->testStatus = 'failed';
-                } else {
-                    $canConnect = false;
-                    $build->status = 'waiting';
-                    $build->testStatus = 'pending';
-                    $build->testResult = '';
-                }
-//@TODO Finish this
-$this->em->flush();
-            }
-
-            if ($canConnect) {
-                try {
-                    $tests = $this->testFunctionality($build);
-                } catch (\Exception $e) {
-                    $build->status = 'failed';
-//@TODO Finish this
-$this->em->flush();
-                }
-                $build->status = 'complete';
-//@TODO Finish this
-$this->em->flush();
-            }
+            $versionBuildRepo->save($build);
         }
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $context = [
             'build'   => $build,
-            'tests'   => $tests,
-            'package' => $p,
+            'package' => $package,
+            'tests'   => $this->getTestStatus($versionBuildRepo, $build),
         ];
+
         $html = $twig->render('extension-test.twig', $context);
 
         return new Response($html);
     }
 
-    protected function testFunctionality($build)
+    /**
+     * @param Repository\VersionBuild $repo
+     * @param Entity\VersionBuild     $build
+     *
+     * @return array
+     */
+    protected function getTestStatus(Repository\VersionBuild $repo, Entity\VersionBuild $build)
+    {
+        $tests = [];
+        if ($build->getUrl()) {
+            $canConnect = true;
+            try {
+                $client = $this->getAppService('guzzle.client');
+                $client->get($build->getUrl());
+            } catch (RequestException $e) {
+                if ($e->getCode() == Response::HTTP_BAD_GATEWAY) {
+                    $canConnect = false;
+                    $build->setStatus('complete');
+                    $build->setTestStatus('failed');
+                } else {
+                    $canConnect = false;
+                    $build->setStatus('waiting');
+                    $build->setTestStatus('pending');
+                    $build->setTestResult(null);
+                }
+
+                $repo->save($build);
+            }
+
+            if ($canConnect) {
+                try {
+                    $tests = $this->testFunctionality($build);
+                    $build->setStatus('complete');
+                } catch (\Exception $e) {
+                    $build->setStatus('failed');
+                }
+
+                $repo->save($build);
+            }
+        }
+
+        return $tests;
+    }
+
+    /**
+     * @param Entity\VersionBuild $build
+     *
+     * @return array
+     */
+    protected function testFunctionality(Entity\VersionBuild $build)
     {
         $test = [];
         $test = array_merge($test, $this->testDashboard($build));
         $test = array_merge($test, $this->testHomepage($build));
         $test = array_merge($test, $this->testExtensionLoaded($build));
 
-        $build->testResult = json_encode($test);
+        $build->setTestResult($test);
         $this->approvedStatus($build);
-//@TODO Finish this
-$this->em->flush();
+
+        return $test;
     }
 
-    protected function testHomepage($build)
+    protected function testHomepage(Entity\VersionBuild $build)
     {
         $client = new Client();
-        $crawler = $client->request('GET', $build->url . '/');
+        $client->request('GET', $build->getUrl() . '/');
+
         $test['homepage'] = [
             'title'    => 'Can load site home page',
             'response' => $client->getResponse()->getStatus(),
-            'status'   => $client->getResponse()->getStatus() == '200' ? 'OK' : 'FAIL',
+            'status'   => $client->getResponse()->getStatus() === Response::HTTP_OK ? 'OK' : 'FAIL',
         ];
 
         return $test;
     }
 
-    protected function testDashboard($build)
+    /**
+     * @param Entity\VersionBuild $build
+     *
+     * @return array
+     */
+    protected function testDashboard(Entity\VersionBuild $build)
     {
         $client = new Client();
-        $crawler = $client->request('GET', $build->url . '/bolt');
+        $crawler = $client->request('GET', $build->getUrl() . '/bolt');
         $form = $crawler->selectButton('Log on')->form();
-        $crawler = $client->submit($form, ['username' => 'admin', 'password' => 'password']);
+        $client->submit($form, ['username' => 'admin', 'password' => 'password']);
+
         $test['dashboard'] = [
             'title'    => 'Can login to admin dashboard',
             'response' => $client->getResponse()->getStatus(),
-            'status'   => $client->getResponse()->getStatus() == '200' ? 'OK' : 'FAIL',
+            'status'   => $client->getResponse()->getStatus() === Response::HTTP_OK ? 'OK' : 'FAIL',
         ];
 
         if (strpos($client->getRequest()->getUri(), 'login') !== false) {
@@ -148,25 +169,36 @@ $this->em->flush();
         return $test;
     }
 
-    protected function testExtensionLoaded($build)
+    /**
+     * @param Entity\VersionBuild $build
+     *
+     * @return array
+     */
+    protected function testExtensionLoaded(Entity\VersionBuild $build)
     {
         $test['extension'] = [
             'title'  => 'Extension is loaded, appears in installed list',
             'status' => 'FAIL',
         ];
         $client = new Client();
-        $crawler = $client->request('GET', $build->url . '/bolt');
+        $crawler = $client->request('GET', $build->getUrl() . '/bolt');
         $form = $crawler->selectButton('Log on')->form();
-        $crawler = $client->submit($form, ['username' => 'admin', 'password' => 'password']);
-        $crawler = $client->request('GET', $build->url . '/bolt/extend/installed');
+
+        $client->submit($form, ['username' => 'admin', 'password' => 'password']);
+        $client->request('GET', $build->getUrl() . '/bolt/extend/installed');
+
         try {
             $json = $client->getResponse()->getContent()->getContents();
             $test['extension']['response'] = $client->getResponse()->getStatus();
             $test['extension']['raw_response'] = $json;
             $extensions = json_decode($json, true);
+
+            /** @var Repository\Package $packageRepo */
+            $packageRepo = $this->getAppService('storage')->getRepository(Entity\Package::class);
             foreach ($extensions['installed'] as $ext) {
-                if ($ext['name'] === $build->package->name && $ext['version'] === $build->version) {
-                    $test['extension']['status'] = $client->getResponse()->getStatus() == '200' ? 'OK' : 'FAIL';
+                $package = $packageRepo->find($build->getPackageId());
+                if ($ext['name'] === $package->getName() && $ext['version'] === $build->getVersion()) {
+                    $test['extension']['status'] = $client->getResponse()->getStatus() === Response::HTTP_OK ? 'OK' : 'FAIL';
                 }
             }
         } catch (\Exception $e) {
@@ -176,19 +208,22 @@ $this->em->flush();
         return $test;
     }
 
-    protected function approvedStatus($build)
+    /**
+     * @param Entity\VersionBuild $build
+     */
+    protected function approvedStatus(Entity\VersionBuild $build)
     {
-        if (!count($build->testResult)) {
-            $build->url = 'pending';
+        if (!count($build->getTestResult())) {
+            $build->setUrl('pending');
 
             return;
         }
         $status = 'approved';
-        foreach ($build->testResult as $test) {
+        foreach ($build->getTestResult() as $test) {
             if ($test['status'] !== 'OK') {
                 $status = 'failed';
             }
         }
-        $build->url = $status;
+        $build->setUrl($status);
     }
 }
