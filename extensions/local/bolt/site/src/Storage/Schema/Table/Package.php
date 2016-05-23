@@ -45,7 +45,6 @@ class Package extends BaseTable
     {
         $this->table->addUniqueIndex(['source']);
         $this->table->addUniqueIndex(['name']);
-        $this->table->addUniqueIndex(['title']);
 
         $this->table->addIndex(['account_id']);
     }
