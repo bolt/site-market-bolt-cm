@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1d729cb1c6746dccab1602a493b27e44",
-    "content-hash": "974a0a6326d55745c008f8dc33b7115d",
+    "hash": "1456ade00dc690c30c5d2f53947d4236",
+    "content-hash": "2c143028100bd83b0eb3ad49d9641e07",
     "packages": [
         {
             "name": "bolt/members",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "1a66c6b4bf4687016801898411444eaef926832e"
+                "reference": "d700ef19c488552f1cf506823bc1e8614c9ca15c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/1a66c6b4bf4687016801898411444eaef926832e",
-                "reference": "1a66c6b4bf4687016801898411444eaef926832e",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/d700ef19c488552f1cf506823bc1e8614c9ca15c",
+                "reference": "d700ef19c488552f1cf506823bc1e8614c9ca15c",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-05-04 16:42:33"
+            "time": "2016-05-23 10:30:31"
         },
         {
             "name": "paragonie/random_compat",
