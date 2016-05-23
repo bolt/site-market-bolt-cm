@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "bbc399ecd6667693da1818772eeeca2299524885"
+                "reference": "15b76fb3df787bae6c98795335ae1d94efd70ba8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/bbc399ecd6667693da1818772eeeca2299524885",
-                "reference": "bbc399ecd6667693da1818772eeeca2299524885",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/15b76fb3df787bae6c98795335ae1d94efd70ba8",
+                "reference": "15b76fb3df787bae6c98795335ae1d94efd70ba8",
                 "shasum": ""
             },
             "require": {
@@ -117,7 +117,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-05-15 08:51:42"
+            "time": "2016-05-23 12:04:50"
         },
         {
             "name": "bolt/filesystem",
