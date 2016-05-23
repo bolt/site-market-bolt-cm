@@ -49,6 +49,6 @@ class Stat extends BaseTable
     protected function addForeignKeyConstraints()
     {
         $this->table->addForeignKeyConstraint($this->tablePrefix . 'marketplace_package', ['package_id'], ['id'],   []);
-        $this->table->addForeignKeyConstraint($this->tablePrefix . 'members_account',     ['account_id'], ['guid'], []);
+        //$this->table->addForeignKeyConstraint($this->tablePrefix . 'members_account',     ['account_id'], ['guid'], []);
     }
 }
