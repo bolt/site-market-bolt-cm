@@ -15,15 +15,10 @@
     "minimum-stability": "beta",
     "require": {
         "bolt/bolt": "^3.0",
-        "composer/composer": "1.0.*@dev",
-        "composer/satis": "^1.0@dev",
-        "doctrine/orm": "^2.5",
-        "fabpot/goutte": "^2.0",
+        "composer/composer": "^1.1",
+        "composer/satis": "dev-master@dev",
         "forxer/gravatar": "^1.2",
-        "mandrill/mandrill": "~1.0",
-        "php-di/php-di": "^5.0",
-        "rossriley/doctrine-migrations-helper": "^1.0",
-        "rossriley/doctrine-entity-base": "^1.0"
+        "mandrill/mandrill": "~1.0"
     },
     "autoload": {
         "psr-4": {
