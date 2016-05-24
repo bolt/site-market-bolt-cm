@@ -83,12 +83,12 @@ class Stat extends AbstractRepository
     public function getAllVersionsQuery($packageId)
     {
         $qb = $this->createQueryBuilder('s')
-            ->select('*')
+            ->select('s.*')
             ->where('s.type = :type')
             ->andWhere('s.package_id = :package_id')
             ->setParameter('type', 'install')
             ->setParameter('package_id', $packageId)
-            ->groupBy('s.version');
+            ->groupBy('s.version, s.id');
 
         return $qb;
     }
