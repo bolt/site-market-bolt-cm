@@ -13,7 +13,7 @@ use Bolt\Extension\Bolt\MarketPlace\Twig;
 use Composer\Config as ComposerConfig;
 use Composer\Config\JsonConfigSource;
 use Composer\Factory;
-use Composer\IO\NullIO;
+use Composer\IO\BufferIO;
 use Composer\Json\JsonFile;
 use Pimple as Container;
 use Silex\Application;
@@ -53,10 +53,8 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
             function ($app) {
                 putenv('COMPOSER_HOME=' . $app['resources']->getPath('cache/composer'));
 
-                $io = new NullIO();
-
                 /** @var ComposerConfig $config */
-                $config = Factory::createConfig($io);
+                $config = Factory::createConfig(new BufferIO());
 
                 foreach (['auth.json', 'github.json'] as $jsonFile) {
                     $jsonFilePath = $app['resources']->getPath('config/satis/' .  $jsonFile);
