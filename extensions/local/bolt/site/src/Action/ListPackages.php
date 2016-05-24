@@ -22,7 +22,7 @@ class ListPackages extends AbstractAction
 
         if (isset($params['sort'])) {
             if ($params['sort'] === 'downloaded') {
-                $packages = $repo->mostDownloaded(200);
+                $packages = $repo->getMostDownloadedStats(200);
             }
         } elseif ($search = $request->get('name')) {
             $packages = $repo->search($search);

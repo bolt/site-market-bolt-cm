@@ -18,9 +18,9 @@ class Package extends AbstractRepository
      *
      * @return Entity\Package[]|false
      */
-    public function mostDownloaded($limit = 10)
+    public function getMostDownloadedStats($limit = 10)
     {
-        return $this->statCount('install', $limit);
+        return $this->getStatCount('install', $limit);
     }
 
     /**
@@ -28,17 +28,17 @@ class Package extends AbstractRepository
      *
      * @return Entity\Package[]|false
      */
-    public function mostStarred($limit = 10)
+    public function getMostStarredStats($limit = 10)
     {
-        return $this->statCount('star', $limit);
+        return $this->getStatCount('star', $limit);
     }
 
     /**
      * @return array
      */
-    public function popularTags()
+    public function getPopularTags()
     {
-        $allTags = $this->fetchTags();
+        $allTags = $this->getTags();
         $tagList = [];
         foreach ($allTags as $tag) {
             $tagList = array_merge($tagList, explode(',', $tag['keywords']));
@@ -60,7 +60,7 @@ class Package extends AbstractRepository
      *
      * @return Entity\Package[]|false
      */
-    public function statCount($type, $limit)
+    public function getStatCount($type, $limit)
     {
         $query = $this->getStatCountQuery($type, $limit);
 
@@ -159,14 +159,14 @@ class Package extends AbstractRepository
     /**
      * @return Entity\Package[]|false
      */
-    public function fetchTags()
+    public function getTags()
     {
-        $query = $this->getFetchTagsQuery();
+        $query = $this->getTagsQuery();
 
         return $this->findWith($query);
     }
 
-    public function getFetchTagsQuery()
+    public function getTagsQuery()
     {
         $qb = $this->createQueryBuilder('p')
             ->select('p.keywords')

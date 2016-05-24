@@ -20,8 +20,8 @@ class Listing extends AbstractAction
         /** @var Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
         $latest = $repo->findBy(['approved' => true], ['created' => 'DESC'], 10);
-        $starred = $repo->mostStarred(5);
-        $downloaded = $repo->mostDownloaded(6);
+        $starred = $repo->getMostStarredStats(5);
+        $downloaded = $repo->getMostDownloadedStats(6);
         $latest_themes = $repo->findBy(['approved' => true, 'type' => 'bolt-theme'], ['created' => 'DESC'], 3);
 
         /** @var \Twig_Environment $twig */
@@ -31,7 +31,7 @@ class Listing extends AbstractAction
             'starred'       => $starred,
             'downloaded'    => $downloaded,
             'latest_themes' => $latest_themes,
-            'popular'       => $repo->popularTags(),
+            'popular'       => $repo->getPopularTags(),
         ];
         $html = $twig->render('index.twig', $context);
 
