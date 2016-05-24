@@ -47,6 +47,11 @@ class UpdatePackage extends BaseCommand
 
         if ($input->getOption('name')) {
             $package = $packageRepo->findOneBy(['name' => $input->getOption('name')]);
+            if ($package === false) {
+                $output->writeln('<error>Package not found!</error>');
+                exit(255);
+            }
+
             /** @var Entity\Package $package */
             $this->updatePackage($packageRepo, $package, $packageManager, $output);
         } elseif ($input->getOption('random')) {
