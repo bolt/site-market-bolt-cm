@@ -60,6 +60,7 @@ class MarketPlaceExtension extends SimpleExtension
     {
         return [
             new Command\UpdatePackage($container),
+            new Command\SatisJsonUpdate($container),
         ];
     }
 
