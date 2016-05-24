@@ -157,8 +157,7 @@ class Package extends AbstractRepository
     public function getSearchQuery($keyword, $type, $order, $limit)
     {
         $qb = $this->createQueryBuilder('p')
-            //->select('count(p.id) AS HIDDEN pcount')
-            ->select('*')
+            ->select('DISTINCT ON (p.id) *' )
             ->addSelect('p.id as id')
             ->addSelect('p.account_id as account_id')
             ->addSelect('p.source as source')
@@ -204,7 +203,7 @@ class Package extends AbstractRepository
                 break;
         }
 
-        $qb->groupBy('p.id');
+        $qb->groupBy('p.id, s.id');
         $qb->setParameter('status', true);
 
         return $qb;
