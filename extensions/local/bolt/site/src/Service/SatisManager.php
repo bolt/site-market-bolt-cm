@@ -81,6 +81,7 @@ class SatisManager
         $packageSelection = new PackageSelection($output, $outputDir, $config, $skipErrors);
         $packageSelection->setPackagesFilter($packagesFilter);
         $packages = $packageSelection->select($composer, true);
+
         if ($packageSelection->hasFilterForPackages() || $packageSelection->hasRepositoryFilter()) {
             // in case of an active filter we need to load the dumped packages.json and merge the
             // updated packages in
@@ -93,7 +94,6 @@ class SatisManager
         $packagesBuilder->dump($packages);
 
         if ($htmlView) {
-            //$rootPackage = new RootPackage(, , );
             $web = new WebBuilder($output, $outputDir, $config, $skipErrors);
             $web->setRootPackage($composer->getPackage());
             $web->dump($packages);
@@ -148,10 +148,11 @@ class SatisManager
     protected function getSatisJsonTempate()
     {
         return [
-            'name'         => 'Bolt Extensions Repository',
-            'homepage'     => 'http://extensions.bolt.cm/satis',
-            'repositories' => [],
-            'output-dir'   => $this->resourceManager->getPath('web/satis'),
+            'name'          => 'Bolt Extensions Repository',
+            'homepage'      => 'http://extensions.bolt.cm/satis',
+            'repositories'  => [],
+            'output-dir'    => $this->resourceManager->getPath('web/satis'),
+            'twig-template' => $this->resourceManager->getPath('theme/satis/satis-search.twig'),
         ];
     }
 
