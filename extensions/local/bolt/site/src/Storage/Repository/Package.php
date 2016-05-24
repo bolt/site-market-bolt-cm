@@ -14,6 +14,16 @@ use Bolt\Storage\Repository;
 class Package extends AbstractRepository
 {
     /**
+     * @param string $composerType
+     * @param int    $limit
+     *
+     * @return Entity\Package[]|false
+     */
+    public function getMostDownloaded($composerType, $limit = 10)
+    {
+        return $this->getStatPackage('install', $composerType, $limit);
+    }
+    /**
      * @param int $limit
      *
      * @return Entity\Package[]|false
@@ -21,6 +31,17 @@ class Package extends AbstractRepository
     public function getMostDownloadedStats($limit = 10)
     {
         return $this->getStatCount('install', $limit);
+    }
+
+    /**
+     * @param string $composerType
+     * @param int    $limit
+     *
+     * @return Entity\Package[]|false
+     */
+    public function getMostStarred($composerType, $limit = 10)
+    {
+        return $this->getStatPackage('star', $composerType, $limit);
     }
 
     /**
@@ -55,6 +76,40 @@ class Package extends AbstractRepository
     }
 
     /**
+     * @param string $action
+     * @param string $composerType
+     * @param int    $limit
+     *
+     * @return Entity\Package[]|false
+     */
+    public function getStatPackage($action, $composerType, $limit)
+    {
+        $query = $this->getStatPackageQuery($action, $composerType, $limit);
+
+        return $this->findWith($query);
+    }
+
+    public function getStatPackageQuery($action, $composerType, $limit)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->select('p.*, count(p.id) AS pcount')
+            ->addSelect('p.source as source')
+            ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+            ->where('p.type = :composerType')
+            ->andWhere('s.type = :action')
+            ->andWhere('p.approved = true')
+            ->groupBy('p.id')
+            ->orderBy('pcount', 'DESC')
+            ->setParameter('composerType', $composerType)
+            ->setParameter('action', $action)
+            ->setMaxResults($limit)
+        ;
+
+        return $qb;
+    }
+
+    /**
      * @param string  $type
      * @param integer $limit
      *
@@ -71,7 +126,6 @@ class Package extends AbstractRepository
     {
         $qb = $this->createQueryBuilder('p');
         $qb
-            //->select('count(p.id) AS HIDDEN pcount')
             ->select('count(p.id) AS pcount')
             ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('s.type = :type')
