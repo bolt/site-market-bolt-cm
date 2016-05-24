@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
+use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
 use Bolt\Storage\EntityManager;
@@ -28,6 +29,10 @@ class Hook extends AbstractAction
             $packageManager = $services['package_manager'];
             /** @var Entity\Package $package */
             $package = $packageManager->syncPackage($package);
+
+            /** @var SatisManager $satisProvider */
+            $satisProvider = $this->getAppService('satis_manager');
+            $satisProvider->dump();
 
             return new JsonResponse(['status' => 'ok', 'response' => $package]);
         }
