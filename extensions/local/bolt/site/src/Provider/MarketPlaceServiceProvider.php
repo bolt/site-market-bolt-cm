@@ -51,8 +51,6 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
 
         $app['marketplace.composer.config'] = $app->share(
             function ($app) {
-                putenv('COMPOSER_HOME=' . $app['resources']->getPath('cache/composer'));
-
                 /** @var ComposerConfig $config */
                 $config = Factory::createConfig(new BufferIO());
 

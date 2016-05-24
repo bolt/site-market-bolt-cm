@@ -37,6 +37,8 @@ class MarketPlaceExtension extends SimpleExtension
      */
     protected function registerServices(Application $app)
     {
+        putenv('COMPOSER_HOME=' . $app['resources']->getPath('cache/composer'));
+
         $this->extendDatabaseSchemaServices();
         $this->extendRepositoryMapping();
     }
@@ -60,6 +62,7 @@ class MarketPlaceExtension extends SimpleExtension
     {
         return [
             new Command\UpdatePackage($container),
+            new Command\SatisBuilder($container),
             new Command\SatisJsonUpdate($container),
         ];
     }
