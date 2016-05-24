@@ -51,9 +51,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
 
         $app['marketplace.composer.config'] = $app->share(
             function ($app) {
-                /** @var \Bolt\Composer\Action\Options $options */
-                $options = $app['extend.action.options'];
-                putenv('COMPOSER_HOME=' . $options->baseDir());
+                putenv('COMPOSER_HOME=' . $app['resources']->getPath('cache/composer'));
 
                 $io = new NullIO();
 
