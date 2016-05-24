@@ -35,9 +35,9 @@ class SatisJsonUpdate extends BaseCommand
         try {
             $satisProvider->dump();
         } catch (IOException $e) {
-            $output->writeln(sprintf('<error>Could not write Satis configuration to %s check file or directory permissions.</error>', $satisProvider->getPath()));
+            $output->writeln(sprintf('<error>Could not write Satis configuration to %s check file or directory permissions.</error>', $satisProvider->getSatisJsonPath()));
         }
 
-        $output->writeln(sprintf('<info>Satis configuration written to %s</info>', $satisProvider->getPath()));
+        $output->writeln(sprintf('<info>Satis configuration written to %s</info>', $satisProvider->getSatisJsonPath()));
     }
 }
