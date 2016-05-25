@@ -24,6 +24,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\LockHandler;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -76,6 +78,44 @@ class SatisManager
             $fs->dumpFile($packageLockFile, $package->getName());
         }
         $lock->release();
+    }
+
+    /**
+     * @param OutputInterface|null $output
+     */
+    public function processQueue(OutputInterface $output = null)
+    {
+        if ($output === null) {
+            $output = new NullIO();
+        }
+
+        $lockDir = $this->resourceManager->getPath('cache/.satis/lock');
+        $queueDir = $this->resourceManager->getPath('cache/.satis/queue');
+
+        $fs = new Filesystem();
+        if (!$fs->exists($queueDir)) {
+            $fs->mkdir($queueDir);
+        }
+
+        $finder = new Finder();
+        $files = $finder
+            ->files()
+            ->in($queueDir)
+            ->ignoreDotFiles(true)
+            ->depth(1)
+        ;
+
+        /** @var SplFileInfo $file */
+        foreach ($files as $file) {
+            $lock = new LockHandler($file->getFilename(), $lockDir);
+            if ($lock->lock(true)) {
+                $packageName = $file->getContents();
+                $output->writeln(sprintf('<info>[Q] %s</info>', $packageName));
+                $this->build($packageName);
+                $fs->remove($file->getRelativePathname());;
+            }
+            $lock->release();
+        }
     }
 
     /**
