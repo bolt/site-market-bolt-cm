@@ -31,7 +31,7 @@ class Hook extends AbstractAction
             $package = $packageManager->syncPackage($package);
 
             /** @var SatisManager $satisProvider */
-            $satisProvider = $this->getAppService('satis_manager');
+            $satisProvider = $services['satis_manager'];
             $satisProvider->dumpSatisJson();
             $satisProvider->queuePackage($package);
 

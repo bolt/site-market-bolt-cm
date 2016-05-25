@@ -100,9 +100,9 @@ class SatisManager
         $finder = new Finder();
         $files = $finder
             ->files()
-            ->in($queueDir)
             ->ignoreDotFiles(true)
-            ->depth(1)
+            ->in($queueDir)
+            ->depth(0)
         ;
 
         /** @var SplFileInfo $file */
@@ -111,8 +111,8 @@ class SatisManager
             if ($lock->lock(true)) {
                 $packageName = $file->getContents();
                 $output->writeln(sprintf('<info>[Q] %s</info>', $packageName));
-                $this->build($packageName);
-                $fs->remove($file->getRelativePathname());;
+                $this->build($packageName, $output);
+                $fs->remove($file->getRealPath());;
             }
             $lock->release();
         }
