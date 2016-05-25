@@ -56,12 +56,12 @@ class SatisManager
     }
 
     /**
-     * @param array                $packagesFilter
+     * @param string               $packageName
      * @param OutputInterface|null $output
      *
      * @return \Composer\Package\PackageInterface[]
      */
-    public function build(array $packagesFilter, OutputInterface $output = null)
+    public function build($packageName, OutputInterface $output = null)
     {
         if ($output === null) {
             $output = new NullIO();
@@ -70,7 +70,7 @@ class SatisManager
         $skipErrors = true;
         $htmlView = true;
 
-        $packages = $this->buildPackages($packagesFilter, $output, $skipErrors);
+        $packages = $this->buildPackages($packageName, $output, $skipErrors);
 
         if ($htmlView) {
             $this->dumpPackages($packages, $output, $skipErrors);
@@ -80,7 +80,7 @@ class SatisManager
     }
 
     /**
-     * @param array           $packagesFilter
+     * @param string          $packageName
      * @param OutputInterface $output
      * @param bool            $skipErrors
      *
@@ -88,10 +88,14 @@ class SatisManager
      *
      * @return \Composer\Package\PackageInterface[]
      */
-    public function buildPackages(array $packagesFilter, OutputInterface $output, $skipErrors = false)
+    public function buildPackages($packageName, OutputInterface $output, $skipErrors = false)
     {
         $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
-        $packageSelection->setPackagesFilter($packagesFilter);
+
+        $packageEntity = $this->em->getRepository(Entity\Package::class)->findOneBy(['name' => $packageName]);
+        if ($packageEntity) {
+            $packageSelection->setRepositoryFilter($packageEntity->getSource());
+        }
         $packages = $packageSelection->select($this->getComposer(), true);
 
         if ($packageSelection->hasFilterForPackages() || $packageSelection->hasRepositoryFilter()) {

@@ -26,7 +26,7 @@ class SatisBuilder extends BaseCommand
         $this->setName('package:build')
             ->setDescription('Trigger build of satis repos.')
             ->setDefinition([
-                new InputArgument('packages', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'Packages that should be built, if not provided all packages are.', null)
+                new InputArgument('package', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'Package that should be built, if not provided all packages are.', null)
             ])
         ;
     }
@@ -36,7 +36,7 @@ class SatisBuilder extends BaseCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $packagesFilter = (array) $input->getArgument('packages');
+        $packageName = $input->getArgument('package');
 
         /** @var SatisManager $satisProvider */
         $satisProvider = $this->app['marketplace.services']['satis_manager'];
@@ -44,7 +44,7 @@ class SatisBuilder extends BaseCommand
         $skipErrors = true;
 
         try {
-            $satisProvider->build($packagesFilter, $output);
+            $satisProvider->build($packageName, $output);
             $output->writeln('<info>Satis file built…</info>');
         } catch (FileNotFoundException $e) {
             $output->writeln('<error>File not found: ' . $satisProvider->getSatisJsonFilePath() . '</error>');
