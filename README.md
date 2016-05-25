@@ -1,11 +1,28 @@
-Bolt Extensions Repository
-===============
+Bolt Extensions Market Place Repository
+=======================================
 
-How to develop / deploy:
+Dump package repository JSON from database
 
-1. Clone this repo
-2. Commit changes to local git repo
-3. run `bundle install`
-4. to deploy run `cap production deploy`
+```
+./app/nut package:dump
+```
 
-Deploy for production occurs from local master branch.
+
+Rebuild JSON data for all packages:
+
+```
+./app/nut package:build 
+```
+
+Rebuild a single package's JSON data
+
+```
+./app/nut package:build author/pachage
+
+```
+
+Flushing the hook generated update queue:
+
+```
+./app/nut package:queue
+```
