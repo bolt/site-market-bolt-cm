@@ -3,6 +3,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
+use Composer\IO\ConsoleIO;
 use Composer\Json\JsonValidationException;
 use Seld\JsonLint\ParsingException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -39,6 +40,7 @@ class SatisBuilder extends BaseCommand
 
         /** @var SatisManager $satisProvider */
         $satisProvider = $this->app['marketplace.services']['satis_manager'];
+        $satisProvider->setIo(new ConsoleIO($input, $output, $this->getHelperSet()));
         $skipErrors = true;
 
         try {

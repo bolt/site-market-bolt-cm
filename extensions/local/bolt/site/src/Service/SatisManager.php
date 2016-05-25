@@ -10,6 +10,7 @@ use Composer\Config;
 use Composer\Config\JsonConfigSource;
 use Composer\Factory;
 use Composer\IO\BufferIO;
+use Composer\IO\IOInterface;
 use Composer\IO\NullIO;
 use Composer\Json\JsonFile;
 use Composer\Json\JsonValidationException;
@@ -35,6 +36,8 @@ class SatisManager
     protected $em;
     /** @var ResourceManager */
     protected $resourceManager;
+    /** @var IOInterface */
+    protected $io;
     /** @var Composer */
     protected $composer;
     /** @var array */
@@ -212,7 +215,7 @@ class SatisManager
         $repositoryUrl = null;
 
         // load auth.json authentication information and pass it to the io interface
-        $io = new BufferIO();
+        $io = $this->getIo();
         $io->loadConfiguration($this->getConfiguration());
 
         $file = new JsonFile($this->getSatisJsonFilePath());
@@ -227,6 +230,27 @@ class SatisManager
         unset(Config::$defaultRepositories['packagist']);
 
         return $this->composer = Factory::create($io, $this->config, false);
+    }
+
+    /**
+     * @return IOInterface
+     */
+    public function getIo()
+    {
+        if ($this->io === null) {
+            $this->io = new BufferIO();
+        }
+
+        return $this->io;
+
+    }
+
+    /**
+     * @param IOInterface $io
+     */
+    public function setIo(IOInterface $io)
+    {
+        $this->io = $io;
     }
 
     /**
