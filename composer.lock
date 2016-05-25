@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "15b76fb3df787bae6c98795335ae1d94efd70ba8"
+                "reference": "a679b216b50643a7d45ae85361c9c476b904f667"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/15b76fb3df787bae6c98795335ae1d94efd70ba8",
-                "reference": "15b76fb3df787bae6c98795335ae1d94efd70ba8",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/a679b216b50643a7d45ae85361c9c476b904f667",
+                "reference": "a679b216b50643a7d45ae85361c9c476b904f667",
                 "shasum": ""
             },
             "require": {
@@ -38,6 +38,7 @@
                 "ircmaxell/random-lib": "~1.1",
                 "monolog/monolog": "~1.12",
                 "nesbot/carbon": "^1.20",
+                "paragonie/random_compat": "^1.4",
                 "passwordlib/passwordlib": "^1.0@beta",
                 "php": ">=5.5.9",
                 "silex/silex": "^1.3",
@@ -117,7 +118,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-05-23 12:04:50"
+            "time": "2016-05-25 15:45:52"
         },
         {
             "name": "bolt/filesystem",
@@ -2071,16 +2072,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.2",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "088c04e2f261c33bed6ca5245491cfca69195ccf"
+                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/088c04e2f261c33bed6ca5245491cfca69195ccf",
-                "reference": "088c04e2f261c33bed6ca5245491cfca69195ccf",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c7e26a21ba357863de030f0b9e701c7d04593774",
+                "reference": "c7e26a21ba357863de030f0b9e701c7d04593774",
                 "shasum": ""
             },
             "require": {
@@ -2115,7 +2116,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-04-03 06:00:07"
+            "time": "2016-03-18 20:34:03"
         },
         {
             "name": "passwordlib/passwordlib",

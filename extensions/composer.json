@@ -23,7 +23,7 @@
     "name": "bolt/extensions",
     "prefer-stable": true,
     "provide": {
-        "bolt/bolt": "3.0.2"
+        "bolt/bolt": "3.0.3"
     },
     "repositories": {
         "packagist": false,
