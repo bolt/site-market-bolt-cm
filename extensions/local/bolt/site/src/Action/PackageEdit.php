@@ -41,9 +41,10 @@ class PackageEdit extends AbstractAction
             $repo->save($package);
         }
 
+        $formsService = $this->getAppService('marketplace.forms');
         /** @var FormFactory $forms */
         $forms = $this->getAppService('form.factory');
-        $form = $forms->create(Form\PackageForm::class, $package);
+        $form = $forms->create($formsService['package'], $package);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
