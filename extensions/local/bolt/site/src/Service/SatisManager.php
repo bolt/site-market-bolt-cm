@@ -23,6 +23,7 @@ use Seld\JsonLint\ParsingException;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\LockHandler;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -53,6 +54,28 @@ class SatisManager
     {
         $this->em = $em;
         $this->resourceManager = $resourceManager;
+    }
+
+    /**
+     * @param Entity\Package $package
+     */
+    public function queuePackage(Entity\Package $package)
+    {
+        $lockDir = $this->resourceManager->getPath('cache/.satis/lock');
+        $queueDir = $this->resourceManager->getPath('cache/.satis/queue');
+
+        $fs = new Filesystem();
+        if (!$fs->exists($queueDir)) {
+            $fs->mkdir($queueDir);
+        }
+        $packageLockFile = $queueDir . '/' . $package->getId();
+        $fs->touch($packageLockFile);
+
+        $lock = new LockHandler($package->getId(), $lockDir);
+        if ($lock->lock(true)) {
+            $fs->dumpFile($packageLockFile, $package->getName());
+        }
+        $lock->release();
     }
 
     /**
@@ -279,7 +302,7 @@ class SatisManager
 
         // add dir to the config
         $config->merge([
-            'config' => ['home' => $this->resourceManager->getPath('cache/.composer')]
+            'config' => ['home' => $this->resourceManager->getPath('cache/.composer')],
         ]);
 
         // load global auth file
