@@ -33,11 +33,11 @@ class SatisJsonUpdate extends BaseCommand
         /** @var SatisManager $satisProvider */
         $satisProvider = $this->app['marketplace.services']['satis_manager'];
         try {
-            $satisProvider->dump();
+            $satisProvider->dumpSatisJson();
         } catch (IOException $e) {
-            $output->writeln(sprintf('<error>Could not write Satis configuration to %s check file or directory permissions.</error>', $satisProvider->getSatisJsonPath()));
+            $output->writeln(sprintf('<error>Could not write Satis configuration to %s check file or directory permissions.</error>', $satisProvider->getSatisJsonFilePath()));
         }
 
-        $output->writeln(sprintf('<info>Satis configuration written to %s</info>', $satisProvider->getSatisJsonPath()));
+        $output->writeln(sprintf('<info>Satis configuration written to %s</info>', $satisProvider->getSatisJsonFilePath()));
     }
 }

@@ -32,7 +32,7 @@ class Hook extends AbstractAction
 
             /** @var SatisManager $satisProvider */
             $satisProvider = $this->getAppService('satis_manager');
-            $satisProvider->dump();
+            $satisProvider->dumpSatisJson();
 
             return new JsonResponse(['status' => 'ok', 'response' => $package]);
         }

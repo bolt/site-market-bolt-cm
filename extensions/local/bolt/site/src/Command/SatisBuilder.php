@@ -45,7 +45,7 @@ class SatisBuilder extends BaseCommand
             $satisProvider->build($packagesFilter, $output);
             $output->writeln('<info>Satis file built…</info>');
         } catch (FileNotFoundException $e) {
-            $output->writeln('<error>File not found: ' . $satisProvider->getSatisJsonPath() . '</error>');
+            $output->writeln('<error>File not found: ' . $satisProvider->getSatisJsonFilePath() . '</error>');
             if (!$skipErrors) {
                 throw $e;
             }

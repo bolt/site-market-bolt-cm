@@ -119,18 +119,24 @@ class SatisManager
 
     /**
      */
-    public function dump()
+    public function dumpSatisJson()
     {
         $fs = new Filesystem();
-        $jsonFilePath = $this->getSatisJsonPath();
+        $jsonFilePath = $this->getSatisJsonFilePath();
         $fs->dumpFile($jsonFilePath, $this->getSatisJson());
     }
 
-    public function getSatisJsonPath()
+    /**
+     * @return string
+     */
+    public function getSatisJsonFilePath()
     {
         return $this->resourceManager->getPath('config/satis/satis.json');
     }
 
+    /**
+     * @return string
+     */
     public function getSatisWebPath()
     {
         return $this->resourceManager->getPath('web/satis');
@@ -209,13 +215,13 @@ class SatisManager
         $io = new BufferIO();
         $io->loadConfiguration($this->getConfiguration());
 
-        $file = new JsonFile($this->getSatisJsonPath());
+        $file = new JsonFile($this->getSatisJsonFilePath());
         if (!$file->exists()) {
-            throw new FileNotFoundException(sprintf('File not found: %s', $this->getSatisJsonPath()));
+            throw new FileNotFoundException(sprintf('File not found: %s', $this->getSatisJsonFilePath()));
         }
 
         $this->config = $file->read();
-        $this->check($this->getSatisJsonPath());
+        $this->check($this->getSatisJsonFilePath());
 
         // disable packagist by default
         unset(Config::$defaultRepositories['packagist']);
