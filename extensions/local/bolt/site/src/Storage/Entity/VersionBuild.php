@@ -2,9 +2,9 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 
-use Doctrine\Entity\Base as EntityBase;
+use Bolt\Storage\Entity\Entity;
 
-class VersionBuild extends EntityBase
+class VersionBuild extends Entity
 {
     /** @var string */
     protected $id;
