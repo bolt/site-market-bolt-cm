@@ -279,7 +279,7 @@ class SatisManager
 
         // add dir to the config
         $config->merge([
-            'config' => ['home' => $this->resourceManager->getPath('cache/composer')]
+            'config' => ['home' => $this->resourceManager->getPath('cache/.composer')]
         ]);
 
         // load global auth file
