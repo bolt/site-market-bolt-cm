@@ -255,7 +255,7 @@ class SatisManager
         ]);
 
         // load global auth file
-        $file = new JsonFile($config->get('home') . '/auth.json');
+        $file = new JsonFile($this->resourceManager->getPath('config/satis/auth.json'));
         if ($file->exists()) {
             $config->merge(['config' => $file->read()]);
         }
