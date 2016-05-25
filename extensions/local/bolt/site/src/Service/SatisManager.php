@@ -5,6 +5,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Service;
 use Bolt\Configuration\ResourceManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
+use Composer\Composer;
 use Composer\Config;
 use Composer\Config\JsonConfigSource;
 use Composer\Factory;
@@ -34,6 +35,10 @@ class SatisManager
     protected $em;
     /** @var ResourceManager */
     protected $resourceManager;
+    /** @var Composer */
+    protected $composer;
+    /** @var array */
+    protected $config;
 
     /**
      * Constructor.
@@ -47,40 +52,44 @@ class SatisManager
         $this->resourceManager = $resourceManager;
     }
 
+    /**
+     * @param array                $packagesFilter
+     * @param OutputInterface|null $output
+     *
+     * @return \Composer\Package\PackageInterface[]
+     */
     public function build(array $packagesFilter, OutputInterface $output = null)
     {
         if ($output === null) {
             $output = new NullIO();
         }
 
-        $outputDir = $this->getSatisWebPath();
-        $repositoryUrl = null;
         $skipErrors = true;
         $htmlView = true;
 
-        // load auth.json authentication information and pass it to the io interface
-        $io = new BufferIO();
-        $io->loadConfiguration($this->getConfiguration());
+        $packages = $this->buildPackages($packagesFilter, $output, $skipErrors);
 
-        $file = new JsonFile($this->getSatisJsonPath());
-        if (!$file->exists()) {
-            throw new FileNotFoundException(sprintf('File not found: %s', $this->getSatisJsonPath()));
+        if ($htmlView) {
+            $this->dumpPackages($packages, $output, $skipErrors);
         }
 
-        $config = $file->read();
-        $this->check($this->getSatisJsonPath());
+        return $packages;
+    }
 
-        if ($repositoryUrl !== null && count($packagesFilter) > 0) {
-            throw new \InvalidArgumentException('The arguments "package" and "repository-url" can not be used together.');
-        }
-
-        // disable packagist by default
-        unset(Config::$defaultRepositories['packagist']);
-        $composer = Factory::create($io, $config, false);
-
-        $packageSelection = new PackageSelection($output, $outputDir, $config, $skipErrors);
+    /**
+     * @param array           $packagesFilter
+     * @param OutputInterface $output
+     * @param bool            $skipErrors
+     *
+     * @throws \Exception
+     *
+     * @return \Composer\Package\PackageInterface[]
+     */
+    public function buildPackages(array $packagesFilter, OutputInterface $output, $skipErrors = false)
+    {
+        $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
         $packageSelection->setPackagesFilter($packagesFilter);
-        $packages = $packageSelection->select($composer, true);
+        $packages = $packageSelection->select($this->getComposer(), true);
 
         if ($packageSelection->hasFilterForPackages() || $packageSelection->hasRepositoryFilter()) {
             // in case of an active filter we need to load the dumped packages.json and merge the
@@ -90,14 +99,22 @@ class SatisManager
             ksort($packages);
         }
 
-        $packagesBuilder = new PackagesBuilder($output, $outputDir, $config, $skipErrors);
+        $packagesBuilder = new PackagesBuilder($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
         $packagesBuilder->dump($packages);
 
-        if ($htmlView) {
-            $web = new WebBuilder($output, $outputDir, $config, $skipErrors);
-            $web->setRootPackage($composer->getPackage());
-            $web->dump($packages);
-        }
+        return $packages;
+    }
+
+    /**
+     * @param array           $packages
+     * @param OutputInterface $output
+     * @param bool            $skipErrors
+     */
+    public function dumpPackages(array $packages, OutputInterface $output, $skipErrors = false)
+    {
+        $web = new WebBuilder($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
+        $web->setRootPackage($this->getComposer()->getPackage());
+        $web->dump($packages);
     }
 
     /**
@@ -172,6 +189,50 @@ class SatisManager
         }
 
         return $satisArray;
+    }
+
+    /**
+     * @throws JsonValidationException
+     * @throws ParsingException
+     *
+     * @return Composer
+     */
+    private function getComposer()
+    {
+        if ($this->composer !== null) {
+            return $this->composer;
+        }
+
+        $repositoryUrl = null;
+
+        // load auth.json authentication information and pass it to the io interface
+        $io = new BufferIO();
+        $io->loadConfiguration($this->getConfiguration());
+
+        $file = new JsonFile($this->getSatisJsonPath());
+        if (!$file->exists()) {
+            throw new FileNotFoundException(sprintf('File not found: %s', $this->getSatisJsonPath()));
+        }
+
+        $this->config = $file->read();
+        $this->check($this->getSatisJsonPath());
+
+        // disable packagist by default
+        unset(Config::$defaultRepositories['packagist']);
+
+        return $this->composer = Factory::create($io, $this->config, false);
+    }
+
+    /**
+     * @return array
+     */
+    private function getConfig()
+    {
+        if ($this->composer === null) {
+            $this->getComposer();
+        }
+
+        return $this->config;
     }
 
 
