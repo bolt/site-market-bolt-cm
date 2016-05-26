@@ -1,6 +1,7 @@
 {
-    "name": "bolt/extensions",
-    "description": "An extension repository manager for Bolt CMS",
+    "name": "bolt/marketplace",
+    "description": "Bolt Market Place core functionality",
+    "type": "project",
     "license": "MIT",
     "authors": [
         {
@@ -23,6 +24,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Bolt\\Extension\\Bolt\\MarketPlace\\": "src"
         }
     }
 }
