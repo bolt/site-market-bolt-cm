@@ -32,7 +32,6 @@ class Hook extends AbstractAction
 
             /** @var SatisManager $satisProvider */
             $satisProvider = $services['satis_manager'];
-            $satisProvider->dumpSatisJson();
             $satisProvider->queuePackage($package);
 
             return new JsonResponse(['status' => 'ok', 'response' => $package]);

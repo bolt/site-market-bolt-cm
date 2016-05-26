@@ -105,6 +105,8 @@ class SatisManager
             ->depth(0)
         ;
 
+        $this->dumpSatisJson();
+
         /** @var SplFileInfo $file */
         foreach ($files as $file) {
             $lock = new LockHandler($file->getFilename(), $lockDir);
