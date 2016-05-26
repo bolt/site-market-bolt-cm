@@ -26,3 +26,9 @@ Flushing the hook generated update queue:
 ```
 ./app/nut package:queue
 ```
+
+Running extension tests
+
+```
+./app/nut package:extension-tester [--wait=n] [--protocol=http] [--protocol=https]
+```
