@@ -4,11 +4,12 @@ namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Composer\Config;
-use Composer\IO\NullIO;
+use Composer\IO\BufferIO;
+use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
 use Composer\Package\Dumper\ArrayDumper;
 use Composer\Package\Link;
-use Composer\Package\LinkConstraint\VersionConstraint;
+use Composer\Semver\Constraint\Constraint;
 use Composer\Package\PackageInterface;
 use Composer\Repository\Vcs\VcsDriverInterface;
 use Composer\Repository\VcsRepository;
@@ -17,7 +18,10 @@ use DateTime;
 
 class PackageManager
 {
-    public $config;
+    /** @var IOInterface */
+    protected $io;
+    /** @var Config */
+    protected $config;
 
     /**
      * Constructor.
@@ -27,6 +31,26 @@ class PackageManager
     public function __construct(Config $config)
     {
         $this->config = $config;
+    }
+
+    /**
+     * @return IOInterface
+     */
+    public function getIo()
+    {
+        if ($this->io === null) {
+            $this->io = new BufferIO();
+        }
+
+        return $this->io;
+    }
+
+    /**
+     * @param IOInterface $io
+     */
+    public function setIo(IOInterface $io)
+    {
+        $this->io = $io;
     }
 
     /**
@@ -110,7 +134,7 @@ class PackageManager
      */
     public function loadRepository(Entity\Package $package)
     {
-        $io = new NullIO();
+        $io = $this->getIo();
         $io->loadConfiguration($this->config);
         $repository = new VcsRepository(['url' => $package->getRawSource()], $io, $this->config);
 
@@ -179,7 +203,7 @@ class PackageManager
      */
     public function getReleaseInfo(Entity\Package $package, $token = null)
     {
-        $io = new NullIO();
+        $io = $this->getIo();
         $io->loadConfiguration($this->config);
         $rfs = new RemoteFilesystem($io, $this->config);
 
@@ -206,7 +230,7 @@ class PackageManager
      */
     public function getReadme(Entity\Package $package)
     {
-        $io = new NullIO();
+        $io = $this->getIo();
         $io->loadConfiguration($this->config);
         $rfs = new RemoteFilesystem($io, $this->config);
 
@@ -234,7 +258,7 @@ class PackageManager
             return false;
         }
         $constraint = $require['bolt/bolt']->getConstraint();
-        $v = new VersionConstraint('=', $boltVersion . '.0');
+        $v = new Constraint('=', $boltVersion . '.0');
 
         return $constraint->matches($v);
     }
