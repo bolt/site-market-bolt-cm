@@ -8,5 +8,6 @@ config/github*
 config/github.json
 node_modules
 public/satis
+public/theme/marketplace/
 satis.json
 vendor

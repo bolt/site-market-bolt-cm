@@ -20,7 +20,7 @@ payoff:
 #
 # Don't edit the templates in theme/base-2016, because they _will_ get updated
 # in next releases
-theme: market-place
+theme: marketplace
 
 # The locale that'll be used by the application. If no locale is set the
 # fallback locale is 'en_GB'. For available options, see:
