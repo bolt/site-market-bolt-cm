@@ -56,7 +56,7 @@ class Submit extends AbstractAction
             try {
                 $roles = $accountUser->getAccount()->getRoles();
                 $packageManager->validate($package, in_array('admin', $roles));
-                $package = $packageManager->syncPackage($package);
+                $packageManager->syncPackage($package);
                 $repo->save($package);
 
                 $session->getFlashBag()->add('info', 'Thanks for submitting an Extension!');

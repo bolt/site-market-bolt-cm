@@ -80,7 +80,7 @@ class UpdatePackage extends BaseCommand
     {
         $output->writeln('<info>Updating ' . $package->getName() . '</info>');
         try {
-            $package = $packageManager->syncPackage($package);
+            $packageManager->syncPackage($package);
             /** @var MembersAccountEntity $account */
             $account = $this->app['members.records']->getAccountByGuid($package->getAccountId());
             if ($account->isEnabled()) {

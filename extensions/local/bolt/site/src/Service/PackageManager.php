@@ -102,8 +102,6 @@ class PackageManager
         $package->setRequirements(json_encode($information['require']));
         $package->setVersions($pv);
         $package->setUpdated(new DateTime());
-
-        return $package;
     }
 
     /**

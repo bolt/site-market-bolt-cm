@@ -22,13 +22,13 @@ class Hook extends AbstractAction
         /** @var Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
 
+        /** @var Entity\Package $package */
         $package = $repo->findOneBy(['token' => $request->query->get('token')]);
         if ($package) {
             $services = $this->getAppService('marketplace.services');
             /** @var PackageManager $packageManager */
             $packageManager = $services['package_manager'];
-            /** @var Entity\Package $package */
-            $package = $packageManager->syncPackage($package);
+            $packageManager->syncPackage($package);
 
             /** @var SatisManager $satisProvider */
             $satisProvider = $services['satis_manager'];

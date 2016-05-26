@@ -52,7 +52,7 @@ class PackageUpdate extends AbstractAction
         }
         try {
             $packageManager->validate($package, $isAdmin);
-            $package = $packageManager->syncPackage($package);
+            $packageManager->syncPackage($package);
             $session->getFlashBag()->add('success', 'Package ' . $package->getName() . ' has been updated');
 
             if ($account->isEnabled()) {
