@@ -1,97 +1,134 @@
 <?php
-namespace Bolt\Extensions\Command;
 
-use Symfony\Component\Console\Command\Command;
+namespace Bolt\Extension\Bolt\MarketPlace\Command;
+
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Nut\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\ArrayInput;
-use Doctrine\ORM\EntityManager;
-use Bolt\Extensions\Entity;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\LockHandler;
 use Symfony\Component\Process\Process;
 
+/**
+ * Extension test runner.
+ *
+ * @author Ross Riley <riley.ross@gmail.com>
+ * @author Gawain Lynch <gawain.lynch@gmail.com>
+ */
+class ExtensionTestRunner extends BaseCommand
+{
+    /** @var int */
+    public $waitTime;
+    /** @var string */
+    public $protocol;
 
-
-
-class ExtensionTestRunner extends Command {
-    
-
-    public $em;
-    public $isRunning = false;
-    public $waitTime = 5;
-    public $protocol = "http://";
-    
- 
-    public function __construct(EntityManager $em) {
-        $this->em = $em;
-        parent::__construct();
-    }
-    
-
-    protected function configure() {
-        $this->setName("bolt:extension-tester")
-                ->setDescription("Looks in the queue and launches a test instance of a Bolt with extension / version loaded.");
-
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output) 
+    protected function configure()
     {
+        $this->setName('package:extension-tester')
+            ->setDescription('Looks in the queue and launches a test instance of a Bolt with extension / version loaded.')
+            ->addOption('wait',   null, InputOption::VALUE_OPTIONAL, 'Amount of time to sleep in between connection attempts', 5)
+            ->addOption('protocol',   null, InputOption::VALUE_OPTIONAL, 'Connection protocol, either "http" or "https"', 'http')
+        ;
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->waitTime = (int) $input->getOption('wait');
+        $this->protocol = $input->getOption('protocol');
+        if (!in_array($this->protocol, ['http', 'https'])) {
+            throw new \BadMethodCallException(sprintf("Bad protocol specified: %s.\n\nMust me either 'http' or 'https'", $this->protocol));
+        }
+
+        $lockDir = $this->app['resources']->getPath('cache/.satis/lock');
+        $lock = new LockHandler('extension.test.runner', $lockDir);
+
         while (true) {
-            if(false === $this->isRunning) {
-                if($build = $this->checkQueue() ) {
-                    $this->startJob($build, $output);
-                }
+            if ($lock->lock() && $build = $this->checkQueue()) {
+                $this->startJob($build, $output);
             }
-            $output->writeln("Sleeping for ".$this->waitTime." seconds");
+            $output->writeln('Sleeping for ' . $this->waitTime . ' seconds');
+            $lock->release();
             sleep($this->waitTime);
         }
     }
-    
+
+    /**
+     * @return Entity\VersionBuild
+     */
     protected function checkQueue()
     {
-        $repo = $this->em->getRepository(Entity\VersionBuild::class);
-        $build = $repo->findOneBy(['status'=>'waiting']);
+        $repo = $this->app['storage']->getRepository(Entity\VersionBuild::class);
+        $build = $repo->findOneBy(['status' => 'waiting']);
+
         return $build;
     }
-    
-    protected function startJob($build, OutputInterface $output)
+
+    /**
+     * @param Entity\VersionBuild $build
+     * @param OutputInterface     $output
+     */
+    protected function startJob(Entity\VersionBuild $build, OutputInterface $output)
     {
-        $this->isRunning = true;
-        $build->status = "building";
-        $this->em->flush();
-        
-        $command = "ssh boltrunner@bolt.rossriley.co.uk 'bundle exec cap production docker:run package=".$build->package->name." version=".$build->version;
-        if ($build->phpTarget) {
-           $command .= " php=".$build->phpTarget."'"; 
-        } else {
-            $command .= "'";
-        }
-        
+        $versionRepo = $this->app['storage']->getRepository(Entity\VersionBuild::class);
+        $packageRepo = $this->app['storage']->getRepository(Entity\Package::class);
+        /** @var Entity\Package $package */
+        $package = $packageRepo->findOneBy(['id' => $build->getPackageId()]);
+
+        $build->setStatus('building');
+        $versionRepo->save($build);
+
+        $command = sprintf(
+            'ssh -i %s boltrunner@bolt.rossriley.co.uk "bundle exec cap production docker:run package=%s version=%s %s"',
+            $this->getSshIdFilePath(),
+            $package->getName(),
+            $build->getVersion(),
+            $build->getPhpTarget() ? 'php=' . $build->getPhpTarget() : ''
+        );
+
         $process = new Process($command);
         $process->mustRun();
-        
+
         if ($process->isSuccessful()) {
             $response = $process->getOutput();
             $lines = explode("\n", $response);
-            if( !isset($lines[2])) {
+            if (!isset($lines[2])) {
                 // This means the container couldn't launch a new instance.
                 // Best bet here is to remain in waiting mode and try again next loop
                 return;
             }
-            $build->status = "complete";
-            $build->url = $this->protocol.$lines[2];
-            $build->lastrun = new \DateTime;
-            $output->writeln($build->status);
-            $output->writeln("<info>Built ".$build->package->name." version ".$build->version." to ".$build->url."</info>");
-            $this->em->flush();
+            $build->setStatus('complete');
+            $build->setUrl(sprintf('%s%s', $this->protocol, $lines[2]));
+            $build->setLastrun(new \DateTime());
+
+            $output->writeln($build->getStatus());
+            $output->writeln(sprintf(
+                '<info>Built %s version %s to %s</info>',
+                $package->getName(),
+                $build->getVersion(),
+                $build->getUrl()
+            ));
         } else {
-            $build->status = "failed";
-            $this->em->flush();
+            $build->setStatus('failed');
         }
-        $this->isRunning = false;
+
+        $versionRepo->save($build);
     }
-    
 
+    /**
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    protected function getSshIdFilePath()
+    {
+        $fs = new Filesystem();
+        $identityFile = $this->app['resources']->getPath('config/satis/boltrunner_id_rsa');
+        if ($fs->exists($identityFile)) {
+            return $identityFile;
+        }
 
+        throw new \RuntimeException(sprintf('SSH private key file not found at %s', $identityFile));
+    }
 }

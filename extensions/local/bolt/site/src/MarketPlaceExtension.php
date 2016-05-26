@@ -61,6 +61,7 @@ class MarketPlaceExtension extends SimpleExtension
     protected function registerNutCommands(Container $container)
     {
         return [
+            new Command\ExtensionTestRunner($container),
             new Command\QueueProcess($container),
             new Command\SatisBuilder($container),
             new Command\SatisJsonUpdate($container),
