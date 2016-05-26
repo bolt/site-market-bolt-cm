@@ -108,7 +108,7 @@ class SatisManager
         /** @var SplFileInfo $file */
         foreach ($files as $file) {
             $lock = new LockHandler($file->getFilename(), $lockDir);
-            if ($lock->lock(true)) {
+            if ($lock->lock()) {
                 $packageName = $file->getContents();
                 $output->writeln(sprintf('<info>[Q] %s</info>', $packageName));
                 $this->build($packageName, $output);
@@ -132,6 +132,11 @@ class SatisManager
 
         $skipErrors = true;
         $htmlView = true;
+        $lockDir = $this->resourceManager->getPath('cache/.satis/lock');
+
+        set_time_limit(3600);
+        $lock = new LockHandler('satis.full.build', $lockDir);
+        $lock->lock(true);
 
         $packages = $this->buildPackages($packageName, $output, $skipErrors);
 
