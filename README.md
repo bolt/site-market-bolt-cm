@@ -30,5 +30,5 @@ Flushing the hook generated update queue:
 Running extension tests
 
 ```
-./app/nut package:extension-tester [--wait=n] [--protocol=http] [--protocol=https]
+./app/nut package:extension-tester [--wait=n] [--protocol=http] [--protocol=https] [--private-key=~/.ssh/id_rsa]
 ```

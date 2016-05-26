@@ -20,16 +20,20 @@ use Symfony\Component\Process\Process;
 class ExtensionTestRunner extends BaseCommand
 {
     /** @var int */
-    public $waitTime;
+    protected $waitTime;
     /** @var string */
-    public $protocol;
+    protected $protocol;
+    /** @var string */
+    protected $privateKey;
 
     protected function configure()
     {
+        $idFile = getenv('HOME') . '/.ssh/id_rsa';
         $this->setName('package:extension-tester')
             ->setDescription('Looks in the queue and launches a test instance of a Bolt with extension / version loaded.')
             ->addOption('wait',   null, InputOption::VALUE_OPTIONAL, 'Amount of time to sleep in between connection attempts', 5)
             ->addOption('protocol',   null, InputOption::VALUE_OPTIONAL, 'Connection protocol, either "http" or "https"', 'http')
+            ->addOption('private-key',   null, InputOption::VALUE_OPTIONAL, 'Private key file for SSH connections', getenv('HOME') . '/.ssh/id_rsa')
         ;
     }
 
@@ -37,6 +41,8 @@ class ExtensionTestRunner extends BaseCommand
     {
         $this->waitTime = (int) $input->getOption('wait');
         $this->protocol = $input->getOption('protocol');
+        $this->privateKey = $input->getOption('private-key');
+
         if (!in_array($this->protocol, ['http', 'https'])) {
             throw new \BadMethodCallException(sprintf("Bad protocol specified: %s.\n\nMust me either 'http' or 'https'", $this->protocol));
         }
@@ -124,11 +130,10 @@ class ExtensionTestRunner extends BaseCommand
     protected function getSshIdFilePath()
     {
         $fs = new Filesystem();
-        $identityFile = $this->app['resources']->getPath('config/satis/boltrunner_id_rsa');
-        if ($fs->exists($identityFile)) {
-            return $identityFile;
+        if ($fs->exists($this->privateKey)) {
+            return $this->privateKey;
         }
 
-        throw new \RuntimeException(sprintf('SSH private key file not found at %s', $identityFile));
+        throw new \RuntimeException(sprintf('SSH private key file not found at %s', $this->privateKey));
     }
 }
