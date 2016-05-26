@@ -1,5 +1,6 @@
 app/cache/
 app/config/satis/auth.json
+app/config/satis/boltrunner_id_rsa
 app/database/*.db
 config/config.php
 config/env.phpvendor
