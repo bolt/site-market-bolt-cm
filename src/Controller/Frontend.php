@@ -69,13 +69,13 @@ class Frontend implements ControllerProviderInterface
         ;
 
         $ctr->match('/login', [$this, 'login'])
-            ->bind('login')
-            ->method('GET|POST')
+            ->bind('loginRedirect')
+            ->method('GET')
         ;
 
         $ctr->match('/logout', [$this, 'logout'])
-            ->bind('logout')
-            ->method('GET|POST')
+            ->bind('logoutRedirect')
+            ->method('GET')
         ;
 
         $ctr->match('/ping', [$this, 'ping'])
@@ -84,13 +84,13 @@ class Frontend implements ControllerProviderInterface
         ;
 
         $ctr->match('/register', [$this, 'register'])
-            ->bind('register')
-            ->method('GET|POST')
+            ->bind('registerRedirect')
+            ->method('GET')
         ;
 
         $ctr->match('/reset', [$this, 'reset'])
-            ->bind('reset')
-            ->method('GET|POST')
+            ->bind('resetRedirect')
+            ->method('GET')
         ;
 
         $ctr->match('/search', [$this, 'search'])
