@@ -191,7 +191,7 @@ class SatisManager
     public function getBuiltPackages(OutputInterface $output, $skipErrors = false)
     {
         $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
-        
+
         return $packageSelection->load();
     }
 
@@ -265,7 +265,7 @@ class SatisManager
             'homepage'      => 'http://extensions.bolt.cm/satis',
             'repositories'  => [],
             'output-dir'    => $this->resourceManager->getPath('web/satis'),
-            'twig-template' => $this->resourceManager->getPath('theme/satis/satis-search.twig'),
+            'twig-template' => $this->resourceManager->getPath('theme/satis/satis-index.twig'),
         ];
     }
 
