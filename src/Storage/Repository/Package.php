@@ -62,7 +62,7 @@ class Package extends AbstractRepository
         $allTags = $this->getTags();
         $tagList = [];
         foreach ($allTags as $tag) {
-            $tagList = array_merge($tagList, $tag['keywords']);
+            $tagList = array_merge($tagList, (array) $tag['keywords']);
         }
         $tagList = array_filter($tagList);
         $tagList = array_diff($tagList, ['bolt']);
