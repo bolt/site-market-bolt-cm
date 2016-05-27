@@ -50,7 +50,8 @@ abstract class AbstractRepository extends Repository
      */
     protected function getLoadQuery()
     {
-        $qb = $this->createQueryBuilder(strtolower(end(explode('\\', $this->entityName))));
+        $parts = explode('\\', $this->entityName);
+        $qb = $this->createQueryBuilder(strtolower(end($parts)));
         $qb->select('*');
         $this->load($qb);
 
