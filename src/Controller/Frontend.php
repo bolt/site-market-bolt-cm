@@ -103,6 +103,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
+        $ctr->match('/stat/install/{author}/{package}/{version}', [$this, 'statCollectInstall'])
+            ->bind('statCollectInstall')
+            ->method('GET')
+        ;
+
         $ctr->match('/stats/api/{package}', [$this, 'statsApi'])
             ->bind('statsApi')
             ->method('GET')
@@ -384,6 +389,7 @@ class Frontend implements ControllerProviderInterface
     /**
      * @param Application $app
      * @param Request     $request
+     * @param string      $package
      *
      * @return Response
      */
@@ -394,6 +400,26 @@ class Frontend implements ControllerProviderInterface
         ];
 
         return $this->getAction($app, 'package_star')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     * @param string      $author
+     * @param string      $package
+     * @param string      $version
+     *
+     * @return Response
+     */
+    public function statCollectInstall(Application $app, Request $request, $author, $package, $version)
+    {
+        $params = [
+            'id'      => 'install',
+            'package' => sprintf('%s/%s', $author, $package),
+            'version' => $version,
+        ];
+
+        return $this->getAction($app, 'stat')->execute($request, $params);
     }
 
     /**

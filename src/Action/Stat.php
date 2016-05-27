@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,27 +31,29 @@ class Stat extends AbstractAction
         $urlGen = $this->getAppService('url_generator');
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        $repo = $em->getRepository(Entity\Package::class);
+        /** @var Repository\Package $packageRepo */
+        $packageRepo = $em->getRepository(Entity\Package::class);
+        /** @var Entity\Package $package */
+        $package = $packageRepo->findOneBy(['name' => $package]);
 
-        $package = $repo->findOneBy(['name' => $package]);
-
+        /** @var Repository\Stat $statRepo */
+        $statRepo = $em->getRepository(Entity\Stat::class);
         $stat = new Entity\Stat([
-            'source'   => $request->server->get('HTTP_REFERER'),
-            'ip'       => $request->server->get('REMOTE_ADDR'),
-            'recorded' => new \DateTime(),
-            'package'  => $package,
-            'version'  => $version,
-            'type'     => $type,
+            'source'     => $request->server->get('HTTP_REFERER'),
+            'ip'         => $request->server->get('REMOTE_ADDR'),
+            'recorded'   => new \DateTime(),
+            'package_id' => $package,
+            'version'    => $version,
+            'type'       => $type,
         ]);
+        $statRepo->save($stat);
 
-        $repo->save($stat);
-
-        if ($type == 'star') {
-            $route = $urlGen->generate('view', ['package' => $package->id]);
+        if ($type === 'star') {
+            $route = $urlGen->generate('view', ['package' => $package->getId()]);
 
             return new RedirectResponse($route);
         }
-        $response = new JsonResponse(['status' => 'OK', 'package' => $package->id]);
+        $response = new JsonResponse(['status' => 'OK', 'package' => $package->getId()]);
         $response->setCallback($request->get('callback'));
 
         return $response;
