@@ -186,13 +186,22 @@ class Package extends AbstractRepository
 
         switch ($order) {
             case 'date':
-                $qb->orderBy('p.created', 'DESC');
+                $qb
+                    ->addSelect('p.created as created')
+                    ->orderBy('p.created', 'DESC')
+                ;
                 break;
             case 'modified':
-                $qb->orderBy('p.updated', 'DESC');
+                $qb
+                    ->addSelect('p.updated as updated')
+                    ->orderBy('p.updated', 'DESC')
+                ;
                 break;
             case 'name':
-                $qb->orderBy('p.title', 'ASC');
+                $qb
+                    ->addSelect('p.title as title')
+                    ->orderBy('p.title', 'ASC')
+                ;
                 break;
             case 'downloads':
                 $qb->andWhere("s.type = 'install'");
