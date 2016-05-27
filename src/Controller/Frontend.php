@@ -30,132 +30,132 @@ class Frontend implements ControllerProviderInterface
 
         $ctr->match('/browse', [$this, 'browse'])
             ->bind('browse')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/edit/{package}', [$this, 'edit'])
             ->bind('edit')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/', [$this, 'home'])
             ->bind('home')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/hook', [$this, 'hook'])
             ->bind('hook')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/info.json', [$this, 'infoJson'])
             ->bind('infoJson')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/profile', [$this, 'profile'])
             ->bind('profile')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/list.json', [$this, 'listJson'])
             ->bind('listJson')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/list/downloaded.json', [$this, 'listDownloadedJson'])
             ->bind('listDownloadedJson')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/login', [$this, 'login'])
             ->bind('loginRedirect')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/logout', [$this, 'logout'])
             ->bind('logoutRedirect')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/ping', [$this, 'ping'])
             ->bind('ping')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/register', [$this, 'register'])
             ->bind('registerRedirect')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/reset', [$this, 'reset'])
             ->bind('resetRedirect')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/search', [$this, 'search'])
             ->bind('search')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/star/{package}', [$this, 'star'])
             ->bind('star')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/stat/install/{author}/{package}/{version}', [$this, 'statCollectInstall'])
             ->bind('statCollectInstall')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/stats/api/{package}', [$this, 'statsApi'])
             ->bind('statsApi')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/stats/{package}', [$this, 'stats'])
             ->bind('stats')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/submit', [$this, 'submit'])
             ->bind('submit')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/test/{package}/{version}', [$this, 'testExtension'])
             ->bind('testExtension')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/test/{package}', [$this, 'testListing'])
             ->bind('testListing')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/update/{package}', [$this, 'update'])
             ->bind('update')
-            ->method('GET|POST')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/view/{package}', [$this, 'view'])
             ->bind('view')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/view/releases/{packageId}', [$this, 'viewPackageReleases'])
             ->bind('viewPackageReleases')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/view/{packageAuthor}', [$this, 'viewPackagesByAuthor'])
             ->bind('viewPackagesByAuthor')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/view/{packageAuthor}/{packageName}', [$this, 'viewPackage'])
             ->bind('viewPackage')
-            ->method('GET')
+            ->method(Request::METHOD_GET)
         ;
 
         $ctr->before([$this, 'before']);
