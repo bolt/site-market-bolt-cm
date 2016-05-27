@@ -118,6 +118,11 @@ class Frontend implements ControllerProviderInterface
             ->method(Request::METHOD_GET)
         ;
 
+        $ctr->match('/status/', [$this, 'status'])
+            ->bind('status')
+            ->method(Request::METHOD_GET)
+        ;
+
         $ctr->match('/submit', [$this, 'submit'])
             ->bind('submit')
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
@@ -454,6 +459,21 @@ class Frontend implements ControllerProviderInterface
         ];
 
         return $this->getAction($app, 'package_stats_api')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function status(Application $app, Request $request)
+    {
+        $params = [
+            'user' => $app['members.session']->getAuthorisation(),
+        ];
+
+        return $this->getAction($app, 'status')->execute($request, $params);
     }
 
     /**
