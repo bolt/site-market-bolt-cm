@@ -27,10 +27,10 @@ class PackageInfo extends AbstractAction
 
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Repository\Package $repo */
-
-        $repo = $em->getRepository(Entity\Package::class);
-        $package = $repo->findOneBy(['approved' => true, 'name' => $p]);
+        /** @var Repository\Package $packageRepo */
+        $packageRepo = $em->getRepository(Entity\Package::class);
+        /** @var Entity\Package $package */
+        $package = $packageRepo->findOneBy(['approved' => true, 'name' => $p]);
 
         if (!$package) {
             return new JsonResponse(['package' => false, 'version' => false]);
@@ -43,9 +43,10 @@ class PackageInfo extends AbstractAction
 
         $buildRepo = $em->getRepository(Entity\VersionBuild::class);
         foreach ($allVersions as &$version) {
-            $build = $buildRepo->findOneBy(['package' => $package->id, 'version' => $version['version']]);
+            /** @var Entity\VersionBuild $build */
+            $build = $buildRepo->findOneBy(['package_id' => $package->getId(), 'version' => $version['version']]);
             if ($build) {
-                $version['buildStatus'] = $build->testStatus;
+                $version['buildStatus'] = $build->getTestStatus();
             } else {
                 $version['buildStatus'] = 'untested';
             }

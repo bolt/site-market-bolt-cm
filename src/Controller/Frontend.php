@@ -48,6 +48,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET')
         ;
 
+        $ctr->match('/info.json', [$this, 'infoJson'])
+            ->bind('infoJson')
+            ->method('GET')
+        ;
+
         $ctr->match('/profile', [$this, 'profile'])
             ->bind('profile')
             ->method('GET|POST')
@@ -244,6 +249,19 @@ class Frontend implements ControllerProviderInterface
         $params = [];
 
         return $this->getAction($app, 'hook')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function infoJson(Application $app, Request $request)
+    {
+        $params = [];
+
+        return $this->getAction($app, 'package_info')->execute($request, $params);
     }
 
     /**
