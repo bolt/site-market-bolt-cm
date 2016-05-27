@@ -18,7 +18,7 @@ class Stat extends BaseTable
     {
         $this->table->addColumn('id',         'guid',     []);
         $this->table->addColumn('package_id', 'guid',     []);
-        $this->table->addColumn('account_id', 'guid',     []);
+        $this->table->addColumn('account_id', 'guid',     ['notnull' => false]);
         $this->table->addColumn('type',       'string',   ['notnull' => false]);
         $this->table->addColumn('source',     'string',   ['notnull' => false]);
         $this->table->addColumn('ip',         'string',   ['notnull' => false]);
