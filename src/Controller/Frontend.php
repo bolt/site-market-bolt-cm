@@ -63,6 +63,11 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
+        $ctr->match('/ping', [$this, 'ping'])
+            ->bind('ping')
+            ->method('GET')
+        ;
+
         $ctr->match('/register', [$this, 'register'])
             ->bind('register')
             ->method('GET|POST')
@@ -77,7 +82,7 @@ class Frontend implements ControllerProviderInterface
             ->bind('search')
             ->method('GET')
         ;
-        
+
         $ctr->match('/star/{package}', [$this, 'star'])
             ->bind('star')
             ->method('GET|POST')
@@ -274,6 +279,19 @@ class Frontend implements ControllerProviderInterface
         $route = $urlGen->generate('authenticationLogout');
 
         return new RedirectResponse($route);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function ping(Application $app, Request $request)
+    {
+        $params = [];
+
+        return $this->getAction($app, 'ping')->execute($request, $params);
     }
 
     /**
