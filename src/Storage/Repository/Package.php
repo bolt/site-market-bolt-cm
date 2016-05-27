@@ -62,7 +62,7 @@ class Package extends AbstractRepository
         $allTags = $this->getTags();
         $tagList = [];
         foreach ($allTags as $tag) {
-            $tagList = array_merge($tagList, explode(',', $tag['keywords']));
+            $tagList = array_merge($tagList, $tag['keywords']);
         }
         $tagList = array_filter($tagList);
         $tagList = array_diff($tagList, ['bolt']);
@@ -157,10 +157,14 @@ class Package extends AbstractRepository
     public function getSearchQuery($keyword, $type, $order, $limit)
     {
         $qb = $this->createQueryBuilder('p')
-            ->select('DISTINCT ON (p.id) *')
+            ->select('DISTINCT (p.id)')
             ->addSelect('p.id as id')
             ->addSelect('p.account_id as account_id')
             ->addSelect('p.source as source')
+            ->addSelect('p.title as title')
+            ->addSelect('p.name as name')
+            ->addSelect('p.authors as authors')
+            ->addSelect('p.type as type')
             ->addSelect('count(p.id) AS pcount')
             ->leftJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('p.approved = :status')
