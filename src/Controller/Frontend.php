@@ -43,6 +43,11 @@ class Frontend implements ControllerProviderInterface
             ->method(Request::METHOD_GET)
         ;
 
+        $ctr->match('/feed.xml', [$this, 'feed'])
+            ->bind('feed')
+            ->method(Request::METHOD_GET)
+        ;
+
         $ctr->match('/hook', [$this, 'hook'])
             ->bind('hook')
             ->method(Request::METHOD_GET)
@@ -246,6 +251,19 @@ class Frontend implements ControllerProviderInterface
     public function home(Application $app, Request $request)
     {
         return $this->getAction($app, 'home')->execute($request, []);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function feed(Application $app, Request $request)
+    {
+        $params = [];
+
+        return $this->getAction($app, 'feed')->execute($request, $params);
     }
 
     /**

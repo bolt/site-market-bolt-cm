@@ -29,7 +29,7 @@ class Feed extends AbstractAction
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
-        $html = $twig->render('feed.xml', ['packages' => $packages]);
+        $html = $twig->render('feed.xml.twig', ['packages' => $packages]);
 
         $response = new Response($html);
         $response->headers->set('Content-Type', 'text/xml');
