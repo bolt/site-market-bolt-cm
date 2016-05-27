@@ -53,6 +53,16 @@ class Frontend implements ControllerProviderInterface
             ->method('GET|POST')
         ;
 
+        $ctr->match('/list.json', [$this, 'listJson'])
+            ->bind('listJson')
+            ->method('GET')
+        ;
+
+        $ctr->match('/list/downloaded.json', [$this, 'listDownloadedJson'])
+            ->bind('listDownloadedJson')
+            ->method('GET')
+        ;
+
         $ctr->match('/login', [$this, 'login'])
             ->bind('login')
             ->method('GET|POST')
@@ -249,6 +259,35 @@ class Frontend implements ControllerProviderInterface
         ];
 
         return $this->getAction($app, 'account_profile')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function listJson(Application $app, Request $request)
+    {
+        $params = [
+        ];
+
+        return $this->getAction($app, 'list_packages')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function listDownloadedJson(Application $app, Request $request)
+    {
+        $params = [
+            'sort' => 'downloaded',
+        ];
+
+        return $this->getAction($app, 'list_packages')->execute($request, $params);
     }
 
     /**
