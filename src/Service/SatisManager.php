@@ -183,6 +183,19 @@ class SatisManager
     }
 
     /**
+     * @param OutputInterface $output
+     * @param bool            $skipErrors
+     *
+     * @return \Composer\Package\PackageInterface[]
+     */
+    public function getBuiltPackages(OutputInterface $output, $skipErrors = false)
+    {
+        $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
+        
+        return $packageSelection->load();
+    }
+
+    /**
      * @param array           $packages
      * @param OutputInterface $output
      * @param bool            $skipErrors
