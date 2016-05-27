@@ -64,6 +64,7 @@ class MarketPlaceExtension extends SimpleExtension
             new Command\ExtensionTestRunner($container),
             new Command\QueueProcess($container),
             new Command\SatisBuilder($container),
+            new Command\SatisBuilderWebIndex($container),
             new Command\SatisJsonUpdate($container),
             new Command\UpdatePackage($container),
         ];
