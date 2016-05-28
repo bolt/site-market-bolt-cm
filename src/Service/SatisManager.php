@@ -115,6 +115,8 @@ class SatisManager
                 $output->writeln(sprintf('<info>[Q] %s</info>', $packageName));
                 $this->build($packageName, $output);
                 $fs->remove($file->getRealPath());
+            } else {
+                $output->writeln(sprintf('<error>[Q] Unable to get lock on %s</error>', $file->getFilename()));
             }
             $lock->release();
         }
@@ -137,6 +139,7 @@ class SatisManager
         $lockDir = $this->resourceManager->getPath('cache/.satis/lock');
 
         set_time_limit(3600);
+        $output->writeln('<info>Acquiring full build lock…</info>');
         $lock = new LockHandler('satis.full.build', $lockDir);
         $lock->lock(true);
 
@@ -160,6 +163,7 @@ class SatisManager
      */
     public function buildPackages($packageName, OutputInterface $output, $skipErrors = false)
     {
+        $output->writeln('<info>Building packages…</info>');
         $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
 
         $packageEntity = $this->em->getRepository(Entity\Package::class)->findOneBy(['name' => $packageName]);
@@ -190,6 +194,7 @@ class SatisManager
      */
     public function getBuiltPackages(OutputInterface $output, $skipErrors = false)
     {
+        $output->writeln('<info>Fetching previously built package data…</info>');
         $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
 
         return $packageSelection->load();
@@ -202,6 +207,7 @@ class SatisManager
      */
     public function dumpPackages(array $packages, OutputInterface $output, $skipErrors = false)
     {
+        $output->writeln('<info>Writing out web files…</info>');
         $web = new WebBuilder($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
         $web->setRootPackage($this->getComposer()->getPackage());
         $web->dump($packages);
