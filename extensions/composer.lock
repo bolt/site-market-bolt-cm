@@ -4,9 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "44a6cd05fb1bb94d6217c856144c0c7c",
-    "content-hash": "b318311840b6995cce8d9a78e09536c2",
+    "hash": "a6fe9cac23bdc3438b4467fcf46d9586",
+    "content-hash": "65b68c645d23e2936f91efe16068fa86",
     "packages": [
+        {
+            "name": "bolt/github",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GawainLynch/bolt-extension-github.git",
+                "reference": "81c838cc4e159b334f1e59dd9f0dad386cd3bbb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/81c838cc4e159b334f1e59dd9f0dad386cd3bbb9",
+                "reference": "81c838cc4e159b334f1e59dd9f0dad386cd3bbb9",
+                "shasum": ""
+            },
+            "require": {
+                "bolt/bolt": "^3.0",
+                "ext-curl": "*",
+                "guzzle/guzzle": "^3.9"
+            },
+            "provide": {
+                "symfony/event-dispatcher": "2.8"
+            },
+            "type": "bolt-extension",
+            "extra": {
+                "bolt-class": "Bolt\\Extension\\Bolt\\GitHub\\GitHubExtension",
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bolt\\Extension\\Bolt\\GitHub\\": "src",
+                    "Github\\": "lib/Github"
+                }
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Gawain Lynch",
+                    "email": "gawain.lynch@gmail.com"
+                }
+            ],
+            "description": "GitHub API interface for Bolt",
+            "keywords": [
+                "API",
+                "GitHub",
+                "Webhooks"
+            ],
+            "support": {
+                "source": "https://github.com/GawainLynch/bolt-extension-github/tree/master",
+                "issues": "https://github.com/GawainLynch/bolt-extension-github/issues"
+            },
+            "time": "2016-05-28 09:31:03"
+        },
         {
             "name": "bolt/marketplace",
             "version": "dev-master",
@@ -159,6 +215,109 @@
             "time": "2016-05-27 07:44:07"
         },
         {
+            "name": "guzzle/guzzle",
+            "version": "v3.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle3.git",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.3",
+                "symfony/event-dispatcher": "~2.1"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-error-response": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/cache": "~1.3",
+                "monolog/monolog": "~1.0",
+                "phpunit/phpunit": "3.7.*",
+                "psr/log": "~1.0",
+                "symfony/class-loader": "~2.1",
+                "zendframework/zend-cache": "2.*,<2.3",
+                "zendframework/zend-log": "2.*,<2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle": "src/",
+                    "Guzzle\\Tests": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "HTTP client",
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "rest",
+                "web service"
+            ],
+            "support": {
+                "source": "https://github.com/guzzle/guzzle3/tree/v3.9.3",
+                "issues": "https://github.com/guzzle/guzzle3/issues"
+            },
+            "time": "2015-03-18 18:23:50"
+        },
+        {
             "name": "paragonie/random_compat",
             "version": "v2.0.2",
             "source": {
@@ -303,6 +462,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "bolt/github": 20,
         "bolt/marketplace": 20,
         "bolt/marketplace-migration": 20,
         "bolt/members": 20
