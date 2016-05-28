@@ -50,7 +50,7 @@ class Frontend implements ControllerProviderInterface
 
         $ctr->match('/hook', [$this, 'hook'])
             ->bind('hook')
-            ->method(Request::METHOD_GET)
+            ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/info.json', [$this, 'infoJson'])
