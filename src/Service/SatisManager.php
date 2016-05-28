@@ -250,7 +250,7 @@ class SatisManager
             ];
         }
 
-        $this->getSatisExtraRepositories($satisArray);
+        $satisArray = $this->getSatisExtraRepositories($satisArray);
 
         return json_encode($satisArray);
     }
