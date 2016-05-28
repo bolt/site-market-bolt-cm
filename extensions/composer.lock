@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GawainLynch/bolt-extension-github.git",
-                "reference": "81c838cc4e159b334f1e59dd9f0dad386cd3bbb9"
+                "reference": "7d8195cfb9ab91b317d72c5ae72610b0206540fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/81c838cc4e159b334f1e59dd9f0dad386cd3bbb9",
-                "reference": "81c838cc4e159b334f1e59dd9f0dad386cd3bbb9",
+                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/7d8195cfb9ab91b317d72c5ae72610b0206540fe",
+                "reference": "7d8195cfb9ab91b317d72c5ae72610b0206540fe",
                 "shasum": ""
             },
             "require": {
@@ -61,7 +61,7 @@
                 "source": "https://github.com/GawainLynch/bolt-extension-github/tree/master",
                 "issues": "https://github.com/GawainLynch/bolt-extension-github/issues"
             },
-            "time": "2016-05-28 09:31:03"
+            "time": "2016-05-28 09:40:36"
         },
         {
             "name": "bolt/marketplace",

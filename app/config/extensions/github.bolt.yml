@@ -1,0 +1,13 @@
+#
+github:
+  org: bolt
+  repo: bolt
+#  token: your-github-auth-token
+
+# Enable caching of requests
+cache: true
+
+templates:
+  collaborators: members.twig
+  contributors: members.twig
+
