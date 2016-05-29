@@ -74,7 +74,7 @@ class SatisManager
         $fs->touch($packageLockFile);
 
         $lock = new LockHandler($package->getId(), $lockDir);
-        if ($lock->lock(true)) {
+        if ($lock->lock()) {
             $fs->dumpFile($packageLockFile, $package->getName());
         }
         $lock->release();
