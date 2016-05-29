@@ -3,6 +3,8 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Bolt\Extension\Bolt\Members\AccessControl\Session as MembersSession;
+use Github\Exception\ApiLimitExceedException;
+use Github\Exception\ExceptionInterface as GithubExceptionInterface;
 use Github\Client as GithubClient;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -66,14 +68,19 @@ class WebhookManager
             return false;
         }
 
+        if ($this->hasWebhook($username, $repository, $callbackToken)) {
+            $this->session->getFlashBag()->add('error', 'Webhook already exists');
+
+            return false;
+        }
+
         /** @var \Github\Api\Repo $apiRepo */
         $apiRepo = $client->api('repo');
 
         try {
             $result = $apiRepo->hooks()->create($username, $repository, $this->getWebhookParameters($callbackToken));
         } catch (\Exception $e) {
-            $this->session->getFlashBag()->add('error', sprintf('Exception type: %s', get_class($e)));
-            $this->session->getFlashBag()->add('error', sprintf('Exception occurred creating webhook: %s', $e->getMessage()));
+            $this->handleException($e);
 
             return false;
         }
@@ -87,6 +94,47 @@ class WebhookManager
         $this->session->getFlashBag()->add('success', 'Successfully created webhook!');
 
         return true;
+    }
+
+    /**
+     * Check if the webhook exists.
+     *
+     * @param string $username
+     * @param string $repository
+     * @param string $callbackToken
+     *
+     * @return bool
+     */
+    public function hasWebhook($username, $repository, $callbackToken)
+    {
+        if (!$client = $this->getGitHubClient()) {
+            return false;
+        }
+
+        /** @var \Github\Api\Repo $apiRepo */
+        $apiRepo = $client->api('repo');
+
+        try {
+            $hooks = $apiRepo->hooks()->all($username, $repository);
+        } catch (\Exception $e) {
+            $this->handleException($e);
+
+            return false;
+        }
+
+        foreach ($hooks as $hook) {
+            $isType = $hook['type'] === 'Repository';
+            $isEvents = array_diff($hook['events'], $this->getHookEvents()) === [];
+            $isConfigJson = $hook['config']['content_type'] === 'json';
+            $isSslCertCheck = (int) $hook['config']['insecure_ssl'] === 0;
+            $isValidCallback = $hook['config']['url'] === $this->getCallbackUrl($callbackToken);
+
+            if ($isType && $isEvents && $isConfigJson && $isSslCertCheck && $isValidCallback) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -109,10 +157,8 @@ class WebhookManager
 
         try {
             $result = $apiRepo->hooks()->ping($username, $repository, $id);
-
         } catch (\Exception $e) {
-            $this->session->getFlashBag()->add('error', sprintf('Exception type: %s', get_class($e)));
-            $this->session->getFlashBag()->add('error', sprintf('Exception occurred pinging webhook: %s', $e->getMessage()));
+            $this->handleException($e);
 
             return false;
         }
@@ -123,7 +169,7 @@ class WebhookManager
 
     /**
      * Remove our webhook.
-     * 
+     *
      * @param string $username
      * @param string $repository
      * @param string $id
@@ -141,10 +187,8 @@ class WebhookManager
 
         try {
             $result = $apiRepo->hooks()->remove($username, $repository, $id);
-
         } catch (\Exception $e) {
-            $this->session->getFlashBag()->add('error', sprintf('Exception type: %s', get_class($e)));
-            $this->session->getFlashBag()->add('error', sprintf('Exception occurred removing webhook: %s', $e->getMessage()));
+            $this->handleException($e);
 
             return false;
         }
@@ -227,11 +271,11 @@ class WebhookManager
     /**
      * Retrun an array of parameters.
      *
-     * @param string $token
+     * @param string $callbackToken
      *
      * @return array
      */
-    protected function getWebhookParameters($token)
+    protected function getWebhookParameters($callbackToken)
     {
         return [
             'name'   => 'web',
@@ -240,7 +284,7 @@ class WebhookManager
             'config' => [
                 'content_type' => 'json',
                 'insecure_ssl' => 0,
-                'url'          => $this->getCallbackUrl($token),
+                'url'          => $this->getCallbackUrl($callbackToken),
             ],
         ];
     }
@@ -254,7 +298,7 @@ class WebhookManager
      */
     protected function getCallbackUrl($callbackToken)
     {
-        return sprintf('%s/hook?token=%s', $this->app['resources']->getUrl('hostname'), $callbackToken);
+        return sprintf('%s/hook?token=%s', $this->app['resources']->getUrl('hosturl'), $callbackToken);
     }
 
     /**
@@ -270,5 +314,24 @@ class WebhookManager
             'push',
             'release',
         ];
+    }
+
+    /**
+     * @param \Exception $e
+     */
+    protected function handleException(\Exception $e)
+    {
+        if  ($e instanceof ApiLimitExceedException) {
+            $this->session->getFlashBag()->add('error', 'GitHub API request limit exceeded.');
+        } elseif  ($e instanceof GithubExceptionInterface) {
+            if ($e->getCode() === 404) {
+                $this->session->getFlashBag()->add('error', 'Authenticating token failure with GitHub');
+            } else {
+                $this->session->getFlashBag()->add('error', sprintf('GitHub API exception: %s', $e->getMessage()));
+            }
+        } else {
+            $this->session->getFlashBag()->add('error', sprintf('Exception type: %s', get_class($e)));
+            $this->session->getFlashBag()->add('error', sprintf('Exception occurred creating webhook: %s', $e->getMessage()));
+        }
     }
 }

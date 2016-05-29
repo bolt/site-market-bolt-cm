@@ -96,6 +96,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'test_extension'    => $app->share(function () use ($app) { return new Action\TestExtension($app); }),
                     'test_listing'      => $app->share(function () use ($app) { return new Action\TestListing($app); }),
                     'v3_ready'          => $app->share(function () use ($app) { return new Action\V3Ready($app); }),
+                    'webhook_creator'   => $app->share(function () use ($app) { return new Action\WebhookCreator($app); }),
                     'webhook_listener'  => $app->share(function () use ($app) { return new Action\WebhookListener($app); }),
                 ]);
 

@@ -48,8 +48,13 @@ class Frontend implements ControllerProviderInterface
             ->method(Request::METHOD_GET)
         ;
 
-        $ctr->match('/hook', [$this, 'hook'])
-            ->bind('hook')
+        $ctr->match('/hook/create', [$this, 'hookCreator'])
+            ->bind('hookCreator')
+            ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
+        ;
+
+        $ctr->match('/hook', [$this, 'hookListener'])
+            ->bind('hookListener')
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
@@ -272,7 +277,20 @@ class Frontend implements ControllerProviderInterface
      *
      * @return Response
      */
-    public function hook(Application $app, Request $request)
+    public function hookCreator(Application $app, Request $request)
+    {
+        $params = [];
+
+        return $this->getAction($app, 'webhook_creator')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function hookListener(Application $app, Request $request)
     {
         $params = [];
 
