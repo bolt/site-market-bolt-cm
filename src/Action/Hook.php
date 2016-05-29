@@ -5,7 +5,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +25,11 @@ class Hook extends AbstractAction
     {
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Package $repo */
-        $repo = $em->getRepository(Entity\Package::class);
+        /** @var Repository\Package $packageRepo */
+        $packageRepo = $em->getRepository(Entity\Package::class);
 
         /** @var Entity\Package $package */
-        $package = $repo->findOneBy(['token' => $request->query->get('token')]);
+        $package = $packageRepo->findOneBy(['token' => $request->query->get('token')]);
         if ($package) {
             $services = $this->getAppService('marketplace.services');
             /** @var PackageManager $packageManager */
@@ -39,6 +39,17 @@ class Hook extends AbstractAction
             /** @var SatisManager $satisProvider */
             $satisProvider = $services['satis_manager'];
             $satisProvider->queuePackage($package);
+
+            /** @var Repository\Stat $statRepo */
+            $statRepo = $em->getRepository(Entity\Stat::class);
+            $stat = new Entity\Stat([
+                'package_id' => $package->getId(),
+                'type'       => 'webhook',
+                'source'     => $request->server->get('REMOTE_HOST') ?: gethostbyaddr($request->server->get('REMOTE_ADDR')),
+                'ip'         => $request->server->get('REMOTE_ADDR'),
+                'recorded'   => new \DateTime(),
+            ]);
+            $statRepo->save($stat);
 
             return new JsonResponse(['status' => 'ok', 'response' => $package]);
         }
