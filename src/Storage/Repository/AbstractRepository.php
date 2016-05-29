@@ -34,7 +34,16 @@ abstract class AbstractRepository extends Repository
         $querySet->append($qb);
         $this->persist($querySet, $entity, []);
 
-        $result = $querySet->execute();
+        try {
+            $result = $querySet->execute();
+        } catch (\PDOException $e) {
+            // Hackishly handle "Object not in prerequisite state: 7 ERROR: currval of sequence "bolt_marketplace_stat_id_seq" is not yet defined in this session"
+            if ((int) $e->getCode() !== 55000) {
+                throw $e;
+            }
+
+            return false;
+        }
 
         // Try and set the entity id using the response from the insert
         try {
