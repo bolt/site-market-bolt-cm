@@ -117,6 +117,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
 
                         return new Service\Statistics($repo);
                     }),
+                    'webhook_manager' => $app->share(function () use ($app) { return new Service\WebhookManager($app); }),
                 ]);
 
                 return $container;
