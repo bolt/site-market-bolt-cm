@@ -276,7 +276,7 @@ class Frontend implements ControllerProviderInterface
     {
         $params = [];
 
-        return $this->getAction($app, 'hook')->execute($request, $params);
+        return $this->getAction($app, 'webhook_listener')->execute($request, $params);
     }
 
     /**

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  * @author Ross Riley <riley.ross@gmail.com>
  */
-class Hook extends AbstractAction
+class WebhookListener extends AbstractAction
 {
     /**
      * {@inheritdoc}

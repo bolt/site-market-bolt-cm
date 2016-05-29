@@ -74,7 +74,6 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'admin'             => $app->share(function () use ($app) { return new Action\Admin($app); }),
                     'feed'              => $app->share(function () use ($app) { return new Action\Feed($app); }),
                     'home'              => $app->share(function () use ($app) { return new Action\Home($app); }),
-                    'hook'              => $app->share(function () use ($app) { return new Action\Hook($app); }),
                     'json_search'       => $app->share(function () use ($app) { return new Action\JsonSearch($app); }),
                     'listing'           => $app->share(function () use ($app) { return new Action\Listing($app); }),
                     'list_packages'     => $app->share(function () use ($app) { return new Action\ListPackages($app); }),
@@ -97,6 +96,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'test_extension'    => $app->share(function () use ($app) { return new Action\TestExtension($app); }),
                     'test_listing'      => $app->share(function () use ($app) { return new Action\TestListing($app); }),
                     'v3_ready'          => $app->share(function () use ($app) { return new Action\V3Ready($app); }),
+                    'webhook_listener'  => $app->share(function () use ($app) { return new Action\WebhookListener($app); }),
                 ]);
 
                 return $container;
