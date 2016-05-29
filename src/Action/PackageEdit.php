@@ -34,7 +34,6 @@ class PackageEdit extends AbstractAction
         $repo = $em->getRepository(Entity\Package::class);
         /** @var Entity\Package $package */
         $package = $repo->findOneBy(['id' => $params['package'], 'account_id' => $params['user']->getGuid()]);
-
         if (!$package) {
             $session->getFlashBag()->add('error', 'There was a problem accessing this package');
             $route = $urlGen->generate('profile');
@@ -46,6 +45,10 @@ class PackageEdit extends AbstractAction
             $package->regenerateToken();
             $repo->save($package);
         }
+
+        $statRepo = $em->getRepository(Entity\Stat::class);
+        /** @var Entity\Stat $stat */
+        $stat = $statRepo->findOneBy(['package_id' => $package->getId(), 'type' => 'webhook'], ['recorded', 'DESC']);
 
         $formsService = $this->getAppService('marketplace.forms');
         /** @var FormFactory $forms */
@@ -62,9 +65,11 @@ class PackageEdit extends AbstractAction
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $context = [
-            'form'    => $form->createView(),
-            'hook'    => $package->getToken() ? $urlGen->generate('hook', ['token' => $package->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
-            'package' => $package,
+            'form'     => $form->createView(),
+            'callback' => $package->getToken() ? $urlGen->generate('hookListener', ['token' => $package->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
+            'package'  => $package,
+            'token'    => $package->getToken(),
+            'webhook'  => $stat,
         ];
         $html = $twig->render('submit.twig', $context);
 
