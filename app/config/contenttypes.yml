@@ -23,6 +23,37 @@ pages:
     taxonomy: [ groups ]
     recordsperpage: 100
 
+collections:
+    name: Collections
+    singular_name: Collection
+    fields:
+        title:
+            type: text
+            class: large
+            group: content
+        slug:
+            type: slug
+            uses: title
+        description:
+            type: html
+            height: 150px
+        items:
+            type: repeater
+            group: Items
+            limit: 50
+            fields:
+                repeattitle:
+                    label: Extension Title (just intern)
+                    type: text
+                repeatextension:
+                    label: Extension ID
+                    type: text
+                    required: true
+                repeatdescription:
+                    label: Description
+                    type: html
+    recordsperpage: 100
+
 blocks:
     name: Blocks
     singular_name: Block
