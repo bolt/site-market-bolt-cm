@@ -34,7 +34,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',
-                function (\Twig_Environment $twig) {
+                function (\Twig_Environment $twig) use ($app) {
                     /** @var \Twig_Environment $twig */
                     $twig->addExtension(new Twig\Extension());
 
@@ -111,6 +111,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'email'           => $app->share(function () use ($app) { return new Service\Email(); }),
                     'mail'            => $app->share(function () use ($app) { return new Service\MailService(); }),
                     'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager($app['marketplace.composer.config']); }),
+                    'record_manager'  => $app->share(function () use ($app) { return new Service\RecordManager($app['storage']); }),
                     'satis_manager'   => $app->share(function () use ($app) { return new Service\SatisManager($app['storage'], $app['resources']); }),
                     'statistics'      => $app->share(function () use ($app) {
                         /** @var Repository\Stat $repo */
