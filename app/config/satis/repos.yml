@@ -3,3 +3,5 @@ vcs:
     - https://github.com/paragonie/random_compat.git
     - https://github.com/ramsey/uuid.git
     - https://github.com/wikimedia/composer-merge-plugin.git
+    - https://github.com/KnpLabs/php-github-api.git
+
