@@ -70,6 +70,13 @@ class PackageView extends AbstractAction
         }
         $stopwatch->stop('marketplace.action.view.suggested');
 
+        $webhook = $this->getWebhookData($package);
+        if ($webhook && $webhook['latest'] === false) {
+            /** @var Session $session */
+            $session = $this->getAppService('session');
+            $session->getFlashBag()->add('warning', 'No webhook notifications have been received for this package. Updates might take up to 24 hours to appear.');
+        }
+
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $services = $this->getAppService('marketplace.services');
@@ -82,7 +89,7 @@ class PackageView extends AbstractAction
             'boltthemes' => $services['bolt_themes']->info($package),
             'suggested'  => $suggested,
             'statistics' => $this->getAppService('marketplace.services')['statistics'],
-            'webhook'    => $this->getWebhookData($package),
+            'webhook'    => $webhook,
         ];
         $html = $twig->render('package.twig', $context);
 
