@@ -53,6 +53,7 @@ collections:
                     label: Description
                     type: html
     recordsperpage: 100
+    sort: -datepublish
 
 blocks:
     name: Blocks
