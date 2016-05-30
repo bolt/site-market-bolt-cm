@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "7e36f84ab12843cfd973b7acb28008588eb19ada"
+                "reference": "e97254ce85874619b29b7916ba10062d6b4563f7"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-05-30 06:50:50"
+            "time": "2016-05-30 15:22:56"
         },
         {
             "name": "bolt/marketplace-migration",
