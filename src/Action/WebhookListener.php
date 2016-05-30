@@ -2,13 +2,12 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Repository web hook callback action.
@@ -23,37 +22,15 @@ class WebhookListener extends AbstractAction
      */
     public function execute(Request $request, array $params)
     {
-        /** @var EntityManager $em */
-        $em = $this->getAppService('storage');
-        /** @var Repository\Package $packageRepo */
-        $packageRepo = $em->getRepository(Entity\Package::class);
-
-        /** @var Entity\Package $package */
-        $package = $packageRepo->findOneBy(['token' => $request->query->get('token')]);
-        if ($package) {
-            $services = $this->getAppService('marketplace.services');
-            /** @var PackageManager $packageManager */
-            $packageManager = $services['package_manager'];
-            $packageManager->syncPackage($package);
-
-            /** @var SatisManager $satisProvider */
-            $satisProvider = $services['satis_manager'];
-            $satisProvider->queuePackage($package);
-
-            /** @var Repository\Stat $statRepo */
-            $statRepo = $em->getRepository(Entity\Stat::class);
-            $stat = new Entity\Stat([
-                'package_id' => $package->getId(),
-                'type'       => 'webhook',
-                'source'     => $request->server->get('REMOTE_HOST') ?: gethostbyaddr($request->server->get('REMOTE_ADDR')),
-                'ip'         => $request->server->get('REMOTE_ADDR'),
-                'recorded'   => new \DateTime(),
-            ]);
-            $statRepo->save($stat);
-
-            return new JsonResponse(['status' => 'ok', 'response' => $package]);
+        if ($request->query->get('token') === null) {
+            return new JsonResponse(['status' => 'error', 'response' => 'Invalid request'], Response::HTTP_BAD_REQUEST);
         }
+        
+        $services = $this->getAppService('marketplace.services');
+        /** @var SatisManager $satisProvider */
+        $satisProvider = $services['satis_manager'];
+        $response = $satisProvider->queueWebhook($request);
 
-        return new JsonResponse(['status' => 'error', 'response' => 'package not found']);
+        return $response;
     }
 }
