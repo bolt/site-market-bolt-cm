@@ -2,7 +2,8 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
+use Bolt\Extension\Bolt\MarketPlace\Service\Queue\PackageQueue;
+use Bolt\Extension\Bolt\MarketPlace\Service\Queue\QueueManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,12 +30,14 @@ class QueueProcess extends BaseCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var PackageManager $packageProvider */
-        $packageProvider = $this->app['marketplace.services']['package_manager'];
-        /** @var SatisManager $satisProvider */
-        $satisProvider = $this->app['marketplace.services']['satis_manager'];
-        $satisProvider->processQueue($packageProvider, $output);
-        
+        /** @var SatisManager $satisManager */
+        $satisManager = $this->app['marketplace.services']['satis_manager'];
+
+        /** @var QueueManager $queueManager */
+        $queueManager = $this->app['marketplace.services']['queue_manager'];
+
+        $queueManager->processQueues($satisManager, $output);
+
         $output->writeln('<info>Queue processed</info>');
     }
 }

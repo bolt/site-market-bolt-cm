@@ -112,6 +112,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'mail'            => $app->share(function () use ($app) { return new Service\MailService(); }),
                     'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager($app['marketplace.composer.config']); }),
                     'record_manager'  => $app->share(function () use ($app) { return new Service\RecordManager($app['storage']); }),
+                    'queue_manager'   => $app->share(function () use ($app) { return new Service\Queue\QueueManager($app['storage'], $app['resources']); }),
                     'satis_manager'   => $app->share(function () use ($app) { return new Service\SatisManager($app['storage'], $app['resources']); }),
                     'statistics'      => $app->share(function () use ($app) {
                         /** @var Repository\Stat $repo */
