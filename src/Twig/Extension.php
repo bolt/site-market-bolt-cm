@@ -2,7 +2,9 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Twig;
 
+use Bolt\Extension\Bolt\MarketPlace\Service\RecordManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Pimple as Container;
 use forxer\Gravatar\Gravatar;
 use Twig_Extension as TwigExtension;
 use Twig_SimpleFilter as TwigSimpleFilter;
@@ -16,6 +18,19 @@ use Twig_SimpleFunction as TwigSimpleFunction;
 class Extension extends TwigExtension
 {
     public $statusTemplate = '<div class="buildstatus ui icon label %s" data-content="%s"><i class="icon %s"></i> %s <span class="version">%s</span></div>';
+
+    /** @var Container */
+    protected $services;
+
+    /**
+     * Constructor.
+     *
+     * @param Container $services
+     */
+    public function __construct(Container $services)
+    {
+        $this->services = $services;
+    }
 
     public function getName()
     {
@@ -32,6 +47,7 @@ class Extension extends TwigExtension
         return [
             new  TwigSimpleFunction('buildStatus', [$this, 'buildStatus'], $safe),
             new  TwigSimpleFunction('gravatar',    [$this, 'gravatar'],    $safe),
+            new  TwigSimpleFunction('package',     [$this, 'getPackage'],  $safe),
             new  TwigSimpleFunction('packageIcon', [$this, 'packageIcon'], $safe),
             new  TwigSimpleFunction('getenv',      [$this, 'getenv'],      $safe),
         ];
@@ -126,6 +142,19 @@ class Extension extends TwigExtension
         }
 
         return '/files/' . $package->getType() . '.png';
+    }
+
+    /**
+     * @param string $packageId
+     *
+     * @return Entity\Package|false
+     */
+    public function getPackage($packageId)
+    {
+        /** @var RecordManager $recordManager */
+        $recordManager = $this->services['record_manager'];
+        
+        return $recordManager->getPackageById($packageId);
     }
 
     public function getenv($key)

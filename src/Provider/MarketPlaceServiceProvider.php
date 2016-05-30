@@ -36,7 +36,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                 'twig',
                 function (\Twig_Environment $twig) use ($app) {
                     /** @var \Twig_Environment $twig */
-                    $twig->addExtension(new Twig\Extension());
+                    $twig->addExtension(new Twig\Extension($app['marketplace.services']));
 
                     return $twig;
                 }
