@@ -4,8 +4,8 @@ namespace Bolt\Extension\Bolt\MarketPlace\Twig;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\RecordManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Pimple as Container;
 use forxer\Gravatar\Gravatar;
+use Pimple as Container;
 use Twig_Extension as TwigExtension;
 use Twig_SimpleFilter as TwigSimpleFilter;
 use Twig_SimpleFunction as TwigSimpleFunction;

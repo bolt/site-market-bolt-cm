@@ -3,7 +3,6 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

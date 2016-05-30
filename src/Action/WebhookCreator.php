@@ -3,7 +3,6 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\WebhookManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

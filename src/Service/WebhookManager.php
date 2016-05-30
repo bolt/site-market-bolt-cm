@@ -3,9 +3,9 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Bolt\Extension\Bolt\Members\AccessControl\Session as MembersSession;
+use Github\Client as GithubClient;
 use Github\Exception\ApiLimitExceedException;
 use Github\Exception\ExceptionInterface as GithubExceptionInterface;
-use Github\Client as GithubClient;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -54,8 +54,6 @@ class WebhookManager
     }
 
     /**
-     *
-     *
      * @param string $username
      * @param string $repository
      * @param string $callbackToken
@@ -321,9 +319,9 @@ class WebhookManager
      */
     protected function handleException(\Exception $e)
     {
-        if  ($e instanceof ApiLimitExceedException) {
+        if ($e instanceof ApiLimitExceedException) {
             $this->session->getFlashBag()->add('error', 'GitHub API request limit exceeded.');
-        } elseif  ($e instanceof GithubExceptionInterface) {
+        } elseif ($e instanceof GithubExceptionInterface) {
             if ($e->getCode() === 404) {
                 $this->session->getFlashBag()->add('error', 'Authenticating token failure with GitHub');
             } else {

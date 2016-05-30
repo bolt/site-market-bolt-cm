@@ -4,7 +4,6 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Configuration\ResourceManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Composer\Package\CompletePackageInterface;
 use Composer\Package\PackageInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -57,7 +56,7 @@ class Status extends AbstractAction
      */
     private function setDependencies(array $packages)
     {
-        $dependencies = array();
+        $dependencies = [];
         foreach ($packages as $package) {
             foreach ($package->getRequires() as $link) {
                 $dependencies[$link->getTarget()][$link->getSource()] = $link->getSource();
@@ -78,16 +77,16 @@ class Status extends AbstractAction
     {
         $groupedPackages = $this->groupPackagesByName($packages);
 
-        $mappedPackages = array();
+        $mappedPackages = [];
         foreach ($groupedPackages as $name => $packages) {
             $highest = $this->getHighestVersion($packages);
 
-            $mappedPackages[$name] = array(
+            $mappedPackages[$name] = [
                 'highest'     => $highest,
                 'abandoned'   => $highest instanceof CompletePackageInterface ? $highest->isAbandoned() : false,
                 'replacement' => $highest instanceof CompletePackageInterface ? $highest->getReplacementPackage() : null,
                 'versions'    => $this->getDescSortedVersions($packages),
-            );
+            ];
         }
 
         return $mappedPackages;
@@ -102,7 +101,7 @@ class Status extends AbstractAction
      */
     private function groupPackagesByName(array $packages)
     {
-        $groupedPackages = array();
+        $groupedPackages = [];
         foreach ($packages as $package) {
             $groupedPackages[$package->getName()][] = $package;
         }

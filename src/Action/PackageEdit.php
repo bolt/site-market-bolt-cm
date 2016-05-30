@@ -58,7 +58,6 @@ class PackageEdit extends AbstractAction
             $session->getFlashBag()->add('success', 'Your package was successfully updated');
         }
 
-
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $context = [
