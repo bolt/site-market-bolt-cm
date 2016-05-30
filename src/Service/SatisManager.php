@@ -26,6 +26,9 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\LockHandler;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -56,6 +59,36 @@ class SatisManager
     {
         $this->em = $em;
         $this->resourceManager = $resourceManager;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function queueWebhook(Request $request)
+    {
+        $queueDir = $this->resourceManager->getPath('cache/.satis/webhook/pending');
+        $event = $request->headers->get('x-github-event', null);
+        $delivery = $request->headers->get('x-github-delivery', null);
+        $token = $request->query->get('token');
+        $payload = $request->getContent();
+
+        if ($event === null || $delivery === null || $token === null) {
+            return new JsonResponse(['status' => 'error', 'response' => 'Invalid request'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $fs = new Filesystem();
+        if (!$fs->exists($queueDir)) {
+            $fs->mkdir($queueDir);
+        }
+
+        $webhookQueueFile = sprintf('%s/%s-%s', $queueDir, $token, time());
+        $fs->dumpFile($webhookQueueFile, $payload);
+
+        $response = new JsonResponse(['status' => 'OK']);
+
+        return $response;
     }
 
     /**
