@@ -1,11 +1,46 @@
-Bolt Extensions Repository
-===============
+Bolt Extensions Market Place Repository
+=======================================
 
-How to develop / deploy:
+Extensions & Theme
+------------------
 
-1. Clone this repo
-2. Commit changes to local git repo
-3. run `bundle install`
-4. to deploy run `cap production deploy`
+Core functionality is provided by the [`bolt/marketplace`](https://github.com/bolt/marketplace-core)
+extension.
 
-Deploy for production occurs from local master branch.
+Theme is provided by the [`bolt/marketplace-theme`](https://github.com/bolt/marketplace-theme).
+
+
+Running Scheduled Jobs
+----------------------
+
+Dump package repository JSON from database
+
+```
+./app/nut package:dump
+```
+
+
+Rebuild JSON data for all packages:
+
+```
+./app/nut package:build 
+```
+
+Rebuild a single package's JSON data
+
+```
+./app/nut package:build author/pachage
+
+```
+
+Flushing the hook generated update queue:
+
+```
+./app/nut package:queue
+```
+
+Running extension tests
+
+```
+./app/nut package:extension-tester [--wait=n] [--protocol=http] [--protocol=https] [--private-key=~/.ssh/id_rsa]
+```

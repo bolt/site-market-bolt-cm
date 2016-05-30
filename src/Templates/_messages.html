@@ -1,7 +1,0 @@
-{% for label, flashes in session.flashbag.all %}
-    {% for flash in flashes %}
-        <div data-alert class="ui message {{ label }}">
-            {{ flash|nl2br }}
-        </div>
-    {% endfor %}
-{% endfor %}
