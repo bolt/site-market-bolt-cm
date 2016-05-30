@@ -34,6 +34,7 @@ class PackageView extends AbstractAction
         $em = $this->getAppService('storage');
         $repo = $em->getRepository(Entity\Package::class);
 
+        /** @var Entity\Package $package */
         if (isset($params['package'])) {
             $package = $repo->findOneBy(['id' => $params['package']]);
         } else {
@@ -78,10 +79,10 @@ class PackageView extends AbstractAction
             'package'    => $package,
             'related'    => $repo->findBy(['account_id' => $package->getAccountId()], null, 8),
             'readme'     => $packageManager->getReadme($package),
-            'allowedit'  => $package->account === $request->get('user'),
             'boltthemes' => $services['bolt_themes']->info($package),
             'suggested'  => $suggested,
             'statistics' => $this->getAppService('marketplace.services')['statistics'],
+            'webhook'    => $this->getWebhookData($package),
         ];
         $html = $twig->render('package.twig', $context);
 

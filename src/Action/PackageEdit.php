@@ -46,10 +46,6 @@ class PackageEdit extends AbstractAction
             $repo->save($package);
         }
 
-        $statRepo = $em->getRepository(Entity\Stat::class);
-        /** @var Entity\Stat $stat */
-        $stat = $statRepo->findOneBy(['package_id' => $package->getId(), 'type' => 'webhook'], ['recorded', 'DESC']);
-
         $formsService = $this->getAppService('marketplace.forms');
         /** @var FormFactory $forms */
         $forms = $this->getAppService('form.factory');
@@ -62,18 +58,13 @@ class PackageEdit extends AbstractAction
             $session->getFlashBag()->add('success', 'Your package was successfully updated');
         }
 
-        $source = explode('/', ltrim(parse_url($package->getSource(), PHP_URL_PATH), '/'));
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $context = [
             'form'     => $form->createView(),
-            'callback' => $package->getToken() ? $urlGen->generate('hookListener', ['token' => $package->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
             'package'  => $package,
-            'user'     => $source[0],
-            'repo'     => $source[1],
-            'token'    => $package->getToken(),
-            'webhook'  => $stat,
+            'webhook'  => $this->getWebhookData($package),
         ];
         $html = $twig->render('submit.twig', $context);
 
