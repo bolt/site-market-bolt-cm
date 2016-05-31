@@ -22,7 +22,7 @@ class Package extends Entity
     protected $title;
     /** @var string */
     protected $name;
-    /** @var string */
+    /** @var array */
     protected $keywords;
     /** @var string */
     protected $type;
@@ -32,23 +32,23 @@ class Package extends Entity
     protected $documentation;
     /** @var boolean */
     protected $approved;
-    /** @var string */
+    /** @var array */
     protected $requirements;
-    /** @var string */
+    /** @var array */
     protected $versions;
     /** @var \DateTime */
     protected $created;
     /** @var \DateTime */
     protected $updated;
-    /** @var string */
+    /** @var array */
     protected $authors;
     /** @var string */
     protected $token;
-    /** @var string */
+    /** @var array */
     protected $screenshots;
     /** @var string */
     protected $icon;
-    /** @var string */
+    /** @var array */
     protected $support;
     /** @var array */
     protected $suggested;
@@ -146,7 +146,7 @@ class Package extends Entity
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getKeywords()
     {
@@ -154,9 +154,9 @@ class Package extends Entity
     }
 
     /**
-     * @param string $keywords
+     * @param array $keywords
      */
-    public function setKeywords($keywords)
+    public function setKeywords(array $keywords)
     {
         $this->keywords = $keywords;
     }
@@ -226,7 +226,7 @@ class Package extends Entity
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getRequirements()
     {
@@ -234,15 +234,15 @@ class Package extends Entity
     }
 
     /**
-     * @param string $requirements
+     * @param array $requirements
      */
-    public function setRequirements($requirements)
+    public function setRequirements(array $requirements)
     {
         $this->requirements = $requirements;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getVersions()
     {
@@ -250,9 +250,9 @@ class Package extends Entity
     }
 
     /**
-     * @param string $versions
+     * @param array $versions
      */
-    public function setVersions($versions)
+    public function setVersions(array $versions)
     {
         $this->versions = $versions;
     }
@@ -290,7 +290,7 @@ class Package extends Entity
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getAuthors()
     {
@@ -298,9 +298,9 @@ class Package extends Entity
     }
 
     /**
-     * @param string $authors
+     * @param array $authors
      */
-    public function setAuthors($authors)
+    public function setAuthors(array $authors)
     {
         $this->authors = $authors;
     }
@@ -322,7 +322,7 @@ class Package extends Entity
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getScreenshots()
     {
@@ -330,9 +330,9 @@ class Package extends Entity
     }
 
     /**
-     * @param string $screenshots
+     * @param array $screenshots
      */
-    public function setScreenshots($screenshots)
+    public function setScreenshots(array $screenshots)
     {
         $this->screenshots = $screenshots;
     }
@@ -354,7 +354,7 @@ class Package extends Entity
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getSupport()
     {
@@ -364,7 +364,7 @@ class Package extends Entity
     /**
      * @param string $support
      */
-    public function setSupport($support)
+    public function setSupport(array $support)
     {
         $this->support = $support;
     }
