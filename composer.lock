@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "179e65795419c9d125367f0f8b62e16d",
-    "content-hash": "22c6b1ccfc6bae89b39c9f65fa304275",
+    "hash": "0b82c6ec64a4e869d2e0ded38672efab",
+    "content-hash": "3a1e6e67ef92de3b104b45a0ca6eeb28",
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "a679b216b50643a7d45ae85361c9c476b904f667"
+                "reference": "67dc150ca9d65388ad3146cc40b5d66feded6d7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/a679b216b50643a7d45ae85361c9c476b904f667",
-                "reference": "a679b216b50643a7d45ae85361c9c476b904f667",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/67dc150ca9d65388ad3146cc40b5d66feded6d7c",
+                "reference": "67dc150ca9d65388ad3146cc40b5d66feded6d7c",
                 "shasum": ""
             },
             "require": {
@@ -118,7 +118,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-05-25 15:45:52"
+            "time": "2016-05-31 10:29:10"
         },
         {
             "name": "bolt/filesystem",
@@ -1896,49 +1896,6 @@
                 "storage"
             ],
             "time": "2016-04-28 06:53:12"
-        },
-        {
-            "name": "mandrill/mandrill",
-            "version": "1.0.55",
-            "source": {
-                "type": "git",
-                "url": "https://bitbucket.org/mailchimp/mandrill-api-php.git",
-                "reference": "da3adc10042eafac2e53de141b358a52b8e53596"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://bitbucket.org/mailchimp/mandrill-api-php/get/da3adc10042eafac2e53de141b358a52b8e53596.zip",
-                "reference": "da3adc10042eafac2e53de141b358a52b8e53596",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Mandrill": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Mandrill Devs",
-                    "email": "community@mandrill.com",
-                    "homepage": "http://mandrill.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "API client library for the Mandrill email as a service platform",
-            "homepage": "https://bitbucket.org/mailchimp/mandrill-api-php",
-            "keywords": [
-                "api",
-                "email"
-            ],
-            "time": "2015-09-22 13:58:03"
         },
         {
             "name": "miljar/php-exif",

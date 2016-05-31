@@ -18,8 +18,7 @@
         "composer/composer": "^1.1",
         "composer/satis": "dev-master@dev",
         "fabpot/goutte": "^3.1",
-        "forxer/gravatar": "^1.2",
-        "mandrill/mandrill": "~1.0"
+        "forxer/gravatar": "^1.2"
     },
     "autoload": {
         "psr-4": {
