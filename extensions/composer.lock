@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "4a4041abae2c955ddf3bf204c5ba774d56fb9d40"
+                "reference": "4eda9f6f767c9dcc5d93cba99cf90344bff6bd46"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-05-31 10:39:40"
+            "time": "2016-05-31 17:18:21"
         },
         {
             "name": "bolt/marketplace-migration",
@@ -115,7 +115,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-migration.git",
-                "reference": "8b30ad64a77bb93d796f2a12ec8dd7339ff31ce4"
+                "reference": "71610a4d5a867042d6426831f65b16d01a8ebe50"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -142,7 +142,7 @@
             "keywords": [
                 ""
             ],
-            "time": "2016-05-26 14:33:37"
+            "time": "2016-05-31 12:17:58"
         },
         {
             "name": "bolt/members",
@@ -150,12 +150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "bdd321266e452e8810896d876f8dcc3141abd495"
+                "reference": "7c04785ea43b0d08405c8e2a635e43fb2beda973"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/bdd321266e452e8810896d876f8dcc3141abd495",
-                "reference": "bdd321266e452e8810896d876f8dcc3141abd495",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/7c04785ea43b0d08405c8e2a635e43fb2beda973",
+                "reference": "7c04785ea43b0d08405c8e2a635e43fb2beda973",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +211,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-05-31 10:08:49"
+            "time": "2016-05-31 12:52:51"
         },
         {
             "name": "guzzle/guzzle",
