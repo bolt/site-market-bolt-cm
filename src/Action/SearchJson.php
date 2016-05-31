@@ -46,37 +46,41 @@ class SearchJson extends AbstractAction
      */
     private function formatPackage(Entity\Package $package)
     {
+        /** @var \Bolt\Extension\Bolt\Members\Storage\Records $membersRecords */
+        $membersRecords = $this->getAppService('members.records');
+        $account = $membersRecords->getAccountByGuid($package->getAccountId());
+        $accountMeta = $membersRecords->getAccountMeta($package->getAccountId(), 'username');
+
         return [
-            'id'          => $package->getId(),
-            'title'       => $package->getTitle(),
-            'source'      => $package->getSource(),
-            'name'        => $package->getName(),
-            'keywords'    => $package->getKeywords(),
-            'type'        => $package->getType(),
-            'description' => $package->getDescription(),
-            //'documentation' => $package->getDocumentation(),
-            'approved'     => $package->getApproved(),
-            'requirements' => $package->getRequirements(),
-            'versions'     => $package->getVersions(),
-            'created'      => $package->getCreated(),
-            'updated'      => $package->getUpdated(),
-            'authors'      => $package->getAuthors(),
-//@TODO 'user' key needs to be fixed
-            'user'         => [
-                'id'         => $package->getAccount()->getId(),
-                'username'   => $package->getAccount()->getUsername(),
-                'name'       => $package->getAccount()->getName(),
+            'id'            => $package->getId(),
+            'title'         => $package->getTitle(),
+            'source'        => $package->getSource(),
+            'name'          => $package->getName(),
+            'keywords'      => $package->getKeywords(),
+            'type'          => $package->getType(),
+            'description'   => $package->getDescription(),
+            'documentation' => $package->getDocumentation(),
+            'approved'      => $package->isApproved(),
+            'requirements'  => $package->getRequirements(),
+            'versions'      => $package->getVersions(),
+            'created'       => $package->getCreated(),
+            'updated'       => $package->getUpdated(),
+            'authors'       => $package->getAuthors(),
+            'user'          => [
+                'id'         => $account->getId(),
+                'username'   => $accountMeta ? $accountMeta->getValue() : null,
+                'name'       => $account->getDisplayname(),
                 'email_hash' => [
                     'type' => 'md5',
-                    'hash' => md5($package->getAccount()->getEmail()),
+                    'hash' => md5($account->getEmail()),
                 ],
             ],
             //'token' => $package->getToken(),
             //'stats' => $package->getStats(),
             //'builds' => $package->getBuilds(),
-            'screenshots' => $package->getScreenshots(),
-            'icon'        => $package->getIcon(),
-            'support'     => $package->getSupport(),
+            'screenshots'   => $package->getScreenshots(),
+            'icon'          => $package->getIcon(),
+            'support'       => $package->getSupport(),
         ];
     }
 }
