@@ -2,7 +2,6 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\Queue\PackageQueue;
 use Bolt\Extension\Bolt\MarketPlace\Service\Queue\QueueManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;

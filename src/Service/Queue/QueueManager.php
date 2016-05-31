@@ -24,7 +24,6 @@ class QueueManager
     /** @var array */
     protected $config;
 
-
     /**
      * Constructor.
      *
