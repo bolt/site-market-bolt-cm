@@ -108,6 +108,11 @@ class Frontend implements ControllerProviderInterface
             ->method(Request::METHOD_GET)
         ;
 
+        $ctr->match('/search.json', [$this, 'searchJson'])
+            ->bind('searchJson')
+            ->method(Request::METHOD_GET)
+        ;
+
         $ctr->match('/star/{package}', [$this, 'star'])
             ->bind('star')
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
@@ -228,6 +233,21 @@ class Frontend implements ControllerProviderInterface
         ];
 
         return $this->getAction($app, 'search')->execute($request, $params);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request     $request
+     *
+     * @return Response
+     */
+    public function searchJson(Application $app, Request $request)
+    {
+        $params = [
+            'type' => 'search',
+        ];
+
+        return $this->getAction($app, 'search_json')->execute($request, $params);
     }
 
     /**
