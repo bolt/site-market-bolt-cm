@@ -236,8 +236,12 @@ class Package extends Entity
     /**
      * @param array $requirements
      */
-    public function setRequirements(array $requirements)
+    public function setRequirements($requirements)
     {
+        // HACK ALERT! This is getting converted to a JSON string somehwere
+        if (is_string($requirements)) {
+            $requirements = json_decode($requirements, true);
+        }
         $this->requirements = $requirements;
     }
 
