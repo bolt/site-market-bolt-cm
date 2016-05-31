@@ -104,7 +104,7 @@ class PackageManager
             $package->setIcon($information['extra']['bolt-icon']);
         }
 
-        $package->setRequirements(json_encode($information['require']));
+        $package->setRequirements($information['require']);
         $package->setVersions($pv);
         $package->setUpdated(new DateTime());
     }
