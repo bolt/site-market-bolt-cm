@@ -107,8 +107,6 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
             function ($app) {
                 $container = new Container([
                     'bolt_themes'     => $app->share(function () use ($app) { return new Service\BoltThemes(); }),
-                    'email'           => $app->share(function () use ($app) { return new Service\Email(); }),
-                    'mail'            => $app->share(function () use ($app) { return new Service\MailService(); }),
                     'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager($app['marketplace.composer.config']); }),
                     'record_manager'  => $app->share(function () use ($app) { return new Service\RecordManager($app['storage']); }),
                     'queue_manager'   => $app->share(function () use ($app) { return new Service\Queue\QueueManager($app['storage'], $app['resources']); }),
