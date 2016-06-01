@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a6fe9cac23bdc3438b4467fcf46d9586",
-    "content-hash": "65b68c645d23e2936f91efe16068fa86",
+    "hash": "ae155d0cff9786cfb1ef8b198e1de84e",
+    "content-hash": "f5020f7ee3496f2b2f97e2f778650f93",
     "packages": [
         {
             "name": "bolt/github",
@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "4eda9f6f767c9dcc5d93cba99cf90344bff6bd46"
+                "reference": "ea13cce59202c87c2eafad27ed3d0488b4f8e2da"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-05-31 17:18:21"
+            "time": "2016-06-01 13:44:48"
         },
         {
             "name": "bolt/marketplace-migration",
