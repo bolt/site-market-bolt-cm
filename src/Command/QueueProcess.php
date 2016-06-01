@@ -6,6 +6,7 @@ use Bolt\Extension\Bolt\MarketPlace\Service\Queue\QueueManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -21,7 +22,11 @@ class QueueProcess extends BaseCommand
     protected function configure()
     {
         $this->setName('package:queue-process')
-            ->setDescription('Processes the package update queue');
+            ->setDescription('Processes the package update queue')
+            ->setDefinition([
+                new InputOption('cron', null, InputOption::VALUE_NONE, 'Running from cron.', null),
+            ])
+        ;
     }
 
     /**
@@ -37,6 +42,8 @@ class QueueProcess extends BaseCommand
 
         $queueManager->processQueues($satisManager, $output);
 
-        $output->writeln('<info>Queue processed</info>');
+        if (!$input->getOption('cron')) {
+            $output->writeln('<info>Queue processed</info>');
+        }
     }
 }
