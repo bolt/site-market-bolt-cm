@@ -86,8 +86,9 @@ class Submit extends AbstractAction
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $context = [
-            'form'  => $form->createView(),
-            'error' => $error,
+            'form'    => $form->createView(),
+            'error'   => $error,
+            'webhook' => false,
         ];
         $html = $twig->render('submit.twig', $context);
 
