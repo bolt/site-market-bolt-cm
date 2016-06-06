@@ -19,7 +19,7 @@ class UniqueSourceUrlValidator extends ConstraintValidator
         $url = rtrim(str_replace('git@github.com:', 'https://github.com/', $value), '.git');
         $package = $packageRepository->findOneBy(['source' => $url]);
 
-        if ($package === false) {
+        if ($package) {
             $this->context->addViolation($constraint->message, ['%string%' => $value]);
         }
     }
