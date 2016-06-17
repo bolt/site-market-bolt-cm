@@ -88,6 +88,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'packages_author'   => $app->share(function () use ($app) { return new Action\PackagesByAuthor($app); }),
                     'ping'              => $app->share(function () use ($app) { return new Action\Ping($app); }),
                     'search'            => $app->share(function () use ($app) { return new Action\Search($app); }),
+                    'search_json'       => $app->share(function () use ($app) { return new Action\SearchJson($app); }),
                     'stat'              => $app->share(function () use ($app) { return new Action\Stat($app); }),
                     'status'            => $app->share(function () use ($app) { return new Action\Status($app); }),
                     'submit'            => $app->share(function () use ($app) { return new Action\Submit($app); }),
