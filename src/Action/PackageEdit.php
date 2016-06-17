@@ -5,7 +5,10 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 use Bolt\Extension\Bolt\MarketPlace\Form;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +52,16 @@ class PackageEdit extends AbstractAction
         $formsService = $this->getAppService('marketplace.forms');
         /** @var FormFactory $forms */
         $forms = $this->getAppService('form.factory');
-        $form = $forms->create($formsService['package'], $package);
+        /** @var FormInterface $form */
+        $form = $forms
+            ->createBuilder($formsService['package'], $package)
+            ->addEventListener(FormEvents::POST_SUBMIT,
+                function (FormEvent $event) {
+                    $event->stopPropagation();
+                }, 128
+            )
+            ->getForm()
+        ;
         $form->handleRequest($request);
 
         if ($form->isValid()) {
