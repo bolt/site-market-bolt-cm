@@ -157,24 +157,7 @@ class Package extends AbstractRepository
     public function getSearchQuery($keyword, $type, $order, $limit)
     {
         $qb = $this->createQueryBuilder('p')
-            ->select('DISTINCT (p.id)')
-            ->addSelect('p.id as id')
-            ->addSelect('p.account_id as account_id')
-            ->addSelect('p.title as title')
-            ->addSelect('p.source as source')
-            ->addSelect('p.name as name')
-            ->addSelect('p.keywords as keywords')
-            ->addSelect('p.type as type')
-            ->addSelect('p.description as description')
-            ->addSelect('p.documentation as documentation')
-            ->addSelect('p.approved as approved')
-            ->addSelect('p.requirements as requirements')
-            ->addSelect('p.versions as versions')
-            ->addSelect('p.screenshots as screenshots')
-            ->addSelect('p.icon as icon')
-            ->addSelect('p.support as support')
-            ->addSelect('p.authors as authors')
-            ->addSelect('count(p.id) AS pcount')
+            ->select('DISTINCT (p.id), p.*')
             ->leftJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('p.approved = :status')
         ;
@@ -195,22 +178,13 @@ class Package extends AbstractRepository
 
         switch ($order) {
             case 'date':
-                $qb
-                    ->addSelect('p.created as created')
-                    ->orderBy('p.created', 'DESC')
-                ;
+                $qb->orderBy('p.created', 'DESC');
                 break;
             case 'modified':
-                $qb
-                    ->addSelect('p.updated as updated')
-                    ->orderBy('p.updated', 'DESC')
-                ;
+                $qb->orderBy('p.updated', 'DESC');
                 break;
             case 'name':
-                $qb
-                    ->addSelect('p.title as title')
-                    ->orderBy('p.title', 'ASC')
-                ;
+                $qb->orderBy('p.title', 'ASC');
                 break;
             case 'downloads':
                 $qb->andWhere("s.type = 'install'");
