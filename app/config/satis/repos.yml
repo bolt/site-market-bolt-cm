@@ -6,3 +6,4 @@ vcs:
     - https://github.com/KnpLabs/php-github-api.git
     - https://github.com/bolt/payments-omnipay.git
     - https://github.com/whiteoctober/Pagerfanta.git
+    - https://github.com/Exeu/apai-io.git
