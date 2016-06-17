@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "93136af2fbc77c728d1992a4ba46244d146a3771"
+                "reference": "c3668250b5274d0b503476ab71bde543b3efb770"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/93136af2fbc77c728d1992a4ba46244d146a3771",
-                "reference": "93136af2fbc77c728d1992a4ba46244d146a3771",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/c3668250b5274d0b503476ab71bde543b3efb770",
+                "reference": "c3668250b5274d0b503476ab71bde543b3efb770",
                 "shasum": ""
             },
             "require": {
@@ -118,7 +118,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-06-08 11:36:45"
+            "time": "2016-06-15 15:40:51"
         },
         {
             "name": "bolt/filesystem",
@@ -561,12 +561,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "ca25ccddfc660894f083e1d1b5c11ed6271533f7"
+                "reference": "10439c168643bd74d76fc894d61ae3291c999aee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/ca25ccddfc660894f083e1d1b5c11ed6271533f7",
-                "reference": "ca25ccddfc660894f083e1d1b5c11ed6271533f7",
+                "url": "https://api.github.com/repos/composer/satis/zipball/10439c168643bd74d76fc894d61ae3291c999aee",
+                "reference": "10439c168643bd74d76fc894d61ae3291c999aee",
                 "shasum": ""
             },
             "require": {
@@ -614,7 +614,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2016-06-03 07:17:08"
+            "time": "2016-06-17 07:00:19"
         },
         {
             "name": "composer/semver",
@@ -2130,12 +2130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ircmaxell/PHP-PasswordLib.git",
-                "reference": "c66e3a19d1d35ecf46a304dab7bc12c8bdeb2247"
+                "reference": "f7909cb90c4dde118d82523299bd8207f56da5ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ircmaxell/PHP-PasswordLib/zipball/c66e3a19d1d35ecf46a304dab7bc12c8bdeb2247",
-                "reference": "c66e3a19d1d35ecf46a304dab7bc12c8bdeb2247",
+                "url": "https://api.github.com/repos/ircmaxell/PHP-PasswordLib/zipball/f7909cb90c4dde118d82523299bd8207f56da5ee",
+                "reference": "f7909cb90c4dde118d82523299bd8207f56da5ee",
                 "shasum": ""
             },
             "require": {
@@ -2816,7 +2816,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -2986,16 +2986,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "e17f386efef7258ac671c24e727673abd086b0cf"
+                "reference": "c526d7b3cb4fe1673c6a34e13be2ff63f519df99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/e17f386efef7258ac671c24e727673abd086b0cf",
-                "reference": "e17f386efef7258ac671c24e727673abd086b0cf",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/c526d7b3cb4fe1673c6a34e13be2ff63f519df99",
+                "reference": "c526d7b3cb4fe1673c6a34e13be2ff63f519df99",
                 "shasum": ""
             },
             "require": {
@@ -3035,7 +3035,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-04 07:56:56"
+            "time": "2016-06-06 11:42:41"
         },
         {
             "name": "symfony/debug",
@@ -3096,7 +3096,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
