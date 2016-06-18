@@ -35,6 +35,7 @@ class Frontend implements ControllerProviderInterface
 
         $ctr->match('/edit/{package}', [$this, 'edit'])
             ->bind('edit')
+            ->before([$this, 'auth'])
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
@@ -65,6 +66,7 @@ class Frontend implements ControllerProviderInterface
 
         $ctr->match('/profile', [$this, 'profile'])
             ->bind('profile')
+            ->before([$this, 'auth'])
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
@@ -115,6 +117,7 @@ class Frontend implements ControllerProviderInterface
 
         $ctr->match('/star/{package}', [$this, 'star'])
             ->bind('star')
+            ->before([$this, 'auth'])
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
@@ -140,21 +143,25 @@ class Frontend implements ControllerProviderInterface
 
         $ctr->match('/submit', [$this, 'submit'])
             ->bind('submit')
+            ->before([$this, 'auth'])
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/test/{package}/{version}', [$this, 'testExtension'])
             ->bind('testExtension')
+            ->before([$this, 'auth'])
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
         $ctr->match('/test/{package}', [$this, 'testListing'])
             ->bind('testListing')
+            ->before([$this, 'auth'])
             ->method(Request::METHOD_GET)
         ;
 
         $ctr->match('/update/{package}', [$this, 'update'])
             ->bind('update')
+            ->before([$this, 'auth'])
             ->method(Request::METHOD_GET)
         ;
 
@@ -182,6 +189,27 @@ class Frontend implements ControllerProviderInterface
         $ctr->after([$this, 'after']);
 
         return $ctr;
+    }
+
+    /**
+     * Middleware to modify the Response before the controller is executed.
+     *
+     * @param Request     $request
+     * @param Application $app
+     *
+     * @return null|RedirectResponse
+     */
+    public function auth(Request $request, Application $app)
+    {
+        if ($app['members.session']->hasAuthorisation()) {
+            return null;
+        }
+
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $app['url_generator'];
+        $route = $urlGen->generate('authenticationLogin');
+
+        return new RedirectResponse($route);
     }
 
     /**
