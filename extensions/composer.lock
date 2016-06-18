@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "e776b9cb6577880a2e9d444ca804acda8af5b4c2"
+                "reference": "81bbddf47cb680ce4c86d47dae08f57d62f797ad"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-06-17 10:52:33"
+            "time": "2016-06-18 07:40:33"
         },
         {
             "name": "bolt/marketplace-migration",
@@ -150,12 +150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "601344e5651b54d28de8eb646040ca6fff77deb0"
+                "reference": "d470722f5b588d008cf9aac82710900b64fe4974"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/601344e5651b54d28de8eb646040ca6fff77deb0",
-                "reference": "601344e5651b54d28de8eb646040ca6fff77deb0",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/d470722f5b588d008cf9aac82710900b64fe4974",
+                "reference": "d470722f5b588d008cf9aac82710900b64fe4974",
                 "shasum": ""
             },
             "require": {
@@ -212,7 +212,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-06-15 09:20:53"
+            "time": "2016-06-17 13:26:37"
         },
         {
             "name": "guzzle/guzzle",
@@ -319,16 +319,16 @@
         },
         {
             "name": "knplabs/github-api",
-            "version": "1.6.1",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/php-github-api.git",
-                "reference": "f77df24a154cdf7461a7ff2712ef271f03a6b85b"
+                "reference": "fe913715d280cc0a5f78a5366c02ad78c0305c66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/f77df24a154cdf7461a7ff2712ef271f03a6b85b",
-                "reference": "f77df24a154cdf7461a7ff2712ef271f03a6b85b",
+                "url": "https://api.github.com/repos/KnpLabs/php-github-api/zipball/fe913715d280cc0a5f78a5366c02ad78c0305c66",
+                "reference": "fe913715d280cc0a5f78a5366c02ad78c0305c66",
                 "shasum": ""
             },
             "require": {
@@ -377,10 +377,10 @@
                 "github"
             ],
             "support": {
-                "source": "https://github.com/KnpLabs/php-github-api/tree/1.6.1",
+                "source": "https://github.com/KnpLabs/php-github-api/tree/master",
                 "issues": "https://github.com/KnpLabs/php-github-api/issues"
             },
-            "time": "2016-05-20 09:54:41"
+            "time": "2016-05-29 11:15:42"
         },
         {
             "name": "pagerfanta/pagerfanta",
