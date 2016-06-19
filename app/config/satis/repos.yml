@@ -7,3 +7,4 @@ vcs:
     - https://github.com/bolt/payments-omnipay.git
     - https://github.com/whiteoctober/Pagerfanta.git
     - https://github.com/Exeu/apai-io.git
+    - https://github.com/pusher/pusher-http-php.git
