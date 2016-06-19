@@ -104,13 +104,24 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
             }
         );
 
+        $app['marketplace.queues'] = $app->share(
+            function ($app) {
+                $container = new Container([
+                    'package' => $app->share(function () use ($app) { return new Service\Queue\PackageQueue($app['storage'], $app['resources']); }),
+                    'webhook' => $app->share(function () use ($app) { return new Service\Queue\WebhookQueue($app['storage'], $app['resources']); }),
+                ]);
+
+                return $container;
+            }
+        );
+
         $app['marketplace.services'] = $app->share(
             function ($app) {
                 $container = new Container([
                     'bolt_themes'     => $app->share(function () use ($app) { return new Service\BoltThemes(); }),
                     'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager($app['marketplace.composer.config']); }),
                     'record_manager'  => $app->share(function () use ($app) { return new Service\RecordManager($app['storage']); }),
-                    'queue_manager'   => $app->share(function () use ($app) { return new Service\Queue\QueueManager($app['storage'], $app['resources']); }),
+                    'queue_manager'   => $app->share(function () use ($app) { return new Service\Queue\QueueManager($app['storage'], $app['resources'], $app['marketplace.queues']); }),
                     'satis_manager'   => $app->share(function () use ($app) { return new Service\SatisManager($app['storage'], $app['resources']); }),
                     'statistics'      => $app->share(function () use ($app) {
                         /** @var Repository\Stat $repo */

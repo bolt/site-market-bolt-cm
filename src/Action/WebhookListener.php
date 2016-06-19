@@ -2,7 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
+use Bolt\Extension\Bolt\MarketPlace\Service\Queue\QueueManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +26,9 @@ class WebhookListener extends AbstractAction
         }
         
         $services = $this->getAppService('marketplace.services');
-        /** @var SatisManager $satisProvider */
-        $satisProvider = $services['satis_manager'];
-        $response = $satisProvider->queueWebhook($request);
+        /** @var QueueManager $queueManager */
+        $queueManager = $services['queue_manager'];
+        $response = $queueManager->queueWebhook($request);
 
         return $response;
     }
