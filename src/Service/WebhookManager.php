@@ -154,7 +154,7 @@ class WebhookManager
         $apiRepo = $client->api('repo');
 
         try {
-            $result = $apiRepo->hooks()->ping($username, $repository, $id);
+            $apiRepo->hooks()->ping($username, $repository, $id);
         } catch (\Exception $e) {
             $this->handleException($e);
 
@@ -184,7 +184,7 @@ class WebhookManager
         $apiRepo = $client->api('repo');
 
         try {
-            $result = $apiRepo->hooks()->remove($username, $repository, $id);
+            $apiRepo->hooks()->remove($username, $repository, $id);
         } catch (\Exception $e) {
             $this->handleException($e);
 
