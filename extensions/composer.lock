@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "81bbddf47cb680ce4c86d47dae08f57d62f797ad"
+                "reference": "e57a4d22e8c5ee2b48c74eaa1c7cae9a25462220"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-06-18 07:40:33"
+            "time": "2016-06-19 10:13:56"
         },
         {
             "name": "bolt/marketplace-migration",
@@ -150,12 +150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "d470722f5b588d008cf9aac82710900b64fe4974"
+                "reference": "e70df461927e1d5e7b02525d3ee07dc33950eda6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/d470722f5b588d008cf9aac82710900b64fe4974",
-                "reference": "d470722f5b588d008cf9aac82710900b64fe4974",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/e70df461927e1d5e7b02525d3ee07dc33950eda6",
+                "reference": "e70df461927e1d5e7b02525d3ee07dc33950eda6",
                 "shasum": ""
             },
             "require": {
@@ -212,7 +212,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-06-17 13:26:37"
+            "time": "2016-06-19 04:31:56"
         },
         {
             "name": "guzzle/guzzle",
