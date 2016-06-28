@@ -9,23 +9,23 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.0.7",
+            "version": "v3.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "dd8a2caf42711f55b2f46ca0be89cf81d1b4732e"
+                "reference": "eeea7fb98a28794351865bf3a6c853308f4984a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/dd8a2caf42711f55b2f46ca0be89cf81d1b4732e",
-                "reference": "dd8a2caf42711f55b2f46ca0be89cf81d1b4732e",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/eeea7fb98a28794351865bf3a6c853308f4984a5",
+                "reference": "eeea7fb98a28794351865bf3a6c853308f4984a5",
                 "shasum": ""
             },
             "require": {
-                "bolt/filesystem": "^2.0@beta",
+                "bolt/filesystem": "^2.0",
                 "bolt/package-wrapper": "^3.0",
                 "bolt/pathogen": "~0.6",
-                "bolt/thumbs": "~3.0@beta",
+                "bolt/thumbs": "^3.0",
                 "brandonwamboldt/utilphp": "~1.0",
                 "cocur/slugify": "~1.0",
                 "composer/composer": "^1.0",
@@ -118,7 +118,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-06-17 11:46:32"
+            "time": "2016-06-22 19:15:15"
         },
         {
             "name": "bolt/filesystem",
@@ -480,16 +480,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "b2cf67b1a575d7e648c742be2454339232ef32b2"
+                "reference": "30ab6f1c1753267d181839142fafe022313c3c9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/b2cf67b1a575d7e648c742be2454339232ef32b2",
-                "reference": "b2cf67b1a575d7e648c742be2454339232ef32b2",
+                "url": "https://api.github.com/repos/composer/composer/zipball/30ab6f1c1753267d181839142fafe022313c3c9a",
+                "reference": "30ab6f1c1753267d181839142fafe022313c3c9a",
                 "shasum": ""
             },
             "require": {
@@ -553,7 +553,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2016-05-31 18:48:12"
+            "time": "2016-06-26 14:42:08"
         },
         {
             "name": "composer/satis",
@@ -1555,16 +1555,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.3.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "31382fef2889136415751badebbd1cb022a4ed72"
+                "reference": "5c6447c9df362e8f8093bda8f5d8873fe5c7f65b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/31382fef2889136415751badebbd1cb022a4ed72",
-                "reference": "31382fef2889136415751badebbd1cb022a4ed72",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/5c6447c9df362e8f8093bda8f5d8873fe5c7f65b",
+                "reference": "5c6447c9df362e8f8093bda8f5d8873fe5c7f65b",
                 "shasum": ""
             },
             "require": {
@@ -1580,7 +1580,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -1609,7 +1609,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-04-13 19:56:01"
+            "time": "2016-06-24 23:00:38"
         },
         {
             "name": "ircmaxell/password-compat",
