@@ -176,6 +176,8 @@ class Package extends AbstractRepository
             $qb->setMaxResults($limit);
         }
 
+        $qb->groupBy('p.id, s.id');
+
         switch ($order) {
             case 'date':
                 $qb->orderBy('p.created', 'DESC');
@@ -187,19 +189,26 @@ class Package extends AbstractRepository
                 $qb->orderBy('p.title', 'ASC');
                 break;
             case 'downloads':
-                $qb->andWhere("s.type = 'install'");
-                $qb->orderBy('pcount', 'DESC');
+                $qb
+                    ->addSelect('COUNT(p.id) as pcount')
+                    ->andWhere("s.type = 'install'")
+                    ->groupBy('p.id')
+                    ->orderBy('pcount', 'DESC')
+                ;
                 break;
             case 'stars':
-                $qb->andWhere("s.type = 'star'");
-                $qb->orderBy('pcount', 'DESC');
+                $qb
+                    ->addSelect('COUNT(p.id) as pcount')
+                    ->andWhere("s.type = 'star'")
+                    ->groupBy('p.id')
+                    ->orderBy('pcount', 'DESC')
+                ;
                 break;
 
             default:
                 break;
         }
 
-        $qb->groupBy('p.id, s.id');
         $qb->setParameter('status', true);
 
         return $qb;
