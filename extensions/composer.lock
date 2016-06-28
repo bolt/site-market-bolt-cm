@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "89ed656714fa458893884ca005ae891d",
-    "content-hash": "f8c52fc1828fc7331fc5899007da01a2",
+    "hash": "840e39666e6f9b3e3ad98f0b3af36bc6",
+    "content-hash": "bdde9eed509f6905a315ed75fd019819",
     "packages": [
         {
             "name": "bolt/github",
@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "e57a4d22e8c5ee2b48c74eaa1c7cae9a25462220"
+                "reference": "b526a8423eab1cefa01db009b6d90ee729230f17"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-06-19 10:13:56"
+            "time": "2016-06-28 16:54:36"
         },
         {
             "name": "bolt/marketplace-migration",
@@ -150,12 +150,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "e70df461927e1d5e7b02525d3ee07dc33950eda6"
+                "reference": "d51fd7389ae9dbd82884e947ebed178355b4383b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/e70df461927e1d5e7b02525d3ee07dc33950eda6",
-                "reference": "e70df461927e1d5e7b02525d3ee07dc33950eda6",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/d51fd7389ae9dbd82884e947ebed178355b4383b",
+                "reference": "d51fd7389ae9dbd82884e947ebed178355b4383b",
                 "shasum": ""
             },
             "require": {
@@ -212,7 +212,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-06-19 04:31:56"
+            "time": "2016-06-28 13:14:07"
         },
         {
             "name": "guzzle/guzzle",
