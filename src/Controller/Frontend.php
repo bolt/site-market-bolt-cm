@@ -397,6 +397,7 @@ class Frontend implements ControllerProviderInterface
     {
         $params = [
             'sort' => 'downloaded',
+            'type' => $request->query->get('type', 'bolt-extension'),
         ];
 
         return $this->getAction($app, 'list_packages')->execute($request, $params);
