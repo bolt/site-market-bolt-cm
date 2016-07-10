@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "840e39666e6f9b3e3ad98f0b3af36bc6",
-    "content-hash": "bdde9eed509f6905a315ed75fd019819",
+    "hash": "311e5cf4e32d8be7ab4ca80f557a2ba5",
+    "content-hash": "ed5d8b6b9e69b56cea2abb759c5962e0",
     "packages": [
         {
             "name": "bolt/github",
@@ -108,41 +108,6 @@
                 "satis"
             ],
             "time": "2016-07-06 06:17:18"
-        },
-        {
-            "name": "bolt/marketplace-migration",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bolt/marketplace-migration.git",
-                "reference": "71610a4d5a867042d6426831f65b16d01a8ebe50"
-            },
-            "require": {
-                "bolt/bolt": "^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.7"
-            },
-            "type": "bolt-extension",
-            "extra": {
-                "bolt-assets": "web",
-                "bolt-class": "Bolt\\Extension\\Bolt\\MarketPlaceMigration\\MarketPlaceMigrationExtension"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Bolt\\Extension\\Bolt\\MarketPlaceMigration\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": []
-            },
-            "license": [
-                "MIT"
-            ],
-            "keywords": [
-                ""
-            ],
-            "time": "2016-05-31 12:17:58"
         },
         {
             "name": "bolt/members",
@@ -599,7 +564,6 @@
     "stability-flags": {
         "bolt/github": 20,
         "bolt/marketplace": 20,
-        "bolt/marketplace-migration": 20,
         "bolt/members": 20
     },
     "prefer-stable": true,
