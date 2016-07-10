@@ -8,3 +8,4 @@ vcs:
     - https://github.com/whiteoctober/Pagerfanta.git
     - https://github.com/Exeu/apai-io.git
     - https://github.com/pusher/pusher-http-php.git
+    - https://github.com/thephpleague/event.git
