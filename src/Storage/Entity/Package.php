@@ -366,7 +366,7 @@ class Package extends Entity
     }
 
     /**
-     * @param string $support
+     * @param array $support
      */
     public function setSupport(array $support)
     {
