@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "311e5cf4e32d8be7ab4ca80f557a2ba5",
-    "content-hash": "ed5d8b6b9e69b56cea2abb759c5962e0",
+    "hash": "89d759ee568b1eac89e797710d49f983",
+    "content-hash": "cc86942c78d8be18d7eaafda9daf6f81",
     "packages": [
         {
             "name": "bolt/github",
@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "acdad865e608463db1e75adcf535597df68d7e16"
+                "reference": "d5b4051d32ecd177bc741a99b27f2ec9004896f7"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-07-12 02:50:59"
+            "time": "2016-07-13 10:44:54"
         },
         {
             "name": "bolt/members",
@@ -115,12 +115,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "79c4fe15ca5744eff51a341259fd99534e22fb92"
+                "reference": "b5b9034534a1a26cc4b0d278f496112fbbebf416"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/79c4fe15ca5744eff51a341259fd99534e22fb92",
-                "reference": "79c4fe15ca5744eff51a341259fd99534e22fb92",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/b5b9034534a1a26cc4b0d278f496112fbbebf416",
+                "reference": "b5b9034534a1a26cc4b0d278f496112fbbebf416",
                 "shasum": ""
             },
             "require": {
@@ -176,7 +176,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-07-10 17:32:03"
+            "time": "2016-07-12 09:05:18"
         },
         {
             "name": "guzzle/guzzle",
