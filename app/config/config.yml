@@ -15,6 +15,8 @@ database:
 sitename:
 payoff:
 
+bolt_major_versions: [ 2, 3 ]
+
 # The theme to use. Be sure to copy the {theme_path}/base-2016 folder, and
 # change the name here accordingly.
 #
