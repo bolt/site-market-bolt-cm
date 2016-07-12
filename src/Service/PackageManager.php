@@ -3,10 +3,14 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bolt\Extension\Bolt\MarketPlace\Storage\VersionDataHandler;
+use Bolt\Storage\EntityManager;
 use Composer\Config;
 use Composer\IO\BufferIO;
 use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
+use Composer\Package\CompletePackage;
 use Composer\Package\Dumper\ArrayDumper;
 use Composer\Package\Link;
 use Composer\Package\PackageInterface;
@@ -65,48 +69,7 @@ class PackageManager
      */
     public function syncPackage(Entity\Package $package)
     {
-        $repository = $this->loadRepository($package);
-        $information = $this->loadInformation($package);
-
-        $versions = $repository->getPackages();
-        $pv = [];
-        foreach ($versions as $version) {
-            $pv[] = $version->getPrettyVersion();
-        }
-
-        $package->setName($information['name']);
-        if (isset($information['type'])) {
-            $package->setType($information['type']);
-        }
-        if (isset($information['keywords'])) {
-            $package->setKeywords($information['keywords']);
-        }
-        if (isset($information['authors'])) {
-            $authors = [];
-            foreach ($information['authors'] as $author) {
-                $authors[] = $author['name'];
-            }
-            $package->setAuthors($authors);
-        }
-        if (isset($information['support'])) {
-            $package->setSupport($information['support']);
-        }
-
-        if (isset($information['suggest'])) {
-            $package->setSuggested($information['suggest']);
-        }
-
-        if (isset($information['extra']) && isset($information['extra']['bolt-screenshots'])) {
-            $package->setScreenshots($information['extra']['bolt-screenshots']);
-        }
-
-        if (isset($information['extra']) && isset($information['extra']['bolt-icon'])) {
-            $package->setIcon($information['extra']['bolt-icon']);
-        }
-
-        $package->setRequirements($information['require']);
-        $package->setVersions($pv);
-        $package->setUpdated(new DateTime());
+        $this->updatePackageInformation($package);
     }
 
     /**
@@ -308,5 +271,131 @@ class PackageManager
         if ($valid === false) {
             throw new \InvalidArgumentException(join("\n\n", $errors));
         }
+    }
+
+    /**
+     * Update package and version entities
+     *
+     * @param EntityManager      $em
+     * @param PackageInterface[] $packages
+     */
+    public function updateEntities(EntityManager $em, array $packages)
+    {
+        $complete = [];
+        /** @var Repository\Package $repo */
+        $repo = $em->getRepository(Entity\Package::class);
+        krsort($packages);
+        foreach ($packages as $key => $package) {
+            $name = $package->getName();
+            if (isset($complete[$name])) {
+                continue;
+            }
+            $complete[$name] = true;
+
+            if ($this->updateEntity($repo, $package) === false) {
+                // Unset the package from the array so we don't send it to the
+                // version data handler
+                unset($packages[$key]);
+            }
+        }
+        ksort($packages);
+
+        // Update stored local versions
+        (new VersionDataHandler())->updateVersionEntities($em, $packages);
+    }
+
+    /**
+     * Check to see if the Composer package is one we manage.
+     *
+     * @param Repository\Package $repo
+     * @param PackageInterface   $package
+     *
+     * @return boolean
+     */
+    protected function updateEntity(Repository\Package $repo, PackageInterface $package)
+    {
+        /** @var Entity\Package $packageEntity */
+        $packageEntity = $repo->findOneBy(['name' => $package->getPrettyName()]);
+        if ($packageEntity === false) {
+            return false;
+        }
+        $this->updatePackageInformation($packageEntity, $package);
+
+        $repo->save($packageEntity);
+
+        return true;
+    }
+
+    /**
+     * Update a package entity with information from Composer.
+     *
+     * @param Entity\Package       $packageEntity
+     * @param CompletePackage|null $package
+     */
+    protected function updatePackageInformation(Entity\Package $packageEntity, CompletePackage $package = null)
+    {
+        $authors = [];
+        if ($package === null) {
+            $information = $this->loadInformation($packageEntity);
+            $packageEntity->setName($information['name']);
+            if (isset($information['type'])) {
+                $packageEntity->setType($information['type']);
+            }
+            if (isset($information['keywords'])) {
+                $packageEntity->setKeywords($information['keywords']);
+            }
+            if (isset($information['authors'])) {
+                $authors = [];
+                foreach ($information['authors'] as $author) {
+                    $authors[] = $author['name'];
+                }
+            }
+            if (isset($information['support'])) {
+                $packageEntity->setSupport($information['support']);
+            }
+
+            if (isset($information['suggest'])) {
+                $packageEntity->setSuggested($information['suggest']);
+            }
+
+            if (isset($information['extra']) && isset($information['extra']['bolt-screenshots'])) {
+                $packageEntity->setScreenshots($information['extra']['bolt-screenshots']);
+            }
+
+            if (isset($information['extra']) && isset($information['extra']['bolt-icon'])) {
+                $packageEntity->setIcon($information['extra']['bolt-icon']);
+            }
+
+            $packageEntity->setRequirements($information['require']);
+        } else {
+            /** @var \Composer\Package\CompletePackage $package */
+            $packageEntity->setName($package->getName());
+            $packageEntity->setType($package->getType());
+            $packageEntity->setKeywords((array) $package->getKeywords());
+            foreach ((array) $package->getAuthors() as $author) {
+                $authors[] = $author['name'];
+            }
+            $packageEntity->setSupport((array) $package->getSupport());
+            $packageEntity->setSuggested((array) $package->getSuggests());
+            $extra = $package->getExtra();
+            if (isset($extra['bolt-screenshots'])) {
+                $packageEntity->setScreenshots((array) $extra['bolt-screenshots']);
+            }
+            if (isset($extra['bolt-icon'])) {
+                $packageEntity->setIcon($extra['bolt-icon']);
+            }
+            $packageEntity->setRequirements($package->getRequires());
+        }
+
+        //$repository = $this->loadRepository($package);
+        //$versions = $repository->getPackages();
+        //$pv = [];
+        //foreach ($versions as $version) {
+        //    $pv[] = $version->getPrettyVersion();
+        //}
+        //$packageEntity->setVersions($pv);
+
+        $packageEntity->setAuthors($authors);
+        $packageEntity->setUpdated(new DateTime());
     }
 }

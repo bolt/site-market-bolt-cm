@@ -1,7 +1,10 @@
 <?php
 namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
+use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Nut\BaseCommand;
 use Composer\IO\ConsoleIO;
 use Composer\Json\JsonValidationException;
@@ -44,8 +47,15 @@ class SatisBuilder extends BaseCommand
         $skipErrors = true;
 
         try {
-            $satisProvider->build($packageName, $output);
+            $packages = $satisProvider->build($packageName, $output);
             $output->writeln('<info>Satis file built…</info>');
+
+            $output->write('<info>Updating package entities… </info>');
+            /** @var PackageManager $packageManager */
+            $packageManager = $this->app['marketplace.services']['package_manager'];
+            // Update version entities
+            $packageManager->updateEntities($this->app['storage'], $packages);
+            $output->writeln('<info>[DONE]</info>');
         } catch (FileNotFoundException $e) {
             $output->writeln('<error>File not found: ' . $satisProvider->getSatisJsonFilePath() . '</error>');
             if (!$skipErrors) {
