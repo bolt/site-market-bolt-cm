@@ -36,4 +36,16 @@ class RecordManager
 
         return $repo->findOneBy(['id' => $packageId]);
     }
+
+    /**
+     * @param string $packageName
+     *
+     * @return object
+     */
+    public function getPackageByName($packageName)
+    {
+        $repo = $this->em->getRepository(Entity\Package::class);
+
+        return $repo->findOneBy(['name' => $packageName]);
+    }
 }

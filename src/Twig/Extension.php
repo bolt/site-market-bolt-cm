@@ -6,6 +6,7 @@ use Bolt\Extension\Bolt\MarketPlace\Service\RecordManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use forxer\Gravatar\Gravatar;
 use Pimple as Container;
+use Ramsey\Uuid\Uuid;
 use Twig_Extension as TwigExtension;
 use Twig_SimpleFilter as TwigSimpleFilter;
 use Twig_SimpleFunction as TwigSimpleFunction;
@@ -153,8 +154,12 @@ class Extension extends TwigExtension
     {
         /** @var RecordManager $recordManager */
         $recordManager = $this->services['record_manager'];
-        
-        return $recordManager->getPackageById($packageId);
+
+        if (Uuid::isValid($packageId)) {
+            return $recordManager->getPackageById($packageId);
+        }
+
+        return $recordManager->getPackageByName($packageId);
     }
 
     public function getenv($key)
