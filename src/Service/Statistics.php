@@ -97,7 +97,7 @@ class Statistics
     protected function getStats($packageId)
     {
         if ($this->stats === null) {
-            $this->stats = $this->repo->findBy(['package_id' => $packageId]);
+            $this->stats = $this->repo->findBy(['package_id' => $packageId]) ?: [];
         }
 
         return $this->stats;
