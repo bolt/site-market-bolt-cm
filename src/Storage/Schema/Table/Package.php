@@ -62,6 +62,6 @@ class Package extends BaseTable
      */
     protected function addForeignKeyConstraints()
     {
-        $this->table->addForeignKeyConstraint($this->tablePrefix . 'members_account', ['account_id'], ['guid']);
+        $this->table->addForeignKeyConstraint($this->tablePrefix . 'members_account', ['account_id'], ['guid'], ['onDelete' => 'CASCADE']);
     }
 }
