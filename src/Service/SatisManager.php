@@ -15,6 +15,7 @@ use Composer\IO\IOInterface;
 use Composer\IO\NullIO;
 use Composer\Json\JsonFile;
 use Composer\Json\JsonValidationException;
+use Composer\Package\PackageInterface;
 use Composer\Satis\Builder\PackagesBuilder;
 use Composer\Satis\Builder\WebBuilder;
 use Composer\Satis\PackageSelection\PackageSelection;
@@ -61,7 +62,7 @@ class SatisManager
      * @param string               $packageName
      * @param OutputInterface|null $output
      *
-     * @return \Composer\Package\PackageInterface[]
+     * @return PackageInterface[]
      */
     public function build($packageName, OutputInterface $output = null)
     {
@@ -94,7 +95,7 @@ class SatisManager
      *
      * @throws \Exception
      *
-     * @return \Composer\Package\PackageInterface[]
+     * @return PackageInterface[]
      */
     public function buildPackages($packageName, OutputInterface $output, $skipErrors = false)
     {
@@ -105,8 +106,8 @@ class SatisManager
         if ($packageEntity) {
             $packageSelection->setRepositoryFilter($packageEntity->getSource());
         }
-        $packages = $packageSelection->select($this->getComposer(), true);
 
+        $packages = $packageSelection->select($this->getComposer(), true);
         if ($packageSelection->hasFilterForPackages() || $packageSelection->hasRepositoryFilter()) {
             // in case of an active filter we need to load the dumped packages.json and merge the
             // updated packages in
@@ -125,7 +126,7 @@ class SatisManager
      * @param OutputInterface $output
      * @param bool            $skipErrors
      *
-     * @return \Composer\Package\PackageInterface[]
+     * @return PackageInterface[]
      */
     public function getBuiltPackages(OutputInterface $output, $skipErrors = false)
     {
