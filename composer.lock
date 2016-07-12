@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.0.8",
+            "version": "v3.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "eeea7fb98a28794351865bf3a6c853308f4984a5"
+                "reference": "8ab8aef18fc05c5add87d35dcfeaccce6c745adc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/eeea7fb98a28794351865bf3a6c853308f4984a5",
-                "reference": "eeea7fb98a28794351865bf3a6c853308f4984a5",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/8ab8aef18fc05c5add87d35dcfeaccce6c745adc",
+                "reference": "8ab8aef18fc05c5add87d35dcfeaccce6c745adc",
                 "shasum": ""
             },
             "require": {
@@ -79,8 +79,8 @@
             },
             "require-dev": {
                 "bolt/codingstyle": "~1.0",
-                "codeception/codeception": "^2.1",
-                "lstrojny/phpunit-function-mocker": "dev-master@dev",
+                "codeception/codeception": "2.2.1",
+                "lstrojny/phpunit-function-mocker": "0.3.0",
                 "phpmd/phpmd": "~2.2",
                 "phpunit/dbunit": "~1.3",
                 "phpunit/php-code-coverage": "~2.0",
@@ -118,7 +118,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-06-22 19:15:15"
+            "time": "2016-07-06 15:59:20"
         },
         {
             "name": "bolt/filesystem",
@@ -2708,23 +2708,23 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.2",
+            "version": "v5.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "d8db871a54619458a805229a057ea2af33c753e8"
+                "reference": "4cc92842069c2bbc1f28daaaf1d2576ec4dfe153"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d8db871a54619458a805229a057ea2af33c753e8",
-                "reference": "d8db871a54619458a805229a057ea2af33c753e8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/4cc92842069c2bbc1f28daaaf1d2576ec4dfe153",
+                "reference": "4cc92842069c2bbc1f28daaaf1d2576ec4dfe153",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1,<0.9.4"
+                "mockery/mockery": "~0.9.1"
             },
             "type": "library",
             "extra": {
@@ -2757,7 +2757,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-05-01 08:45:47"
+            "time": "2016-07-08 11:51:25"
         },
         {
             "name": "symfony/asset",
@@ -4899,16 +4899,16 @@
         },
         {
             "name": "ua-parser/uap-php",
-            "version": "v3.4.5",
+            "version": "v3.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ua-parser/uap-php.git",
-                "reference": "97b455ce9828b2a240b7b8782d862fa244d2818f"
+                "reference": "a8397606c112612f981d1feb9cbc3bf4d0a452fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ua-parser/uap-php/zipball/97b455ce9828b2a240b7b8782d862fa244d2818f",
-                "reference": "97b455ce9828b2a240b7b8782d862fa244d2818f",
+                "url": "https://api.github.com/repos/ua-parser/uap-php/zipball/a8397606c112612f981d1feb9cbc3bf4d0a452fb",
+                "reference": "a8397606c112612f981d1feb9cbc3bf4d0a452fb",
                 "shasum": ""
             },
             "require": {
@@ -4921,7 +4921,7 @@
                 "phpunit/phpunit": "^4.0 || ^5.0"
             },
             "bin": [
-                "bin/uaparser.php"
+                "bin/uaparser"
             ],
             "type": "library",
             "autoload": {
@@ -4944,7 +4944,7 @@
                 }
             ],
             "description": "A multi-language port of Browserscope's user agent parser.",
-            "time": "2015-12-13 17:08:15"
+            "time": "2016-07-09 13:53:59"
         },
         {
             "name": "webmozart/assert",
