@@ -68,7 +68,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "1db032e8a14cd579f69635a16f1edde0dcbb20c2"
+                "reference": "acdad865e608463db1e75adcf535597df68d7e16"
             },
             "require": {
                 "bolt/bolt": "^3.0"
@@ -107,7 +107,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-07-06 06:17:18"
+            "time": "2016-07-12 02:50:59"
         },
         {
             "name": "bolt/members",
@@ -115,12 +115,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "084c76a105562a3a169de03dd43ca85d0615cc11"
+                "reference": "79c4fe15ca5744eff51a341259fd99534e22fb92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/084c76a105562a3a169de03dd43ca85d0615cc11",
-                "reference": "084c76a105562a3a169de03dd43ca85d0615cc11",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/79c4fe15ca5744eff51a341259fd99534e22fb92",
+                "reference": "79c4fe15ca5744eff51a341259fd99534e22fb92",
                 "shasum": ""
             },
             "require": {
@@ -143,7 +143,6 @@
             "autoload": {
                 "psr-4": {
                     "Bolt\\Extension\\Bolt\\Members\\": "src",
-                    "League\\Event\\": "lib/League/Event",
                     "League\\OAuth2\\Client\\": "lib/League/OAuth2/Client/",
                     "Stevenmaguire\\OAuth2\\Client\\": "lib/League/OAuth2/Client/"
                 }
@@ -177,7 +176,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-07-07 18:46:24"
+            "time": "2016-07-10 17:32:03"
         },
         {
             "name": "guzzle/guzzle",
