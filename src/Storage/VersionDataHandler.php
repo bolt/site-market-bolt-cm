@@ -24,7 +24,7 @@ class VersionDataHandler
             /** @var Entity\Package $packageEntity */
             $packageEntity = $em->getRepository(Entity\Package::class)->findOneBy(['name' => $name]);
             if ($packageEntity === false) {
-                throw new \RuntimeException(sprintf('Package %s was not found in database', $name));
+                continue;
             }
 
             /**
