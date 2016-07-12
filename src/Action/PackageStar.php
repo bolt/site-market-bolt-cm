@@ -27,6 +27,8 @@ class PackageStar extends AbstractAction
     {
         $packageId = $params['package'];
 
+        /** @var UrlGeneratorInterface $urlGen */
+        $urlGen = $this->getAppService('url_generator');
         /** @var Session $session */
         $session = $this->getAppService('session');
         /** @var EntityManager $em */
@@ -36,6 +38,11 @@ class PackageStar extends AbstractAction
         $packageRepo = $em->getRepository(Entity\Package::class);
         /** @var Entity\Package $package */
         $package = $packageRepo->findOneBy(['id' => $packageId]);
+        if ($package === false) {
+            $session->getFlashBag()->add('error', 'Star went supernova!');
+
+            return new RedirectResponse($urlGen->generate('home'));
+        }
 
         /** @var Records $records */
         $records = $this->getAppService('members.records');
@@ -63,8 +70,6 @@ class PackageStar extends AbstractAction
             $session->getFlashBag()->add('success', 'Your have starred this package');
         }
 
-        /** @var UrlGeneratorInterface $urlGen */
-        $urlGen = $this->getAppService('url_generator');
         $route = $urlGen->generate('view', ['package' => $packageId]);
 
         return new RedirectResponse($route);
