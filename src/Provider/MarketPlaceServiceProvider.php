@@ -71,6 +71,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
             function ($app) {
                 $container = new Container([
                     'account_profile'   => $app->share(function () use ($app) { return new Action\AccountProfile($app); }),
+                    'account_starred'   => $app->share(function () use ($app) { return new Action\AccountStarred($app); }),
                     'admin'             => $app->share(function () use ($app) { return new Action\Admin($app); }),
                     'feed'              => $app->share(function () use ($app) { return new Action\Feed($app); }),
                     'home'              => $app->share(function () use ($app) { return new Action\Home($app); }),

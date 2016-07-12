@@ -70,6 +70,12 @@ class Frontend implements ControllerProviderInterface
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
 
+        $ctr->match('/profile/starred', [$this, 'profileStarred'])
+            ->bind('profileStarred')
+            ->before([$this, 'auth'])
+            ->method(Request::METHOD_GET)
+        ;
+
         $ctr->match('/list.json', [$this, 'listJson'])
             ->bind('listJson')
             ->method(Request::METHOD_GET)
@@ -371,6 +377,15 @@ class Frontend implements ControllerProviderInterface
         ];
 
         return $this->getAction($app, 'account_profile')->execute($request, $params);
+    }
+
+    public function profileStarred(Application $app, Request $request)
+    {
+        $params = [
+            'user' => $app['members.session']->getAuthorisation(),
+        ];
+
+        return $this->getAction($app, 'account_starred')->execute($request, $params);
     }
 
     /**

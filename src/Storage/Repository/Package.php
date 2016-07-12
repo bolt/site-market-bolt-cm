@@ -302,4 +302,32 @@ class Package extends AbstractRepository
 
         return $qb;
     }
+
+    /**
+     * @param string $accountId
+     *
+     * @return array
+     */
+    public function getStarredPackages($accountId)
+    {
+        $query = $this->getStarredPackagesQuery($accountId);
+
+        return $this->findWith($query);
+    }
+
+    public function getStarredPackagesQuery($accountId)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+            ->select('p.*')
+            ->where('p.approved = :approved')
+            ->andWhere('s.type = :star')
+            ->andWhere('s.account_id = :account_id')
+            ->setParameter('approved', true)
+            ->setParameter('star', 'star')
+            ->setParameter('account_id', $accountId)
+        ;
+
+        return $qb;
+    }
 }
