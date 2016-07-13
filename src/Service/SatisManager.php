@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Bolt\Configuration\ResourceManager;
+use Bolt\Extension\Bolt\MarketPlace\Location;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
@@ -72,7 +73,7 @@ class SatisManager
 
         $skipErrors = true;
         $htmlView = true;
-        $lockDir = $this->resourceManager->getPath('cache/.satis/lock');
+        $lockDir = $this->resourceManager->getPath(Location::SATIS_LOCK);
 
         set_time_limit(3600);
         $output->writeln('<info>Acquiring full build lock…</info>');
@@ -302,7 +303,7 @@ class SatisManager
 
         // add dir to the config
         $config->merge([
-            'config' => ['home' => $this->resourceManager->getPath('cache/.composer')],
+            'config' => ['home' => $this->resourceManager->getPath('composer')],
         ]);
 
         // load global auth file

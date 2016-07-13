@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service\Queue;
 
+use Bolt\Extension\Bolt\MarketPlace\Location;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,9 +21,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class WebhookQueue extends AbstractQueue
 {
-    const CACHE_DIR_WEBHOOK_PENDING = 'cache/.satis/queue/webhook/pending';
-    const CACHE_DIR_WEBHOOK_PROCESSED = 'cache/.satis/queue/webhook/processed';
-
     /** @var PackageQueue */
     protected $packageQueue;
 
@@ -33,8 +31,8 @@ class WebhookQueue extends AbstractQueue
      */
     public function queue(Request $request)
     {
-        $queuePendingDir = $this->getCachePath(self::CACHE_DIR_WEBHOOK_PENDING);
-        $queueProcessedDir = $this->getCachePath(self::CACHE_DIR_WEBHOOK_PROCESSED);
+        $queuePendingDir = $this->getCachePath(Location::SATIS_QUEUE_WEBHOOK_PENDING);
+        $queueProcessedDir = $this->getCachePath(Location::SATIS_QUEUE_WEBHOOK_PROCESSED);
         $event = $request->headers->get('X-GitHub-Event', null);
         $delivery = $request->headers->get('X-GitHub-Delivery', null);
         $signature = $request->headers->get('X-Hub-Signature', null);
@@ -70,9 +68,9 @@ class WebhookQueue extends AbstractQueue
      */
     public function process(OutputInterface $output)
     {
-        $lockDir = $this->getCachePath(QueueManager::CACHE_DIR_LOCK);
-        $queuePendingDir = $this->getCachePath(self::CACHE_DIR_WEBHOOK_PENDING);
-        $queueProcessedDir = $this->getCachePath(self::CACHE_DIR_WEBHOOK_PROCESSED);
+        $lockDir = $this->getCachePath(Location::SATIS_LOCK);
+        $queuePendingDir = $this->getCachePath(Location::SATIS_QUEUE_WEBHOOK_PENDING);
+        $queueProcessedDir = $this->getCachePath(Location::SATIS_QUEUE_WEBHOOK_PROCESSED);
 
         $fs = new Filesystem();
 

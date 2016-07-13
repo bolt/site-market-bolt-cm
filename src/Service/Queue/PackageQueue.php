@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service\Queue;
 
+use Bolt\Extension\Bolt\MarketPlace\Location;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,15 +18,13 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class PackageQueue extends AbstractQueue
 {
-    const CACHE_DIR_PACKAGE = 'cache/.satis/queue/package';
-
     /**
      * @param Entity\Package $package
      */
     public function queue(Entity\Package $package)
     {
-        $lockDir = $this->getCachePath(QueueManager::CACHE_DIR_LOCK);
-        $queueDir = $this->getCachePath(self::CACHE_DIR_PACKAGE);
+        $lockDir = $this->getCachePath(Location::SATIS_LOCK);
+        $queueDir = $this->getCachePath(Location::SATIS_QUEUE_PACKAGE);
 
         $fs = new Filesystem();
         if (!$fs->exists($queueDir)) {
@@ -47,8 +46,8 @@ class PackageQueue extends AbstractQueue
      */
     public function process(SatisManager $manager, OutputInterface $output)
     {
-        $lockDir = $this->getCachePath(QueueManager::CACHE_DIR_LOCK);
-        $queueDir = $this->getCachePath(self::CACHE_DIR_PACKAGE);
+        $lockDir = $this->getCachePath(Location::SATIS_LOCK);
+        $queueDir = $this->getCachePath(Location::SATIS_QUEUE_PACKAGE);
 
         $fs = new Filesystem();
         if (!$fs->exists($queueDir)) {

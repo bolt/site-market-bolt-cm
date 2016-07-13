@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class QueueManager
 {
-    const CACHE_DIR_LOCK = 'cache/.satis/lock';
-
     /** @var EntityManager */
     protected $em;
     /** @var ResourceManager */

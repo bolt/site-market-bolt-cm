@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
+use Bolt\Extension\Bolt\MarketPlace\Location;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Nut\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,7 +48,7 @@ class ExtensionTestRunner extends BaseCommand
             throw new \BadMethodCallException(sprintf("Bad protocol specified: %s.\n\nMust me either 'http' or 'https'", $this->protocol));
         }
 
-        $lockDir = $this->app['resources']->getPath('cache/.satis/lock');
+        $lockDir = $this->app['resources']->getPath(Location::SATIS_LOCK);
         $lock = new LockHandler('extension.test.runner', $lockDir);
 
         while (true) {
