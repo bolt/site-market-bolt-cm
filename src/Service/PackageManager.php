@@ -305,7 +305,7 @@ class PackageManager
             }
             $updated[$stability][$version] = [
                 'version'  => $package->getPrettyVersion(),
-                'released' => $package->getReleaseDate()->format('Y-m-d H:i:s'),
+                'released' => $package->getReleaseDate(),
             ];
 
             if (isset($complete[$name])) {
