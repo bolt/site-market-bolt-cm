@@ -92,6 +92,7 @@ class PackageView extends AbstractAction
             'suggested'  => $suggested,
             'statistics' => $this->getAppService('marketplace.services')['statistics'],
             'webhook'    => $webhook,
+            'updated'    => $this->getUpdated($package),
             'versions'   => $this->getVersions($package),
         ];
         $html = $twig->render('package.twig', $context);
@@ -99,6 +100,29 @@ class PackageView extends AbstractAction
         $stopwatch->stop('marketplace.action.view');
 
         return new Response($html);
+    }
+
+    /**
+     * @param Entity\Package $package
+     *
+     * @return array
+     */
+    protected function getUpdated(Entity\Package $package)
+    {
+        $sort = function ($a, $b) {
+            return $b['released'] <=> $a['released'];
+        };
+        $updated = $package->getUpdated();
+        $dev = $updated['dev'] ?? [];
+        $stable = $updated['stable'] ?? [];
+
+        usort($dev, $sort);
+        usort($stable, $sort);
+
+        return [
+            'dev'    => $dev,
+            'stable' => $stable,
+        ];
     }
 
     protected function getVersions(Entity\Package $package)
@@ -118,7 +142,7 @@ class PackageView extends AbstractAction
             }
             $versions[$boltMajorVersion] = $entity;
         }
-        
+
         return $versions;
     }
 }
