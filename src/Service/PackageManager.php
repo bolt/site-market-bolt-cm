@@ -18,7 +18,6 @@ use Composer\Repository\Vcs\VcsDriverInterface;
 use Composer\Repository\VcsRepository;
 use Composer\Semver\Constraint\Constraint;
 use Composer\Util\RemoteFilesystem;
-use DateTime;
 
 /**
  * Composer package manager class.
@@ -282,27 +281,38 @@ class PackageManager
     public function updateEntities(EntityManager $em, array $packages)
     {
         $complete = [];
-        $masterBranchDate = null;
+        $updated = [];
+        $current = null;
 
         /** @var Repository\Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
         krsort($packages);
         foreach ($packages as $key => $package) {
             $name = $package->getName();
+            $stability = $package->getStability();
+            $version = $package->getVersion();
+
+            if ($current === null) {
+                $current = $name;
+                $updated = [];
+            } elseif ($current !== $name) {
+                if ($this->updateEntity($repo, $package, $updated) === false) {
+                    // Unset the package from the array so we don't send it to the
+                    // version data handler
+                    unset($packages[$key]);
+                }
+                $current = null;
+            }
+            $updated[$stability][$version] = [
+                'version'  => $package->getPrettyVersion(),
+                'released' => $package->getReleaseDate()->format('Y-m-d H:i:s'),
+            ];
+
             if (isset($complete[$name])) {
                 continue;
             }
-            if ($package->getStability() === 'stable') {
+            if ($stability === 'stable') {
                 $complete[$name] = true;
-            }
-            if ($package->getPrettyVersion() === 'dev-master') {
-                $masterBranchDate = $package->getReleaseDate();
-
-            }
-            if ($this->updateEntity($repo, $package, $masterBranchDate) === false) {
-                // Unset the package from the array so we don't send it to the
-                // version data handler
-                unset($packages[$key]);
             }
         }
 
@@ -315,18 +325,18 @@ class PackageManager
      *
      * @param Repository\Package $repo
      * @param PackageInterface   $package
-     * @param DateTime           $masterBranchDate
+     * @param array              $updated
      *
      * @return bool
      */
-    protected function updateEntity(Repository\Package $repo, PackageInterface $package, DateTime $masterBranchDate)
+    protected function updateEntity(Repository\Package $repo, PackageInterface $package, array $updated)
     {
         /** @var Entity\Package $packageEntity */
         $packageEntity = $repo->findOneBy(['name' => $package->getPrettyName()]);
         if ($packageEntity === false) {
             return false;
         }
-        $this->updatePackageInformation($packageEntity, $package, $masterBranchDate);
+        $this->updatePackageInformation($packageEntity, $package, $updated);
 
         $repo->save($packageEntity);
 
@@ -338,9 +348,9 @@ class PackageManager
      *
      * @param Entity\Package       $packageEntity
      * @param CompletePackage|null $package
-     * @param DateTime             $masterBranchDate
+     * @param array                $updated
      */
-    protected function updatePackageInformation(Entity\Package $packageEntity, CompletePackage $package = null, DateTime $masterBranchDate = null)
+    protected function updatePackageInformation(Entity\Package $packageEntity, CompletePackage $package = null, array $updated = [])
     {
         $authors = [];
         if ($package === null) {
@@ -393,7 +403,7 @@ class PackageManager
                 $packageEntity->setIcon($extra['bolt-icon']);
             }
             $packageEntity->setRequirements($package->getRequires());
-            $packageEntity->setUpdated($masterBranchDate);
+            $packageEntity->setUpdated($updated);
         }
 
         $packageEntity->setAuthors($authors);

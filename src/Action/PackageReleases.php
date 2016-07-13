@@ -6,7 +6,6 @@ use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
 use Bolt\Storage\EntityManager;
-use DateTime;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,9 +55,6 @@ class PackageReleases extends AbstractAction
 
         $i = 0;
         foreach ($info as $ver) {
-            if ($i === 0) {
-                $package->setUpdated(new DateTime($ver['time']));
-            }
             $build = $repo->findOneBy(['package_id' => $package->getId(), 'version' => $ver['version']]);
             if ($build) {
                 $ver['build'] = $build;
