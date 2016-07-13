@@ -30,7 +30,7 @@ class Package extends BaseTable
         $this->table->addColumn('requirements',  'json_array', ['notnull' => false]);
         $this->table->addColumn('authors',       'json_array', ['notnull' => false]);
         $this->table->addColumn('created',       'datetime',   ['notnull' => false]);
-        $this->table->addColumn('updated',       'datetime',   ['notnull' => false]);
+        $this->table->addColumn('updated',       'json_array', ['notnull' => false]);
         $this->table->addColumn('token',         'string',     ['notnull' => false]);
         $this->table->addColumn('screenshots',   'json_array', ['notnull' => false]);
         $this->table->addColumn('icon',          'text',       ['notnull' => false]);

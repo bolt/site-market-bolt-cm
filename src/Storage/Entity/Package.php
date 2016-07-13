@@ -38,7 +38,7 @@ class Package extends Entity
     protected $versions;
     /** @var \DateTime */
     protected $created;
-    /** @var \DateTime */
+    /** @var array */
     protected $updated;
     /** @var array */
     protected $authors;
@@ -278,7 +278,7 @@ class Package extends Entity
     }
 
     /**
-     * @return \DateTime
+     * @return array
      */
     public function getUpdated()
     {
@@ -286,9 +286,9 @@ class Package extends Entity
     }
 
     /**
-     * @param \DateTime $updated
+     * @param array $updated
      */
-    public function setUpdated($updated)
+    public function setUpdated(array $updated)
     {
         $this->updated = $updated;
     }
