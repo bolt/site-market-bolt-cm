@@ -20,7 +20,8 @@
         "doctrine/dbal": "^2.6@dev",
         "fabpot/goutte": "^3.1",
         "forxer/gravatar": "^1.2",
-        "passwordlib/passwordlib": "^1.0@beta"
+        "passwordlib/passwordlib": "^1.0@beta",
+        "php": "^7.0"
     },
     "autoload": {
         "psr-4": {
