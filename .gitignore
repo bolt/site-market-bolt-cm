@@ -11,4 +11,5 @@ public/bolt-public/view/
 public/satis
 public/theme/marketplace/
 satis.json
+var/cache/
 vendor
