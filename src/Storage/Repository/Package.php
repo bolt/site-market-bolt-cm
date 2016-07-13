@@ -163,8 +163,8 @@ class Package extends AbstractRepository
         ;
 
         if ($keyword !== null) {
-            $qb->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search OR p.authors LIKE :search');
-            $qb->setParameter('search', '%' . $keyword . '%');
+            $qb->andWhere('lower(p.name) LIKE :search OR lower(p.title) LIKE :search OR lower(p.keywords) LIKE :search OR lower(p.authors) LIKE :search');
+            $qb->setParameter('search', '%' . strtolower($keyword) . '%');
         }
 
         if ($type !== null) {
@@ -243,8 +243,8 @@ class Package extends AbstractRepository
         $qb->andWhere($qb->expr()->like('v.bolt_min', $qb->expr()->literal('>= ' . $boltMajor . '%')));
 
         if ($keyword !== null) {
-            $qb->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search OR p.authors LIKE :search');
-            $qb->setParameter('search', '%' . $keyword . '%');
+            $qb->andWhere('lower(p.name) LIKE :search OR lower(p.title) LIKE :search OR lower(p.keywords) LIKE :search OR lower(p.authors) LIKE :search');
+            $qb->setParameter('search', '%' . strtolower($keyword) . '%');
         }
 
         if ($type !== null) {
@@ -347,9 +347,9 @@ class Package extends AbstractRepository
         $qb = $this->createQueryBuilder('p')
             ->select('*')
             ->where('p.approved = :approved')
-            ->andWhere('p.name LIKE :author')
+            ->andWhere('lower(p.name) LIKE :author')
             ->setParameter('approved', true)
-            ->setParameter('author', $author . '/%')
+            ->setParameter('author', strtolower($author) . '/%')
             ->orderBy('created', 'DESC')
             ->setMaxResults($limit)
         ;
