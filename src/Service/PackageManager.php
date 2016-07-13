@@ -290,7 +290,9 @@ class PackageManager
             if (isset($complete[$name])) {
                 continue;
             }
-            $complete[$name] = true;
+            if ($package->getStability() === 'stable') {
+                $complete[$name] = true;
+            }
 
             if ($this->updateEntity($repo, $package) === false) {
                 // Unset the package from the array so we don't send it to the
@@ -298,7 +300,6 @@ class PackageManager
                 unset($packages[$key]);
             }
         }
-        ksort($packages);
 
         // Update stored local versions
         (new VersionDataHandler())->updateVersionEntities($em, $packages);
