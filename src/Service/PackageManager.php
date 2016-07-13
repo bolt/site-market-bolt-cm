@@ -282,6 +282,8 @@ class PackageManager
     public function updateEntities(EntityManager $em, array $packages)
     {
         $complete = [];
+        $masterBranchDate = null;
+
         /** @var Repository\Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
         krsort($packages);
@@ -293,8 +295,11 @@ class PackageManager
             if ($package->getStability() === 'stable') {
                 $complete[$name] = true;
             }
+            if ($package->getPrettyVersion() === 'dev-master') {
+                $masterBranchDate = $package->getReleaseDate();
 
-            if ($this->updateEntity($repo, $package) === false) {
+            }
+            if ($this->updateEntity($repo, $package, $masterBranchDate) === false) {
                 // Unset the package from the array so we don't send it to the
                 // version data handler
                 unset($packages[$key]);
@@ -310,17 +315,18 @@ class PackageManager
      *
      * @param Repository\Package $repo
      * @param PackageInterface   $package
+     * @param DateTime           $masterBranchDate
      *
-     * @return boolean
+     * @return bool
      */
-    protected function updateEntity(Repository\Package $repo, PackageInterface $package)
+    protected function updateEntity(Repository\Package $repo, PackageInterface $package, DateTime $masterBranchDate)
     {
         /** @var Entity\Package $packageEntity */
         $packageEntity = $repo->findOneBy(['name' => $package->getPrettyName()]);
         if ($packageEntity === false) {
             return false;
         }
-        $this->updatePackageInformation($packageEntity, $package);
+        $this->updatePackageInformation($packageEntity, $package, $masterBranchDate);
 
         $repo->save($packageEntity);
 
@@ -332,8 +338,9 @@ class PackageManager
      *
      * @param Entity\Package       $packageEntity
      * @param CompletePackage|null $package
+     * @param DateTime             $masterBranchDate
      */
-    protected function updatePackageInformation(Entity\Package $packageEntity, CompletePackage $package = null)
+    protected function updatePackageInformation(Entity\Package $packageEntity, CompletePackage $package = null, DateTime $masterBranchDate = null)
     {
         $authors = [];
         if ($package === null) {
@@ -386,17 +393,9 @@ class PackageManager
                 $packageEntity->setIcon($extra['bolt-icon']);
             }
             $packageEntity->setRequirements($package->getRequires());
+            $packageEntity->setUpdated($masterBranchDate);
         }
 
-        //$repository = $this->loadRepository($package);
-        //$versions = $repository->getPackages();
-        //$pv = [];
-        //foreach ($versions as $version) {
-        //    $pv[] = $version->getPrettyVersion();
-        //}
-        //$packageEntity->setVersions($pv);
-
         $packageEntity->setAuthors($authors);
-        $packageEntity->setUpdated(new DateTime());
     }
 }
