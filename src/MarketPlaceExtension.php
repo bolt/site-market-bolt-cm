@@ -37,7 +37,10 @@ class MarketPlaceExtension extends SimpleExtension
      */
     protected function registerServices(Application $app)
     {
-        putenv('COMPOSER_HOME=' . $app['resources']->getPath('cache/.composer'));
+        $app['resources']->setPath('composer', 'var/cache/composer');
+        $app['resources']->setPath('satis', 'var/cache/satis');
+
+        putenv('COMPOSER_HOME=' . $app['resources']->getPath('composer'));
 
         $this->extendDatabaseSchemaServices();
         $this->extendRepositoryMapping();
