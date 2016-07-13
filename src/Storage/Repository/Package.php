@@ -215,6 +215,67 @@ class Package extends AbstractRepository
     }
 
     /**
+     * Temporary! Both search functions need overhaul.
+     *
+     * @param string $keyword
+     * @param string $type
+     * @param int    $boltMajor
+     * @param string $order
+     * @param int    $limit
+     *
+     * @return array
+     */
+    public function searchByVersion($keyword, $type = null, $boltMajor, $order = null, $limit = null)
+    {
+        $query = $this->searchByVersionQuery($keyword, $type, $boltMajor, $order, $limit);
+
+        return $this->findWith($query);
+    }
+
+    public function searchByVersionQuery($keyword, $type, $boltMajor, $order, $limit)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('DISTINCT (p.id), p.*')
+            ->leftJoin('p', 'bolt_marketplace_package_versions', 'v', 'p.id = v.package_id')
+            ->where('p.approved = :status')
+        ;
+
+        $qb->andWhere($qb->expr()->like('v.bolt_min', $qb->expr()->literal('>= ' . $boltMajor . '%')));
+
+        if ($keyword !== null) {
+            $qb->andWhere('p.name LIKE :search OR p.title LIKE :search OR p.keywords LIKE :search OR p.authors LIKE :search');
+            $qb->setParameter('search', '%' . $keyword . '%');
+        }
+
+        if ($type !== null) {
+            $qb->andWhere('p.type = :type');
+            $qb->setParameter('type', $type);
+        }
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        switch ($order) {
+            case 'date':
+                $qb->orderBy('p.created', 'DESC');
+                break;
+            case 'modified':
+                $qb->orderBy('p.updated', 'DESC');
+                break;
+            case 'name':
+                $qb->orderBy('p.title', 'ASC');
+                break;
+            default:
+                break;
+        }
+
+        $qb->setParameter('status', true);
+
+        return $qb;
+    }
+
+    /**
      * @return Entity\Package[]|false
      */
     public function getTags()

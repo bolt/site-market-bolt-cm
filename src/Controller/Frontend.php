@@ -248,7 +248,8 @@ class Frontend implements ControllerProviderInterface
     public function browse(Application $app, Request $request)
     {
         $params = [
-            'type' => 'browse',
+            'type'    => 'browse',
+            'version' => $request->query->get('version')
         ];
 
         return $this->getAction($app, 'search')->execute($request, $params);

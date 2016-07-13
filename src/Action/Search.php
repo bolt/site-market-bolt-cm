@@ -29,7 +29,11 @@ class Search extends AbstractAction
         $em = $this->getAppService('storage');
         /** @var Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
-        $packages = $repo->search($search, $type, $order);
+        if ($params['version'] === null) {
+            $packages = $repo->search($search, $type, $order);
+        } else {
+            $packages = $repo->searchByVersion($search, $type, $params['version'], $order);
+        }
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
