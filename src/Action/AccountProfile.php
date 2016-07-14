@@ -30,7 +30,7 @@ class AccountProfile extends AbstractAction
 
         /** @var Authorisation $user */
         $user = $params['user'];
-        $packages = $repo->findBy(['account_id' => $user->getGuid()], ['created', 'DESC']);
+        $packages = $repo->findBy(['account_id' => $user->getGuid()], ['title', 'ASC']);
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
