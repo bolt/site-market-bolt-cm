@@ -3,7 +3,6 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Storage\Repository;
 
 /**
  * Package repository.
@@ -157,7 +156,6 @@ class Package extends AbstractRepository
     public function getSearchQuery($keyword, $type, $order, $limit)
     {
         $qb = $this->createQueryBuilder('p')
-            ->select('DISTINCT (p.id), p.*')
             ->leftJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('p.approved = :status')
         ;
@@ -180,17 +178,26 @@ class Package extends AbstractRepository
 
         switch ($order) {
             case 'date':
-                $qb->orderBy('p.created', 'DESC');
+                $qb
+                    ->select('DISTINCT ON (p.id, p.created) p.*')
+                    ->orderBy('p.created', 'DESC')
+                ;
                 break;
             case 'modified':
-                $qb->orderBy('p.updated', 'DESC');
+// broken
+                $qb
+                    ->select('DISTINCT ON (p.id, p.updated) p.*')
+                    ->orderBy('p.updated', 'DESC')
+                ;
                 break;
             case 'name':
-                $qb->orderBy('p.title', 'ASC');
+                $qb
+                    ->select('DISTINCT ON (p.id, p.title) p.*')
+                    ->orderBy('p.title', 'ASC');
                 break;
             case 'downloads':
                 $qb
-                    ->addSelect('COUNT(p.id) as pcount')
+                    ->select('DISTINCT ON (p.id, pcount) p.*, COUNT(p.id) as pcount')
                     ->andWhere("s.type = 'install'")
                     ->groupBy('p.id')
                     ->orderBy('pcount', 'DESC')
@@ -198,7 +205,7 @@ class Package extends AbstractRepository
                 break;
             case 'stars':
                 $qb
-                    ->addSelect('COUNT(p.id) as pcount')
+                    ->select('DISTINCT ON (p.id, pcount) p.*, COUNT(p.id) as pcount')
                     ->andWhere("s.type = 'star'")
                     ->groupBy('p.id')
                     ->orderBy('pcount', 'DESC')
@@ -206,6 +213,7 @@ class Package extends AbstractRepository
                 break;
 
             default:
+                $qb->select('DISTINCT ON (p.id) p.*');
                 break;
         }
 
@@ -235,7 +243,6 @@ class Package extends AbstractRepository
     public function searchByVersionQuery($keyword, $type, $boltMajor, $order, $limit)
     {
         $qb = $this->createQueryBuilder('p')
-            ->select('DISTINCT (p.id), p.*')
             ->leftJoin('p', 'bolt_marketplace_package_versions', 'v', 'p.id = v.package_id')
             ->where('p.approved = :status')
         ;
@@ -258,15 +265,21 @@ class Package extends AbstractRepository
 
         switch ($order) {
             case 'date':
-                $qb->orderBy('p.created', 'DESC');
+                $qb
+                    ->select('DISTINCT ON (p.id, p.created) p.*')
+                    ->orderBy('p.created', 'DESC')
+                ;
                 break;
             case 'modified':
                 $qb->orderBy('p.updated', 'DESC');
                 break;
             case 'name':
-                $qb->orderBy('p.title', 'ASC');
+                $qb
+                    ->select('DISTINCT ON (p.id, p.title) p.*')
+                    ->orderBy('p.title', 'ASC');
                 break;
             default:
+                $qb->select('DISTINCT ON (p.id) p.*');
                 break;
         }
 
