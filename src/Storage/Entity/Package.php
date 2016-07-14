@@ -35,8 +35,6 @@ class Package extends Entity
     /** @var \DateTime */
     protected $created;
     /** @var array */
-    protected $updated;
-    /** @var array */
     protected $authors;
     /** @var string */
     protected $token;
@@ -235,22 +233,6 @@ class Package extends Entity
     public function setCreated($created)
     {
         $this->created = $created;
-    }
-
-    /**
-     * @return array
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * @param array $updated
-     */
-    public function setUpdated(array $updated)
-    {
-        $this->updated = $updated;
     }
 
     /**

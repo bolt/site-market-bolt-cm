@@ -21,6 +21,7 @@ class PackageVersions extends BaseTable
         $this->table->addColumn('version',        'string',   ['notnull' => false]);
         $this->table->addColumn('pretty_version', 'string',   ['notnull' => false]);
         $this->table->addColumn('stability',      'string',   ['notnull' => false]);
+        $this->table->addColumn('updated',        'datetime', ['notnull' => false]);
         $this->table->addColumn('bolt_min',       'string',   ['notnull' => false]);
         $this->table->addColumn('bolt_max',       'string',   ['notnull' => false]);
     }

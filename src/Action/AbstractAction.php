@@ -2,7 +2,9 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Bolt\Config;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Silex\Application;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -75,5 +77,48 @@ abstract class AbstractAction implements ActionInterface
             'repo'     => $source[1],
             'token'    => $package->getToken(),
         ];
+    }
+
+    /**
+     * @param Entity\Package $package
+     *
+     * @return array
+     */
+    protected function getUpdated(Entity\Package $package)
+    {
+        $em = $this->getAppService('storage');
+        /** @var Repository\PackageVersions $repo */
+        $repo = $em->getRepository(Entity\PackageVersions::class);
+
+        return [
+            'dev'    => $repo->getLatestReleaseForStability($package->getId(), 'dev'),
+            'stable' => $repo->getLatestReleaseForStability($package->getId(), 'stable'),
+        ];
+    }
+
+    /**
+     * @param Entity\Package $package
+     *
+     * @return Entity\PackageVersions[]
+     */
+    protected function getVersions(Entity\Package $package)
+    {
+        $em = $this->getAppService('storage');
+        /** @var Repository\PackageVersions $repo */
+        $repo = $em->getRepository(Entity\PackageVersions::class);
+        /** @var Config $config */
+        $config = $this->getAppService('config');
+        $boltMajorVersions = $config->get('general/bolt_major_versions');
+
+        $versions = [];
+        foreach ($boltMajorVersions as $boltMajorVersion) {
+            $entity = $repo->getLatestCompatibleVersion($package->getId(), 'stable', $boltMajorVersion);
+            if ($entity === false) {
+                continue;
+            }
+            $versions[$boltMajorVersion] = $entity;
+        }
+
+        return $versions;
     }
 }

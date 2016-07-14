@@ -2,10 +2,8 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Config;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,49 +98,5 @@ class PackageView extends AbstractAction
         $stopwatch->stop('marketplace.action.view');
 
         return new Response($html);
-    }
-
-    /**
-     * @param Entity\Package $package
-     *
-     * @return array
-     */
-    protected function getUpdated(Entity\Package $package)
-    {
-        $sort = function ($a, $b) {
-            return $b['released'] <=> $a['released'];
-        };
-        $updated = $package->getUpdated();
-        $dev = $updated['dev'] ?? [];
-        $stable = $updated['stable'] ?? [];
-
-        usort($dev, $sort);
-        usort($stable, $sort);
-
-        return [
-            'dev'    => $dev,
-            'stable' => $stable,
-        ];
-    }
-
-    protected function getVersions(Entity\Package $package)
-    {
-        $em = $this->getAppService('storage');
-        /** @var Repository\PackageVersions $repo */
-        $repo = $em->getRepository(Entity\PackageVersions::class);
-        /** @var Config $config */
-        $config = $this->getAppService('config');
-        $boltMajorVersions = $config->get('general/bolt_major_versions');
-
-        $versions = [];
-        foreach ($boltMajorVersions as $boltMajorVersion) {
-            $entity = $repo->getLatestCompatibleVersion($package->getId(), 'stable', $boltMajorVersion);
-            if ($entity === false) {
-                continue;
-            }
-            $versions[$boltMajorVersion] = $entity;
-        }
-
-        return $versions;
     }
 }

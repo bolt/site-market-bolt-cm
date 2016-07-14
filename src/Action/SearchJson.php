@@ -50,6 +50,17 @@ class SearchJson extends AbstractAction
         $membersRecords = $this->getAppService('members.records');
         $account = $membersRecords->getAccountByGuid($package->getAccountId());
         $accountMeta = $membersRecords->getAccountMeta($package->getAccountId(), 'username');
+        $updateEntities = $this->getUpdated($package);
+        $versions = [];
+        if ($versionEntities = $this->getVersions($package)) {
+            /**
+             * @var int $version
+             * @var Entity\PackageVersions $versionEntity
+             */
+            foreach ($versionEntities as $version => $versionEntity) {
+                $versions[$version] = $versionEntity->getPrettyVersion();
+            }
+        }
 
         return [
             'id'            => $package->getId(),
@@ -61,9 +72,12 @@ class SearchJson extends AbstractAction
             'description'   => $package->getDescription(),
             'documentation' => $package->getDocumentation(),
             'approved'      => $package->isApproved(),
-            'versions'      => $package->getVersions(),
+            'versions'      => $versions,
             'created'       => $package->getCreated(),
-            'updated'       => $package->getUpdated(),
+            'updated'       => [
+                'dev'    => $updateEntities['dev'] ? $updateEntities['dev']->getUpdated() : null,
+                'stable' => $updateEntities['stable'] ? $updateEntities['stable']->getUpdated() : null,
+            ],
             'authors'       => $package->getAuthors(),
             'user'          => [
                 'id'         => $account->getId(),

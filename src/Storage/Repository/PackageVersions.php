@@ -3,7 +3,6 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Storage\Repository;
 use Composer\Semver\Constraint\Constraint;
 use Composer\Semver\VersionParser;
 
@@ -25,13 +24,40 @@ class PackageVersions extends AbstractRepository
             ->from($this->getTableName(), $alias === 'packageversions' ? 'package_versions' :$alias);
     }
 
+    /**
+     * @param string $packageId
+     * @param string $stability
+     *
+     * @return array
+     */
+    public function getLatestReleaseForStability($packageId, $stability)
+    {
+        $query = $this->getLatestReleaseForStabilityQuery($packageId, $stability);
+
+        return $this->findOneWith($query);
+    }
+
+    public function getLatestReleaseForStabilityQuery($packageId, $stability)
+    {
+        $qb = $this->createQueryBuilder('v');
+        $qb
+            ->select('*')
+            ->where('v.package_id = :package_id')
+            ->andWhere('v.stability = :stability')
+            ->orderBy('v.updated', 'DESC')
+            ->setParameter('package_id', $packageId)
+            ->setParameter('stability', $stability)
+        ;
+
+        return $qb;
+    }
 
     /**
      * @param string $packageId
      * @param string $stability
      * @param string $boltVersion
      *
-     * @return array|bool
+     * @return Entity\PackageVersions|bool
      */
     public function getLatestCompatibleVersion($packageId, $stability, $boltVersion)
     {

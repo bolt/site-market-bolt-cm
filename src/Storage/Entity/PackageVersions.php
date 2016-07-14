@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 
 use Bolt\Storage\Entity\Entity;
+use DateTime;
 
 /**
  * Package version entity.
@@ -21,6 +22,8 @@ class PackageVersions extends Entity
     protected $pretty_version;
     /** @var string */
     protected $stability;
+    /** @var DateTime */
+    protected $updated;
     /** @var string */
     protected $bolt_min;
     /** @var string */
@@ -104,6 +107,22 @@ class PackageVersions extends Entity
     public function setStability($stability)
     {
         $this->stability = $stability;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param DateTime $updated
+     */
+    public function setUpdated(DateTime $updated)
+    {
+        $this->updated = $updated;
     }
 
     /**

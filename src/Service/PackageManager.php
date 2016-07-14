@@ -281,42 +281,17 @@ class PackageManager
     public function updateEntities(EntityManager $em, array $packages)
     {
         $complete = [];
-        $updated = [];
         $current = null;
 
         /** @var Repository\Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
         foreach ($packages as $key => $package) {
-            $name = $package->getName();
-            $stability = $package->getStability();
-            $version = $package->getVersion();
-
-            if ($current === null) {
-                $current = $name;
-                $updated = [];
-            } elseif ($current !== $name) {
-                if ($this->updateEntity($repo, $package, $updated) === false) {
-                    // Unset the package from the array so we don't send it to the
-                    // version data handler
-                    unset($packages[$key]);
-                }
-                $current = null;
-            }
-            $updated[$stability][$version] = [
-                'version'  => $package->getPrettyVersion(),
-                'released' => $package->getReleaseDate(),
-            ];
-
-            if (isset($complete[$name])) {
-                continue;
-            }
-            if ($stability === 'stable') {
-                $complete[$name] = true;
+            if ($package->getPrettyVersion() === 'dev-master') {
+                $this->updateEntity($repo, $package);
+                // Update stored local versions
+                (new VersionDataHandler())->updateVersionEntities($em, $packages);
             }
         }
-
-        // Update stored local versions
-        (new VersionDataHandler())->updateVersionEntities($em, $packages);
     }
 
     /**
@@ -324,18 +299,17 @@ class PackageManager
      *
      * @param Repository\Package $repo
      * @param PackageInterface   $package
-     * @param array              $updated
      *
      * @return bool
      */
-    protected function updateEntity(Repository\Package $repo, PackageInterface $package, array $updated)
+    protected function updateEntity(Repository\Package $repo, PackageInterface $package)
     {
         /** @var Entity\Package $packageEntity */
         $packageEntity = $repo->findOneBy(['name' => $package->getPrettyName()]);
         if ($packageEntity === false) {
             return false;
         }
-        $this->updatePackageInformation($packageEntity, $package, $updated);
+        $this->updatePackageInformation($packageEntity, $package);
 
         $repo->save($packageEntity);
 
@@ -347,9 +321,8 @@ class PackageManager
      *
      * @param Entity\Package       $packageEntity
      * @param CompletePackage|null $package
-     * @param array                $updated
      */
-    protected function updatePackageInformation(Entity\Package $packageEntity, CompletePackage $package = null, array $updated = [])
+    protected function updatePackageInformation(Entity\Package $packageEntity, CompletePackage $package = null)
     {
         $authors = [];
         if ($package === null) {
@@ -399,7 +372,6 @@ class PackageManager
             if (isset($extra['bolt-icon'])) {
                 $packageEntity->setIcon($extra['bolt-icon']);
             }
-            $packageEntity->setUpdated($updated);
         }
 
         $packageEntity->setAuthors($authors);

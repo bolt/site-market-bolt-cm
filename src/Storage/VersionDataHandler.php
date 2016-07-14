@@ -32,9 +32,6 @@ class VersionDataHandler
              * @var Entity\PackageVersions $parts
              */
             foreach ($versionData as $version => $parts) {
-                if ($parts->getStability() !== 'stable') {
-                    continue;
-                }
                 /** @var Entity\PackageVersions $versionEntity */
                 $versionEntity = $repo->findOneBy(['package_id' => $packageEntity->getId(), 'version' => $version]);
                 if ($versionEntity !== false) {
@@ -63,6 +60,7 @@ class VersionDataHandler
             $entity = new Entity\PackageVersions();
             $entity->setStability($package->getStability());
             $entity->setVersion($version);
+            $entity->setUpdated($package->getReleaseDate());
             $entity->setPrettyVersion($package->getPrettyVersion());
             $entity->setBoltMin($requires['min']);
             $entity->setBoltMax($requires['max']);
