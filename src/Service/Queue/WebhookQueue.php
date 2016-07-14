@@ -38,7 +38,8 @@ class WebhookQueue extends AbstractQueue
         $signature = $request->headers->get('X-Hub-Signature', null);
         $token = $request->query->get('token');
 
-        if ($event === null || $delivery === null || $token === null) {
+        // Token can be either NULL or an empty string … both are, obviously, invalid
+        if ($event === null || $delivery === null || empty($token)) {
             return new JsonResponse(['status' => 'error', 'response' => 'Invalid request'], Response::HTTP_BAD_REQUEST);
         }
 
