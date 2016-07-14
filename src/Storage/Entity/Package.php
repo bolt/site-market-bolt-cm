@@ -32,8 +32,6 @@ class Package extends Entity
     protected $documentation;
     /** @var boolean */
     protected $approved;
-    /** @var array */
-    protected $versions;
     /** @var \DateTime */
     protected $created;
     /** @var array */
@@ -221,22 +219,6 @@ class Package extends Entity
     public function setApproved($approved)
     {
         $this->approved = $approved;
-    }
-
-    /**
-     * @return array
-     */
-    public function getVersions()
-    {
-        return $this->versions;
-    }
-
-    /**
-     * @param array $versions
-     */
-    public function setVersions(array $versions)
-    {
-        $this->versions = $versions;
     }
 
     /**

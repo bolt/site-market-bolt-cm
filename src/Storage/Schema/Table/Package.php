@@ -26,7 +26,6 @@ class Package extends BaseTable
         $this->table->addColumn('description',   'text',       ['notnull' => false]);
         $this->table->addColumn('documentation', 'text',       ['notnull' => false]);
         $this->table->addColumn('approved',      'boolean',    ['notnull' => false, 'default' => true]);
-        $this->table->addColumn('versions',      'json_array', ['notnull' => false]);
         $this->table->addColumn('authors',       'json_array', ['notnull' => false]);
         $this->table->addColumn('created',       'datetime',   ['notnull' => false]);
         $this->table->addColumn('updated',       'json_array', ['notnull' => false]);
