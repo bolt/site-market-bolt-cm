@@ -161,8 +161,16 @@ class Package extends AbstractRepository
         ;
 
         if ($keyword !== null) {
-            $qb->andWhere('lower(p.name) LIKE :search OR lower(p.title) LIKE :search OR lower(p.keywords) LIKE :search OR lower(p.authors) LIKE :search');
-            $qb->setParameter('search', '%' . strtolower($keyword) . '%');
+            $andCond = $qb->expr()
+                ->orX()
+                ->add($qb->expr()->like('lower(p.name)', ':search'))
+                ->add($qb->expr()->like('lower(p.title)', ':search'))
+                ->add($qb->expr()->orX("(p.keywords #>> '{}' ILIKE :search)"))
+                ->add($qb->expr()->orX("(p.authors #>> '{}' ILIKE :search)"))
+            ;
+            $qb->andWhere($andCond)
+                ->setParameter('search', '%' . strtolower($keyword) . '%')
+            ;
         }
 
         if ($type !== null) {
@@ -250,8 +258,16 @@ class Package extends AbstractRepository
         $qb->andWhere($qb->expr()->like('v.bolt_min', $qb->expr()->literal('>= ' . $boltMajor . '%')));
 
         if ($keyword !== null) {
-            $qb->andWhere('lower(p.name) LIKE :search OR lower(p.title) LIKE :search OR lower(p.keywords) LIKE :search OR lower(p.authors) LIKE :search');
-            $qb->setParameter('search', '%' . strtolower($keyword) . '%');
+            $andCond = $qb->expr()
+                ->orX()
+                ->add($qb->expr()->like('lower(p.name)', ':search'))
+                ->add($qb->expr()->like('lower(p.title)', ':search'))
+                ->add($qb->expr()->orX("(p.keywords #>> '{}' ILIKE :search)"))
+                ->add($qb->expr()->orX("(p.authors #>> '{}' ILIKE :search)"))
+            ;
+            $qb->andWhere($andCond)
+                ->setParameter('search', '%' . strtolower($keyword) . '%')
+            ;
         }
 
         if ($type !== null) {
