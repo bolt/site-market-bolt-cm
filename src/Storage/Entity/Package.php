@@ -33,8 +33,6 @@ class Package extends Entity
     /** @var boolean */
     protected $approved;
     /** @var array */
-    protected $requirements;
-    /** @var array */
     protected $versions;
     /** @var \DateTime */
     protected $created;
@@ -223,26 +221,6 @@ class Package extends Entity
     public function setApproved($approved)
     {
         $this->approved = $approved;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRequirements()
-    {
-        return $this->requirements;
-    }
-
-    /**
-     * @param array $requirements
-     */
-    public function setRequirements($requirements)
-    {
-        // HACK ALERT! This is getting converted to a JSON string somehwere
-        if (is_string($requirements)) {
-            $requirements = json_decode($requirements, true);
-        }
-        $this->requirements = $requirements;
     }
 
     /**

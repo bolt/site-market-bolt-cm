@@ -382,8 +382,6 @@ class PackageManager
             if (isset($information['extra']) && isset($information['extra']['bolt-icon'])) {
                 $packageEntity->setIcon($information['extra']['bolt-icon']);
             }
-
-            $packageEntity->setRequirements($information['require']);
         } else {
             /** @var \Composer\Package\CompletePackage $package */
             $packageEntity->setName($package->getName());
@@ -401,7 +399,6 @@ class PackageManager
             if (isset($extra['bolt-icon'])) {
                 $packageEntity->setIcon($extra['bolt-icon']);
             }
-            $packageEntity->setRequirements($package->getRequires());
             $packageEntity->setUpdated($updated);
         }
 

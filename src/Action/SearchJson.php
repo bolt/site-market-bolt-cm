@@ -61,7 +61,6 @@ class SearchJson extends AbstractAction
             'description'   => $package->getDescription(),
             'documentation' => $package->getDocumentation(),
             'approved'      => $package->isApproved(),
-            'requirements'  => $package->getRequirements(),
             'versions'      => $package->getVersions(),
             'created'       => $package->getCreated(),
             'updated'       => $package->getUpdated(),
