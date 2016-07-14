@@ -90,6 +90,7 @@ class WebhookManager
         }
 
         $this->session->getFlashBag()->add('success', 'Successfully created webhook!');
+        $this->session->set('pending-' .  $callbackToken, $callbackToken);
 
         return true;
     }

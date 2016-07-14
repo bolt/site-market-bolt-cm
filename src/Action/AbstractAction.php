@@ -7,6 +7,7 @@ use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -67,7 +68,11 @@ abstract class AbstractAction implements ActionInterface
         /** @var Entity\Stat $stat */
         $stat = $statRepo->findOneBy(['package_id' => $package->getId(), 'type' => 'webhook'], ['recorded', 'DESC']);
         if ($stat !== false) {
-            return false;
+            /** @var Session $session */
+            $session = $this->getAppService('session');
+            if ($session->get('pending-' .  $package->getToken(), false)) {
+                return false;
+            }
         }
 
         /** @var UrlGeneratorInterface $urlGen */
