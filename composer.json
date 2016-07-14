@@ -18,7 +18,8 @@
         "composer/composer": "^1.1",
         "composer/satis": "dev-master@dev",
         "fabpot/goutte": "^3.1",
-        "forxer/gravatar": "^1.2"
+        "forxer/gravatar": "^1.2",
+        "doctrine/dbal": "^2.6@dev"
     },
     "autoload": {
         "psr-4": {

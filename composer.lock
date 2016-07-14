@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0b82c6ec64a4e869d2e0ded38672efab",
-    "content-hash": "3a1e6e67ef92de3b104b45a0ca6eeb28",
+    "hash": "82dfdc5483cac938f3d06097edf08211",
+    "content-hash": "fa057a09ac71f7c8e40bdeb98cf5cc67",
     "packages": [
         {
             "name": "bolt/bolt",
@@ -1018,24 +1018,24 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.5.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "abbdfd1cff43a7b99d027af3be709bc8fc7d4769"
+                "reference": "17f50b86ef2b78d4331e60b2caead3829505c350"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/abbdfd1cff43a7b99d027af3be709bc8fc7d4769",
-                "reference": "abbdfd1cff43a7b99d027af3be709bc8fc7d4769",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/17f50b86ef2b78d4331e60b2caead3829505c350",
+                "reference": "17f50b86ef2b78d4331e60b2caead3829505c350",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": ">=2.4,<2.7-dev",
-                "php": ">=5.3.2"
+                "doctrine/common": "~2.4",
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*",
+                "phpunit/phpunit": "^5.4.6",
                 "symfony/console": "2.*"
             },
             "suggest": {
@@ -1047,7 +1047,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5.x-dev"
+                    "dev-master": "2.6.x-dev"
                 }
             },
             "autoload": {
@@ -1085,7 +1085,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-01-05 22:11:12"
+            "time": "2016-07-11 12:36:11"
         },
         {
             "name": "doctrine/inflector",
@@ -5093,7 +5093,8 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "composer/satis": 20
+        "composer/satis": 20,
+        "doctrine/dbal": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
