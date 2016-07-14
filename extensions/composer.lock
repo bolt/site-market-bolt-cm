@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "89d759ee568b1eac89e797710d49f983",
-    "content-hash": "cc86942c78d8be18d7eaafda9daf6f81",
+    "hash": "f657ccf71330ada43662dd7f33b2a1d2",
+    "content-hash": "4987297a7174114096de6b62108167bd",
     "packages": [
         {
             "name": "bolt/github",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/GawainLynch/bolt-extension-github.git",
-                "reference": "0ba7fb8b4b36c098b1a4a6eefa4c241b024be844"
+                "reference": "f32cd3e51b412936bf5231e58ae384fba85eb0ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/0ba7fb8b4b36c098b1a4a6eefa4c241b024be844",
-                "reference": "0ba7fb8b4b36c098b1a4a6eefa4c241b024be844",
+                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/f32cd3e51b412936bf5231e58ae384fba85eb0ec",
+                "reference": "f32cd3e51b412936bf5231e58ae384fba85eb0ec",
                 "shasum": ""
             },
             "require": {
@@ -32,6 +32,7 @@
             "type": "bolt-extension",
             "extra": {
                 "bolt-class": "Bolt\\Extension\\Bolt\\GitHub\\GitHubExtension",
+                "bolt-icon": "icon.png",
                 "branch-alias": {
                     "dev-master": "3.0.x-dev"
                 }
@@ -60,7 +61,7 @@
                 "source": "https://github.com/GawainLynch/bolt-extension-github/tree/master",
                 "issues": "https://github.com/GawainLynch/bolt-extension-github/issues"
             },
-            "time": "2016-05-30 04:14:47"
+            "time": "2016-07-14 05:15:19"
         },
         {
             "name": "bolt/marketplace",
@@ -68,7 +69,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "8ed7238a5c6f979284eedd25e4510b0d86dab0b9"
+                "reference": "adc24ab2e0a177cd380c0df18c7ecad7d5a93155"
             },
             "require": {
                 "bolt/bolt": "^3.0",
@@ -108,7 +109,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-07-14 09:17:07"
+            "time": "2016-07-14 13:52:54"
         },
         {
             "name": "bolt/members",
@@ -116,12 +117,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "b5b9034534a1a26cc4b0d278f496112fbbebf416"
+                "reference": "ccdf01ced4edcbd86bd4a08b2180a7722a6dfc60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/b5b9034534a1a26cc4b0d278f496112fbbebf416",
-                "reference": "b5b9034534a1a26cc4b0d278f496112fbbebf416",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/ccdf01ced4edcbd86bd4a08b2180a7722a6dfc60",
+                "reference": "ccdf01ced4edcbd86bd4a08b2180a7722a6dfc60",
                 "shasum": ""
             },
             "require": {
@@ -137,6 +138,7 @@
             "extra": {
                 "bolt-assets": "web",
                 "bolt-class": "Bolt\\Extension\\Bolt\\Members\\MembersExtension",
+                "bolt-icon": "icon.png",
                 "branch-alias": {
                     "dev-master": "3.0.x-dev"
                 }
@@ -177,7 +179,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-07-12 09:05:18"
+            "time": "2016-07-14 05:28:33"
         },
         {
             "name": "guzzle/guzzle",
