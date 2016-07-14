@@ -44,11 +44,11 @@ class Package extends BaseTable
         $this->table->addUniqueIndex(['name']);
 
         // Indexes for binary JSON arrays
-        $this->table->addUniqueIndex(['keywords']);
-        $this->table->addUniqueIndex(['authors']);
-        $this->table->addUniqueIndex(['screenshots']);
-        $this->table->addUniqueIndex(['support']);
-        $this->table->addUniqueIndex(['suggested']);
+        $this->table->addIndex(['keywords']);
+        $this->table->addIndex(['authors']);
+        $this->table->addIndex(['screenshots']);
+        $this->table->addIndex(['support']);
+        $this->table->addIndex(['suggested']);
 
         $this->table->addIndex(['account_id']);
     }
