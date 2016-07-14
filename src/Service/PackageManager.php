@@ -286,7 +286,6 @@ class PackageManager
 
         /** @var Repository\Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
-        krsort($packages);
         foreach ($packages as $key => $package) {
             $name = $package->getName();
             $stability = $package->getStability();
