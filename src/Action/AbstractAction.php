@@ -59,6 +59,10 @@ abstract class AbstractAction implements ActionInterface
 
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
+        if (!$package->getToken()) {
+            $package->regenerateToken();
+            $em->getRepository(Entity\Package::class)->save($package);
+        }
         $statRepo = $em->getRepository(Entity\Stat::class);
         /** @var Entity\Stat $stat */
         $stat = $statRepo->findOneBy(['package_id' => $package->getId(), 'type' => 'webhook'], ['recorded', 'DESC']);
