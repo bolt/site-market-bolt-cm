@@ -36,6 +36,8 @@ class Package extends Entity
     protected $created;
     /** @var array */
     protected $authors;
+    /** @var array */
+    protected $license;
     /** @var string */
     protected $token;
     /** @var array */
@@ -249,6 +251,22 @@ class Package extends Entity
     public function setAuthors(array $authors)
     {
         $this->authors = $authors;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLicense(): array
+    {
+        return $this->license;
+    }
+
+    /**
+     * @param array $license
+     */
+    public function setLicense(array $license)
+    {
+        $this->license = $license;
     }
 
     /**

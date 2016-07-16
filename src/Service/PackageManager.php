@@ -340,6 +340,9 @@ class PackageManager
                     $authors[] = $author['name'];
                 }
             }
+            if (isset($information['license'])) {
+                $packageEntity->setLicense((array) $information['license']);
+            }
             if (isset($information['support'])) {
                 $packageEntity->setSupport($information['support']);
             }
@@ -363,6 +366,7 @@ class PackageManager
             foreach ((array) $package->getAuthors() as $author) {
                 $authors[] = $author['name'];
             }
+            $packageEntity->setLicense((array) $package->getLicense());
             $packageEntity->setSupport((array) $package->getSupport());
             $packageEntity->setSuggested((array) $package->getSuggests());
             $extra = $package->getExtra();

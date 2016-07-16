@@ -27,6 +27,7 @@ class Package extends BaseTable
         $this->table->addColumn('documentation', 'text',       ['notnull' => false]);
         $this->table->addColumn('approved',      'boolean',    ['notnull' => false, 'default' => true]);
         $this->table->addColumn('authors',       'json_array', ['notnull' => false]);
+        $this->table->addColumn('license',       'json_array', ['notnull' => false]);
         $this->table->addColumn('created',       'datetime',   ['notnull' => false]);
         $this->table->addColumn('token',         'string',     ['notnull' => false]);
         $this->table->addColumn('screenshots',   'json_array', ['notnull' => false]);
@@ -46,6 +47,7 @@ class Package extends BaseTable
         // Indexes for binary JSON arrays
         $this->table->addIndex(['keywords']);
         $this->table->addIndex(['authors']);
+        $this->table->addIndex(['licence']);
         $this->table->addIndex(['screenshots']);
         $this->table->addIndex(['support']);
         $this->table->addIndex(['suggested']);
