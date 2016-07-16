@@ -284,6 +284,15 @@ class Package extends Entity
     {
         $this->token = $token;
     }
+    
+    /**
+     * Override this to make sure the token isn't exposed in JSON output.
+     * @return string
+     */
+    public function serializeToken()
+    {
+        return '';
+    }
 
     /**
      * @return array
