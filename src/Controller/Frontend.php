@@ -249,7 +249,7 @@ class Frontend implements ControllerProviderInterface
     {
         $params = [
             'type'    => 'browse',
-            'version' => $request->query->get('version')
+            'version' => $request->query->get('version'),
         ];
 
         return $this->getAction($app, 'search')->execute($request, $params);

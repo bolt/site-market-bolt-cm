@@ -3,8 +3,6 @@ namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Nut\BaseCommand;
 use Composer\IO\ConsoleIO;
 use Composer\Json\JsonValidationException;

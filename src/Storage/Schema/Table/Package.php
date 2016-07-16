@@ -47,7 +47,7 @@ class Package extends BaseTable
         // Indexes for binary JSON arrays
         $this->table->addIndex(['keywords']);
         $this->table->addIndex(['authors']);
-        $this->table->addIndex(['licence']);
+        $this->table->addIndex(['license']);
         $this->table->addIndex(['screenshots']);
         $this->table->addIndex(['support']);
         $this->table->addIndex(['suggested']);

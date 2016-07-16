@@ -28,7 +28,7 @@ class VersionDataHandler
             }
 
             /**
-             * @var string $version
+             * @var string                 $version
              * @var Entity\PackageVersions $parts
              */
             foreach ($versionData as $version => $parts) {

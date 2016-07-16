@@ -54,7 +54,7 @@ class SearchJson extends AbstractAction
         $versions = [];
         if ($versionEntities = $this->getVersions($package)) {
             /**
-             * @var int $version
+             * @var int                    $version
              * @var Entity\PackageVersions $versionEntity
              */
             foreach ($versionEntities as $version => $versionEntity) {
