@@ -60,7 +60,7 @@ class PackageView extends AbstractAction
         $stopwatch->start('marketplace.action.view.suggested');
         $suggested = [];
         foreach ($package->getSuggested() as $name => $description) {
-            $suggestedPackage = $repo->findOneBy(['name' => $name]);
+            $suggestedPackage = $repo->findOneBy(['name' => $name, 'approved' => true]);
             if ($suggestedPackage) {
                 $suggested[] = [
                     'package'     => $suggestedPackage,
@@ -84,7 +84,7 @@ class PackageView extends AbstractAction
         $packageManager = $services['package_manager'];
         $context = [
             'package'    => $package,
-            'related'    => $repo->findBy(['account_id' => $package->getAccountId()], null, 8),
+            'related'    => $repo->findBy(['account_id' => $package->getAccountId(), 'approved' => true], null, 8),
             'readme'     => $packageManager->getReadme($package),
             'boltthemes' => $services['bolt_themes']->info($package),
             'suggested'  => $suggested,
