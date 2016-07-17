@@ -141,7 +141,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "469ad2912c5678f62322bc4e53437d1d4ff882d2"
+                "reference": "7ca8771d529de2eb8a53d653a54c8f032c261e60"
             },
             "require": {
                 "bolt/bolt": "^3.0",
@@ -181,7 +181,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-07-17 08:54:15"
+            "time": "2016-07-17 11:23:48"
         },
         {
             "name": "bolt/members",
