@@ -254,7 +254,7 @@ class Package extends Entity
     /**
      * @return array
      */
-    public function getLicense(): array
+    public function getLicense()
     {
         return $this->license;
     }
