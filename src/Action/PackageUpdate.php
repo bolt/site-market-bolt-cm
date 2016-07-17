@@ -31,9 +31,6 @@ class PackageUpdate extends AbstractAction
 
         /** @var Session $session */
         $session = $this->getAppService('session');
-        $services = $this->getAppService('marketplace.services');
-        /** @var PackageManager $packageManager */
-        $packageManager = $services['package_manager'];
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
         /** @var Repository\Package $packageRepo */
@@ -47,34 +44,47 @@ class PackageUpdate extends AbstractAction
             return new RedirectResponse($route);
         }
 
-        $membersRecords = $this->getAppService('members.records');
-        /** @var Account $account */
-        $account = $membersRecords->getAccountByGuid($package->getAccountId());
-        $roles = (array) $account->getRoles();
-        if (in_array('admin', $roles)) {
-            $isAdmin = true;
-        } else {
-            $isAdmin = false;
-        }
         try {
-            $packageManager->validate($package, $isAdmin);
-            $packageManager->syncPackage($package);
-            $session->getFlashBag()->add('success', 'Package ' . $package->getName() . ' has been updated');
-
-            if ($account->isEnabled()) {
-                $package->setApproved(true);
-            }
-            if (!$package->getToken()) {
-                $package->regenerateToken();
-            }
+            $this->update($package);
         } catch (\Exception $e) {
             $session->getFlashBag()->add('error', 'Package has an invalid composer.json and will be disabled!');
             $session->getFlashBag()->add('warning', implode(' : ', [$e->getMessage(), $e->getFile(), $e->getLine()]));
             $package->setApproved(false);
         }
-
         $packageRepo->save($package);
 
         return new RedirectResponse($route);
+    }
+
+    /**
+     * @param Entity\Package $package
+     */
+    protected function update(Entity\Package $package)
+    {
+        /** @var Session $session */
+        $session = $this->getAppService('session');
+        $services = $this->getAppService('marketplace.services');
+        /** @var PackageManager $packageManager */
+        $packageManager = $services['package_manager'];
+        $membersRecords = $this->getAppService('members.records');
+        /** @var Account $account */
+        $account = $membersRecords->getAccountByGuid($package->getAccountId());
+
+        $roles = (array) $account->getRoles();
+        $isAdmin = in_array('admin', $roles);
+
+        $packageManager->validate($package, $isAdmin);
+        $packageManager->syncPackage($package);
+        $session->getFlashBag()->add('success', 'Package ' . $package->getName() . ' has been updated');
+
+        if ($account->isEnabled()) {
+            $package->setApproved(true);
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getAppService('storage');
+        /** @var Repository\Token $tokenRepo */
+        $tokenRepo = $em->getRepository(Entity\Token::class);
+        $tokenRepo->getValidPackageToken($package->getId(), 'webhook');
     }
 }

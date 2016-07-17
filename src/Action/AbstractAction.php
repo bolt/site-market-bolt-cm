@@ -60,17 +60,18 @@ abstract class AbstractAction implements ActionInterface
 
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        if (!$package->getToken()) {
-            $package->regenerateToken();
-            $em->getRepository(Entity\Package::class)->save($package);
-        }
+        /** @var Repository\Token $tokenRepo */
+        $tokenRepo = $em->getRepository(Entity\Token::class);
+        $tokenEntity = $tokenRepo->getValidPackageToken($package->getId(), 'webhook');
+
+        /** @var Repository\Stat $statRepo */
         $statRepo = $em->getRepository(Entity\Stat::class);
         /** @var Entity\Stat $stat */
         $stat = $statRepo->findOneBy(['package_id' => $package->getId(), 'type' => 'webhook'], ['recorded', 'DESC']);
         if ($stat !== false) {
             /** @var Session $session */
             $session = $this->getAppService('session');
-            if ($session->get('pending-' .  $package->getToken(), false)) {
+            if ($session->get('pending-' .  $tokenEntity, false)) {
                 return false;
             }
         }
@@ -80,11 +81,11 @@ abstract class AbstractAction implements ActionInterface
         $source = explode('/', ltrim(parse_url($package->getSource(), PHP_URL_PATH), '/'));
 
         return [
-            'callback' => $package->getToken() ? $urlGen->generate('hookListener', ['token' => $package->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
+            'callback' => $tokenEntity ? $urlGen->generate('hookListener', ['token' => $tokenEntity], UrlGeneratorInterface::ABSOLUTE_URL) : false,
             'latest'   => $stat,
             'user'     => $source[0],
             'repo'     => $source[1],
-            'token'    => $package->getToken(),
+            'token'    => $tokenEntity,
         ];
     }
 

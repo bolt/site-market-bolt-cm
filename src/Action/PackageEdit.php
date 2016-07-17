@@ -2,8 +2,8 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Form;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -44,10 +44,9 @@ class PackageEdit extends AbstractAction
             return new RedirectResponse($route);
         }
 
-        if (!$package->getToken()) {
-            $package->regenerateToken();
-            $repo->save($package);
-        }
+        /** @var Repository\Token $tokenRepo */
+        $tokenRepo = $em->getRepository(Entity\Token::class);
+        $tokenRepo->getValidPackageToken($package->getId(), 'webhook');
 
         $formsService = $this->getAppService('marketplace.forms');
         /** @var FormFactory $forms */
