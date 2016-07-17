@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1f5038753fb97a4bd798d86eb552e0fc",
-    "content-hash": "095925211b25c26f5cdf5fa42e20a91d",
+    "hash": "d8c0ca2b1d27eb7a8c3cb482b46a4006",
+    "content-hash": "754fcbf105cfcd4d5d018e2e9516e4a6",
     "packages": [
         {
             "name": "bolt/boltforms",
@@ -141,7 +141,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "e16a141db0323a89a03c4bf491ecb2eb0ade0b50"
+                "reference": "469ad2912c5678f62322bc4e53437d1d4ff882d2"
             },
             "require": {
                 "bolt/bolt": "^3.0",
@@ -181,7 +181,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-07-16 17:50:48"
+            "time": "2016-07-17 08:54:15"
         },
         {
             "name": "bolt/members",
@@ -636,10 +636,10 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "bolt/boltforms": 20,
         "bolt/github": 20,
         "bolt/marketplace": 20,
-        "bolt/members": 20,
-        "bolt/boltforms": 20
+        "bolt/members": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
