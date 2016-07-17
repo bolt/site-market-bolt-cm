@@ -1,0 +1,62 @@
+#templates:
+#    form: extensions/boltforms/form.twig
+#    email: extensions/boltforms/email.twig
+#    subject: extensions/boltforms/_subject.twig
+#    files: extensions/boltforms/file_browser.twig
+
+## CSRF protection
+#
+# Enable CSRF protection for forms. You should leave this set to 'true', unless
+# you know what you're doing.
+csrf: true
+
+## Debugging
+#
+# Global debugging on/off switch
+#
+# If enabled, ALL forms will go into debug mode.  However, when disabled an individual
+# form can still enable it's own debug — specific for and to that form
+debug:
+    enabled: true
+    address: gawain@bolt.cm
+
+package_edit:
+    submission:
+        ajax: false
+    notification:
+        enabled: false
+        debug: false
+    feedback:
+        success: Your package was successfully updated
+        error: There are errors in the form
+    fields:
+        title:
+            type: text
+            options:
+                required: true
+                label: Name of extension
+                attr:
+                    placeholder: 'Main title eg: My Widget Extension'
+                constraints: [ NotBlank, { Length: { 'min': 3, 'max': 128 } } ]
+        source:
+            type: text
+            options:
+                required: true
+                label: Link to a public Git repository
+                attr:
+                    placeholder: 'eg: https://github.com/you/bolt-widget-extension'
+                constraints: [ NotBlank, { Length: { 'min': 3, 'max': 128 } } ]
+        description:
+            type: textarea
+            options:
+                required: true
+                label: Description of your extension
+                attr:
+                    placeholder: Write a description of your package
+        submit:
+            type: submit
+            options:
+                label: Submit Your Extension
+                attr:
+                    class: ui fluid large vk submit button
+

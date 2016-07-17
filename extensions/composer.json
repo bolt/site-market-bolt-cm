@@ -36,6 +36,7 @@
         }
     },
     "require": {
+        "bolt/boltforms": "dev-master",
         "bolt/github": "dev-master@dev",
         "bolt/marketplace": "dev-master@dev",
         "bolt/members": "^3.0@dev"
