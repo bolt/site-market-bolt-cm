@@ -38,8 +38,6 @@ class Package extends Entity
     protected $authors;
     /** @var array */
     protected $license;
-    /** @var string */
-    protected $token;
     /** @var array */
     protected $screenshots;
     /** @var string */
@@ -270,31 +268,6 @@ class Package extends Entity
     }
 
     /**
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string $token
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-    }
-    
-    /**
-     * Override this to make sure the token isn't exposed in JSON output.
-     * @return string
-     */
-    public function serializeToken()
-    {
-        return '';
-    }
-
-    /**
      * @return array
      */
     public function getScreenshots()
@@ -360,10 +333,5 @@ class Package extends Entity
     public function setSuggested($suggested)
     {
         $this->suggested = $suggested;
-    }
-
-    public function regenerateToken()
-    {
-        $this->token = bin2hex(openssl_random_pseudo_bytes(16));
     }
 }

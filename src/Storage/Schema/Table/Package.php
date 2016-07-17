@@ -29,7 +29,6 @@ class Package extends BaseTable
         $this->table->addColumn('authors',       'json_array', ['notnull' => false]);
         $this->table->addColumn('license',       'json_array', ['notnull' => false]);
         $this->table->addColumn('created',       'datetime',   ['notnull' => false]);
-        $this->table->addColumn('token',         'string',     ['notnull' => false]);
         $this->table->addColumn('screenshots',   'json_array', ['notnull' => false]);
         $this->table->addColumn('icon',          'text',       ['notnull' => false]);
         $this->table->addColumn('support',       'json_array', ['notnull' => false]);
