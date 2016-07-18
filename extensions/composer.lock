@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/boltforms.git",
-                "reference": "0bd0c894c670c500e216cb89fb3022d5a55315a9"
+                "reference": "c5dd37be067c2483631ca258b6ce42aed9ad795a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/boltforms/zipball/0bd0c894c670c500e216cb89fb3022d5a55315a9",
-                "reference": "0bd0c894c670c500e216cb89fb3022d5a55315a9",
+                "url": "https://api.github.com/repos/bolt/boltforms/zipball/c5dd37be067c2483631ca258b6ce42aed9ad795a",
+                "reference": "c5dd37be067c2483631ca258b6ce42aed9ad795a",
                 "shasum": ""
             },
             "require": {
@@ -74,10 +74,10 @@
                 "uploads"
             ],
             "support": {
-                "source": "https://github.com/bolt/boltforms/tree/master",
+                "source": "https://github.com/bolt/boltforms/tree/repeaters",
                 "issues": "https://github.com/bolt/boltforms/issues"
             },
-            "time": "2016-07-07 07:22:45"
+            "time": "2016-07-08 06:58:05"
         },
         {
             "name": "bolt/github",
@@ -141,7 +141,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "7ca8771d529de2eb8a53d653a54c8f032c261e60"
+                "reference": "0f550a317a5e791fd6ee4276f16ea9bba54dc08f"
             },
             "require": {
                 "bolt/bolt": "^3.0",
@@ -181,7 +181,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-07-17 11:23:48"
+            "time": "2016-07-18 12:41:26"
         },
         {
             "name": "bolt/members",
