@@ -4,7 +4,7 @@ vcs:
     - https://github.com/ramsey/uuid.git
     - https://github.com/wikimedia/composer-merge-plugin.git
     - https://github.com/KnpLabs/php-github-api.git
-    - https://github.com/bolt/payments-omnipay.git
+    - https://github.com/bolt/omnipay.git
     - https://github.com/whiteoctober/Pagerfanta.git
     - https://github.com/Exeu/apai-io.git
     - https://github.com/pusher/pusher-http-php.git
