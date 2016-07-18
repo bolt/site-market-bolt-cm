@@ -21,7 +21,7 @@ class PackageVersion extends AbstractRepository
         // Gotta fix this alias thing …
         // HINT: The abstract overrides getLoadQuery() for a reason I can't quite remember
         return $this->em->createQueryBuilder()
-            ->from($this->getTableName(), $alias === 'packageversions' ? 'package_versions' : $alias);
+            ->from($this->getTableName(), $alias === 'packageversion' ? 'package_version' : $alias);
     }
 
     /**

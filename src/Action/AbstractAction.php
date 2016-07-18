@@ -81,7 +81,7 @@ abstract class AbstractAction implements ActionInterface
         $source = explode('/', ltrim(parse_url($package->getSource(), PHP_URL_PATH), '/'));
 
         return [
-            'callback' => $tokenEntity ? $urlGen->generate('hookListener', ['token' => $tokenEntity], UrlGeneratorInterface::ABSOLUTE_URL) : false,
+            'callback' => $tokenEntity ? $urlGen->generate('hookListener', ['token' => $tokenEntity->getToken()], UrlGeneratorInterface::ABSOLUTE_URL) : false,
             'latest'   => $stat,
             'user'     => $source[0],
             'repo'     => $source[1],

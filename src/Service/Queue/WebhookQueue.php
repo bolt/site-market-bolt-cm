@@ -99,16 +99,15 @@ class WebhookQueue extends AbstractQueue
 
             /** @var Repository\Package $packageRepo */
             $packageRepo = $this->em->getRepository(Entity\Package::class);
-
             /** @var Entity\Package $package */
-            $package = $packageRepo->findOneBy(['token' => $token]);
+            $package = $packageRepo->getPackageByToken('webhook', $token);
             if ($package) {
                 // @TODO
                 //if ($payload->security) {
                 //    $this->validateGitHubSignature($package->getTokenSecret(), $payload->security, $file->getContents());
                 //}
 
-                $this->getPackgeQueue()->queue($package);
+                $this->getPackageQueue()->queue($package);
 
                 /** @var Repository\Stat $statRepo */
                 $statRepo = $this->em->getRepository(Entity\Stat::class);
@@ -136,7 +135,7 @@ class WebhookQueue extends AbstractQueue
     /**
      * @return PackageQueue
      */
-    protected function getPackgeQueue()
+    protected function getPackageQueue()
     {
         if ($this->packageQueue === null) {
             $this->packageQueue = new PackageQueue($this->em, $this->resourceManager);

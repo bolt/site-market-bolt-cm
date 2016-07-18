@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Package repository.
@@ -416,6 +417,34 @@ class Package extends AbstractRepository
             ->setParameter('approved', true)
             ->setParameter('star', 'star')
             ->setParameter('account_id', $accountId)
+        ;
+
+        return $qb;
+    }
+    /**
+     * @param string $type
+     * @param string $token
+     *
+     * @return Entity\Package|false
+     */
+    public function getPackageByToken($type, $token)
+    {
+        $qb = $this->getPackageByTokenQuery($type, $token);
+
+        return $this->findOneWith($qb);
+    }
+
+    public function getPackageByTokenQuery($type, $token)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->leftJoin('p', 'bolt_marketplace_token', 't', 'p.id = t.package_id')
+            ->select('p.*')
+            ->where('t.type = :type')
+            ->andWhere('t.token = :token')
+            ->setParameter('type', $type)
+            ->setParameter('token', $token)
         ;
 
         return $qb;

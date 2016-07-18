@@ -13,35 +13,6 @@ use Doctrine\DBAL\Query\QueryBuilder;
 class Token extends AbstractRepository
 {
     /**
-     * @param string $type
-     * @param string $token
-     *
-     * @return Entity\Package|false
-     */
-    public function getPackage($type, $token)
-    {
-        $qb = $this->getPackageQuery($type, $token);
-
-        return $this->findOneWith($qb);
-    }
-
-    public function getPackageQuery($type, $token)
-    {
-        /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder();
-        $qb
-            ->rightJoin('t', 'bolt_marketplace_package', 'p', 't.package_id = p.id')
-            ->select('*')
-            ->where('t.type = :type')
-            ->andWhere('t.token = :token')
-            ->setParameter('type', $type)
-            ->setParameter('token', $token)
-        ;
-
-        return $qb;
-    }
-
-    /**
      * @param string $packageId
      * @param string $type
      *
