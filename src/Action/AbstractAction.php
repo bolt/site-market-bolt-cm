@@ -97,8 +97,8 @@ abstract class AbstractAction implements ActionInterface
     protected function getUpdated(Entity\Package $package)
     {
         $em = $this->getAppService('storage');
-        /** @var Repository\PackageVersions $repo */
-        $repo = $em->getRepository(Entity\PackageVersions::class);
+        /** @var Repository\PackageVersion $repo */
+        $repo = $em->getRepository(Entity\PackageVersion::class);
 
         return [
             'dev'    => $repo->getLatestReleaseForStability($package->getId(), 'dev'),
@@ -109,13 +109,13 @@ abstract class AbstractAction implements ActionInterface
     /**
      * @param Entity\Package $package
      *
-     * @return Entity\PackageVersions[]
+     * @return Entity\PackageVersion[]
      */
     protected function getVersions(Entity\Package $package)
     {
         $em = $this->getAppService('storage');
-        /** @var Repository\PackageVersions $repo */
-        $repo = $em->getRepository(Entity\PackageVersions::class);
+        /** @var Repository\PackageVersion $repo */
+        $repo = $em->getRepository(Entity\PackageVersion::class);
         /** @var Config $config */
         $config = $this->getAppService('config');
         $boltMajorVersions = $config->get('general/bolt_major_versions');

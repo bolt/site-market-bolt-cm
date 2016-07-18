@@ -10,7 +10,7 @@ use DateTime;
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class PackageVersions extends Entity
+class PackageVersion extends Entity
 {
     /** @var string */
     protected $id;

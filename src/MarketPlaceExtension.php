@@ -79,11 +79,11 @@ class MarketPlaceExtension extends SimpleExtension
     protected function registerExtensionTables()
     {
         return [
-            'marketplace_package'          => Table\Package::class,
-            'marketplace_package_versions' => Table\PackageVersions::class,
-            'marketplace_stat'             => Table\Stat::class,
-            'marketplace_token'            => Table\Token::class,
-            'marketplace_version_build'    => Table\VersionBuild::class,
+            'marketplace_package'         => Table\Package::class,
+            'marketplace_package_version' => Table\PackageVersion::class,
+            'marketplace_stat'            => Table\Stat::class,
+            'marketplace_token'           => Table\Token::class,
+            'marketplace_version_build'   => Table\VersionBuild::class,
         ];
     }
 
@@ -93,11 +93,11 @@ class MarketPlaceExtension extends SimpleExtension
     protected function registerRepositoryMappings()
     {
         return [
-            'marketplace_package'          => [Entity\Package::class         => Repository\Package::class],
-            'marketplace_package_versions' => [Entity\PackageVersions::class => Repository\PackageVersions::class],
-            'marketplace_stat'             => [Entity\Stat::class            => Repository\Stat::class],
-            'marketplace_token'            => [Entity\Token::class           => Repository\Token::class],
-            'marketplace_version_build'    => [Entity\VersionBuild::class    => Repository\VersionBuild::class],
+            'marketplace_package'         => [Entity\Package::class         => Repository\Package::class],
+            'marketplace_package_version' => [Entity\PackageVersion::class => Repository\PackageVersion::class],
+            'marketplace_stat'            => [Entity\Stat::class            => Repository\Stat::class],
+            'marketplace_token'           => [Entity\Token::class           => Repository\Token::class],
+            'marketplace_version_build'   => [Entity\VersionBuild::class    => Repository\VersionBuild::class],
         ];
     }
 }

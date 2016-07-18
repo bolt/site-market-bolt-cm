@@ -9,7 +9,7 @@ use Bolt\Storage\Database\Schema\Table\BaseTable;
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class PackageVersions extends BaseTable
+class PackageVersion extends BaseTable
 {
     /**
      * {@inheritdoc}

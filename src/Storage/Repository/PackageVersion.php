@@ -11,7 +11,7 @@ use Composer\Semver\VersionParser;
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class PackageVersions extends AbstractRepository
+class PackageVersion extends AbstractRepository
 {
     /**
      * {@inheritdoc}
@@ -57,7 +57,7 @@ class PackageVersions extends AbstractRepository
      * @param string $stability
      * @param string $boltVersion
      *
-     * @return Entity\PackageVersions|bool
+     * @return Entity\PackageVersion|bool
      */
     public function getLatestCompatibleVersion($packageId, $stability, $boltVersion)
     {
@@ -71,7 +71,7 @@ class PackageVersions extends AbstractRepository
         $parser = new VersionParser();
         $boltVersion = new Constraint('==', $parser->normalize($boltVersion));
 
-        /** @var Entity\PackageVersions $versionEntity */
+        /** @var Entity\PackageVersion $versionEntity */
         foreach ($versionEntities as $versionEntity) {
             $boltConstraints = $parser->parseConstraints(sprintf('%s,%s', $versionEntity->getBoltMin(), $versionEntity->getBoltMax()));
             if ($boltConstraints->matches($boltVersion)) {
