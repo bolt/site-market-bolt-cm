@@ -36,9 +36,9 @@ class Stat extends AbstractAction
         /** @var Entity\Package $package */
         $package = $packageRepo->findOneBy(['name' => $package]);
 
-        /** @var Repository\Stat $statRepo */
-        $statRepo = $em->getRepository(Entity\Stat::class);
-        $stat = new Entity\Stat([
+        /** @var Repository\StatInstall $statRepo */
+        $statRepo = $em->getRepository(Entity\StatInstall::class);
+        $stat = new Entity\StatInstall([
             'source'     => $request->server->get('HTTP_REFERER'),
             'ip'         => $request->server->get('REMOTE_ADDR'),
             'recorded'   => new \DateTime(),

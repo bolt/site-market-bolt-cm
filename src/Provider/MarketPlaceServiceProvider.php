@@ -125,8 +125,8 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'queue_manager'   => $app->share(function () use ($app) { return new Service\Queue\QueueManager($app['storage'], $app['resources'], $app['marketplace.queues']); }),
                     'satis_manager'   => $app->share(function () use ($app) { return new Service\SatisManager($app['storage'], $app['resources']); }),
                     'statistics'      => $app->share(function () use ($app) {
-                        /** @var Repository\Stat $repo */
-                        $repo = $app['storage']->getRepository(Entity\Stat::class);
+                        /** @var Repository\StatInstall $repo */
+                        $repo = $app['storage']->getRepository(Entity\StatInstall::class);
 
                         return new Service\Statistics($repo);
                     }),

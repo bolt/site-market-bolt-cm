@@ -12,17 +12,17 @@ use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
  */
 class Statistics
 {
-    /** @var Repository\Stat */
+    /** @var Repository\StatInstall */
     private $repo;
-    /** @var Entity\Stat[] */
+    /** @var Entity\StatInstall[] */
     private $stats;
 
     /**
      * Constructor.
      *
-     * @param Repository\Stat $repo
+     * @param Repository\StatInstall $repo
      */
-    public function __construct(Repository\Stat $repo)
+    public function __construct(Repository\StatInstall $repo)
     {
         $this->repo = $repo;
     }
@@ -92,7 +92,7 @@ class Statistics
     /**
      * @param string $packageId
      *
-     * @return Entity\Stat[]
+     * @return Entity\StatInstall[]
      */
     protected function getStats($packageId)
     {

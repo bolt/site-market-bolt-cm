@@ -109,9 +109,9 @@ class WebhookQueue extends AbstractQueue
 
                 $this->getPackageQueue()->queue($package);
 
-                /** @var Repository\Stat $statRepo */
-                $statRepo = $this->em->getRepository(Entity\Stat::class);
-                $stat = new Entity\Stat([
+                /** @var Repository\StatInstall $statRepo */
+                $statRepo = $this->em->getRepository(Entity\StatInstall::class);
+                $stat = new Entity\StatInstall([
                     'package_id' => $package->getId(),
                     'type'       => 'webhook',
                     'source'     => $payload->source,

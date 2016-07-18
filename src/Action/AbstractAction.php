@@ -64,9 +64,9 @@ abstract class AbstractAction implements ActionInterface
         $tokenRepo = $em->getRepository(Entity\Token::class);
         $tokenEntity = $tokenRepo->getValidPackageToken($package->getId(), 'webhook');
 
-        /** @var Repository\Stat $statRepo */
-        $statRepo = $em->getRepository(Entity\Stat::class);
-        /** @var Entity\Stat $stat */
+        /** @var Repository\StatInstall $statRepo */
+        $statRepo = $em->getRepository(Entity\StatInstall::class);
+        /** @var Entity\StatInstall $stat */
         $stat = $statRepo->findOneBy(['package_id' => $package->getId(), 'type' => 'webhook'], ['recorded', 'DESC']);
         if ($stat !== false) {
             /** @var Session $session */

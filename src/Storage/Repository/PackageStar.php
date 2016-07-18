@@ -3,15 +3,14 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Storage\Repository;
 
 /**
- * Stat repository.
+ * Package "stars" repository.
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  * @author Ross Riley <riley.ross@gmail.com>
  */
-class Stat extends AbstractRepository
+class PackageStar extends AbstractRepository
 {
     /**
      * @param Entity\Package $package
@@ -19,7 +18,7 @@ class Stat extends AbstractRepository
      * @param \DateTime|null $from
      * @param \DateTime|null $to
      *
-     * @return Entity\Stat[]
+     * @return Entity\StatInstall[]
      */
     public function getStats(Entity\Package $package, $version, \DateTime $from = null, \DateTime $to = null)
     {
@@ -73,7 +72,7 @@ class Stat extends AbstractRepository
             return $versions;
         }
 
-        /** @var Entity\Stat $statEntity */
+        /** @var Entity\StatInstall $statEntity */
         foreach ($statEntities as $statEntity) {
             $versions[] = $statEntity->getVersion();
         }

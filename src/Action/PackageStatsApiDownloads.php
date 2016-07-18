@@ -88,8 +88,8 @@ class PackageStatsApiDownloads extends AbstractAction
 
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Repository\Stat $repo */
-        $repo = $em->getRepository(Entity\Stat::class);
+        /** @var Repository\StatInstall $repo */
+        $repo = $em->getRepository(Entity\StatInstall::class);
         $stats = $repo->getStats($package, $version, $fromDT, $toDT);
         $allVersions = $this->getAllVersions($package);
 
@@ -237,8 +237,8 @@ class PackageStatsApiDownloads extends AbstractAction
     {
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Repository\Stat $repo */
-        $repo = $em->getRepository(Entity\Stat::class);
+        /** @var Repository\StatInstall $repo */
+        $repo = $em->getRepository(Entity\StatInstall::class);
 
         return $repo->getAllVersions($package->id);
     }

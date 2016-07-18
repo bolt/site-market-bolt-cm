@@ -5,32 +5,23 @@ namespace Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\Entity\Entity;
 
 /**
- * Stat entity.
+ * Package install statistics entity.
  *
  * @author Ross Riley <riley.ross@gmail.com>
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class Stat extends Entity
+class StatInstall extends Entity
 {
     /** @var string */
     protected $id;
     /** @var string */
     protected $package_id;
     /** @var string */
-    protected $account_id;
-    /** @var string */
-    protected $type;
+    protected $ip;
     /** @var \DateTime */
     protected $recorded;
     /** @var string */
-    protected $source;
-    /** @var string */
-    protected $ip;
-    /** @var string */
     protected $version;
-
-    protected $account;
-    protected $package;
 
     /**
      * @return string
@@ -67,33 +58,17 @@ class Stat extends Entity
     /**
      * @return string
      */
-    public function getAccountId()
+    public function getIp()
     {
-        return $this->account_id;
+        return $this->ip;
     }
 
     /**
-     * @param string $account_id
+     * @param string $ip
      */
-    public function setAccountId($account_id)
+    public function setIp($ip)
     {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
+        $this->ip = $ip;
     }
 
     /**
@@ -110,38 +85,6 @@ class Stat extends Entity
     public function setRecorded($recorded)
     {
         $this->recorded = $recorded;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    /**
-     * @param string $source
-     */
-    public function setSource($source)
-    {
-        $this->source = $source;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIp()
-    {
-        return $this->ip;
-    }
-
-    /**
-     * @param string $ip
-     */
-    public function setIp($ip)
-    {
-        $this->ip = $ip;
     }
 
     /**
