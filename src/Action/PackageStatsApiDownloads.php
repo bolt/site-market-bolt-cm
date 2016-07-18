@@ -219,7 +219,7 @@ class PackageStatsApiDownloads extends AbstractAction
         ];
     }
 
-    private function getVersions($stats)
+    protected function getVersions($stats)
     {
         $versions = [];
         foreach ($stats as $stat) {
