@@ -14,17 +14,6 @@ use Composer\Semver\VersionParser;
 class PackageVersion extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
-     */
-    public function createQueryBuilder($alias = null)
-    {
-        // Gotta fix this alias thing …
-        // HINT: The abstract overrides getLoadQuery() for a reason I can't quite remember
-        return $this->em->createQueryBuilder()
-            ->from($this->getTableName(), $alias === 'packageversion' ? 'package_version' : $alias);
-    }
-
-    /**
      * @param string $packageId
      * @param string $stability
      *
