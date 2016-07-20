@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Install statistics repository.
@@ -30,6 +31,7 @@ class StatInstall extends AbstractRepository
 
     public function getStatsQuery(Entity\Package $package, $version, \DateTime $from = null, \DateTime $to = null)
     {
+        /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('s')
             ->select('*')
             ->where('s.type = :type')
@@ -82,6 +84,7 @@ class StatInstall extends AbstractRepository
 
     public function getAllVersionsQuery($packageId)
     {
+        /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('s')
             ->select('s.*')
             ->where('s.type = :type')
