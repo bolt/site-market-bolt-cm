@@ -21,7 +21,7 @@ class Package extends AbstractRepository
      */
     public function getMostDownloaded($composerType, $limit = 10)
     {
-        return $this->getStatPackage('install', $composerType, $limit);
+        return $this->getInstallStatistics('install', $composerType, $limit);
     }
     /**
      * @param int $limit
@@ -30,7 +30,7 @@ class Package extends AbstractRepository
      */
     public function getMostDownloadedStats($limit = 10)
     {
-        return $this->getStatCount('install', $limit);
+        return $this->getInstallStatisticsCount('install', $limit);
     }
 
     /**
@@ -41,7 +41,7 @@ class Package extends AbstractRepository
      */
     public function getMostStarred($composerType, $limit = 10)
     {
-        return $this->getStatPackage('star', $composerType, $limit);
+        return $this->getInstallStatistics('star', $composerType, $limit);
     }
 
     /**
@@ -51,7 +51,7 @@ class Package extends AbstractRepository
      */
     public function getMostStarredStats($limit = 10)
     {
-        return $this->getStatCount('star', $limit);
+        return $this->getInstallStatisticsCount('star', $limit);
     }
 
     /**
@@ -82,14 +82,14 @@ class Package extends AbstractRepository
      *
      * @return Entity\Package[]|false
      */
-    public function getStatPackage($action, $composerType, $limit)
+    public function getInstallStatistics($action, $composerType, $limit)
     {
-        $query = $this->getStatPackageQuery($action, $composerType, $limit);
+        $query = $this->getInstallStatisticsQuery($action, $composerType, $limit);
 
         return $this->findWith($query);
     }
 
-    public function getStatPackageQuery($action, $composerType, $limit)
+    public function getInstallStatisticsQuery($action, $composerType, $limit)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('p');
@@ -116,14 +116,14 @@ class Package extends AbstractRepository
      *
      * @return Entity\Package[]|false
      */
-    public function getStatCount($type, $limit)
+    public function getInstallStatisticsCount($type, $limit)
     {
-        $query = $this->getStatCountQuery($type, $limit);
+        $query = $this->getInstallStatisticsCountQuery($type, $limit);
 
         return $this->findWith($query);
     }
 
-    public function getStatCountQuery($type, $limit)
+    public function getInstallStatisticsCountQuery($type, $limit)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('p');
