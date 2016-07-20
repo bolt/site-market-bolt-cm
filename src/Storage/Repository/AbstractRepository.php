@@ -57,4 +57,20 @@ abstract class AbstractRepository extends Repository
 
         return $qb;
     }
+
+    /**
+     * Get a column count query result.
+     *
+     * @param array|false $result
+     *
+     * @return integer|false
+     */
+    protected function getCount($result)
+    {
+        if ($result !== false && isset($result['count'])) {
+            return $result['count'];
+        }
+
+        return false;
+    }
 }

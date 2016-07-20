@@ -125,10 +125,14 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                     'queue_manager'   => $app->share(function () use ($app) { return new Service\Queue\QueueManager($app['storage'], $app['resources'], $app['marketplace.queues']); }),
                     'satis_manager'   => $app->share(function () use ($app) { return new Service\SatisManager($app['storage'], $app['resources']); }),
                     'statistics'      => $app->share(function () use ($app) {
-                        /** @var Repository\StatInstall $repo */
-                        $repo = $app['storage']->getRepository(Entity\StatInstall::class);
+                        /** @var Repository\StatInstall $repoStatInstall */
+                        $repoStatInstall = $app['storage']->getRepository(Entity\StatInstall::class);
+                        /** @var Repository\StatWebhook $repoStatWebhook */
+                        $repoStatWebhook = $app['storage']->getRepository(Entity\StatWebhook::class);
+                        /** @var Repository\PackageStar $repoPackageStar */
+                        $repoPackageStar = $app['storage']->getRepository(Entity\PackageStar::class);
 
-                        return new Service\Statistics($repo);
+                        return new Service\Statistics($repoStatInstall, $repoStatWebhook, $repoPackageStar);
                     }),
                     'webhook_manager' => $app->share(function () use ($app) { return new Service\WebhookManager($app); }),
                 ]);

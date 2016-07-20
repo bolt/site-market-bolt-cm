@@ -91,12 +91,12 @@ class Package extends AbstractRepository
 
     public function getInstallStatisticsQuery($action, $composerType, $limit)
     {
+        $installStatTable = 'bolt_marketplace_stat_install';
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p');
-        $qb
+        $qb = $this->createQueryBuilder('p')
             ->select('p.*, count(p.id) AS pcount')
             ->addSelect('p.source as source')
-            ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+            ->innerJoin('p', $installStatTable, 's', 'p.id = s.package_id')
             ->where('p.type = :composerType')
             ->andWhere('s.type = :action')
             ->andWhere('p.approved = true')
@@ -125,11 +125,11 @@ class Package extends AbstractRepository
 
     public function getInstallStatisticsCountQuery($type, $limit)
     {
+        $installStatTable = 'bolt_marketplace_stat_install';
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p');
-        $qb
+        $qb = $this->createQueryBuilder('p')
             ->select('count(p.id) AS pcount')
-            ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+            ->innerJoin('p', $installStatTable, 's', 'p.id = s.package_id')
             ->where('s.type = :type')
             ->andWhere('p.approved = true')
             ->groupBy('p.id')
@@ -159,8 +159,7 @@ class Package extends AbstractRepository
     public function getSearchQuery($keyword, $type, $order, $limit)
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p');
-        $qb->leftJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+        $qb = $this->createQueryBuilder('p')
             ->where('p.approved = :status')
         ;
 
@@ -186,7 +185,7 @@ class Package extends AbstractRepository
             $qb->setMaxResults($limit);
         }
 
-        $qb->groupBy('p.id, s.id');
+        $qb->groupBy('p.id');
 
         switch ($order) {
             case 'date':
@@ -208,17 +207,19 @@ class Package extends AbstractRepository
                     ->orderBy('p.title', 'ASC');
                 break;
             case 'downloads':
+                $installStatTable = 'bolt_marketplace_stat_install';
                 $qb
                     ->select('DISTINCT ON (p.id, pcount) p.*, COUNT(p.id) as pcount')
-                    ->andWhere("s.type = 'install'")
+                    ->leftJoin('p', $installStatTable, 's', 'p.id = s.package_id')
                     ->groupBy('p.id')
                     ->orderBy('pcount', 'DESC')
                 ;
                 break;
             case 'stars':
+                $installStarTable = 'bolt_marketplace_package_star';
                 $qb
                     ->select('DISTINCT ON (p.id, pcount) p.*, COUNT(p.id) as pcount')
-                    ->andWhere("s.type = 'star'")
+                    ->leftJoin('p', $installStarTable, 's', 'p.id = s.package_id')
                     ->groupBy('p.id')
                     ->orderBy('pcount', 'DESC')
                 ;
@@ -255,8 +256,7 @@ class Package extends AbstractRepository
     public function searchByVersionQuery($keyword, $type, $boltMajor, $order, $limit)
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p');
-        $qb
+        $qb = $this->createQueryBuilder('p')
             ->leftJoin('p', 'bolt_marketplace_package_versions', 'v', 'p.id = v.package_id')
             ->where('p.approved = :status')
         ;
@@ -323,8 +323,7 @@ class Package extends AbstractRepository
     public function getTagsQuery()
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p');
-        $qb
+        $qb = $this->createQueryBuilder('p')
             ->select('p.keywords')
             ->where('p.approved = true')
         ;
@@ -419,10 +418,10 @@ class Package extends AbstractRepository
 
     public function getStarredPackagesQuery($accountId)
     {
+        $installStarTable = 'bolt_marketplace_package_star';
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p');
-        $qb
-            ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p', $installStarTable, 's', 'p.id = s.package_id')
             ->select('p.*')
             ->where('p.approved = :approved')
             ->andWhere('s.type = :star')
@@ -450,8 +449,7 @@ class Package extends AbstractRepository
     public function getPackageByTokenQuery($type, $token)
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p');
-        $qb
+        $qb = $this->createQueryBuilder('p')
             ->leftJoin('p', 'bolt_marketplace_token', 't', 'p.id = t.package_id')
             ->select('p.*')
             ->where('t.type = :type')

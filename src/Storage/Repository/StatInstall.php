@@ -14,6 +14,74 @@ use Doctrine\DBAL\Query\QueryBuilder;
 class StatInstall extends AbstractRepository
 {
     /**
+     * Get a package's install stats.
+     *
+     * @param string $packageId
+     * @param string $version
+     *
+     * @return Entity\StatInstall[]
+     */
+    public function getInstalls($packageId, $version = null)
+    {
+        $query = $this->getInstallsQuery($packageId, $version);
+
+        return $this->findWith($query);
+    }
+
+    public function getInstallsQuery($packageId, $version)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('s')
+            ->select('s.*')->where('s.package_id = :packageId')
+            ->setParameter('packageId', $packageId)
+            ->groupBy('ip')
+        ;
+
+        if ($version !== null) {
+            $qb
+                ->andWhere('s.version = :version')
+                ->setParameter('version', $version)
+            ;
+        }
+
+        return $qb;
+    }
+
+    /**
+     * Get a package's install count.
+     *
+     * @param string $packageId
+     * @param string $version
+     *
+     * @return integer
+     */
+    public function getInstallsCount($packageId, $version = null)
+    {
+        $query = $this->getInstallsCountQuery($packageId, $version);
+
+        return $this->getCount($query->execute()->fetch());
+    }
+
+    public function getInstallsCountQuery($packageId, $version)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('s')
+            ->select('COUNT(s.id) as count')
+            ->where('s.package_id = :packageId')
+            ->setParameter('packageId', $packageId)
+        ;
+
+        if ($version !== null) {
+            $qb
+                ->andWhere('s.version = :version')
+                ->setParameter('version', $version)
+            ;
+        }
+
+        return $qb;
+    }
+
+    /**
      * @param Entity\Package $package
      * @param string         $version
      * @param \DateTime|null $from
@@ -23,37 +91,36 @@ class StatInstall extends AbstractRepository
      */
     public function getStats(Entity\Package $package, $version, \DateTime $from = null, \DateTime $to = null)
     {
-        $qb = $this->getStatsQuery($package, $version, $from, $to);
-        $stats = $this->findWith($qb);
+        $query = $this->getStatsQuery($package, $version, $from, $to);
 
-        return $stats;
+        return $this->findWith($query);
     }
 
     public function getStatsQuery(Entity\Package $package, $version, \DateTime $from = null, \DateTime $to = null)
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('s')
-            ->select('*')
-            ->where('s.type = :type')
-            ->andWhere('s.package_id = :package_id')
-            ->setParameter('type', 'install')
-            ->setParameter('package_id', $package->getId());
+            ->select('s.*')
+            ->andWhere('s.package_id = :packageId')
+            ->setParameter('packageId', $package->getId());
 
         if ($from != null && $to != null) {
             $from = $from->format('Y-m-d H:i:s');
             $to = $to->format('Y-m-d H:i:s');
 
-            $qb = $qb
+            $qb
                 ->andWhere('s.recorded >= :from')
                 ->andWhere('s.recorded < :to')
                 ->setParameter('from', $from)
-                ->setParameter('to', $to);
+                ->setParameter('to', $to)
+            ;
         }
 
         if ($version != null && $version != '') {
-            $qb = $qb
+            $qb
                 ->andWhere('s.version = :version')
-                ->setParameter('version', $version);
+                ->setParameter('version', $version)
+            ;
         }
 
         return $qb;
@@ -87,11 +154,10 @@ class StatInstall extends AbstractRepository
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('s')
             ->select('s.*')
-            ->where('s.type = :type')
-            ->andWhere('s.package_id = :package_id')
-            ->setParameter('type', 'install')
-            ->setParameter('package_id', $packageId)
-            ->groupBy('s.version, s.id');
+            ->andWhere('s.package_id = :packageId')
+            ->setParameter('packageId', $packageId)
+            ->groupBy('s.version, s.id')
+        ;
 
         return $qb;
     }

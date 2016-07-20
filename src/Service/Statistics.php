@@ -13,18 +13,29 @@ use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 class Statistics
 {
     /** @var Repository\StatInstall */
-    private $repo;
+    private $repoStatInstall;
+    /** @var Repository\StatWebhook */
+    private $repoStatWebhook;
+    /** @var Repository\PackageStar */
+    private $repoPackageStar;
     /** @var Entity\StatInstall[] */
     private $stats;
 
     /**
      * Constructor.
      *
-     * @param Repository\StatInstall $repo
+     * @param Repository\StatInstall $repoStatInstall
+     * @param Repository\StatWebhook $repoStatWebhook
+     * @param Repository\PackageStar $repoPackageStar
      */
-    public function __construct(Repository\StatInstall $repo)
-    {
-        $this->repo = $repo;
+    public function __construct(
+        Repository\StatInstall $repoStatInstall,
+        Repository\StatWebhook $repoStatWebhook,
+        Repository\PackageStar $repoPackageStar
+    ) {
+        $this->repoStatInstall = $repoStatInstall;
+        $this->repoStatWebhook = $repoStatWebhook;
+        $this->repoPackageStar = $repoPackageStar;
     }
 
     /**
@@ -35,23 +46,11 @@ class Statistics
      */
     public function getDownloads($packageId, $version = null)
     {
-        $downloads = [];
-        $dcount = 0;
-        foreach ($this->getStats($packageId) as $stat) {
-            if ($stat->getType() === 'install') {
-                $downloads[$stat->getVersion()][$stat->getIp()] = 1;
-                $dcount ++;
-            }
-        }
-        foreach ($downloads as $ver => $hits) {
-            $downloads[$ver] = count($hits);
+        if ($version) {
+            return $this->repoStatInstall->getInstallsCount($packageId, $version);
         }
 
-        if ($version && isset($downloads[$version])) {
-            return $downloads[$version];
-        }
-
-        return $dcount;
+        return $this->repoStatInstall->getInstallsCount($packageId);
     }
 
     /**
@@ -61,45 +60,19 @@ class Statistics
      */
     public function getStars($packageId)
     {
-        $stars = 0;
-        foreach ($this->getStats($packageId) as $stat) {
-            if ($stat->getType() === 'star') {
-                $stars ++;
-            }
-        }
+        $stars = $this->repoPackageStar->getStarsCount($packageId);
 
         return $stars;
     }
 
     /**
      * @param string $packageId
-     * @param string $userId
+     * @param string $accountId
      *
      * @return bool
      */
-    public function isStarredBy($packageId, $userId)
+    public function isStarredBy($packageId, $accountId)
     {
-        $starred = false;
-        foreach ($this->getStats($packageId) as $stat) {
-            if ($stat->getType() === 'star' && $stat->getAccountId() === $userId) {
-                $starred = true;
-            }
-        }
-
-        return $starred;
-    }
-
-    /**
-     * @param string $packageId
-     *
-     * @return Entity\StatInstall[]
-     */
-    protected function getStats($packageId)
-    {
-        if ($this->stats === null) {
-            $this->stats = $this->repo->findBy(['package_id' => $packageId]) ?: [];
-        }
-
-        return $this->stats;
+        return $this->repoPackageStar->isStarredBy($packageId, $accountId);
     }
 }

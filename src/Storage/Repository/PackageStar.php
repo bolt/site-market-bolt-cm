@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * Package "stars" repository.
@@ -13,82 +14,82 @@ use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 class PackageStar extends AbstractRepository
 {
     /**
-     * @param Entity\Package $package
-     * @param string         $version
-     * @param \DateTime|null $from
-     * @param \DateTime|null $to
+     * Get a package's stars.
+     *
+     * @param string $packageId
      *
      * @return Entity\StatInstall[]
      */
-    public function getStats(Entity\Package $package, $version, \DateTime $from = null, \DateTime $to = null)
+    public function getStars($packageId)
     {
-        $qb = $this->getStatsQuery($package, $version, $from, $to);
-        $stats = $this->findWith($qb);
+        $query = $this->getStarsQuery($packageId);
 
-        return $stats;
+        return $this->findWith($query);
     }
 
-    public function getStatsQuery(Entity\Package $package, $version, \DateTime $from = null, \DateTime $to = null)
+    public function getStarsQuery($packageId)
     {
+        /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('s')
-            ->select('*')
-            ->where('s.type = :type')
-            ->andWhere('s.package_id = :package_id')
-            ->setParameter('type', 'install')
-            ->setParameter('package_id', $package->getId());
-
-        if ($from != null && $to != null) {
-            $from = $from->format('Y-m-d H:i:s');
-            $to = $to->format('Y-m-d H:i:s');
-
-            $qb = $qb
-                ->andWhere('s.recorded >= :from')
-                ->andWhere('s.recorded < :to')
-                ->setParameter('from', $from)
-                ->setParameter('to', $to);
-        }
-
-        if ($version != null && $version != '') {
-            $qb = $qb
-                ->andWhere('s.version = :version')
-                ->setParameter('version', $version);
-        }
+            ->select('s.*')->where('s.package_id = :packageId')
+            ->setParameter('packageId', $packageId)
+            ->groupBy('ip')
+        ;
 
         return $qb;
     }
 
     /**
+     * Get a package's star count.
+     *
      * @param string $packageId
      *
-     * @return array
+     * @return integer
      */
-    public function getAllVersions($packageId)
+    public function getStarsCount($packageId)
     {
-        $versions = [];
-        $qb = $this->getAllVersionsQuery($packageId);
+        $query = $this->getStarsCountQuery($packageId);
 
-        $statEntities = $this->findWith($qb);
-        if ($statEntities === false) {
-            return $versions;
-        }
-
-        /** @var Entity\StatInstall $statEntity */
-        foreach ($statEntities as $statEntity) {
-            $versions[] = $statEntity->getVersion();
-        }
-
-        return $versions;
+        return $this->getCount($query->execute()->fetch());
     }
 
-    public function getAllVersionsQuery($packageId)
+    public function getStarsCountQuery($packageId)
     {
+        /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('s')
-            ->select('s.*')
-            ->where('s.type = :type')
-            ->andWhere('s.package_id = :package_id')
-            ->setParameter('type', 'install')
-            ->setParameter('package_id', $packageId)
-            ->groupBy('s.version, s.id');
+            ->select('COUNT(s.id) as count')
+            ->where('s.package_id = :packageId')
+            ->setParameter('packageId', $packageId)
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * Check if a package is starred by a user ID.
+     *
+     * @param string $packageId
+     * @param string $accountId
+     *
+     * @return bool
+     */
+    public function isStarredBy($packageId, $accountId)
+    {
+        $query = $this->isStarredByQuery($packageId, $accountId);
+
+        return (bool) $this->getCount($query->execute()->fetch());
+    }
+
+    public function isStarredByQuery($packageId, $accountId)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('s')
+            ->select('COUNT(s.id) as count')
+            ->where('s.package_id = :packageId')
+            ->where('s.account_id = :accountId')
+            ->setParameter('packageId', $packageId)
+            ->setParameter('accountId', $accountId)
+        ;
 
         return $qb;
     }
