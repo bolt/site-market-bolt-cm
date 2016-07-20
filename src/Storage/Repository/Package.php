@@ -91,6 +91,7 @@ class Package extends AbstractRepository
 
     public function getStatPackageQuery($action, $composerType, $limit)
     {
+        /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('p');
         $qb
             ->select('p.*, count(p.id) AS pcount')
@@ -124,6 +125,7 @@ class Package extends AbstractRepository
 
     public function getStatCountQuery($type, $limit)
     {
+        /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('p');
         $qb
             ->select('count(p.id) AS pcount')
@@ -156,8 +158,9 @@ class Package extends AbstractRepository
 
     public function getSearchQuery($keyword, $type, $order, $limit)
     {
-        $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('p');
+        $qb->leftJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->where('p.approved = :status')
         ;
 
@@ -251,7 +254,9 @@ class Package extends AbstractRepository
 
     public function searchByVersionQuery($keyword, $type, $boltMajor, $order, $limit)
     {
-        $qb = $this->createQueryBuilder('p')
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('p');
+        $qb
             ->leftJoin('p', 'bolt_marketplace_package_versions', 'v', 'p.id = v.package_id')
             ->where('p.approved = :status')
         ;
@@ -317,7 +322,9 @@ class Package extends AbstractRepository
 
     public function getTagsQuery()
     {
-        $qb = $this->createQueryBuilder('p')
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('p');
+        $qb
             ->select('p.keywords')
             ->where('p.approved = true')
         ;
@@ -340,7 +347,9 @@ class Package extends AbstractRepository
 
     public function getLatestQuery($limit, $type)
     {
-        $qb = $this->createQueryBuilder('p')
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('p');
+        $qb
             ->select('*')
             ->where('p.approved = :approved')
             ->setParameter('approved', true)
@@ -374,7 +383,9 @@ class Package extends AbstractRepository
 
     public function getAllByComposerAuthorQuery($author, $limit, $type)
     {
-        $qb = $this->createQueryBuilder('p')
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('p');
+        $qb
             ->select('*')
             ->where('p.approved = :approved')
             ->andWhere('lower(p.name) LIKE :author')
@@ -408,7 +419,9 @@ class Package extends AbstractRepository
 
     public function getStarredPackagesQuery($accountId)
     {
-        $qb = $this->createQueryBuilder('p')
+        /** @var QueryBuilder $qb */
+        $qb = $this->createQueryBuilder('p');
+        $qb
             ->innerJoin('p', 'bolt_marketplace_stat', 's', 'p.id = s.package_id')
             ->select('p.*')
             ->where('p.approved = :approved')
