@@ -105,7 +105,14 @@ class PackageStatsApiDownloads extends AbstractAction
         return new JsonResponse($data);
     }
 
-    private function getDataGroupedByMonths($stats, $from, $to)
+    /**
+     * @param Entity\StatInstall[] $stats
+     * @param string               $from
+     * @param string               $to
+     *
+     * @return array
+     */
+    private function getDataGroupedByMonths(array $stats, $from, $to)
     {
         $months = [];
 
@@ -114,14 +121,15 @@ class PackageStatsApiDownloads extends AbstractAction
         } else {
             // getting all months with downloads
             foreach ($stats as $stat) {
-                $months[$stat->recorded->format('Y-m')]['date'] = $stat->recorded;
+                $date = $stat->getRecorded()->format('Y-m');
+                $months[$date]['date'] = $stat->getRecorded();
             }
 
             ksort($months);
         }
 
         // get all the different downloaded package versions
-        $versions = $this->getVersionsArray($stats);
+        $versions = $stats ? $this->getVersionsArray($stats) : [];
 
         $labels = [];
         $values = [];
@@ -160,7 +168,14 @@ class PackageStatsApiDownloads extends AbstractAction
         ];
     }
 
-    private function getDataGroupedByDays($stats, $from, $to)
+    /**
+     * @param Entity\StatInstall[] $stats
+     * @param string               $from
+     * @param string               $to
+     *
+     * @return array
+     */
+    private function getDataGroupedByDays(array $stats, $from, $to)
     {
         $days = [];
 
@@ -169,14 +184,15 @@ class PackageStatsApiDownloads extends AbstractAction
         } else {
             // getting all months with downloads
             foreach ($stats as $stat) {
-                $days[$stat->recorded->format('Y-m-d')]['date'] = $stat->recorded;
+                $date = $stat->getRecorded()->format('Y-m-d');
+                $days[$date]['date'] = $stat->getRecorded();
             }
 
             ksort($days);
         }
 
         // get all the different downloaded package versions
-        $versions = $this->getVersionsArray($stats);
+        $versions = $stats ? $this->getVersionsArray($stats) : [];
 
         $labels = [];
         $values = [];
@@ -215,12 +231,17 @@ class PackageStatsApiDownloads extends AbstractAction
         ];
     }
 
-    protected function getVersionsArray($stats)
+    /**
+     * @param Entity\StatInstall[] $stats
+     *
+     * @return array
+     */
+    protected function getVersionsArray(array $stats)
     {
         $versions = [];
         foreach ($stats as $stat) {
-            if ($stat->type == 'install' && $stat->version != null && $stat->version != '') {
-                $versions[$stat->version] = 1;
+            if ($stat->getVersion()) {
+                $versions[$stat->getVersion()] = 1;
             }
         }
         ksort($versions);
@@ -229,21 +250,35 @@ class PackageStatsApiDownloads extends AbstractAction
         return $versions;
     }
 
-    private function getAllVersions($package)
+    /**
+     * @param Entity\Package $package
+     *
+     * @return Entity\StatInstall[]
+     */
+    private function getAllVersions(Entity\Package $package)
     {
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
         /** @var Repository\StatInstall $repo */
         $repo = $em->getRepository(Entity\StatInstall::class);
 
-        return $repo->getAllVersions($package->id);
+        return $repo->getAllVersions($package->getId());
     }
 
-    private function getInstallsByVersionAndDate($stats, $version, $date, $dateFormat)
+    /**
+     * @param Entity\StatInstall[] $stats
+     * @param string               $version
+     * @param string               $date
+     * @param string               $dateFormat
+     *
+     * @return array
+     */
+    private function getInstallsByVersionAndDate(array $stats, $version, $date, $dateFormat)
     {
         $installs = [];
+        /** @var Entity\StatInstall $stat */
         foreach ($stats as $stat) {
-            if ($stat->type == 'install' && $stat->version == $version && $stat->recorded->format($dateFormat) == $date) {
+            if ($stat->getVersion() === $version && $stat->getRecorded()->format($dateFormat) === $date) {
                 $installs[] = $stat;
             }
         }
@@ -251,6 +286,12 @@ class PackageStatsApiDownloads extends AbstractAction
         return $installs;
     }
 
+    /**
+     * @param string $from
+     * @param string $to
+     *
+     * @return array
+     */
     private function getMonthsFromRange($from, $to)
     {
         $months = [];
@@ -267,6 +308,12 @@ class PackageStatsApiDownloads extends AbstractAction
         return $months;
     }
 
+    /**
+     * @param string $from
+     * @param string $to
+     *
+     * @return array
+     */
     private function getDaysFromRange($from, $to)
     {
         $days = [];
@@ -283,7 +330,13 @@ class PackageStatsApiDownloads extends AbstractAction
         return $days;
     }
 
-    private function applyColors($item, $colorIndex)
+    /**
+     * @param array  $item
+     * @param string $colorIndex
+     *
+     * @return array
+     */
+    private function applyColors(array $item, $colorIndex)
     {
         $item['backgroundColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 0.2)';
         $item['borderColor'] = 'rgba(' . $this->colors[$colorIndex] . ', 1)';
