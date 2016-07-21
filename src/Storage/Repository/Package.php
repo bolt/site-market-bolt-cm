@@ -35,41 +35,6 @@ class Package extends AbstractRepository
     }
 
     /**
-     * @param string $action
-     * @param string $composerType
-     * @param int    $limit
-     *
-     * @return Entity\Package[]|false
-     */
-    public function getInstallStatistics($action, $composerType, $limit)
-    {
-        $query = $this->getInstallStatisticsQuery($action, $composerType, $limit);
-
-        return $this->findWith($query);
-    }
-
-    public function getInstallStatisticsQuery($action, $composerType, $limit)
-    {
-        $installStatTable = 'bolt_marketplace_stat_install';
-        /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p')
-            ->select('p.*, count(p.id) AS pcount')
-            ->addSelect('p.source as source')
-            ->innerJoin('p', $installStatTable, 's', 'p.id = s.package_id')
-            ->where('p.type = :composerType')
-            ->andWhere('s.type = :action')
-            ->andWhere('p.approved = true')
-            ->groupBy('p.id')
-            ->orderBy('pcount', 'DESC')
-            ->setParameter('composerType', $composerType)
-            ->setParameter('action', $action)
-            ->setMaxResults($limit)
-        ;
-
-        return $qb;
-    }
-
-    /**
      * @param string $keyword
      * @param string $type
      * @param string $order
@@ -199,7 +164,8 @@ class Package extends AbstractRepository
                 ->add($qb->expr()->orX("(p.keywords #>> '{}' ILIKE :search)"))
                 ->add($qb->expr()->orX("(p.authors #>> '{}' ILIKE :search)"))
             ;
-            $qb->andWhere($andCond)
+            $qb
+                ->andWhere($andCond)
                 ->setParameter('search', '%' . strtolower($keyword) . '%')
             ;
         }
