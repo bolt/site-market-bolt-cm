@@ -448,9 +448,10 @@ class Package extends AbstractRepository
 
     public function getPackageByTokenQuery($type, $token)
     {
+        $packageTokenTable = 'bolt_marketplace_package_token';
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p', 'bolt_marketplace_token', 't', 'p.id = t.package_id')
+            ->leftJoin('p', $packageTokenTable, 't', 'p.id = t.package_id')
             ->select('p.*')
             ->where('t.type = :type')
             ->andWhere('t.token = :token')

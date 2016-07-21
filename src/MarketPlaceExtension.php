@@ -81,10 +81,10 @@ class MarketPlaceExtension extends SimpleExtension
         return [
             'marketplace_package'         => Table\Package::class,
             'marketplace_package_star'    => Table\PackageStar::class,
+            'marketplace_package_token'   => Table\PackageToken::class,
             'marketplace_package_version' => Table\PackageVersion::class,
             'marketplace_stat_install'    => Table\StatInstall::class,
             'marketplace_stat_webhook'    => Table\StatWebhook::class,
-            'marketplace_token'           => Table\Token::class,
             'marketplace_version_build'   => Table\VersionBuild::class,
         ];
     }
@@ -97,10 +97,10 @@ class MarketPlaceExtension extends SimpleExtension
         return [
             'marketplace_package'         => [Entity\Package::class        => Repository\Package::class],
             'marketplace_package_star'    => [Entity\PackageStar::class    => Repository\PackageStar::class],
+            'marketplace_package_token'   => [Entity\PackageToken::class => Repository\PackageToken::class],
             'marketplace_package_version' => [Entity\PackageVersion::class => Repository\PackageVersion::class],
             'marketplace_stat_install'    => [Entity\StatInstall::class => Repository\StatInstall::class],
             'marketplace_stat_webhook'    => [Entity\StatWebhook::class => Repository\StatWebhook::class],
-            'marketplace_token'           => [Entity\Token::class          => Repository\Token::class],
             'marketplace_version_build'   => [Entity\VersionBuild::class   => Repository\VersionBuild::class],
         ];
     }

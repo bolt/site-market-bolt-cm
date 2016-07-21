@@ -6,11 +6,11 @@ use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
- * Token repository.
+ * Package token repository.
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class Token extends AbstractRepository
+class PackageToken extends AbstractRepository
 {
     /**
      * @param string $packageId
@@ -44,7 +44,7 @@ class Token extends AbstractRepository
      * @param string $packageId
      * @param string $type
      *
-     * @return Entity\Token|false
+     * @return Entity\PackageToken|false
      */
     public function getValidPackageToken($packageId, $type)
     {

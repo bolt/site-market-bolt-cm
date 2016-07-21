@@ -83,8 +83,8 @@ class PackageUpdate extends AbstractAction
 
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Repository\Token $tokenRepo */
-        $tokenRepo = $em->getRepository(Entity\Token::class);
+        /** @var Repository\PackageToken $tokenRepo */
+        $tokenRepo = $em->getRepository(Entity\PackageToken::class);
         $tokenRepo->getValidPackageToken($package->getId(), 'webhook');
     }
 }

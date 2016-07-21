@@ -5,11 +5,11 @@ namespace Bolt\Extension\Bolt\MarketPlace\Storage\Schema\Table;
 use Bolt\Storage\Database\Schema\Table\BaseTable;
 
 /**
- * Token table.
+ * Package token table.
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class Token extends BaseTable
+class PackageToken extends BaseTable
 {
     /**
      * {@inheritdoc}

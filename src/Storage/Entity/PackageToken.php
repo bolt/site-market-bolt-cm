@@ -5,11 +5,11 @@ namespace Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\Entity\Entity;
 
 /**
- * Token entity.
+ * Package token entity.
  *
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class Token extends Entity
+class PackageToken extends Entity
 {
     /** @var string */
     protected $id;

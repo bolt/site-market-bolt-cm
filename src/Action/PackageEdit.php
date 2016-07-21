@@ -44,8 +44,8 @@ class PackageEdit extends AbstractAction
             return new RedirectResponse($route);
         }
 
-        /** @var Repository\Token $tokenRepo */
-        $tokenRepo = $em->getRepository(Entity\Token::class);
+        /** @var Repository\PackageToken $tokenRepo */
+        $tokenRepo = $em->getRepository(Entity\PackageToken::class);
         $tokenRepo->getValidPackageToken($package->getId(), 'webhook');
 
         $formsService = $this->getAppService('marketplace.forms');
