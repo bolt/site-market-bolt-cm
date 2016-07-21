@@ -100,13 +100,9 @@ class PackageStatsApiDownloads extends AbstractAction
         } else {
             $data = $this->getDataGroupedByMonths($stats, $from, $to);
         }
+        $data['allVersions'] = $allVersions;
 
-        return new JsonResponse(array_merge(
-            $data,
-            [
-                'allVersions' => $allVersions,
-            ]
-        ));
+        return new JsonResponse($data);
     }
 
     private function getDataGroupedByMonths($stats, $from, $to)
