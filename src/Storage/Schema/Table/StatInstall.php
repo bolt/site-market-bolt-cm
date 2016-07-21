@@ -21,11 +21,6 @@ class StatInstall extends BaseTable
         $this->table->addColumn('ip',         'string',   ['notnull' => false]);
         $this->table->addColumn('recorded',   'datetime', ['notnull' => false]);
         $this->table->addColumn('version',    'string',   ['notnull' => false]);
-
-        // To be remove after migration
-        $this->table->addColumn('account_id', 'guid',     ['notnull' => false]);
-        $this->table->addColumn('type',       'string',   ['notnull' => false]);
-        $this->table->addColumn('source',     'string',   ['notnull' => false]);
     }
 
     /**
