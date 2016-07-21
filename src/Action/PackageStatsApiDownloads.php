@@ -125,7 +125,7 @@ class PackageStatsApiDownloads extends AbstractAction
         }
 
         // get all the different downloaded package versions
-        $versions = $this->getVersions($stats);
+        $versions = $this->getVersionsArray($stats);
 
         $labels = [];
         $values = [];
@@ -180,7 +180,7 @@ class PackageStatsApiDownloads extends AbstractAction
         }
 
         // get all the different downloaded package versions
-        $versions = $this->getVersions($stats);
+        $versions = $this->getVersionsArray($stats);
 
         $labels = [];
         $values = [];
@@ -219,7 +219,7 @@ class PackageStatsApiDownloads extends AbstractAction
         ];
     }
 
-    protected function getVersions($stats)
+    protected function getVersionsArray($stats)
     {
         $versions = [];
         foreach ($stats as $stat) {
