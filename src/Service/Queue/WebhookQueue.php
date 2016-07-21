@@ -97,10 +97,10 @@ class WebhookQueue extends AbstractQueue
             $parts = explode('#', $fileName);
             $token = $parts[0];
 
-            /** @var Repository\Package $packageRepo */
-            $packageRepo = $this->em->getRepository(Entity\Package::class);
+            /** @var Repository\PackageToken $tokenRepo */
+            $tokenRepo = $this->em->getRepository(Entity\PackageToken::class);
             /** @var Entity\Package $package */
-            $package = $packageRepo->getPackageByToken('webhook', $token);
+            $package = $tokenRepo->getPackage($token);
             if ($package) {
                 // @TODO
                 //if ($payload->security) {

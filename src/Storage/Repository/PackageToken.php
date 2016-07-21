@@ -12,6 +12,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
  */
 class PackageToken extends AbstractRepository
 {
+    use PackageMetaTrait;
+
     /**
      * @param string $packageId
      * @param string $type
@@ -62,5 +64,38 @@ class PackageToken extends AbstractRepository
         }
 
         return $tokenEntity;
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return Entity\Package|false
+     */
+    public function getPackage($token)
+    {
+        /** @var Package $packageRepo */
+        $packageRepo = $this->getEntityManager()->getRepository(Entity\Package::class);
+        $query = $this->getPackageQuery($packageRepo, $token);
+
+        return $packageRepo->findOneWith($query);
+    }
+
+    /**
+     * @param Package $packageRepo
+     * @param string  $token
+     *
+     * @return QueryBuilder
+     */
+    public function getPackageQuery($packageRepo, $token)
+    {
+        /** @var QueryBuilder $qb */
+        $qb = $packageRepo->createQueryBuilder('p')
+            ->select('p.*')
+            ->leftJoin('p', $this->getTableName(), 't', 'p.id = t.package_id')
+            ->andWhere('t.token = :token')
+            ->setParameter('token', $token)
+        ;
+
+        return $qb;
     }
 }
