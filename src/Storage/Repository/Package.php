@@ -45,16 +45,6 @@ class Package extends AbstractRepository
     }
 
     /**
-     * @param int $limit
-     *
-     * @return Entity\Package[]|false
-     */
-    public function getMostStarredStats($limit = 10)
-    {
-        return $this->getInstallStatisticsCount('star', $limit);
-    }
-
-    /**
      * @return array
      */
     public function getPopularTags()
@@ -424,11 +414,9 @@ class Package extends AbstractRepository
             ->innerJoin('p', $installStarTable, 's', 'p.id = s.package_id')
             ->select('p.*')
             ->where('p.approved = :approved')
-            ->andWhere('s.type = :star')
             ->andWhere('s.account_id = :account_id')
             ->setParameter('approved', true)
-            ->setParameter('star', 'star')
-            ->setParameter('account_id', $accountId)
+             ->setParameter('account_id', $accountId)
         ;
 
         return $qb;
@@ -453,9 +441,7 @@ class Package extends AbstractRepository
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p', $packageTokenTable, 't', 'p.id = t.package_id')
             ->select('p.*')
-            ->where('t.type = :type')
             ->andWhere('t.token = :token')
-            ->setParameter('type', $type)
             ->setParameter('token', $token)
         ;
 

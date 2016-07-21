@@ -13,6 +13,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
  */
 class PackageStar extends AbstractRepository
 {
+    use PackageMetaTrait;
+
     /**
      * Get a package's stars.
      *
@@ -31,7 +33,8 @@ class PackageStar extends AbstractRepository
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('s')
-            ->select('s.*')->where('s.package_id = :packageId')
+            ->select('s.*')
+            ->where('s.package_id = :packageId')
             ->setParameter('packageId', $packageId)
             ->groupBy('ip')
         ;
