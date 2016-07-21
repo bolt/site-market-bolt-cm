@@ -27,17 +27,19 @@ class Home extends AbstractAction
         $repo = $em->getRepository(Entity\Package::class);
         /** @var Repository\PackageStar $starRepo */
         $starRepo = $em->getRepository(Entity\PackageStar::class);
+        /** @var Repository\StatInstall $installRepo */
+        $installRepo = $em->getRepository(Entity\StatInstall::class);
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $context = [
             'latest'                  => $repo->getLatest(10),
             'starred'                 => $starRepo->getRankedPackages(5),
-            'downloaded'              => $repo->getMostDownloadedStats(6),
+            'downloaded'              => $installRepo->getRankedPackages(6),
             'latest_themes'           => $repo->getLatest(3, 'bolt-theme'),
             'latest_plugins'          => $repo->getLatest(12, 'bolt-extension'),
-            'most_downloaded_themes'  => $repo->getMostDownloaded('bolt-theme', 6),
-            'most_downloaded_plugins' => $repo->getMostDownloaded('bolt-extension', 6),
+            'most_downloaded_themes'  => $installRepo->getRankedPackages(6, 'bolt-theme'),
+            'most_downloaded_plugins' => $installRepo->getRankedPackages(6, 'bolt-extension'),
             'popular'                 => $repo->getPopularTags(),
         ];
         $html = $twig->render('index.twig', $context);

@@ -27,13 +27,15 @@ class Listing extends AbstractAction
         $repo = $em->getRepository(Entity\Package::class);
         /** @var Repository\PackageStar $starRepo */
         $starRepo = $em->getRepository(Entity\PackageStar::class);
+        /** @var Repository\StatInstall $installRepo */
+        $installRepo = $em->getRepository(Entity\StatInstall::class);
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
         $context = [
             'latest'        => $repo->findBy(['approved' => true], ['created' => 'DESC'], 10),
             'starred'       => $starRepo->getRankedPackages(5),
-            'downloaded'    => $repo->getMostDownloadedStats(6),
+            'downloaded'    => $installRepo->getRankedPackages(6),
             'latest_themes' => $repo->findBy(['approved' => true, 'type' => 'bolt-theme'], ['created' => 'DESC'], 3),
             'popular'       => $repo->getPopularTags(),
         ];

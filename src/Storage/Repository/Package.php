@@ -14,37 +14,6 @@ use Doctrine\DBAL\Query\QueryBuilder;
 class Package extends AbstractRepository
 {
     /**
-     * @param string $composerType
-     * @param int    $limit
-     *
-     * @return Entity\Package[]|false
-     */
-    public function getMostDownloaded($composerType, $limit = 10)
-    {
-        return $this->getInstallStatistics('install', $composerType, $limit);
-    }
-    /**
-     * @param int $limit
-     *
-     * @return Entity\Package[]|false
-     */
-    public function getMostDownloadedStats($limit = 10)
-    {
-        return $this->getInstallStatisticsCount('install', $limit);
-    }
-
-    /**
-     * @param string $composerType
-     * @param int    $limit
-     *
-     * @return Entity\Package[]|false
-     */
-    public function getMostStarred($composerType, $limit = 10)
-    {
-        return $this->getInstallStatistics('star', $composerType, $limit);
-    }
-
-    /**
      * @return array
      */
     public function getPopularTags()

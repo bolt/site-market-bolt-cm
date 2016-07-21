@@ -13,6 +13,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
  */
 class StatInstall extends AbstractRepository
 {
+    use PackageMetaTrait;
+
     /**
      * Get a package's install stats.
      *
@@ -160,5 +162,25 @@ class StatInstall extends AbstractRepository
         ;
 
         return $qb;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $type
+     */
+    public function getRankedPackages($limit = 10, $type = null)
+    {
+        /** @var Package $packageRepo */
+        $packageRepo = $this->getEntityManager()->getRepository(Entity\Package::class);
+        $query = $this->getRankedPackagesQuery($packageRepo, $limit);
+        if ($this !== null) {
+            $query
+                ->andWhere('s.type = :type')
+                ->setParameter('type', $type)
+            ;
+        }
+
+        return $packageRepo->findWith($query);
     }
 }

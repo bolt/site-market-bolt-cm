@@ -3,7 +3,7 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
+use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,17 +23,19 @@ class ListPackages extends AbstractAction
     {
         /** @var EntityManager $em */
         $em = $this->getAppService('storage');
-        /** @var Package $repo */
-        $repo = $em->getRepository(Entity\Package::class);
+        /** @var Repository\Package $packageRepo */
+        $packageRepo = $em->getRepository(Entity\Package::class);
+        /** @var Repository\StatInstall $installRepo */
+        $installRepo = $em->getRepository(Entity\StatInstall::class);
 
         if (isset($params['sort'])) {
             if ($params['sort'] === 'downloaded') {
-                $packages = $repo->getMostDownloaded($params['type'], 200);
+                $packages = $installRepo->getRankedPackages(200, $params['type']);
             }
         } elseif ($search = $request->get('name')) {
-            $packages = $repo->search($search);
+            $packages = $packageRepo->search($search);
         } else {
-            $packages = $repo->findBy(['approved' => true]);
+            $packages = $packageRepo->findBy(['approved' => true]);
         }
         array_walk($packages, function (&$v, $k) {
             $v = $v->serialize();
