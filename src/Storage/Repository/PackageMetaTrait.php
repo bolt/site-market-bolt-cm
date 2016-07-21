@@ -42,6 +42,8 @@ trait PackageMetaTrait
             ->select('p.*')
             ->leftJoin('p', $this->getTableName(), 's', 'p.id = s.package_id')
             ->addSelect('COUNT(s.id) as count')
+            ->andWhere('p.approved = :approved')
+            ->setParameter('approved', true)
             ->setMaxResults($limit)
             ->groupBy('s.id, p.id')
             ->orderBy('count', 'DESC')
