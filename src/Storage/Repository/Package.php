@@ -352,9 +352,9 @@ class Package extends AbstractRepository
             ->innerJoin('p', $installStarTable, 's', 'p.id = s.package_id')
             ->select('p.*')
             ->where('p.approved = :approved')
-            ->andWhere('s.account_id = :account_id')
             ->setParameter('approved', true)
-             ->setParameter('account_id', $accountId)
+            ->andWhere('s.account_id = :account_id')
+            ->setParameter('account_id', $accountId)
         ;
 
         return $qb;
