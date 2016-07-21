@@ -91,16 +91,17 @@ class PackageStatsApiDownloads extends AbstractAction
         /** @var Repository\StatInstall $repo */
         $repo = $em->getRepository(Entity\StatInstall::class);
         $stats = $repo->getStats($package, $version, $fromDT, $toDT);
-        $allVersions = $this->getAllVersions($package);
 
-        if ($group === 'months') {
+        if ($stats && $group === 'months') {
             $data = $this->getDataGroupedByMonths($stats, $from, $to);
-        } elseif ($group === 'days') {
+        } elseif ($stats && $group === 'days') {
             $data = $this->getDataGroupedByDays($stats, $from, $to);
-        } else {
+        } elseif ($stats) {
             $data = $this->getDataGroupedByMonths($stats, $from, $to);
+        } else {
+            $data = [];
         }
-        $data['allVersions'] = $allVersions;
+        $data['allVersions'] = $this->getAllVersions($package);
 
         return new JsonResponse($data);
     }
