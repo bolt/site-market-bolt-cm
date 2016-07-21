@@ -70,37 +70,6 @@ class Package extends AbstractRepository
     }
 
     /**
-     * @param string  $type
-     * @param integer $limit
-     *
-     * @return Entity\Package[]|false
-     */
-    public function getInstallStatisticsCount($type, $limit)
-    {
-        $query = $this->getInstallStatisticsCountQuery($type, $limit);
-
-        return $this->findWith($query);
-    }
-
-    public function getInstallStatisticsCountQuery($type, $limit)
-    {
-        $installStatTable = 'bolt_marketplace_stat_install';
-        /** @var QueryBuilder $qb */
-        $qb = $this->createQueryBuilder('p')
-            ->select('count(p.id) AS pcount')
-            ->innerJoin('p', $installStatTable, 's', 'p.id = s.package_id')
-            ->where('s.type = :type')
-            ->andWhere('p.approved = true')
-            ->groupBy('p.id')
-            ->orderBy('pcount', 'DESC')
-            ->setParameter('type', $type)
-            ->setMaxResults($limit)
-        ;
-
-        return $qb;
-    }
-
-    /**
      * @param string $keyword
      * @param string $type
      * @param string $order
