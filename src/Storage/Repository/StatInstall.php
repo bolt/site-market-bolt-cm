@@ -174,9 +174,10 @@ class StatInstall extends AbstractRepository
         /** @var Package $packageRepo */
         $packageRepo = $this->getEntityManager()->getRepository(Entity\Package::class);
         $query = $this->getRankedPackagesQuery($packageRepo, $limit);
-        if ($this !== null) {
+        if ($type !== null) {
             $query
-                ->andWhere('s.type = :type')
+                //->select('p.*')
+                ->andWhere('p.type = :type')
                 ->setParameter('type', $type)
             ;
         }

@@ -45,7 +45,7 @@ trait PackageMetaTrait
             ->andWhere('p.approved = :approved')
             ->setParameter('approved', true)
             ->setMaxResults($limit)
-            ->groupBy('s.id, p.id')
+            ->groupBy('p.id')
             ->orderBy('count', 'DESC')
         ;
 
