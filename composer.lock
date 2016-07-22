@@ -9,32 +9,32 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.0.10",
+            "version": "v3.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "62600d5776b115504c8d90f40872cfc21ae9156c"
+                "reference": "ac6731941e6321914b4ce836b15982da3b80f762"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/62600d5776b115504c8d90f40872cfc21ae9156c",
-                "reference": "62600d5776b115504c8d90f40872cfc21ae9156c",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/ac6731941e6321914b4ce836b15982da3b80f762",
+                "reference": "ac6731941e6321914b4ce836b15982da3b80f762",
                 "shasum": ""
             },
             "require": {
                 "bolt/filesystem": "^2.0",
-                "bolt/package-wrapper": "^3.0",
                 "bolt/pathogen": "~0.6",
                 "bolt/thumbs": "^3.0",
                 "brandonwamboldt/utilphp": "~1.0",
                 "cocur/slugify": "~1.0",
-                "composer/composer": "^1.0",
+                "composer/composer": "^1.2",
                 "doctrine/cache": "^1.5",
                 "doctrine/dbal": "^2.5",
                 "erusev/parsedown-extra": "~0.2",
                 "ext-mbstring": "*",
                 "ext-pdo": "*",
                 "filp/whoops": "~2.0",
+                "guzzlehttp/guzzle": "^5.3.1 || ^6.2.1",
                 "ircmaxell/random-lib": "~1.1",
                 "monolog/monolog": "~1.12",
                 "nesbot/carbon": "^1.20",
@@ -84,7 +84,7 @@
                 "phpmd/phpmd": "~2.2",
                 "phpunit/dbunit": "~1.3",
                 "phpunit/php-code-coverage": "~2.0",
-                "phpunit/phpunit": "~4.4",
+                "phpunit/phpunit": "^4.8",
                 "sebastian/phpcpd": "~2.0",
                 "squizlabs/php_codesniffer": "~2.0",
                 "symfony/phpunit-bridge": "^2.8"
@@ -95,7 +95,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-release/3.0": "3.0.x-dev"
                 }
             },
             "autoload": {
@@ -118,7 +118,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-07-14 07:30:26"
+            "time": "2016-07-19 11:15:08"
         },
         {
             "name": "bolt/filesystem",
@@ -175,37 +175,6 @@
             ],
             "description": "Bolt's filesystem abstraction layer",
             "time": "2016-04-29 17:44:16"
-        },
-        {
-            "name": "bolt/package-wrapper",
-            "version": "v3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bolt/package-wrapper.git",
-                "reference": "81b33aec72f7d3e1943eca974d04dc4d44aa6647"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bolt/package-wrapper/zipball/81b33aec72f7d3e1943eca974d04dc4d44aa6647",
-                "reference": "81b33aec72f7d3e1943eca974d04dc4d44aa6647",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^5.3 || ^6.1"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gawain Lynch",
-                    "email": "gawain.lynch@gmail.com"
-                }
-            ],
-            "description": "A wrapper to pull in required packages",
-            "time": "2016-01-13 08:03:34"
         },
         {
             "name": "bolt/pathogen",
@@ -1024,12 +993,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "272b87213e0203bdf2f438102aed2c7b2919aadf"
+                "reference": "45939c61df532608c67a92733b7cd1e64455abc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/272b87213e0203bdf2f438102aed2c7b2919aadf",
-                "reference": "272b87213e0203bdf2f438102aed2c7b2919aadf",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/45939c61df532608c67a92733b7cd1e64455abc1",
+                "reference": "45939c61df532608c67a92733b7cd1e64455abc1",
                 "shasum": ""
             },
             "require": {
@@ -1087,7 +1056,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-07-15 21:22:59"
+            "time": "2016-07-20 13:35:22"
         },
         {
             "name": "doctrine/inflector",
