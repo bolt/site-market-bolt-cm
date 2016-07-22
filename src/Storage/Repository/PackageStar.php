@@ -89,7 +89,7 @@ class PackageStar extends AbstractRepository
         $qb = $this->createQueryBuilder('s')
             ->select('COUNT(s.id) as count')
             ->where('s.package_id = :packageId')
-            ->where('s.account_id = :accountId')
+            ->andWhere('s.account_id = :accountId')
             ->setParameter('packageId', $packageId)
             ->setParameter('accountId', $accountId)
         ;
