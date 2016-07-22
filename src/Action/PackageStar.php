@@ -49,24 +49,22 @@ class PackageStar extends AbstractAction
         /** @var Account $account */
         $account = $records->getAccountByGuid($package->getAccountId());
 
-        /** @var Repository\StatInstall $statRepo */
-        $statRepo = $em->getRepository(Entity\StatInstall::class);
-        /** @var Entity\StatInstall $existing */
-        $existing = $statRepo->findOneBy(['package_id' => $package, 'account_id' => $account->getGuid()]);
+        /** @var Repository\PackageStar $starRepo */
+        $starRepo = $em->getRepository(Entity\PackageStar::class);
+        $existing = $starRepo->isStarredBy($package->getId(), $account->getGuid());
 
         if ($existing) {
             $session->getFlashBag()->add('error', 'Your have already starred this package');
         } else {
-            $stat = new Entity\StatInstall([
+            $star = new Entity\PackageStar([
                 'source'     => $request->server->get('HTTP_REFERER'),
                 'ip'         => $request->server->get('REMOTE_ADDR'),
                 'recorded'   => new \DateTime(),
                 'package_id' => $package,
-                'type'       => 'star',
                 'account_id' => $account->getGuid(),
             ]);
 
-            $statRepo->save($stat);
+            $starRepo->save($star);
             $session->getFlashBag()->add('success', 'Your have starred this package');
         }
 
