@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d8c0ca2b1d27eb7a8c3cb482b46a4006",
-    "content-hash": "754fcbf105cfcd4d5d018e2e9516e4a6",
+    "hash": "2c7ee3b90df0a2a3b143bac0222a34de",
+    "content-hash": "8c57a4e29745b53e93b479ff251654c5",
     "packages": [
         {
             "name": "bolt/boltforms",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/boltforms.git",
-                "reference": "c5dd37be067c2483631ca258b6ce42aed9ad795a"
+                "reference": "b6997a003fdaea30a17b1f10593f52f8c3f4f36d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/boltforms/zipball/c5dd37be067c2483631ca258b6ce42aed9ad795a",
-                "reference": "c5dd37be067c2483631ca258b6ce42aed9ad795a",
+                "url": "https://api.github.com/repos/bolt/boltforms/zipball/b6997a003fdaea30a17b1f10593f52f8c3f4f36d",
+                "reference": "b6997a003fdaea30a17b1f10593f52f8c3f4f36d",
                 "shasum": ""
             },
             "require": {
@@ -74,10 +74,10 @@
                 "uploads"
             ],
             "support": {
-                "source": "https://github.com/bolt/boltforms/tree/repeaters",
+                "source": "https://github.com/bolt/boltforms/tree/master",
                 "issues": "https://github.com/bolt/boltforms/issues"
             },
-            "time": "2016-07-08 06:58:05"
+            "time": "2016-07-19 13:45:44"
         },
         {
             "name": "bolt/github",
@@ -141,7 +141,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "0f550a317a5e791fd6ee4276f16ea9bba54dc08f"
+                "reference": "87d2421705b30d44f339ea0bca90cc21eba1d06b"
             },
             "require": {
                 "bolt/bolt": "^3.0",
@@ -181,7 +181,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2016-07-18 12:41:26"
+            "time": "2016-07-23 06:55:38"
         },
         {
             "name": "bolt/members",
@@ -189,12 +189,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "ccdf01ced4edcbd86bd4a08b2180a7722a6dfc60"
+                "reference": "8d273a281631853d6603d369406945de1d40ba7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/ccdf01ced4edcbd86bd4a08b2180a7722a6dfc60",
-                "reference": "ccdf01ced4edcbd86bd4a08b2180a7722a6dfc60",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/8d273a281631853d6603d369406945de1d40ba7e",
+                "reference": "8d273a281631853d6603d369406945de1d40ba7e",
                 "shasum": ""
             },
             "require": {
@@ -251,7 +251,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-07-14 05:28:33"
+            "time": "2016-07-22 06:15:11"
         },
         {
             "name": "guzzle/guzzle",
