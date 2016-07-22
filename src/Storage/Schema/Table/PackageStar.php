@@ -47,6 +47,6 @@ class PackageStar extends BaseTable
     protected function addForeignKeyConstraints()
     {
         $this->table->addForeignKeyConstraint($this->tablePrefix . 'marketplace_package', ['package_id'], ['id'], ['onDelete' => 'CASCADE']);
-        //$this->table->addForeignKeyConstraint($this->tablePrefix . 'members_account',     ['account_id'], ['guid'], []);
+        $this->table->addForeignKeyConstraint($this->tablePrefix . 'members_account', ['account_id'], ['guid'], ['onDelete' => 'CASCADE']);
     }
 }
