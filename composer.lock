@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.1.0-beta2",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "3fa94144cd791d9ad3a9c24b9e445ca15e808b9f"
+                "reference": "d0d51938e632d242a8752cd6e0de224672e9bfff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/3fa94144cd791d9ad3a9c24b9e445ca15e808b9f",
-                "reference": "3fa94144cd791d9ad3a9c24b9e445ca15e808b9f",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/d0d51938e632d242a8752cd6e0de224672e9bfff",
+                "reference": "d0d51938e632d242a8752cd6e0de224672e9bfff",
                 "shasum": ""
             },
             "require": {
@@ -119,7 +119,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-08-11 08:53:16"
+            "time": "2016-08-23 17:59:56"
         },
         {
             "name": "bolt/filesystem",
@@ -533,12 +533,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "2ce60aee6b780fc5eba2481ff1e2169549dea75f"
+                "reference": "56e3976301893dc89838380fa4b81024a5ac602c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/2ce60aee6b780fc5eba2481ff1e2169549dea75f",
-                "reference": "2ce60aee6b780fc5eba2481ff1e2169549dea75f",
+                "url": "https://api.github.com/repos/composer/satis/zipball/56e3976301893dc89838380fa4b81024a5ac602c",
+                "reference": "56e3976301893dc89838380fa4b81024a5ac602c",
                 "shasum": ""
             },
             "require": {
@@ -586,7 +586,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2016-07-17 22:56:19"
+            "time": "2016-08-20 22:07:33"
         },
         {
             "name": "composer/semver",
@@ -994,12 +994,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "45939c61df532608c67a92733b7cd1e64455abc1"
+                "reference": "70896e0c5534e0ecf1cae165397211f6e03e50ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/45939c61df532608c67a92733b7cd1e64455abc1",
-                "reference": "45939c61df532608c67a92733b7cd1e64455abc1",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/70896e0c5534e0ecf1cae165397211f6e03e50ae",
+                "reference": "70896e0c5534e0ecf1cae165397211f6e03e50ae",
                 "shasum": ""
             },
             "require": {
@@ -1008,6 +1008,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.4.6",
+                "phpunit/phpunit-mock-objects": "!=3.2.4",
                 "symfony/console": "2.*"
             },
             "suggest": {
@@ -1057,7 +1058,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-07-20 13:35:22"
+            "time": "2016-08-24 17:23:58"
         },
         {
             "name": "doctrine/inflector",
