@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.2.0-rc2",
+            "version": "v3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "7d1175848a8aff959db95e5fa8ca68aed168f236"
+                "reference": "473479cdc549d576d422c6eab4048a3dae0e687b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/7d1175848a8aff959db95e5fa8ca68aed168f236",
-                "reference": "7d1175848a8aff959db95e5fa8ca68aed168f236",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/473479cdc549d576d422c6eab4048a3dae0e687b",
+                "reference": "473479cdc549d576d422c6eab4048a3dae0e687b",
                 "shasum": ""
             },
             "require": {
@@ -120,7 +120,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-10-30 15:16:18"
+            "time": "2016-11-07 16:22:24"
         },
         {
             "name": "bolt/filesystem",
@@ -1001,12 +1001,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "ec8fc16604915110eea8046e3ea594c133aee880"
+                "reference": "51f6934c19635fa1c69680482522c734a0121463"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/ec8fc16604915110eea8046e3ea594c133aee880",
-                "reference": "ec8fc16604915110eea8046e3ea594c133aee880",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/51f6934c19635fa1c69680482522c734a0121463",
+                "reference": "51f6934c19635fa1c69680482522c734a0121463",
                 "shasum": ""
             },
             "require": {
@@ -1065,7 +1065,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-09-09 19:26:50"
+            "time": "2016-11-06 12:49:02"
         },
         {
             "name": "doctrine/inflector",
