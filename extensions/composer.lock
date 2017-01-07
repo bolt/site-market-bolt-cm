@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5fcb7465348348aa9cb8c62307e60e19",
-    "content-hash": "d30c311db4a486583119434c7bf54618",
+    "content-hash": "a3ebc62658056f947228261874adea41",
     "packages": [
         {
             "name": "bolt/boltforms",
@@ -13,16 +12,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/boltforms.git",
-                "reference": "345a5f0177c1c41d465987aed6abf2c553242d22"
+                "reference": "7a6378ccf184dd6852feb0284419e7a7893022f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/boltforms/zipball/345a5f0177c1c41d465987aed6abf2c553242d22",
-                "reference": "345a5f0177c1c41d465987aed6abf2c553242d22",
+                "url": "https://api.github.com/repos/bolt/boltforms/zipball/7a6378ccf184dd6852feb0284419e7a7893022f5",
+                "reference": "7a6378ccf184dd6852feb0284419e7a7893022f5",
                 "shasum": ""
             },
             "require": {
-                "bolt/bolt": "^3.0"
+                "bolt/bolt": "^3.0",
+                "bolt/email-spooler": "^3.0",
+                "google/recaptcha": "^1.1.2"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.7"
@@ -36,15 +37,14 @@
                 "bolt-class": "Bolt\\Extension\\Bolt\\BoltForms\\BoltFormsExtension",
                 "bolt-icon": "icon-boltforms.png",
                 "branch-alias": {
-                    "dev-master": "3.1.x-dev"
+                    "dev-master": "4.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
                     "Bolt\\Extension\\Bolt\\BoltForms\\": [
                         "src/"
-                    ],
-                    "ReCaptcha\\": "lib/ReCaptcha/"
+                    ]
                 },
                 "classmap": [
                     "doc/example/"
@@ -57,7 +57,8 @@
                 }
             },
             "license": [
-                "GPL-3.0+"
+                "GPL-3.0+",
+                "LGPL-3.0+"
             ],
             "authors": [
                 {
@@ -65,7 +66,7 @@
                     "email": "gawain.lynch@gmail.com"
                 }
             ],
-            "description": "Symfony Forms API for bolt",
+            "description": "Powerful and flexible HTML form generator for Bolt based on Symfony Forms",
             "keywords": [
                 "comments",
                 "contact",
@@ -77,7 +78,56 @@
                 "source": "https://github.com/bolt/boltforms/tree/master",
                 "issues": "https://github.com/bolt/boltforms/issues"
             },
-            "time": "2016-08-09 09:23:52"
+            "time": "2017-01-06 13:22:38"
+        },
+        {
+            "name": "bolt/email-spooler",
+            "version": "v3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GawainLynch/bolt-extension-email-spooler.git",
+                "reference": "e9f338c572f9aeb3f16162bd60f8877c75b6e09d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-email-spooler/zipball/e9f338c572f9aeb3f16162bd60f8877c75b6e09d",
+                "reference": "e9f338c572f9aeb3f16162bd60f8877c75b6e09d",
+                "shasum": ""
+            },
+            "require": {
+                "bolt/bolt": "^3.0",
+                "php": ">=5.5.9"
+            },
+            "type": "bolt-extension",
+            "extra": {
+                "bolt-class": "Bolt\\Extension\\Bolt\\EmailSpooler\\EmailSpoolerExtension",
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bolt\\Extension\\Bolt\\EmailSpooler\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gawain Lynch",
+                    "email": "gawain.lynch@gmail.com"
+                }
+            ],
+            "keywords": [
+                "email",
+                "spool"
+            ],
+            "support": {
+                "source": "https://github.com/GawainLynch/bolt-extension-email-spooler/tree/master",
+                "issues": "https://github.com/GawainLynch/bolt-extension-email-spooler/issues"
+            },
+            "time": "2016-09-16T15:11:09+00:00"
         },
         {
             "name": "bolt/github",
@@ -185,20 +235,21 @@
         },
         {
             "name": "bolt/members",
-            "version": "dev-master",
+            "version": "v3.0.0-beta3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "24374fd5cca75b46595333a8ca91bb2ef551ec82"
+                "reference": "18b794a55577383aa92598dbf6e71e32f0dfc656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/24374fd5cca75b46595333a8ca91bb2ef551ec82",
-                "reference": "24374fd5cca75b46595333a8ca91bb2ef551ec82",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/18b794a55577383aa92598dbf6e71e32f0dfc656",
+                "reference": "18b794a55577383aa92598dbf6e71e32f0dfc656",
                 "shasum": ""
             },
             "require": {
-                "bolt/bolt": "^3.0.3",
+                "bolt/bolt": "^3.2",
+                "bolt/email-spooler": "^3.0",
                 "pagerfanta/pagerfanta": "^1.0",
                 "php": ">=5.5.9",
                 "ramsey/uuid": "^3.1"
@@ -251,7 +302,56 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2016-08-03 14:31:17"
+            "time": "2017-01-06T16:16:58+00:00"
+        },
+        {
+            "name": "google/recaptcha",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/recaptcha.git",
+                "reference": "2b7e00566afca82a38a1d3adb8e42c118006296e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/recaptcha/zipball/2b7e00566afca82a38a1d3adb8e42c118006296e",
+                "reference": "2b7e00566afca82a38a1d3adb8e42c118006296e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ReCaptcha\\": "src/ReCaptcha"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Client library for reCAPTCHA, a free service that protect websites from spam and abuse.",
+            "homepage": "http://www.google.com/recaptcha/",
+            "keywords": [
+                "abuse",
+                "captcha",
+                "recaptcha",
+                "spam"
+            ],
+            "support": {
+                "forum": "https://groups.google.com/forum/#!forum/recaptcha",
+                "source": "https://github.com/google/recaptcha",
+                "issues": "https://github.com/google/recaptcha/issues"
+            },
+            "time": "2015-09-02T17:23:59+00:00"
         },
         {
             "name": "guzzle/guzzle",
@@ -354,7 +454,7 @@
                 "source": "https://github.com/guzzle/guzzle3/tree/v3.9.3",
                 "issues": "https://github.com/guzzle/guzzle3/issues"
             },
-            "time": "2015-03-18 18:23:50"
+            "time": "2015-03-18T18:23:50+00:00"
         },
         {
             "name": "knplabs/github-api",
@@ -419,20 +519,20 @@
                 "source": "https://github.com/KnpLabs/php-github-api/tree/master",
                 "issues": "https://github.com/KnpLabs/php-github-api/issues"
             },
-            "time": "2016-07-26 08:49:38"
+            "time": "2016-07-26T08:49:38+00:00"
         },
         {
             "name": "pagerfanta/pagerfanta",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/Pagerfanta.git",
-                "reference": "a874d3612d954dcbbb49e5ffe178890918fb76fb"
+                "reference": "f846c5e06bb66df659a688ea4734aab49de589d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/a874d3612d954dcbbb49e5ffe178890918fb76fb",
-                "reference": "a874d3612d954dcbbb49e5ffe178890918fb76fb",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/f846c5e06bb66df659a688ea4734aab49de589d6",
+                "reference": "f846c5e06bb66df659a688ea4734aab49de589d6",
                 "shasum": ""
             },
             "require": {
@@ -445,7 +545,7 @@
                 "jmikola/geojson": "~1.0",
                 "mandango/mandango": "~1.0@dev",
                 "mandango/mondator": "~1.0@dev",
-                "phpunit/phpunit": "~4",
+                "phpunit/phpunit": "~4 | ~5",
                 "propel/propel1": "~1.6",
                 "ruflin/elastica": "~1.3",
                 "solarium/solarium": "~3.1"
@@ -486,23 +586,23 @@
                 "paging"
             ],
             "support": {
-                "source": "https://github.com/whiteoctober/Pagerfanta/tree/v1.0.3",
+                "source": "https://github.com/whiteoctober/Pagerfanta/tree/master",
                 "issues": "https://github.com/whiteoctober/Pagerfanta/issues"
             },
-            "time": "2014-10-06 10:57:25"
+            "time": "2016-11-28T09:17:04+00:00"
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.2",
+            "version": "v2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "088c04e2f261c33bed6ca5245491cfca69195ccf"
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/088c04e2f261c33bed6ca5245491cfca69195ccf",
-                "reference": "088c04e2f261c33bed6ca5245491cfca69195ccf",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
                 "shasum": ""
             },
             "require": {
@@ -541,20 +641,20 @@
                 "email": "info@paragonie.com",
                 "source": "https://github.com/paragonie/random_compat"
             },
-            "time": "2016-04-03 06:00:07"
+            "time": "2016-11-07T23:38:38+00:00"
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.5.0",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "a6d15c8618ea3951fd54d34e326b68d3d0bc0786"
+                "reference": "5677cfe02397dd6b58c861870dfaa5d9007d3954"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/a6d15c8618ea3951fd54d34e326b68d3d0bc0786",
-                "reference": "a6d15c8618ea3951fd54d34e326b68d3d0bc0786",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/5677cfe02397dd6b58c861870dfaa5d9007d3954",
+                "reference": "5677cfe02397dd6b58c861870dfaa5d9007d3954",
                 "shasum": ""
             },
             "require": {
@@ -567,11 +667,13 @@
             "require-dev": {
                 "apigen/apigen": "^4.1",
                 "codeception/aspect-mock": "1.0.0",
+                "doctrine/annotations": "~1.2.0",
                 "goaop/framework": "1.0.0-alpha.2",
                 "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
                 "mockery/mockery": "^0.9.4",
                 "moontoast/math": "^1.1",
+                "php-mock/php-mock-phpunit": "^0.3|^1.1",
                 "phpunit/phpunit": "^4.7|>=5.0 <5.4",
                 "satooshi/php-coveralls": "^0.6.1",
                 "squizlabs/php_codesniffer": "^2.3"
@@ -597,7 +699,7 @@
             },
             "autoload-dev": {
                 "psr-4": {
-                    "Ramsey\\Uuid\\Test\\": "tests/src/"
+                    "Ramsey\\Uuid\\Test\\": "tests/"
                 }
             },
             "license": [
@@ -629,7 +731,7 @@
                 "issues": "https://github.com/ramsey/uuid/issues",
                 "source": "https://github.com/ramsey/uuid"
             },
-            "time": "2016-08-02 18:39:32"
+            "time": "2016-11-22T19:21:44+00:00"
         }
     ],
     "packages-dev": [],
