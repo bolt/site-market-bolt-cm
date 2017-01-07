@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3ebc62658056f947228261874adea41",
+    "content-hash": "de6316f8c3b6b9ed3e38e46838731e67",
     "packages": [
         {
             "name": "bolt/boltforms",
