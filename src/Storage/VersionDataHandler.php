@@ -18,6 +18,7 @@ class VersionDataHandler
      */
     public function updateVersionEntities(EntityManager $em, array $packages)
     {
+        /** @var Repository\PackageVersion $repo */
         $repo = $em->getRepository(Entity\PackageVersion::class);
         $packageData = $this->getPackageData($packages);
         foreach ($packageData as $name => $versionData) {
@@ -33,7 +34,7 @@ class VersionDataHandler
              */
             foreach ($versionData as $version => $parts) {
                 /** @var Entity\PackageVersion $versionEntity */
-                $versionEntity = $repo->findOneBy(['package_id' => $packageEntity->getId(), 'version' => $version]);
+                $versionEntity = $repo->getPackageVersion($packageEntity->getId(), $version);
                 if ($versionEntity !== false) {
                     $parts->setId($versionEntity->getId());
                 }
