@@ -7,57 +7,15 @@
 debug: false
 
 ## Template overrides #########################################################
-#
-# The template names that you wish to use in your theme to override the default
-#
-templates:
-    profile:
-        parent: partials/_profile.twig
-#        associate: _register.twig
-#        edit: _edit.twig
-        register: partials/_profile_register.twig
-#        verify: _verify.twig
-#        view: _view.twig
-    authentication:
-        parent: partials/_authentication.twig
-#        associate: _associate.twig
-        login: partials/_auth_login.twig
-        recovery: partials/_auth_recovery.twig
-#        logout: _logout.twig
-#        feedback: _feedback.twig
-#    error:
-#        parent: members_error.twig
-#        error: _members_error.twig
-#    verification:
-#        subject: subject.twig
-#        body: body.twig
-#    recovery:
-#        subject: subject.twig
-#        body: body.twig
-
-## Labels #####################################################################
-#
-#labels:
-#    login: Login
-#    logout: Logout
-#    displayname: Public Name
-#    email: Email Address
-#    password_first: Password
-#    password_second: Repeat Password
-#    profile_save: Save & Continue
-
-## Placeholders ###############################################################
-#
-#placeholders:
-#    displayname: The name you would like to display publicly…
-#    email: Your email address…
-#    password_first: Enter your password…
-#    password_second: Repeat the above password…
-
-## Add-ons ####################################################################
-#
-#addons:
-#    zocial: false # Requires the bolt/zocial-icons extension to be installed.
+forms:
+    templates:
+        profile:
+            parent: partials/_profile.twig
+            register: partials/_profile_register.twig
+        authentication:
+            parent: partials/_authentication.twig
+            login: partials/_auth_login.twig
+            recovery: partials/_auth_recovery.twig
 
 ## Registration ###############################################################
 #
@@ -69,23 +27,6 @@ registration:
 notification:
     name: Bolt Market Place   # Display name used as the sender name
     email: no-reply@bolt.cm   # Email address as the sender address
-
-# URLs ########################################################################
-#
-# URLs that the controllers will be mounted on
-#
-urls:
-    authenticate: authentication
-    members: membership
-
-# URLs that a member will be redirected to after login/logout
-#
-# If commented out, members will be redirected to the referring page after login,
-# and the homepage after logout.
-#
-#redirects:
-#    login:  /membership/profile
-#    logout: /authentication/login
 
 ## Access Control #############################################################
 #
@@ -112,24 +53,6 @@ providers:
             client_id: localdefault
             client_secret: localdefault
         scopes: [ user ]
-    google:
-        label:
-            sign_in: Sign in with Google
-            associate: Add your Google account
-        enabled: false
-        keys:
-            client_id:
-            client_secret:
-        scopes: [ openid, profile, email ]
-    facebook:
-        label:
-            sign_in: Sign in with Facebook
-            associate: Add your Facebook account
-        enabled: false
-        keys:
-            client_id:
-            client_secret:
-        scopes: [ email ]
     github:
         label:
             sign_in: Sign in with GitHub
