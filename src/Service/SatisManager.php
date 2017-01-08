@@ -5,7 +5,6 @@ namespace Bolt\Extension\Bolt\MarketPlace\Service;
 use Bolt\Configuration\ResourceManager;
 use Bolt\Extension\Bolt\MarketPlace\Location;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Composer\Composer;
 use Composer\Config;
@@ -257,7 +256,7 @@ class SatisManager
         $this->check($this->getSatisJsonFilePath());
 
         // disable packagist by default
-        unset(Config::$defaultRepositories['packagist']);
+        unset(Config::$defaultRepositories['packagist.org']);
 
         return $this->composer = Factory::create($io, $this->config, false);
     }
