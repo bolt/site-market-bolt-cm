@@ -24,7 +24,7 @@
         "packagist": false,
         "bolt": {
             "type": "composer",
-            "url": "https://extensions.bolt.cm/satis/"
+            "url": "https://market.bolt.cm/satis/"
         },
         "core": {
             "type": "git",

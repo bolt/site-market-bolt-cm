@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa057a09ac71f7c8e40bdeb98cf5cc67",
+    "content-hash": "74958f1e352879707105de26e97ba1a3",
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.2.5",
+            "version": "dev-release/3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "dbe3ad4a7fcaaaf27dc3f10a73e0c509aebcf0f0"
+                "reference": "1bd3335547327d4b4cf8d7c7d737f713a8f43dff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/dbe3ad4a7fcaaaf27dc3f10a73e0c509aebcf0f0",
-                "reference": "dbe3ad4a7fcaaaf27dc3f10a73e0c509aebcf0f0",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/1bd3335547327d4b4cf8d7c7d737f713a8f43dff",
+                "reference": "1bd3335547327d4b4cf8d7c7d737f713a8f43dff",
                 "shasum": ""
             },
             "require": {
@@ -119,7 +119,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2016-12-29T13:15:28+00:00"
+            "time": "2017-01-08 16:57:32"
         },
         {
             "name": "bolt/filesystem",
@@ -5226,6 +5226,7 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
+        "bolt/bolt": 20,
         "composer/satis": 20,
         "doctrine/dbal": 20
     },
