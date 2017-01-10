@@ -54,11 +54,11 @@ class PackageVersion extends Entity
     }
 
     /**
-     * @param string $package_id
+     * @param string $packageId
      */
-    public function setPackageId($package_id)
+    public function setPackageId($packageId)
     {
-        $this->package_id = $package_id;
+        $this->package_id = $packageId;
     }
 
     /**
@@ -86,11 +86,11 @@ class PackageVersion extends Entity
     }
 
     /**
-     * @param string $pretty_version
+     * @param string $prettyVersion
      */
-    public function setPrettyVersion($pretty_version)
+    public function setPrettyVersion($prettyVersion)
     {
-        $this->pretty_version = $pretty_version;
+        $this->pretty_version = $prettyVersion;
     }
 
     /**
@@ -120,7 +120,7 @@ class PackageVersion extends Entity
     /**
      * @param DateTime $updated
      */
-    public function setUpdated(DateTime $updated)
+    public function setUpdated($updated)
     {
         $this->updated = $updated;
     }
