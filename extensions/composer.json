@@ -18,7 +18,7 @@
     "name": "bolt/extensions",
     "prefer-stable": true,
     "provide": {
-        "bolt/bolt": "3.2.7"
+        "bolt/bolt": "3.3.0"
     },
     "repositories": {
         "packagist": false,
@@ -33,7 +33,7 @@
     },
     "require": {
         "bolt/boltforms": "^4.0@beta",
-        "bolt/github": "^3.0",
+        "bolt/github": "^3.1",
         "bolt/marketplace": "^1.0",
         "bolt/members": "^3.0@beta"
     },

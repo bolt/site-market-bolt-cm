@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa057a09ac71f7c8e40bdeb98cf5cc67",
+    "content-hash": "86c1c21ab86d02958a7964ba8cad7d59",
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.2.7",
+            "version": "dev-release/3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "37a16cc49e198e1aa78c5f77cc6e25b5eb4802d4"
+                "reference": "59702ddb61293db8af792259290896d13c146483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/37a16cc49e198e1aa78c5f77cc6e25b5eb4802d4",
-                "reference": "37a16cc49e198e1aa78c5f77cc6e25b5eb4802d4",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/59702ddb61293db8af792259290896d13c146483",
+                "reference": "59702ddb61293db8af792259290896d13c146483",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +72,7 @@
                 "symfony/web-profiler-bundle": "^2.8",
                 "symfony/yaml": "^2.8",
                 "tdammers/htmlmaid": "~0.7",
-                "twig/twig": "^1.27",
+                "twig/twig": "^1.28",
                 "ua-parser/uap-php": "^3.4"
             },
             "conflict": {
@@ -81,6 +81,7 @@
             "require-dev": {
                 "bolt/codingstyle": "^1.0",
                 "codeception/codeception": "2.2.1",
+                "league/flysystem-memory": "^1.0",
                 "lstrojny/phpunit-function-mocker": "0.3.0",
                 "phpmd/phpmd": "^2.2",
                 "phpunit/dbunit": "^1.3",
@@ -96,7 +97,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-release/3.2": "3.2.x-dev"
+                    "dev-release/3.3": "3.3.x-dev"
                 }
             },
             "autoload": {
@@ -119,7 +120,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2017-02-13T19:24:19+00:00"
+            "time": "2017-02-13 21:15:06"
         },
         {
             "name": "bolt/filesystem",
@@ -5348,6 +5349,7 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
+        "bolt/bolt": 20,
         "composer/satis": 20,
         "doctrine/dbal": 20
     },
