@@ -28,7 +28,7 @@ class RecordManager
     /**
      * @param string $packageId
      *
-     * @return object
+     * @return \Bolt\Storage\Entity\Entity|object
      */
     public function getPackageById($packageId)
     {
@@ -40,7 +40,7 @@ class RecordManager
     /**
      * @param string $packageName
      *
-     * @return object
+     * @return \Bolt\Storage\Entity\Entity|object
      */
     public function getPackageByName($packageName)
     {

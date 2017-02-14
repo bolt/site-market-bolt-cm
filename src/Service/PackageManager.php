@@ -63,8 +63,6 @@ class PackageManager
 
     /**
      * @param Entity\Package $package
-     *
-     * @return Entity\Package
      */
     public function syncPackage(Entity\Package $package)
     {
@@ -280,7 +278,6 @@ class PackageManager
      */
     public function updateEntities(EntityManager $em, array $packages)
     {
-        $complete = [];
         $current = null;
 
         /** @var Repository\Package $repo */
