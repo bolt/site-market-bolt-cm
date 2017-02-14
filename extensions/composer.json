@@ -29,17 +29,13 @@
         "core": {
             "type": "git",
             "url": "https://github.com/bolt/marketplace-core.git"
-        },
-        "migration": {
-            "type": "git",
-            "url": "https://github.com/bolt/marketplace-migration.git"
         }
     },
     "require": {
-        "bolt/boltforms": "^4.0@dev",
-        "bolt/github": "dev-master@dev",
-        "bolt/marketplace": "dev-master@dev",
-        "bolt/members": "^3.0@dev"
+        "bolt/boltforms": "^4.0@beta",
+        "bolt/github": "^3.0",
+        "bolt/marketplace": "^1.0",
+        "bolt/members": "^3.0@beta"
     },
     "scripts": {
         "post-autoload-dump": "Bolt\\Composer\\EventListener\\PackageEventListener::dump",
