@@ -31,12 +31,75 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        $app['marketplace.manager_themes'] = $app->share(
+            function () {
+                return new Service\BoltThemes();
+            }
+        );
+
+        $app['marketplace.manager_package'] = $app->share(
+            function ($app) {
+                return new Service\PackageManager($app['marketplace.composer.config']);
+            }
+        );
+
+        $app['marketplace.manager_record'] = $app->share(
+            function ($app) {
+                return new Service\RecordManager($app['storage']);
+            }
+        );
+
+        $app['marketplace.manager_queue'] = $app->share(
+            function ($app) {
+                return new Service\Queue\QueueManager($app['storage'], $app['resources'], $app['marketplace.queues']);
+            }
+        );
+
+        $app['marketplace.manager_satis'] = $app->share(
+            function ($app) {
+                return new Service\SatisManager($app['storage'], $app['resources']);
+            }
+        );
+
+        $app['marketplace.manager_statistics'] = $app->share(
+            function ($app) {
+                return new Service\Statistics($app['storage']);
+            }
+        );
+
+        $app['marketplace.manager_webhook'] = $app->share(
+            function ($app) {
+                return new Service\WebhookManager($app);
+            }
+        );
+
+        $app['twig.runtime.market_core'] = function ($app) {
+            return new Twig\MarketCoreRuntime(
+                $app['marketplace.manager_themes'],
+                $app['marketplace.manager_package'],
+                $app['marketplace.manager_record'],
+                $app['marketplace.manager_queue'],
+                $app['marketplace.manager_satis'],
+                $app['marketplace.manager_statistics'],
+                $app['marketplace.manager_webhook']
+            );
+        };
+
+        $app['twig.runtimes'] = $app->extend(
+            'twig.runtimes',
+            function () {
+                return [
+                    Twig\MarketCoreRuntime::class   => 'twig.runtime.market_core',
+                ];
+            }
+        );
+
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',
                 function (\Twig_Environment $twig) use ($app) {
                     /** @var \Twig_Environment $twig */
-                    $twig->addExtension(new Twig\Extension($app['marketplace.services']));
+                    $twig->addExtension(new Twig\MarketCoreExtension());
 
                     return $twig;
                 }
@@ -110,31 +173,6 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                 $container = new Container([
                     'package' => $app->share(function () use ($app) { return new Service\Queue\PackageQueue($app['storage'], $app['resources']); }),
                     'webhook' => $app->share(function () use ($app) { return new Service\Queue\WebhookQueue($app['storage'], $app['resources']); }),
-                ]);
-
-                return $container;
-            }
-        );
-
-        $app['marketplace.services'] = $app->share(
-            function ($app) {
-                $container = new Container([
-                    'bolt_themes'     => $app->share(function () use ($app) { return new Service\BoltThemes(); }),
-                    'package_manager' => $app->share(function () use ($app) { return new Service\PackageManager($app['marketplace.composer.config']); }),
-                    'record_manager'  => $app->share(function () use ($app) { return new Service\RecordManager($app['storage']); }),
-                    'queue_manager'   => $app->share(function () use ($app) { return new Service\Queue\QueueManager($app['storage'], $app['resources'], $app['marketplace.queues']); }),
-                    'satis_manager'   => $app->share(function () use ($app) { return new Service\SatisManager($app['storage'], $app['resources']); }),
-                    'statistics'      => $app->share(function () use ($app) {
-                        /** @var Repository\StatInstall $repoStatInstall */
-                        $repoStatInstall = $app['storage']->getRepository(Entity\StatInstall::class);
-                        /** @var Repository\StatWebhook $repoStatWebhook */
-                        $repoStatWebhook = $app['storage']->getRepository(Entity\StatWebhook::class);
-                        /** @var Repository\PackageStar $repoPackageStar */
-                        $repoPackageStar = $app['storage']->getRepository(Entity\PackageStar::class);
-
-                        return new Service\Statistics($repoStatInstall, $repoStatWebhook, $repoPackageStar);
-                    }),
-                    'webhook_manager' => $app->share(function () use ($app) { return new Service\WebhookManager($app); }),
                 ]);
 
                 return $container;

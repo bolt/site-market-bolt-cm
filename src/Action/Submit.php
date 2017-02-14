@@ -2,7 +2,6 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Form;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
@@ -41,9 +40,8 @@ class Submit extends AbstractAction
         $em = $this->getAppService('storage');
         /** @var Repository\Package $repo */
         $repo = $em->getRepository(Entity\Package::class);
-        $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
-        $packageManager = $services['package_manager'];
+        $packageManager = $this->getAppService('marketplace.manager_package');
         $formsService = $this->getAppService('marketplace.forms');
         /** @var FormFactory $forms */
         $forms = $this->getAppService('form.factory');

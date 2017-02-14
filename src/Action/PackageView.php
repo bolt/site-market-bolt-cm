@@ -2,6 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
+use Bolt\Extension\Bolt\MarketPlace\Service\BoltThemes;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
@@ -79,16 +80,17 @@ class PackageView extends AbstractAction
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
-        $services = $this->getAppService('marketplace.services');
+        /** @var BoltThemes $themeManager */
+        $themesManager = $this->getAppService('marketplace.manager_themes');
         /** @var PackageManager $packageManager */
-        $packageManager = $services['package_manager'];
+        $packageManager = $this->getAppService('marketplace.manager_package');
         $context = [
             'package'    => $package,
             'related'    => $repo->findBy(['account_id' => $package->getAccountId(), 'approved' => true], null, 8),
             'readme'     => $packageManager->getReadme($package),
-            'boltthemes' => $services['bolt_themes']->info($package),
+            'boltthemes' => $themesManager->info($package),
             'suggested'  => $suggested,
-            'statistics' => $this->getAppService('marketplace.services')['statistics'],
+            'statistics' => $this->getAppService('marketplace.manager_statistics'),
             'webhook'    => $webhook,
             'updated'    => $this->getUpdated($package),
             'versions'   => $this->getVersions($package),

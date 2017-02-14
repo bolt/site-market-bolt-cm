@@ -33,9 +33,8 @@ class TestListing extends AbstractAction
         $em = $this->getAppService('storage');
         $packageRepo = $em->getRepository(Entity\Package::class);
         $versionBuildRepo = $em->getRepository(Entity\VersionBuild::class);
-        $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
-        $packageManager = $services['package_manager'];
+        $packageManager = $this->getAppService('marketplace.manager_package');
         /** @var Authorisation $member */
         $member = $this->getAppService('members.session')->getAuthorisation();
         /** @var Entity\Package $package */

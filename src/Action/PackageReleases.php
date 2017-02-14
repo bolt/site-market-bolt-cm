@@ -44,10 +44,8 @@ class PackageReleases extends AbstractAction
         }
 
         $versions = ['dev' => [], 'stable' => []];
-
-        $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
-        $packageManager = $services['package_manager'];
+        $packageManager = $this->getAppService('marketplace.manager_package');
 
         $token = $this->getAppService('config')->get('general/token/github');
         $repo = $em->getRepository(Entity\VersionBuild::class);

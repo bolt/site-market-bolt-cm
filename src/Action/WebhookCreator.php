@@ -3,7 +3,6 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\WebhookManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,9 +18,8 @@ class WebhookCreator extends AbstractAction
      */
     public function execute(Request $request, array $params)
     {
-        $services = $this->getAppService('marketplace.services');
         /** @var WebhookManager $webhookManager */
-        $webhookManager = $services['webhook_manager'];
+        $webhookManager = $this->getAppService('marketplace.manager_webhook');
         $webhookManager->createWebhook($request->request->get('user'), $request->request->get('repo'), $request->request->get('token'));
 
         return new RedirectResponse($request->headers->get('referer'));

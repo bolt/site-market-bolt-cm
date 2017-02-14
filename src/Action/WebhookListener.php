@@ -3,7 +3,6 @@
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\Queue\QueueManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +23,9 @@ class WebhookListener extends AbstractAction
         if ($request->query->get('token') === null) {
             return new JsonResponse(['status' => 'error', 'response' => 'Invalid request'], Response::HTTP_BAD_REQUEST);
         }
-        
-        $services = $this->getAppService('marketplace.services');
+
         /** @var QueueManager $queueManager */
-        $queueManager = $services['queue_manager'];
+        $queueManager = $this->getAppService('marketplace.manager_queue');
         $response = $queueManager->queueWebhook($request);
 
         return $response;

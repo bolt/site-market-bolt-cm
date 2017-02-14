@@ -2,8 +2,9 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
-use Bolt\Configuration\ResourceManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
+use Bolt\Filesystem\Filesystem;
+use Bolt\Filesystem\Handler\FileInterface;
 use Composer\Package\CompletePackageInterface;
 use Composer\Package\PackageInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -24,11 +25,13 @@ class Status extends AbstractAction
     {
         $output = new BufferedOutput();
 
-        /** @var ResourceManager $resources */
-        $resources = $this->getAppService('resources');
-        $services = $this->getAppService('marketplace.services');
-        /** @var SatisManager $packageManager */
-        $satisManager = $services['satis_manager'];
+        /** @var Filesystem $resources */
+        $resources = $this->getAppService('filesystem');
+        /** @var FileInterface $indexFile */
+        $indexFile = $resources->get('web/satis/index.html');
+
+       /** @var SatisManager $packageManager */
+        $satisManager = $this->getAppService('marketplace.manager_satis');
         $packages = $satisManager->getBuiltPackages($output, true);
 
         /** @var \Twig_Environment $twig */
@@ -40,7 +43,7 @@ class Status extends AbstractAction
             'description'  => null,
             'packages'     => $this->getMappedPackageList($packages),
             'dependencies' => $this->setDependencies($packages),
-            'lastupdate'   => filemtime($resources->getPath('web/satis/index.html')),
+            'lastupdate'   => $indexFile->exists() ? $indexFile->getTimestamp() : 0,
         ];
         $html = $twig->render('status.twig', $context);
 
@@ -52,7 +55,7 @@ class Status extends AbstractAction
      *
      * @param PackageInterface[] $packages List of packages to dump
      *
-     * @return $this
+     * @return string[]
      */
     private function setDependencies(array $packages)
     {

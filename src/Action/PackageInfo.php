@@ -36,9 +36,8 @@ class PackageInfo extends AbstractAction
             return new JsonResponse(['package' => false, 'version' => false]);
         }
 
-        $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
-        $packageManager = $services['package_manager'];
+        $packageManager = $this->getAppService('marketplace.manager_package');
         $allVersions = $packageManager->getInfo($package, $bolt);
 
         $buildRepo = $em->getRepository(Entity\VersionBuild::class);

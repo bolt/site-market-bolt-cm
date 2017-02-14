@@ -2,66 +2,58 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Twig;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\RecordManager;
+use Bolt\Extension\Bolt\MarketPlace\Service;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use forxer\Gravatar\Gravatar;
-use Pimple as Container;
 use Ramsey\Uuid\Uuid;
-use Twig_Extension as TwigExtension;
-use Twig_SimpleFilter as TwigSimpleFilter;
-use Twig_SimpleFunction as TwigSimpleFunction;
 
 /**
- * Twig extension class.
+ * Twig runtime class.
  *
  * @author Ross Riley <riley.ross@gmail.com>
+ * @author Gawain Lynch <gawain.lynch@gmail.com>
  */
-class Extension extends TwigExtension
+class MarketCoreRuntime
 {
-    public $statusTemplate = '<div class="buildstatus ui icon label %s" data-content="%s"><i class="icon %s"></i> %s <span class="version">%s</span></div>';
+    /** @var Service\BoltThemes */
+    protected $boltThemes;
+    /** @var Service\PackageManager */
+    protected $packageManager;
+    /** @var Service\RecordManager */
+    protected $recordManager;
+    /** @var Service\Queue\QueueManager */
+    protected $queueManager;
+    /** @var Service\SatisManager */
+    protected $satisManager;
+    /** @var Service\Statistics */
+    protected $statisticsManager;
 
-    /** @var Container */
-    protected $services;
+    private $statusTemplate = '<div class="buildstatus ui icon label %s" data-content="%s"><i class="icon %s"></i> %s <span class="version">%s</span></div>';
 
     /**
      * Constructor.
      *
-     * @param Container $services
+     * @param Service\BoltThemes         $boltThemes
+     * @param Service\PackageManager     $packageManager
+     * @param Service\RecordManager      $recordManager
+     * @param Service\Queue\QueueManager $queueManager
+     * @param Service\SatisManager       $satisManager
+     * @param Service\Statistics         $statisticsManager
      */
-    public function __construct(Container $services)
-    {
-        $this->services = $services;
-    }
-
-    public function getName()
-    {
-        return 'bolt_helper';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
-    {
-        $safe = ['is_safe' => ['html']];
-
-        return [
-            new  TwigSimpleFunction('buildStatus', [$this, 'buildStatus'], $safe),
-            new  TwigSimpleFunction('gravatar',    [$this, 'gravatar'],    $safe),
-            new  TwigSimpleFunction('package',     [$this, 'getPackage'],  $safe),
-            new  TwigSimpleFunction('packageIcon', [$this, 'packageIcon'], $safe),
-            new  TwigSimpleFunction('getenv',      [$this, 'getenv'],      $safe),
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFilters()
-    {
-        return [
-            new TwigSimpleFilter('humanTime', [$this, 'humanTime']),
-        ];
+    public function __construct(
+        Service\BoltThemes $boltThemes,
+        Service\PackageManager $packageManager,
+        Service\RecordManager $recordManager,
+        Service\Queue\QueueManager $queueManager,
+        Service\SatisManager $satisManager,
+        Service\Statistics $statisticsManager
+    ) {
+        $this->boltThemes = $boltThemes;
+        $this->packageManager = $packageManager;
+        $this->recordManager = $recordManager;
+        $this->queueManager = $queueManager;
+        $this->satisManager = $satisManager;
+        $this->statisticsManager = $statisticsManager;
     }
 
     public function buildStatus($build, $options = [])
@@ -148,20 +140,22 @@ class Extension extends TwigExtension
     /**
      * @param string $packageId
      *
-     * @return Entity\Package|false
+     * @return Entity\Package|object|false
      */
     public function getPackage($packageId)
     {
-        /** @var RecordManager $recordManager */
-        $recordManager = $this->services['record_manager'];
-
         if (Uuid::isValid($packageId)) {
-            return $recordManager->getPackageById($packageId);
+            return $this->recordManager->getPackageById($packageId);
         }
 
-        return $recordManager->getPackageByName($packageId);
+        return $this->recordManager->getPackageByName($packageId);
     }
 
+    /**
+     * @param string $key
+     *
+     * @return array|false|string
+     */
     public function getenv($key)
     {
         return getenv($key);

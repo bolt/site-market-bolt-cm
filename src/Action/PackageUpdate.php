@@ -63,9 +63,8 @@ class PackageUpdate extends AbstractAction
     {
         /** @var Session $session */
         $session = $this->getAppService('session');
-        $services = $this->getAppService('marketplace.services');
         /** @var PackageManager $packageManager */
-        $packageManager = $services['package_manager'];
+        $packageManager = $this->getAppService('marketplace.manager_package');
         $membersRecords = $this->getAppService('members.records');
         /** @var Account $account */
         $account = $membersRecords->getAccountByGuid($package->getAccountId());

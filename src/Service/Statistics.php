@@ -4,6 +4,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bolt\Storage\EntityManager;
 
 /**
  * Statistics service.
@@ -12,30 +13,17 @@ use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
  */
 class Statistics
 {
-    /** @var Repository\StatInstall */
-    private $repoStatInstall;
-    /** @var Repository\StatWebhook */
-    private $repoStatWebhook;
-    /** @var Repository\PackageStar */
-    private $repoPackageStar;
-    /** @var Entity\StatInstall[] */
-    private $stats;
+    /** @var EntityManager */
+    private $em;
 
     /**
      * Constructor.
      *
-     * @param Repository\StatInstall $repoStatInstall
-     * @param Repository\StatWebhook $repoStatWebhook
-     * @param Repository\PackageStar $repoPackageStar
+     * @param EntityManager $em
      */
-    public function __construct(
-        Repository\StatInstall $repoStatInstall,
-        Repository\StatWebhook $repoStatWebhook,
-        Repository\PackageStar $repoPackageStar
-    ) {
-        $this->repoStatInstall = $repoStatInstall;
-        $this->repoStatWebhook = $repoStatWebhook;
-        $this->repoPackageStar = $repoPackageStar;
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
     }
 
     /**
@@ -46,11 +34,13 @@ class Statistics
      */
     public function getDownloads($packageId, $version = null)
     {
+        /** @var Repository\StatInstall $repo */
+        $repo = $this->em->getRepository(Entity\StatInstall::class);
         if ($version) {
-            return $this->repoStatInstall->getInstallsCount($packageId, $version);
+            return $repo->getInstallsCount($packageId, $version);
         }
 
-        return $this->repoStatInstall->getInstallsCount($packageId);
+        return $repo->getInstallsCount($packageId);
     }
 
     /**
@@ -60,9 +50,10 @@ class Statistics
      */
     public function getStars($packageId)
     {
-        $stars = $this->repoPackageStar->getStarsCount($packageId);
+        /** @var Repository\PackageStar $repo */
+        $repo = $this->em->getRepository(Entity\PackageStar::class);
 
-        return $stars;
+        return $repo->getStarsCount($packageId);
     }
 
     /**
@@ -73,6 +64,9 @@ class Statistics
      */
     public function isStarredBy($packageId, $accountId)
     {
-        return $this->repoPackageStar->isStarredBy($packageId, $accountId);
+        /** @var Repository\PackageStar $repo */
+        $repo = $this->em->getRepository(Entity\PackageStar::class);
+
+        return $repo->isStarredBy($packageId, $accountId);
     }
 }
