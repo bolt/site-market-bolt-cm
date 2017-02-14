@@ -4,12 +4,14 @@ namespace Bolt\Extension\Bolt\MarketPlace\Command;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
+use Composer\IO\BufferIO;
 use Composer\IO\ConsoleIO;
 use Composer\Json\JsonValidationException;
 use Seld\JsonLint\ParsingException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
@@ -51,6 +53,8 @@ class SatisBuilder extends BaseCommand
             $output->write('<info>Updating package entities… </info>');
             /** @var PackageManager $packageManager */
             $packageManager = $this->app['marketplace.services']['package_manager'];
+            $packageManager->setIo(new BufferIO('', StreamOutput::VERBOSITY_NORMAL, $output->getFormatter()));
+
             // Update version entities
             $packageManager->updateEntities($this->app['storage'], $packages);
             $output->writeln('<info>[DONE]</info>');
