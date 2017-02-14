@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "503a4e8e6504f3d3e775da9255af553e",
+    "content-hash": "a5ca41bcb05b3b3226c367d6f8f72d5e",
     "packages": [
         {
             "name": "bolt/boltforms",
-            "version": "dev-master",
+            "version": "4.0.0-beta1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/boltforms.git",
-                "reference": "dbdce991363bcc423d4369e349f47f0b54b5191b"
+                "reference": "e747822b86704197e9626bc25085385123960bea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/boltforms/zipball/dbdce991363bcc423d4369e349f47f0b54b5191b",
-                "reference": "dbdce991363bcc423d4369e349f47f0b54b5191b",
+                "url": "https://api.github.com/repos/bolt/boltforms/zipball/e747822b86704197e9626bc25085385123960bea",
+                "reference": "e747822b86704197e9626bc25085385123960bea",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "source": "https://github.com/bolt/boltforms/tree/master",
                 "issues": "https://github.com/bolt/boltforms/issues"
             },
-            "time": "2017-01-09 15:04:42"
+            "time": "2017-01-21T05:20:02+00:00"
         },
         {
             "name": "bolt/email-spooler",
@@ -131,16 +131,16 @@
         },
         {
             "name": "bolt/github",
-            "version": "dev-master",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GawainLynch/bolt-extension-github.git",
-                "reference": "f32cd3e51b412936bf5231e58ae384fba85eb0ec"
+                "reference": "0ba7fb8b4b36c098b1a4a6eefa4c241b024be844"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/f32cd3e51b412936bf5231e58ae384fba85eb0ec",
-                "reference": "f32cd3e51b412936bf5231e58ae384fba85eb0ec",
+                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/0ba7fb8b4b36c098b1a4a6eefa4c241b024be844",
+                "reference": "0ba7fb8b4b36c098b1a4a6eefa4c241b024be844",
                 "shasum": ""
             },
             "require": {
@@ -154,7 +154,6 @@
             "type": "bolt-extension",
             "extra": {
                 "bolt-class": "Bolt\\Extension\\Bolt\\GitHub\\GitHubExtension",
-                "bolt-icon": "icon.png",
                 "branch-alias": {
                     "dev-master": "3.0.x-dev"
                 }
@@ -183,11 +182,11 @@
                 "source": "https://github.com/GawainLynch/bolt-extension-github/tree/master",
                 "issues": "https://github.com/GawainLynch/bolt-extension-github/issues"
             },
-            "time": "2016-07-14 05:15:19"
+            "time": "2016-05-30T04:14:47+00:00"
         },
         {
             "name": "bolt/marketplace",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
@@ -231,20 +230,20 @@
                 "composer",
                 "satis"
             ],
-            "time": "2017-01-10 11:36:36"
+            "time": "2017-01-10T11:36:36+00:00"
         },
         {
             "name": "bolt/members",
-            "version": "v3.0.0-beta3",
+            "version": "v3.0.0-beta7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "18b794a55577383aa92598dbf6e71e32f0dfc656"
+                "reference": "29f14008d0b543c7aa9660743427242ec2336974"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/18b794a55577383aa92598dbf6e71e32f0dfc656",
-                "reference": "18b794a55577383aa92598dbf6e71e32f0dfc656",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/29f14008d0b543c7aa9660743427242ec2336974",
+                "reference": "29f14008d0b543c7aa9660743427242ec2336974",
                 "shasum": ""
             },
             "require": {
@@ -302,7 +301,7 @@
                 "source": "https://github.com/bolt/Members/tree/master",
                 "issues": "https://github.com/bolt/Members/issues"
             },
-            "time": "2017-01-06T16:16:58+00:00"
+            "time": "2017-01-30T15:56:06+00:00"
         },
         {
             "name": "google/recaptcha",
@@ -738,10 +737,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bolt/boltforms": 20,
-        "bolt/github": 20,
-        "bolt/marketplace": 20,
-        "bolt/members": 20
+        "bolt/boltforms": 10,
+        "bolt/members": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
