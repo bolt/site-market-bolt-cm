@@ -1,8 +1,4 @@
 paths:
-    cache: app/cache
-    config: app/config
-    database: app/database
-    web: public
-    themebase: public/theme
-    files: public/files
-    view: public/bolt-public/view
+    var: %root%/var
+    composer: %var%/cache/composer
+    satis: %var%/cache/satis
