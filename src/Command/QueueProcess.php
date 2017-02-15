@@ -36,6 +36,7 @@ class QueueProcess extends BaseCommand
     {
         /** @var SatisManager $satisManager */
         $satisManager = $this->app['marketplace.manager_satis'];
+        $satisManager->setConsoleOutput($output);
 
         /** @var QueueManager $queueManager */
         $queueManager = $this->app['marketplace.manager_queue'];
