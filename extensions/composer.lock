@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5ca41bcb05b3b3226c367d6f8f72d5e",
+    "content-hash": "108d9314931210a21e4105ad90517e1d",
     "packages": [
         {
             "name": "bolt/boltforms",
@@ -131,20 +131,20 @@
         },
         {
             "name": "bolt/github",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GawainLynch/bolt-extension-github.git",
-                "reference": "0ba7fb8b4b36c098b1a4a6eefa4c241b024be844"
+                "reference": "ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/0ba7fb8b4b36c098b1a4a6eefa4c241b024be844",
-                "reference": "0ba7fb8b4b36c098b1a4a6eefa4c241b024be844",
+                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358",
+                "reference": "ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358",
                 "shasum": ""
             },
             "require": {
-                "bolt/bolt": "^3.0",
+                "bolt/bolt": "^3.3",
                 "ext-curl": "*",
                 "knplabs/github-api": "^1.6"
             },
@@ -154,8 +154,9 @@
             "type": "bolt-extension",
             "extra": {
                 "bolt-class": "Bolt\\Extension\\Bolt\\GitHub\\GitHubExtension",
+                "bolt-icon": "icon.png",
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "3.1.x-dev"
                 }
             },
             "autoload": {
@@ -179,21 +180,20 @@
                 "Webhooks"
             ],
             "support": {
-                "source": "https://github.com/GawainLynch/bolt-extension-github/tree/master",
-                "issues": "https://github.com/GawainLynch/bolt-extension-github/issues"
+                "source": "https://github.com/GawainLynch/bolt-extension-github/tree/v3.1.0"
             },
-            "time": "2016-05-30T04:14:47+00:00"
+            "time": "2017-02-15T01:17:10+00:00"
         },
         {
             "name": "bolt/marketplace",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "f94d2d4409271a0130ad4a2d9ba1d3ef66869301"
+                "reference": "995da121e1daf84b41e2bfc049abb653f97311c3"
             },
             "require": {
-                "bolt/bolt": "^3.0",
+                "bolt/bolt": "^3.3",
                 "php": "^7.0"
             },
             "require-dev": {
@@ -230,20 +230,20 @@
                 "composer",
                 "satis"
             ],
-            "time": "2017-01-10T11:36:36+00:00"
+            "time": "2017-02-15T07:11:38+00:00"
         },
         {
             "name": "bolt/members",
-            "version": "v3.0.0-beta7",
+            "version": "v3.0.0-beta8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/Members.git",
-                "reference": "29f14008d0b543c7aa9660743427242ec2336974"
+                "reference": "f56b95e45be6959571ee9fc63e8b973fb4557997"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/29f14008d0b543c7aa9660743427242ec2336974",
-                "reference": "29f14008d0b543c7aa9660743427242ec2336974",
+                "url": "https://api.github.com/repos/bolt/Members/zipball/f56b95e45be6959571ee9fc63e8b973fb4557997",
+                "reference": "f56b95e45be6959571ee9fc63e8b973fb4557997",
                 "shasum": ""
             },
             "require": {
@@ -298,10 +298,9 @@
                 "profiles"
             ],
             "support": {
-                "source": "https://github.com/bolt/Members/tree/master",
-                "issues": "https://github.com/bolt/Members/issues"
+                "source": "https://github.com/bolt/Members/tree/master"
             },
-            "time": "2017-01-30T15:56:06+00:00"
+            "time": "2017-02-14T11:32:43+00:00"
         },
         {
             "name": "google/recaptcha",
