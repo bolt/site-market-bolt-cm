@@ -278,6 +278,7 @@ class PackageManager
      */
     public function updateEntities(EntityManager $em, array $packages)
     {
+        $handler = new VersionDataHandler();
         $current = null;
 
         /** @var Repository\Package $repo */
@@ -285,10 +286,10 @@ class PackageManager
         foreach ($packages as $key => $package) {
             if ($package->getPrettyVersion() === 'dev-master') {
                 $this->updateEntity($repo, $package);
-                // Update stored local versions
-                (new VersionDataHandler())->updateVersionEntities($em, $packages);
             }
         }
+        // Update stored local versions
+        $handler->updateVersionEntities($em, $packages);
     }
 
     /**

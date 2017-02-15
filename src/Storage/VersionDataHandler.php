@@ -28,19 +28,26 @@ class VersionDataHandler
                 continue;
             }
 
-            /**
-             * @var string                $version
-             * @var Entity\PackageVersion $parts
-             */
-            foreach ($versionData as $version => $parts) {
-                /** @var Entity\PackageVersion $versionEntity */
-                $versionEntity = $repo->getPackageVersion($packageEntity->getId(), $version);
-                if ($versionEntity !== false) {
-                    $parts->setId($versionEntity->getId());
+            // Check stored version entities and copy primary key
+            $dbVersionEntities = $repo->getPackageVersions($packageEntity->getId());
+            /** @var Entity\PackageVersion $dbVersionEntity */
+            foreach ($dbVersionEntities as $dbVersionEntity) {
+                $versionNumber = $dbVersionEntity->getVersion();
+                $versionEntities = $packageData[$name];
+                if (!isset($versionEntities[$versionNumber])) {
+                    // Version stored in the database no longer exists in the repository
+                    $repo->delete($dbVersionEntity);
+                    continue;
                 }
-                $parts->setPackageId($packageEntity->getId());
+                /** @var Entity\PackageVersion $versionEntity */
+                $versionEntity = $versionEntities[$versionNumber];
+                $versionEntity->setId($dbVersionEntity->getId());
+            }
 
-                $repo->save($parts);
+            /** @var Entity\PackageVersion $entity */
+            foreach ($versionData as $entity) {
+                $entity->setPackageId($packageEntity->getId());
+                $repo->save($entity);
             }
         }
     }
