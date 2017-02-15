@@ -37,10 +37,7 @@ class MarketPlaceExtension extends SimpleExtension
      */
     protected function registerServices(Application $app)
     {
-        $app['resources']->setPath('composer', 'var/cache/composer');
-        $app['resources']->setPath('satis', 'var/cache/satis');
-
-        putenv('COMPOSER_HOME=' . $app['resources']->getPath('composer'));
+        putenv('COMPOSER_HOME=' . $app['path_resolver']->resolve('composer'));
 
         $this->extendDatabaseSchemaServices();
         $this->extendRepositoryMapping();
@@ -97,10 +94,10 @@ class MarketPlaceExtension extends SimpleExtension
         return [
             'marketplace_package'         => [Entity\Package::class        => Repository\Package::class],
             'marketplace_package_star'    => [Entity\PackageStar::class    => Repository\PackageStar::class],
-            'marketplace_package_token'   => [Entity\PackageToken::class => Repository\PackageToken::class],
+            'marketplace_package_token'   => [Entity\PackageToken::class   => Repository\PackageToken::class],
             'marketplace_package_version' => [Entity\PackageVersion::class => Repository\PackageVersion::class],
-            'marketplace_stat_install'    => [Entity\StatInstall::class => Repository\StatInstall::class],
-            'marketplace_stat_webhook'    => [Entity\StatWebhook::class => Repository\StatWebhook::class],
+            'marketplace_stat_install'    => [Entity\StatInstall::class    => Repository\StatInstall::class],
+            'marketplace_stat_webhook'    => [Entity\StatWebhook::class    => Repository\StatWebhook::class],
             'marketplace_version_build'   => [Entity\VersionBuild::class   => Repository\VersionBuild::class],
         ];
     }

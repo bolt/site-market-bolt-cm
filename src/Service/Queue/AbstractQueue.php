@@ -2,7 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service\Queue;
 
-use Bolt\Configuration\ResourceManager;
+use Bolt\Configuration\PathResolver;
 use Bolt\Storage\EntityManager;
 use Composer\Composer;
 use Symfony\Component\Filesystem\Filesystem;
@@ -16,8 +16,8 @@ abstract class AbstractQueue
 {
     /** @var EntityManager */
     protected $em;
-    /** @var ResourceManager */
-    protected $resourceManager;
+    /** @var PathResolver */
+    protected $pathResolver;
     /** @var Composer */
     protected $composer;
     /** @var array */
@@ -26,13 +26,13 @@ abstract class AbstractQueue
     /**
      * Constructor.
      *
-     * @param EntityManager   $em
-     * @param ResourceManager $resourceManager
+     * @param EntityManager $em
+     * @param PathResolver  $pathResolver
      */
-    public function __construct(EntityManager $em, ResourceManager $resourceManager)
+    public function __construct(EntityManager $em, PathResolver $pathResolver)
     {
         $this->em = $em;
-        $this->resourceManager = $resourceManager;
+        $this->pathResolver = $pathResolver;
     }
 
     /**
@@ -42,7 +42,7 @@ abstract class AbstractQueue
      */
     protected function getCachePath($mountPath)
     {
-        $resolvedPath = $this->resourceManager->getPath($mountPath);
+        $resolvedPath = $this->pathResolver->resolve($mountPath);
         $fs = new Filesystem();
         if (!$fs->exists($resolvedPath)) {
             $fs->mkdir($resolvedPath);

@@ -51,13 +51,13 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
 
         $app['marketplace.manager_queue'] = $app->share(
             function ($app) {
-                return new Service\Queue\QueueManager($app['storage'], $app['resources'], $app['marketplace.queues']);
+                return new Service\Queue\QueueManager($app['storage'], $app['path_resolver'], $app['marketplace.queues']);
             }
         );
 
         $app['marketplace.manager_satis'] = $app->share(
             function ($app) {
-                return new Service\SatisManager($app['storage'], $app['resources']);
+                return new Service\SatisManager($app['storage'], $app['path_resolver']);
             }
         );
 
@@ -87,10 +87,10 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
 
         $app['twig.runtimes'] = $app->extend(
             'twig.runtimes',
-            function () {
-                return [
-                    Twig\MarketCoreRuntime::class   => 'twig.runtime.market_core',
-                ];
+            function (array $runtimes) {
+                return $runtimes + [
+                        Twig\MarketCoreRuntime::class => 'twig.runtime.market_core',
+                    ];
             }
         );
 
@@ -118,7 +118,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
                 $config = Factory::createConfig(new BufferIO());
 
                 foreach (['auth.json', 'github.json'] as $jsonFile) {
-                    $jsonFilePath = $app['resources']->getPath('config/satis/' .  $jsonFile);
+                    $jsonFilePath = $app['path_resolver']->resolve('%config%/satis/' . $jsonFile);
                     $file = new JsonFile($jsonFilePath);
                     if ($file->exists()) {
                         $config->merge(['config' => $file->read()]);
@@ -171,8 +171,8 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
         $app['marketplace.queues'] = $app->share(
             function ($app) {
                 $container = new Container([
-                    'package' => $app->share(function () use ($app) { return new Service\Queue\PackageQueue($app['storage'], $app['resources']); }),
-                    'webhook' => $app->share(function () use ($app) { return new Service\Queue\WebhookQueue($app['storage'], $app['resources']); }),
+                    'package' => $app->share(function () use ($app) { return new Service\Queue\PackageQueue($app['storage'], $app['path_resolver']); }),
+                    'webhook' => $app->share(function () use ($app) { return new Service\Queue\WebhookQueue($app['storage'], $app['path_resolver']); }),
                 ]);
 
                 return $container;
@@ -194,7 +194,7 @@ class MarketPlaceServiceProvider implements ServiceProviderInterface
         $app['marketplace.forms'] = $app->share(
             function ($app) {
                 $container = new Container([
-                    'package' => $app->share(function () use ($app) { return new Form\PackageForm($app['marketplace.forms.constraints']['unique_source_url']); }),
+                    'package' => $app->share(function () use ($app) { return new Form\PackageForm($app['marketplace.forms.constraints']['unique_source_url']);}),
                 ]);
 
                 return $container;

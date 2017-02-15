@@ -9,10 +9,10 @@ namespace Bolt\Extension\Bolt\MarketPlace;
  */
 class Location
 {
-    const SATIS_LOCK = 'satis/lock';
-    const SATIS_QUEUE_WEBHOOK_PENDING = 'satis/queue/webhook/pending';
-    const SATIS_QUEUE_WEBHOOK_PROCESSED = 'satis/queue/webhook/processed';
-    const SATIS_QUEUE_PACKAGE = 'satis/queue/package';
+    const SATIS_LOCK = '%satis%/lock';
+    const SATIS_QUEUE_WEBHOOK_PENDING = '%satis%/queue/webhook/pending';
+    const SATIS_QUEUE_WEBHOOK_PROCESSED = '%satis%/queue/webhook/processed';
+    const SATIS_QUEUE_PACKAGE = '%satis%/queue/package';
 
     /**
      * Constructor.

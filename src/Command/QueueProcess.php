@@ -35,10 +35,10 @@ class QueueProcess extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var SatisManager $satisManager */
-        $satisManager = $this->app['marketplace.services']['satis_manager'];
+        $satisManager = $this->app['marketplace.manager_satis'];
 
         /** @var QueueManager $queueManager */
-        $queueManager = $this->app['marketplace.services']['queue_manager'];
+        $queueManager = $this->app['marketplace.manager_queue'];
 
         $queueManager->processQueues($satisManager, $output);
 

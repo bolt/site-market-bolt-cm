@@ -48,7 +48,7 @@ class ExtensionTestRunner extends BaseCommand
             throw new \BadMethodCallException(sprintf("Bad protocol specified: %s.\n\nMust me either 'http' or 'https'", $this->protocol));
         }
 
-        $lockDir = $this->app['resources']->getPath(Location::SATIS_LOCK);
+        $lockDir = $this->app['path_resolver']->resolve(Location::SATIS_LOCK);
         $lock = new LockHandler('extension.test.runner', $lockDir);
 
         while (true) {

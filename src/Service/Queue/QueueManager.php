@@ -2,7 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service\Queue;
 
-use Bolt\Configuration\ResourceManager;
+use Bolt\Configuration\PathResolver;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
@@ -21,22 +21,22 @@ class QueueManager
 {
     /** @var EntityManager */
     protected $em;
-    /** @var ResourceManager */
-    protected $resourceManager;
+    /** @var PathResolver */
+    protected $pathResolver;
     /** @var Container */
     private $queues;
 
     /**
      * Constructor.
      *
-     * @param EntityManager   $em
-     * @param ResourceManager $resourceManager
-     * @param Container       $queues
+     * @param EntityManager $em
+     * @param PathResolver  $pathResolver
+     * @param Container     $queues
      */
-    public function __construct(EntityManager $em, ResourceManager $resourceManager, Container $queues)
+    public function __construct(EntityManager $em, PathResolver $pathResolver, Container $queues)
     {
         $this->em = $em;
-        $this->resourceManager = $resourceManager;
+        $this->pathResolver = $pathResolver;
         $this->queues = $queues;
     }
 

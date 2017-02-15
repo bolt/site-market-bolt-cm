@@ -138,7 +138,7 @@ class WebhookQueue extends AbstractQueue
     protected function getPackageQueue()
     {
         if ($this->packageQueue === null) {
-            $this->packageQueue = new PackageQueue($this->em, $this->resourceManager);
+            $this->packageQueue = new PackageQueue($this->em, $this->pathResolver);
         }
 
         return $this->packageQueue;
