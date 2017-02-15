@@ -186,11 +186,11 @@
         },
         {
             "name": "bolt/marketplace",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "995da121e1daf84b41e2bfc049abb653f97311c3"
+                "reference": "803e0aa650c841933122b7875f7e223d0ed538d5"
             },
             "require": {
                 "bolt/bolt": "^3.3",
@@ -230,7 +230,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2017-02-15T07:11:38+00:00"
+            "time": "2017-02-15T10:30:36+00:00"
         },
         {
             "name": "bolt/members",
