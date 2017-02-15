@@ -65,7 +65,7 @@ class Frontend implements ControllerProviderInterface
         ;
 
         $ctr->match('/profile', [$this, 'profile'])
-            ->bind('profile')
+            ->bind('profilePackages')
             ->before([$this, 'auth'])
             ->method(Request::METHOD_GET . '|' . Request::METHOD_POST)
         ;
