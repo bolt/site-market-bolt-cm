@@ -71,7 +71,7 @@ abstract class AbstractAction implements ActionInterface
         if ($stat !== false) {
             /** @var Session $session */
             $session = $this->getAppService('session');
-            if ($session->get('pending-' .  $tokenEntity, false)) {
+            if ($session->get('pending-' . $tokenEntity, false)) {
                 return false;
             }
         }

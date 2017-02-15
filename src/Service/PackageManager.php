@@ -247,7 +247,7 @@ class PackageManager
                 $errors[] = "'name' in composer.json must be set, must be lowercase and contain only alphanumerics";
             }
 
-            if (!isset($manifest['type']) ||  !preg_match('#^bolt-(theme|extension)#', $manifest['type'])) {
+            if (!isset($manifest['type']) || !preg_match('#^bolt-(theme|extension)#', $manifest['type'])) {
                 $valid = false;
                 $errors[] = "'type' in composer.json must be set, and must be either 'bolt-extension' or 'bolt-theme'";
             }

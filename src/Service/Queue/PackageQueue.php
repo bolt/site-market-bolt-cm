@@ -89,7 +89,7 @@ class PackageQueue extends AbstractQueue
 
         $packageName = $file->getContents();
         $output->writeln(sprintf('<info>[Q] Processing build for %s</info>', $packageName));
-        $manager->build($packageName, $output);
+        $manager->build($packageName);
         $fs->remove($file->getRealPath());
 
         $lock->release();

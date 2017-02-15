@@ -6,7 +6,7 @@ use Bolt\Storage\Entity\Entity;
 
 /**
  * VersionBuild entity.
- * 
+ *
  * @author Ross Riley <riley.ross@gmail.com>
  * @author Gawain Lynch <gawain.lynch@gmail.com>
  */

@@ -30,7 +30,7 @@ class Status extends AbstractAction
         /** @var FileInterface $indexFile */
         $indexFile = $resources->get('web/satis/index.html');
 
-       /** @var SatisManager $packageManager */
+        /** @var SatisManager $packageManager */
         $satisManager = $this->getAppService('marketplace.manager_satis');
         $packages = $satisManager->getBuiltPackages($output, true);
 
