@@ -39,6 +39,29 @@ class PackageVersion extends AbstractRepository
 
         return $qb;
     }
+    /**
+     * @param string $packageId
+     *
+     * @return Entity\PackageVersion[]
+     */
+    public function getPackageVersions($packageId)
+    {
+        $query = $this->getPackageVersionsQuery($packageId);
+
+        return $this->findWith($query);
+    }
+
+    public function getPackageVersionsQuery($packageId)
+    {
+        $qb = $this->createQueryBuilder('v');
+        $qb
+            ->select('*')
+            ->where('v.package_id = :package_id')
+            ->setParameter('package_id', $packageId)
+        ;
+
+        return $qb;
+    }
 
     /**
      * @param string $packageId
