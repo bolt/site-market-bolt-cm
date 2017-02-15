@@ -39,7 +39,7 @@ class UpdatePackage extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var PackageManager $packageManager */
-        $packageManager = $this->app['marketplace.services']['package_manager'];
+        $packageManager = $this->app['marketplace.manager_package'];
         /** @var Repository\Package $packageRepo */
         $packageRepo = $this->app['storage']->getRepository(Entity\Package::class);
         /** @var MembersAccountRepository $accountRepo */

@@ -5,7 +5,6 @@ use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
 use Composer\IO\BufferIO;
-use Composer\IO\ConsoleIO;
 use Composer\Json\JsonValidationException;
 use Seld\JsonLint\ParsingException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -27,7 +26,7 @@ class SatisBuilder extends BaseCommand
     protected function configure()
     {
         $this->setName('package:build')
-            ->setDescription('Trigger build of satis repos.')
+            ->setDescription('Trigger build of the Satis repository.')
             ->setDefinition([
                 new InputArgument('package', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'Package that should be built, if not provided all packages are.', null),
             ])
@@ -39,25 +38,23 @@ class SatisBuilder extends BaseCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $skipErrors = true;
         $packageName = $input->getArgument('package');
 
         /** @var SatisManager $satisProvider */
-        $satisProvider = $this->app['marketplace.services']['satis_manager'];
-        $satisProvider->setIo(new ConsoleIO($input, $output, $this->getHelperSet()));
-        $skipErrors = true;
+        $satisProvider = $this->app['marketplace.manager_satis'];
+        $satisProvider->setConsoleOutput($output);
 
         try {
-            $packages = $satisProvider->build($packageName, $output);
-            $output->writeln('<info>Satis file built…</info>');
+            $packages = $satisProvider->build($packageName);
 
-            $output->write('<info>Updating package entities… </info>');
+            $output->write('<info>Updating package entities …</info>');
             /** @var PackageManager $packageManager */
-            $packageManager = $this->app['marketplace.services']['package_manager'];
+            $packageManager = $this->app['marketplace.manager_package'];
             $packageManager->setIo(new BufferIO('', StreamOutput::VERBOSITY_NORMAL, $output->getFormatter()));
 
             // Update version entities
             $packageManager->updateEntities($this->app['storage'], $packages);
-            $output->writeln('<info>[DONE]</info>');
         } catch (FileNotFoundException $e) {
             $output->writeln('<error>File not found: ' . $satisProvider->getSatisJsonFilePath() . '</error>');
             if (!$skipErrors) {

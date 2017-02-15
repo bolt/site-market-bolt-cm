@@ -30,7 +30,7 @@ class SatisJsonUpdate extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var SatisManager $satisProvider */
-        $satisProvider = $this->app['marketplace.services']['satis_manager'];
+        $satisProvider = $this->app['marketplace.manager_satis'];
         try {
             $satisProvider->dumpSatisJson();
         } catch (IOException $e) {

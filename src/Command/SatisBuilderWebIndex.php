@@ -4,7 +4,6 @@ namespace Bolt\Extension\Bolt\MarketPlace\Command;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
-use Composer\IO\ConsoleIO;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -21,7 +20,7 @@ class SatisBuilderWebIndex extends BaseCommand
     protected function configure()
     {
         $this->setName('package:build-web')
-            ->setDescription('Manually rebuild satis web index.')
+            ->setDescription('Manually rebuild the Satis web index.')
         ;
     }
 
@@ -31,11 +30,11 @@ class SatisBuilderWebIndex extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var SatisManager $satisProvider */
-        $satisProvider = $this->app['marketplace.services']['satis_manager'];
-        $satisProvider->setIo(new ConsoleIO($input, $output, $this->getHelperSet()));
+        $satisProvider = $this->app['marketplace.manager_satis'];
+        $satisProvider->setConsoleOutput($output);
 
-        $packages = $satisProvider->getBuiltPackages($output, true);
+        $packages = $satisProvider->getBuiltPackages(true);
 
-        $satisProvider->dumpPackages($packages, $output, true);
+        $satisProvider->dumpPackages($packages, true);
     }
 }

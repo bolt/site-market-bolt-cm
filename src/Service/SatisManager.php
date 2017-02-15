@@ -2,8 +2,9 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
-use Bolt\Configuration\ResourceManager;
+use Bolt\Configuration\PathResolver;
 use Bolt\Extension\Bolt\MarketPlace\Location;
+use Bolt\Extension\Bolt\MarketPlace\Output\BufferedOutputArray;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
 use Composer\Composer;
@@ -11,8 +12,6 @@ use Composer\Config;
 use Composer\Config\JsonConfigSource;
 use Composer\Factory;
 use Composer\IO\BufferIO;
-use Composer\IO\IOInterface;
-use Composer\IO\NullIO;
 use Composer\Json\JsonFile;
 use Composer\Json\JsonValidationException;
 use Composer\Package\PackageInterface;
@@ -22,6 +21,7 @@ use Composer\Satis\PackageSelection\PackageSelection;
 use JsonSchema\Validator;
 use Seld\JsonLint\JsonParser;
 use Seld\JsonLint\ParsingException;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -37,114 +37,132 @@ class SatisManager
 {
     /** @var EntityManager */
     protected $em;
-    /** @var ResourceManager */
-    protected $resourceManager;
-    /** @var IOInterface */
-    protected $io;
+    /** @var PathResolver */
+    protected $pathResolver;
+    /** @var BufferIO */
+    protected $composerOutput;
+    /** @var OutputInterface */
+    protected $consoleOutput;
+    /** @var OutputInterface */
+    protected $consoleOutputBuffer;
     /** @var Composer */
     protected $composer;
     /** @var array */
-    protected $config;
+    protected $satisJsonData;
 
     /**
      * Constructor.
      *
-     * @param EntityManager   $em
-     * @param ResourceManager $resourceManager
+     * @param EntityManager $em
+     * @param PathResolver  $pathResolver
      */
-    public function __construct(EntityManager $em, ResourceManager $resourceManager)
+    public function __construct(EntityManager $em, PathResolver $pathResolver)
     {
         $this->em = $em;
-        $this->resourceManager = $resourceManager;
+        $this->pathResolver = $pathResolver;
+        $this->consoleOutputBuffer = new BufferedOutputArray();
+        $this->composerOutput = new BufferIO();
     }
 
     /**
-     * @param string               $packageName
-     * @param OutputInterface|null $output
+     * @param string $packageName
      *
      * @return PackageInterface[]
      */
-    public function build($packageName, OutputInterface $output = null)
+    public function build($packageName)
     {
-        if ($output === null) {
-            $output = new NullIO();
-        }
-
         $skipErrors = true;
         $htmlView = true;
-        $lockDir = $this->resourceManager->getPath(Location::SATIS_LOCK);
+        $lock = $this->getLock();
+        $packageSelection = $this->getSatisPackageSelection($packageName, $skipErrors);
 
-        set_time_limit(3600);
-        $output->writeln('<info>Acquiring full build lock…</info>');
-        $lock = new LockHandler('satis.full.build', $lockDir);
-        $lock->lock(true);
+        $this->consoleOutput->writeln('<info>Searching repositories for valid versions …</info>');
+        $packages = $packageSelection->select($this->getComposer(), true);
 
-        $packages = $this->buildPackages($packageName, $output, $skipErrors);
+        // In case of an active filter we need to load the dumped packages.json
+        // and merge the updated packages in
+        if ($packageSelection->hasFilterForPackages() || $packageSelection->hasRepositoryFilter()) {
+            $oldPackages = $packageSelection->load();
+            $packages += $oldPackages;
+            ksort($packages);
+        }
+        $this->renderPackageSelection($packages);
+
+        // Write out JSON
+        $this->consoleOutput->writeln(sprintf('<info>Outputting Satis JSON data to %s </info>', $this->getSatisWebPath()));
+        $packagesBuilder = new PackagesBuilder($this->consoleOutputBuffer, $this->getSatisWebPath(), $this->getSatisJsonData(), $skipErrors);
+        $packagesBuilder->dump($packages);
 
         if ($htmlView) {
-            $this->dumpPackages($packages, $output, $skipErrors);
+            $this->dumpPackages($packages, $skipErrors);
         }
+
+        $lock->release();
 
         return $packages;
     }
 
     /**
-     * @param string          $packageName
-     * @param OutputInterface $output
-     * @param bool            $skipErrors
+     * @param string|null $packageName
+     * @param bool        $skipErrors
      *
-     * @throws \Exception
-     *
-     * @return PackageInterface[]
+     * @return PackageSelection
      */
-    public function buildPackages($packageName, OutputInterface $output, $skipErrors = false)
+    private function getSatisPackageSelection($packageName, $skipErrors)
     {
-        $output->writeln('<info>Building packages…</info>');
-        $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
-
+        $packageSelection = new PackageSelection($this->consoleOutputBuffer, $this->getSatisWebPath(), $this->getSatisJsonData(), $skipErrors);
+        if ($packageName === null) {
+            return $packageSelection;
+        }
         $packageEntity = $this->em->getRepository(Entity\Package::class)->findOneBy(['name' => $packageName]);
         if ($packageEntity) {
             $packageSelection->setRepositoryFilter($packageEntity->getSource());
         }
 
-        $packages = $packageSelection->select($this->getComposer(), true);
-        if ($packageSelection->hasFilterForPackages() || $packageSelection->hasRepositoryFilter()) {
-            // in case of an active filter we need to load the dumped packages.json and merge the
-            // updated packages in
-            $oldPackages = $packageSelection->load();
-            $packages += $oldPackages;
-            ksort($packages);
-        }
-
-        $packagesBuilder = new PackagesBuilder($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
-        $packagesBuilder->dump($packages);
-
-        return $packages;
+        return $packageSelection;
     }
 
     /**
-     * @param OutputInterface $output
-     * @param bool            $skipErrors
+     * @param \Composer\Package\CompletePackage[] $packages
+     */
+    private function renderPackageSelection(array $packages)
+    {
+        $result = [];
+        foreach ($packages as $package) {
+            $name = $package->getPrettyName();
+            $result[$name][] = $package->getPrettyVersion();
+        }
+        $table = new Table($this->consoleOutput);
+        foreach ($result as $name => $versions) {
+            $chunks = array_chunk($versions, 8);
+            foreach ($chunks as $chunk) {
+                $table->addRow([$name, implode(', ', $chunk)]);
+            }
+        }
+        $table->render();
+    }
+
+    /**
+     * @param bool $skipErrors
      *
      * @return PackageInterface[]
      */
-    public function getBuiltPackages(OutputInterface $output, $skipErrors = false)
+    public function getBuiltPackages($skipErrors = false)
     {
-        $output->writeln('<info>Fetching previously built package data…</info>');
-        $packageSelection = new PackageSelection($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
+        $this->consoleOutput->writeln('<info>Fetching previously built package data…</info>');
+        $packageSelection = new PackageSelection($this->consoleOutputBuffer, $this->getSatisWebPath(), $this->getSatisJsonData(), $skipErrors);
 
         return $packageSelection->load();
     }
 
     /**
-     * @param array           $packages
-     * @param OutputInterface $output
-     * @param bool            $skipErrors
+     * @param array $packages
+     * @param bool  $skipErrors
      */
-    public function dumpPackages(array $packages, OutputInterface $output, $skipErrors = false)
+    public function dumpPackages(array $packages, $skipErrors = false)
     {
-        $output->writeln('<info>Writing out web files…</info>');
-        $web = new WebBuilder($output, $this->getSatisWebPath(), $this->getConfig(), $skipErrors);
+        $this->consoleOutput->writeln('<info>Writing out web files…</info>');
+        $web = new WebBuilder($this->consoleOutputBuffer, $this->getSatisWebPath(), $this->getSatisJsonData(), $skipErrors);
         $web->setRootPackage($this->getComposer()->getPackage());
         $web->dump($packages);
     }
@@ -163,7 +181,7 @@ class SatisManager
      */
     public function getSatisJsonFilePath()
     {
-        return $this->resourceManager->getPath('config/satis/satis.json');
+        return $this->pathResolver->resolve('%config%/satis/satis.json');
     }
 
     /**
@@ -171,7 +189,7 @@ class SatisManager
      */
     public function getSatisWebPath()
     {
-        return $this->resourceManager->getPath('web/satis');
+        return $this->pathResolver->resolve('%web%/satis');
     }
 
     /**
@@ -206,8 +224,8 @@ class SatisManager
             'name'          => 'Bolt Extensions Repository',
             'homepage'      => 'http://extensions.bolt.cm/satis',
             'repositories'  => [],
-            'output-dir'    => $this->resourceManager->getPath('web/satis'),
-            'twig-template' => $this->resourceManager->getPath('theme/satis/satis-index.twig'),
+            'output-dir'    => $this->pathResolver->resolve('%web%/satis'),
+            'twig-template' => $this->pathResolver->resolve('%theme%/satis/satis-index.twig'),
         ];
     }
 
@@ -218,7 +236,7 @@ class SatisManager
      */
     protected function getSatisExtraRepositories(array $satisArray)
     {
-        $repoFile = $this->resourceManager->getPath('config/satis/repos.yml');
+        $repoFile = $this->pathResolver->resolve('%config%/satis/repos.yml');
         $repoConfig = Yaml::parse(file_get_contents($repoFile));
         foreach (array_keys($repoConfig) as $type) {
             foreach ($repoConfig[$type] as $url) {
@@ -230,6 +248,8 @@ class SatisManager
     }
 
     /**
+     * Get an instance of the Composer API.
+     *
      * @throws JsonValidationException
      * @throws ParsingException
      *
@@ -241,56 +261,53 @@ class SatisManager
             return $this->composer;
         }
 
-        $repositoryUrl = null;
-
         // load auth.json authentication information and pass it to the io interface
-        $io = $this->getIo();
-        $io->loadConfiguration($this->getConfiguration());
+        $this->composerOutput->loadConfiguration($this->getConfiguration());
 
         $file = new JsonFile($this->getSatisJsonFilePath());
         if (!$file->exists()) {
             throw new FileNotFoundException(sprintf('File not found: %s', $this->getSatisJsonFilePath()));
         }
 
-        $this->config = $file->read();
+        $this->satisJsonData = $file->read();
         $this->check($this->getSatisJsonFilePath());
 
-        // disable packagist by default
+        // Disable packagist.org by default
         unset(Config::$defaultRepositories['packagist.org']);
 
-        return $this->composer = Factory::create($io, $this->config, false);
+        return $this->composer = Factory::create($this->composerOutput, $this->satisJsonData, false);
     }
 
     /**
-     * @return IOInterface
+     * @return OutputInterface
      */
-    public function getIo()
+    public function getConsoleOutput()
     {
-        if ($this->io === null) {
-            $this->io = new BufferIO();
+        if ($this->consoleOutput === null) {
+            throw new \RuntimeException(sprintf('Output interface not set!'));
         }
 
-        return $this->io;
+        return $this->consoleOutput;
     }
 
     /**
-     * @param IOInterface $io
+     * @param OutputInterface $output
      */
-    public function setIo(IOInterface $io)
+    public function setConsoleOutput(OutputInterface $output)
     {
-        $this->io = $io;
+        $this->consoleOutput = $output;
     }
 
     /**
      * @return array
      */
-    private function getConfig()
+    private function getSatisJsonData()
     {
         if ($this->composer === null) {
             $this->getComposer();
         }
 
-        return $this->config;
+        return $this->satisJsonData;
     }
 
     /**
@@ -302,11 +319,11 @@ class SatisManager
 
         // add dir to the config
         $config->merge([
-            'config' => ['home' => $this->resourceManager->getPath('composer')],
+            'config' => ['home' => $this->pathResolver->resolve('composer')],
         ]);
 
         // load global auth file
-        $file = new JsonFile($this->resourceManager->getPath('config/satis/auth.json'));
+        $file = new JsonFile($this->pathResolver->resolve('%config%/satis/auth.json'));
         if ($file->exists()) {
             $config->merge(['config' => $file->read()]);
         }
@@ -339,7 +356,7 @@ class SatisManager
 
             $data = json_decode($content);
 
-            $resDir = $this->resourceManager->getPath('root/vendor/composer/satis/res');
+            $resDir = $this->pathResolver->resolve('%root%/vendor/composer/satis/res');
             $schemaFile = $resDir . '/satis-schema.json';
             $schema = json_decode(file_get_contents($schemaFile));
             $validator = new Validator();
@@ -357,5 +374,24 @@ class SatisManager
         }
 
         throw new ParsingException(sprintf("%s does not contain valid JSON\n%s", $configFile, $result->getMessage()), $result->getDetails());
+    }
+
+    /**
+     * Get write lock on Satis directory.
+     *
+     * @return LockHandler
+     */
+    private function getLock()
+    {
+        set_time_limit(3600);
+        $lockDir = $this->pathResolver->resolve(Location::SATIS_LOCK);
+        $lock = new LockHandler('satis.full.build', $lockDir);
+
+        $this->consoleOutput->writeln(sprintf('<info>Acquiring lock on build directory: %s </info>', $lockDir));
+        if ($lock->lock(true)) {
+            return $lock;
+        }
+
+        throw new \RuntimeException('Unable to aquire build directory lock.');
     }
 }
