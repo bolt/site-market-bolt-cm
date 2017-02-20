@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "59702ddb61293db8af792259290896d13c146483"
+                "reference": "94840c2b885c596a0e59a7cbe68283e396d9b188"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/59702ddb61293db8af792259290896d13c146483",
-                "reference": "59702ddb61293db8af792259290896d13c146483",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/94840c2b885c596a0e59a7cbe68283e396d9b188",
+                "reference": "94840c2b885c596a0e59a7cbe68283e396d9b188",
                 "shasum": ""
             },
             "require": {
@@ -120,7 +120,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2017-02-13 21:15:06"
+            "time": "2017-02-19 20:27:00"
         },
         {
             "name": "bolt/filesystem",
@@ -544,12 +544,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "15fcb45615d74e2b79da93f3d214f69025777e10"
+                "reference": "4468caa80d3a8e4eb4692c2e8eac871df1c68ad3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/15fcb45615d74e2b79da93f3d214f69025777e10",
-                "reference": "15fcb45615d74e2b79da93f3d214f69025777e10",
+                "url": "https://api.github.com/repos/composer/satis/zipball/4468caa80d3a8e4eb4692c2e8eac871df1c68ad3",
+                "reference": "4468caa80d3a8e4eb4692c2e8eac871df1c68ad3",
                 "shasum": ""
             },
             "require": {
@@ -602,7 +602,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2017-01-18 08:14:21"
+            "time": "2017-02-17 13:13:47"
         },
         {
             "name": "composer/semver",
@@ -729,16 +729,16 @@
         },
         {
             "name": "contao/imagine-svg",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/imagine-svg.git",
-                "reference": "3dd00399927a759550ea409779890dcd47279822"
+                "reference": "8e5515c757f23bc03c59fd14ecc2f8ade82f3447"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/imagine-svg/zipball/3dd00399927a759550ea409779890dcd47279822",
-                "reference": "3dd00399927a759550ea409779890dcd47279822",
+                "url": "https://api.github.com/repos/contao/imagine-svg/zipball/8e5515c757f23bc03c59fd14ecc2f8ade82f3447",
+                "reference": "8e5515c757f23bc03c59fd14ecc2f8ade82f3447",
                 "shasum": ""
             },
             "require": {
@@ -747,10 +747,10 @@
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "~1.8",
-                "phpunit/phpunit": "~4.5",
-                "satooshi/php-coveralls": "~0.6",
-                "symfony/filesystem": "~2.8 | ~3.0"
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "phpunit/phpunit": "^4.5",
+                "satooshi/php-coveralls": "^0.6",
+                "symfony/filesystem": "^2.8|^3.0"
             },
             "type": "library",
             "extra": {
@@ -774,7 +774,7 @@
                 }
             ],
             "description": "Contao Imagine SVG library",
-            "time": "2016-11-22T20:55:40+00:00"
+            "time": "2017-02-14T13:44:59+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1060,12 +1060,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "eaafa67e7591db1156fbf93f7e1c2d32f857ff3d"
+                "reference": "c7c3d8b7329dc36c3a3a425b78ed7e77986c0453"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/eaafa67e7591db1156fbf93f7e1c2d32f857ff3d",
-                "reference": "eaafa67e7591db1156fbf93f7e1c2d32f857ff3d",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c7c3d8b7329dc36c3a3a425b78ed7e77986c0453",
+                "reference": "c7c3d8b7329dc36c3a3a425b78ed7e77986c0453",
                 "shasum": ""
             },
             "require": {
@@ -1124,7 +1124,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-02-10 18:28:54"
+            "time": "2017-02-16 19:14:48"
         },
         {
             "name": "doctrine/inflector",
@@ -1384,16 +1384,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "2.1.5",
+            "version": "2.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c"
+                "reference": "92bdc6800ac6e233c9e161a1768e082389a73530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/2abce9d956589122c6443d6265f01cf7e9388e3c",
-                "reference": "2abce9d956589122c6443d6265f01cf7e9388e3c",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/92bdc6800ac6e233c9e161a1768e082389a73530",
+                "reference": "92bdc6800ac6e233c9e161a1768e082389a73530",
                 "shasum": ""
             },
             "require": {
@@ -1440,7 +1440,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2016-12-26T16:13:31+00:00"
+            "time": "2017-02-18T14:22:27+00:00"
         },
         {
             "name": "forxer/gravatar",
@@ -2988,7 +2988,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -3162,7 +3162,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -3272,7 +3272,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
