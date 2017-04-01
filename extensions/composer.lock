@@ -85,12 +85,12 @@
             "version": "v3.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/GawainLynch/bolt-extension-email-spooler.git",
+                "url": "https://github.com/bolt/bolt-extension-email-spooler.git",
                 "reference": "e9f338c572f9aeb3f16162bd60f8877c75b6e09d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-email-spooler/zipball/e9f338c572f9aeb3f16162bd60f8877c75b6e09d",
+                "url": "https://api.github.com/repos/bolt/bolt-extension-email-spooler/zipball/e9f338c572f9aeb3f16162bd60f8877c75b6e09d",
                 "reference": "e9f338c572f9aeb3f16162bd60f8877c75b6e09d",
                 "shasum": ""
             },
@@ -134,12 +134,12 @@
             "version": "v3.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/GawainLynch/bolt-extension-github.git",
+                "url": "https://github.com/bolt/bolt-extension-github.git",
                 "reference": "ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GawainLynch/bolt-extension-github/zipball/ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358",
+                "url": "https://api.github.com/repos/bolt/bolt-extension-github/zipball/ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358",
                 "reference": "ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358",
                 "shasum": ""
             },
@@ -186,11 +186,11 @@
         },
         {
             "name": "bolt/marketplace",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "803e0aa650c841933122b7875f7e223d0ed538d5"
+                "reference": "eaa6e67f31631c5a517f523c671a6e176f0d4e6c"
             },
             "require": {
                 "bolt/bolt": "^3.3",
@@ -230,7 +230,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2017-02-15T10:30:36+00:00"
+            "time": "2017-04-01T07:45:44+00:00"
         },
         {
             "name": "bolt/members",
