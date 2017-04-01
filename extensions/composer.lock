@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bolt/boltforms",
-            "version": "4.0.0-beta1",
+            "version": "4.0.0-beta2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/boltforms.git",
-                "reference": "e747822b86704197e9626bc25085385123960bea"
+                "reference": "8d2169c112129f673f0346b7d338837264175116"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/boltforms/zipball/e747822b86704197e9626bc25085385123960bea",
-                "reference": "e747822b86704197e9626bc25085385123960bea",
+                "url": "https://api.github.com/repos/bolt/boltforms/zipball/8d2169c112129f673f0346b7d338837264175116",
+                "reference": "8d2169c112129f673f0346b7d338837264175116",
                 "shasum": ""
             },
             "require": {
@@ -37,7 +37,7 @@
                 "bolt-class": "Bolt\\Extension\\Bolt\\BoltForms\\BoltFormsExtension",
                 "bolt-icon": "icon-boltforms.png",
                 "branch-alias": {
-                    "dev-master": "4.0.x-dev"
+                    "dev-4.0": "4.0.x-dev"
                 }
             },
             "autoload": {
@@ -75,10 +75,10 @@
                 "uploads"
             ],
             "support": {
-                "source": "https://github.com/bolt/boltforms/tree/master",
+                "source": "https://github.com/bolt/boltforms/tree/4.0",
                 "issues": "https://github.com/bolt/boltforms/issues"
             },
-            "time": "2017-01-21T05:20:02+00:00"
+            "time": "2017-03-20T15:24:51+00:00"
         },
         {
             "name": "bolt/email-spooler",
