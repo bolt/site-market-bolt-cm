@@ -122,7 +122,7 @@ abstract class AbstractAction implements ActionInterface
 
         $versions = [];
         foreach ($boltMajorVersions as $boltMajorVersion) {
-            $entity = $repo->getLatestCompatibleVersion($package->getId(), 'stable', $boltMajorVersion);
+            $entity = $repo->getLatestCompatibleVersion($package->getId(), 'stable', $boltMajorVersion . '.99999');
             if ($entity === false) {
                 continue;
             }
