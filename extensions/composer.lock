@@ -82,27 +82,27 @@
         },
         {
             "name": "bolt/email-spooler",
-            "version": "v3.0.3",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt-extension-email-spooler.git",
-                "reference": "e9f338c572f9aeb3f16162bd60f8877c75b6e09d"
+                "reference": "3f2fa17f4072e413e0fca4ab6b70cd440d4c3f3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt-extension-email-spooler/zipball/e9f338c572f9aeb3f16162bd60f8877c75b6e09d",
-                "reference": "e9f338c572f9aeb3f16162bd60f8877c75b6e09d",
+                "url": "https://api.github.com/repos/bolt/bolt-extension-email-spooler/zipball/3f2fa17f4072e413e0fca4ab6b70cd440d4c3f3c",
+                "reference": "3f2fa17f4072e413e0fca4ab6b70cd440d4c3f3c",
                 "shasum": ""
             },
             "require": {
-                "bolt/bolt": "^3.0",
+                "bolt/bolt": "^3.3",
                 "php": ">=5.5.9"
             },
             "type": "bolt-extension",
             "extra": {
                 "bolt-class": "Bolt\\Extension\\Bolt\\EmailSpooler\\EmailSpoolerExtension",
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "3.1.x-dev"
                 }
             },
             "autoload": {
@@ -124,10 +124,9 @@
                 "spool"
             ],
             "support": {
-                "source": "https://github.com/GawainLynch/bolt-extension-email-spooler/tree/master",
-                "issues": "https://github.com/GawainLynch/bolt-extension-email-spooler/issues"
+                "source": "https://github.com/bolt/bolt-extension-email-spooler/tree/master"
             },
-            "time": "2016-09-16T15:11:09+00:00"
+            "time": "2017-04-27T10:11:16+00:00"
         },
         {
             "name": "bolt/github",
@@ -186,11 +185,11 @@
         },
         {
             "name": "bolt/marketplace",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "eaa6e67f31631c5a517f523c671a6e176f0d4e6c"
+                "reference": "81c1fcc7774fcf95a05d9534501efb1d1d765bf2"
             },
             "require": {
                 "bolt/bolt": "^3.3",
@@ -230,7 +229,7 @@
                 "composer",
                 "satis"
             ],
-            "time": "2017-04-01T07:45:44+00:00"
+            "time": "2017-05-04T08:33:55+00:00"
         },
         {
             "name": "bolt/members",
@@ -304,23 +303,23 @@
         },
         {
             "name": "google/recaptcha",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/google/recaptcha.git",
-                "reference": "2b7e00566afca82a38a1d3adb8e42c118006296e"
+                "reference": "5a56d15ca10a7b75158178752b2ad8f755eb4f78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/recaptcha/zipball/2b7e00566afca82a38a1d3adb8e42c118006296e",
-                "reference": "2b7e00566afca82a38a1d3adb8e42c118006296e",
+                "url": "https://api.github.com/repos/google/recaptcha/zipball/5a56d15ca10a7b75158178752b2ad8f755eb4f78",
+                "reference": "5a56d15ca10a7b75158178752b2ad8f755eb4f78",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": ">=5.5"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.5.*"
+                "phpunit/phpunit": "^4.8"
             },
             "type": "library",
             "extra": {
@@ -349,7 +348,7 @@
                 "source": "https://github.com/google/recaptcha",
                 "issues": "https://github.com/google/recaptcha/issues"
             },
-            "time": "2015-09-02T17:23:59+00:00"
+            "time": "2017-03-09T18:44:34+00:00"
         },
         {
             "name": "guzzle/guzzle",
@@ -521,16 +520,16 @@
         },
         {
             "name": "pagerfanta/pagerfanta",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whiteoctober/Pagerfanta.git",
-                "reference": "f846c5e06bb66df659a688ea4734aab49de589d6"
+                "reference": "29aade64addfdfb12c05aabf160f09d1aea6b143"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/f846c5e06bb66df659a688ea4734aab49de589d6",
-                "reference": "f846c5e06bb66df659a688ea4734aab49de589d6",
+                "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/29aade64addfdfb12c05aabf160f09d1aea6b143",
+                "reference": "29aade64addfdfb12c05aabf160f09d1aea6b143",
                 "shasum": ""
             },
             "require": {
@@ -544,6 +543,7 @@
                 "mandango/mandango": "~1.0@dev",
                 "mandango/mondator": "~1.0@dev",
                 "phpunit/phpunit": "~4 | ~5",
+                "propel/propel": "~2.0@dev",
                 "propel/propel1": "~1.6",
                 "ruflin/elastica": "~1.3",
                 "solarium/solarium": "~3.1"
@@ -553,6 +553,7 @@
                 "doctrine/orm": "To use the DoctrineORMAdapter.",
                 "doctrine/phpcr-odm": "To use the DoctrineODMPhpcrAdapter. >= 1.1.0",
                 "mandango/mandango": "To use the MandangoAdapter.",
+                "propel/propel": "To use the Propel2Adapter",
                 "propel/propel1": "To use the PropelAdapter",
                 "solarium/solarium": "To use the SolariumAdapter."
             },
@@ -584,23 +585,23 @@
                 "paging"
             ],
             "support": {
-                "source": "https://github.com/whiteoctober/Pagerfanta/tree/master",
+                "source": "https://github.com/whiteoctober/Pagerfanta/tree/v1.0.5",
                 "issues": "https://github.com/whiteoctober/Pagerfanta/issues"
             },
-            "time": "2016-11-28T09:17:04+00:00"
+            "time": "2017-03-20T13:46:15+00:00"
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.4",
+            "version": "v2.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e"
+                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
-                "reference": "a9b97968bcde1c4de2a5ec6cbd06a0f6c919b46e",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
                 "shasum": ""
             },
             "require": {
@@ -639,34 +640,34 @@
                 "email": "info@paragonie.com",
                 "source": "https://github.com/paragonie/random_compat"
             },
-            "time": "2016-11-07T23:38:38+00:00"
+            "time": "2017-03-13T16:27:32+00:00"
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.5.2",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "5677cfe02397dd6b58c861870dfaa5d9007d3954"
+                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/5677cfe02397dd6b58c861870dfaa5d9007d3954",
-                "reference": "5677cfe02397dd6b58c861870dfaa5d9007d3954",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
+                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
                 "shasum": ""
             },
             "require": {
                 "paragonie/random_compat": "^1.0|^2.0",
-                "php": ">=5.4"
+                "php": "^5.4 || ^7.0"
             },
             "replace": {
                 "rhumsaa/uuid": "self.version"
             },
             "require-dev": {
                 "apigen/apigen": "^4.1",
-                "codeception/aspect-mock": "1.0.0",
+                "codeception/aspect-mock": "^1.0 | ^2.0",
                 "doctrine/annotations": "~1.2.0",
-                "goaop/framework": "1.0.0-alpha.2",
+                "goaop/framework": "1.0.0-alpha.2 | ^1.0 | ^2.1",
                 "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
                 "mockery/mockery": "^0.9.4",
@@ -700,6 +701,25 @@
                     "Ramsey\\Uuid\\Test\\": "tests/"
                 }
             },
+            "scripts": {
+                "lint": [
+                    "parallel-lint src tests"
+                ],
+                "phpunit": [
+                    "phpunit --verbose --colors=always"
+                ],
+                "phpcs": [
+                    "phpcs src tests --standard=psr2 -sp --colors"
+                ],
+                "test": [
+                    "@lint",
+                    "@phpunit",
+                    "@phpcs"
+                ],
+                "build-docs": [
+                    "apigen generate --source='src' --destination='build/apidocs' --template-theme='bootstrap' --deprecated --todo"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -729,7 +749,7 @@
                 "issues": "https://github.com/ramsey/uuid/issues",
                 "source": "https://github.com/ramsey/uuid"
             },
-            "time": "2016-11-22T19:21:44+00:00"
+            "time": "2017-03-26T20:37:53+00:00"
         }
     ],
     "packages-dev": [],
