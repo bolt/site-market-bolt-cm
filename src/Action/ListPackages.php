@@ -27,6 +27,7 @@ class ListPackages extends AbstractAction
         $packageRepo = $em->getRepository(Entity\Package::class);
         /** @var Repository\StatInstall $installRepo */
         $installRepo = $em->getRepository(Entity\StatInstall::class);
+        $boltVersion = $request->query->get('bolt');
 
         if (isset($params['sort'])) {
             if ($params['sort'] === 'downloaded') {
@@ -37,11 +38,20 @@ class ListPackages extends AbstractAction
         } else {
             $packages = $packageRepo->findBy(['approved' => true]);
         }
-        array_walk($packages, function (&$v, $k) {
-            $v = $v->serialize();
+        array_walk($packages, function (Entity\Package $v) {
             unset($v['approved']);
-            unset($v['account']);
+            unset($v['account_id']);
         });
+        if ($boltVersion) {
+            /** @var Repository\PackageVersion $versionRepo */
+            $versionRepo = $em->getRepository(Entity\PackageVersion::class);
+            foreach ($packages as $key => $package) {
+                $version = $versionRepo->getLatestCompatibleVersion($package->getId(), 'dev', $boltVersion);
+                if ($version === false) {
+                    unset($packages[$key]);
+                }
+            }
+        }
 
         $response = new JsonResponse(['packages' => $packages]);
         $response->setCallback($request->get('callback'));

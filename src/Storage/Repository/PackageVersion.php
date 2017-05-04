@@ -100,7 +100,7 @@ class PackageVersion extends AbstractRepository
      */
     public function getLatestCompatibleVersion($packageId, $stability, $boltVersion)
     {
-        $query = $this->getLatestVersionQuery($packageId, $stability);
+        $query = $this->LatestCompatibleVersionsQuery($packageId, $stability);
 
         $versionEntities = $this->findWith($query);
         if ($versionEntities === false) {
@@ -121,7 +121,33 @@ class PackageVersion extends AbstractRepository
         return false;
     }
 
-    public function getLatestVersionQuery($packageId, $stability)
+    /**
+     * @param string $packageId
+     * @param string $stability
+     * @param string $boltVersion
+     *
+     * @return Entity\PackageVersion[]
+     */
+    public function getLatestCompatibleVersions($packageId, $stability, $boltVersion)
+    {
+        $query = $this->LatestCompatibleVersionsQuery($packageId, $stability);
+
+        $versionEntities = $this->findWith($query);
+        $parser = new VersionParser();
+        $boltVersion = new Constraint('==', $parser->normalize($boltVersion));
+
+        /** @var Entity\PackageVersion $versionEntity */
+        foreach ($versionEntities as $key => $versionEntity) {
+            $boltConstraints = $parser->parseConstraints(sprintf('%s,%s', $versionEntity->getBoltMin(), $versionEntity->getBoltMax()));
+            if (!$boltConstraints->matches($boltVersion)) {
+                unset($versionEntities[$key]);
+            }
+        }
+
+        return $versionEntities;
+    }
+
+    public function LatestCompatibleVersionsQuery($packageId, $stability)
     {
         $qb = $this->createQueryBuilder('v');
         $qb
