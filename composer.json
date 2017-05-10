@@ -14,7 +14,8 @@
     ],
     "minimum-stability": "beta",
     "require": {
-        "bolt/bolt": "3.3.x@dev",
+        "bolt/bolt": "^3.3@beta",
+        "bolt/collection": "dev-master@dev",
         "composer/composer": "^1.1",
         "composer/satis": "dev-master@dev",
         "fabpot/goutte": "^3.1",
