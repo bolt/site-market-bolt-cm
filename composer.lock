@@ -4,23 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "86c1c21ab86d02958a7964ba8cad7d59",
+    "content-hash": "8ae98acadec68b5d40cf427a4e9714c9",
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.3.0-beta5",
+            "version": "v3.3.0-beta7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "b1e410b6ff21e196bab938cf882ac60aee04ad9f"
+                "reference": "f1f48cb7ff12300b42996273d7c76883180f02a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/b1e410b6ff21e196bab938cf882ac60aee04ad9f",
-                "reference": "b1e410b6ff21e196bab938cf882ac60aee04ad9f",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/f1f48cb7ff12300b42996273d7c76883180f02a6",
+                "reference": "f1f48cb7ff12300b42996273d7c76883180f02a6",
                 "shasum": ""
             },
             "require": {
+                "bolt/collection": "dev-master@dev",
                 "bolt/filesystem": "^2.2",
                 "bolt/pathogen": "~0.6",
                 "bolt/thumbs": "^3.1.1",
@@ -29,17 +30,16 @@
                 "composer/composer": "^1.2",
                 "doctrine/cache": "^1.5",
                 "doctrine/dbal": "^2.5",
+                "embed/embed": "^3.0",
                 "erusev/parsedown-extra": "~0.7",
                 "ext-curl": "*",
                 "ext-exif": "*",
                 "ext-fileinfo": "*",
                 "ext-gd": "*",
-                "ext-gmp": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
                 "ext-pdo": "*",
-                "ext-posix": "*",
                 "ext-xml": "*",
                 "ext-zip": "*",
                 "filp/whoops": "^2.0",
@@ -134,7 +134,48 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2017-04-04T06:05:29+00:00"
+            "time": "2017-05-09T19:35:15+00:00"
+        },
+        {
+            "name": "bolt/collection",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bolt/collection.git",
+                "reference": "327ec1a92c10eacc2d6ee1792f6bf29e5c888eac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bolt/collection/zipball/327ec1a92c10eacc2d6ee1792f6bf29e5c888eac",
+                "reference": "327ec1a92c10eacc2d6ee1792f6bf29e5c888eac",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0",
+                "symfony/polyfill-php71": "^1.3",
+                "webmozart/assert": "^1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bolt\\Collection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Carson Full",
+                    "email": "carsonfull@gmail.com"
+                }
+            ],
+            "description": "Object Orientated implementations of various collections",
+            "time": "2017-04-28 23:44:10"
         },
         {
             "name": "bolt/filesystem",
@@ -1264,6 +1305,59 @@
                 "parser"
             ],
             "time": "2014-09-09T13:34:57+00:00"
+        },
+        {
+            "name": "embed/embed",
+            "version": "v3.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/oscarotero/Embed.git",
+                "reference": "bf12eaadff32d205663c4c5b01020756168d474a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/oscarotero/Embed/zipball/bf12eaadff32d205663c4c5b01020756168d474a",
+                "reference": "bf12eaadff32d205663c4c5b01020756168d474a",
+                "shasum": ""
+            },
+            "require": {
+                "composer/ca-bundle": "^1.0",
+                "ext-curl": "*",
+                "ext-mbstring": "*",
+                "php": "^5.5|^7.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "phpunit/phpunit": "^4.8|^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Embed\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oscar Otero",
+                    "email": "oom@oscarotero.com",
+                    "homepage": "http://oscarotero.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP library to retrieve page info using oembed, opengraph, etc",
+            "homepage": "https://github.com/oscarotero/Embed",
+            "keywords": [
+                "embed",
+                "embedly",
+                "oembed",
+                "opengraph",
+                "twitter cards"
+            ],
+            "time": "2017-05-07T18:52:23+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -4266,6 +4360,61 @@
             "time": "2016-11-14T01:06:16+00:00"
         },
         {
+            "name": "symfony/polyfill-php71",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php71.git",
+                "reference": "36004d119352f4506398032259a08e4ca9607285"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php71/zipball/36004d119352f4506398032259a08e4ca9607285",
+                "reference": "36004d119352f4506398032259a08e4ca9607285",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php71\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.1+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-11-14T01:11:10+00:00"
+        },
+        {
             "name": "symfony/polyfill-util",
             "version": "v1.3.0",
             "source": {
@@ -5387,7 +5536,8 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "bolt/bolt": 20,
+        "bolt/bolt": 10,
+        "bolt/collection": 20,
         "composer/satis": 20,
         "doctrine/dbal": 20
     },

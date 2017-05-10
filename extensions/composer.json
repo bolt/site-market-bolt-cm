@@ -6,7 +6,9 @@
     },
     "config": {
         "discard-changes": true,
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "optimize-autoloader": false,
+        "classmap-authoritative": false
     },
     "description": "Bolt extension installation interface",
     "extra": {
