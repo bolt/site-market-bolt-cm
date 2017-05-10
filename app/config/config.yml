@@ -6,10 +6,8 @@
 #
 # If you're trying out Bolt, just keep it set to SQLite for now.
 database:
-    driver: mysql
-    databasename: bolt_extensions
-    username: bolt_extensions
-    password: bolt_extensions
+    driver: sqlite
+    databasename: bolt
 
 # The name of the website
 sitename:
@@ -35,7 +33,10 @@ theme: marketplace
 # This can be done as [nl_NL, Dutch_Netherlands] when specifying multiple
 # locales, ensure the first is a standard locale.
 locale: en_GB
-#timezone: UTC
+
+# Set the timezone to be used on the website. For a list of valid timezone
+# settings, see: http://php.net/manual/en/timezones.php
+# timezone: UTC
 
 # Set maintenance mode on or off.
 #
@@ -221,7 +222,7 @@ thumbnails:
 # left in the content that is shown to users. For example, tags like `<script>`
 # or `onclick`-attributes.
 htmlcleaner:
-    allowed_tags: [ div, span, p, br, hr, s, u, strong, em, i, b, li, ul, ol, mark, blockquote, pre, code, tt, h1, h2, h3, h4, h5, h6, dd, dl, dh, table, tbody, thead, tfoot, th, td, tr, a, img, address, abbr, iframe, caption ]
+    allowed_tags: [ div, span, p, br, hr, s, u, strong, em, i, b, li, ul, ol, mark, blockquote, pre, code, tt, h1, h2, h3, h4, h5, h6, dd, dl, dh, table, tbody, thead, tfoot, th, td, tr, a, img, address, abbr, iframe, caption, sub, super ]
     allowed_attributes: [ id, class, style, name, value, href, src, alt, title, width, height, frameborder, allowfullscreen, scrolling, target, colspan, rowspan ]
 
 # Uploaded file handling
@@ -267,9 +268,9 @@ accept_file_types: [ twig, html, js, css, scss, gif, jpg, jpeg, png, ico, zip, t
 debug: false
 debug_show_loggedoff: false
 debug_permission_audit_mode: false
-debug_error_level: 8181           # equivalent to E_ALL &~ E_NOTICE &~ E_DEPRECATED &~ E_USER_DEPRECATED &~ E_WARNING
-# debug_error_level: -1               # equivalent to E_ALL
-debug_error_use_symfony: false      # When set to true, Symfony Profiler will be used for exception display when possible
+debug_error_level: 8181             # equivalent to E_ALL &~ E_NOTICE &~ E_DEPRECATED &~ E_USER_DEPRECATED &~ E_WARNING
+# debug_error_level: -1             # equivalent to E_ALL
+debug_error_use_symfony: true       # When set to true, Symfony Profiler will be used for exception display when possible
 debug_trace_argument_limit: 4       # Determine how many steps in the backtrace will show (dump) arguments.
 
 # error level when debug is disabled
@@ -289,7 +290,7 @@ debuglog:
 
 # Use strict variables. This will make Bolt complain if you use {{ foo }},
 # when foo doesn't exist.
-strict_variables: false
+#strict_variables: false
 
 # There are several options for giving editors more options to insert images,
 # video, etc in the WYSIWYG areas. But, as you give them more options, that
@@ -402,21 +403,21 @@ hash_strength: 10
 # Do not change this, unless you know what you're doing, and understand the
 # associated risks. If you use 'http://market.bolt.cm', Bolt will not use
 # SSL, increasing the risk for a MITM attacks.
-# extensions:
+extensions:
 #     site: 'https://market.bolt.cm/'
-#     enabled: true
-#     composer:
-#         minimum-stability: stable      # Either 'stable', 'beta', or 'dev'. Setting 'dev' will allow you to install dev-master versions of extensions.
-#         prefer-stable: true            # Prefer stable releases over development ones
-#         prefer-dist: true              # Forces installation from package dist even for dev versions.
+    enabled: true
+    composer:
+        minimum-stability: stable      # Either 'stable', 'beta', or 'dev'. Setting 'dev' will allow you to install dev-master versions of extensions.
+        prefer-stable: true            # Prefer stable releases over development ones
+        prefer-dist: true              # Forces installation from package dist even for dev versions.
 #         prefer-source: false           # Forces installation from package sources when possible, including VCS information.
-#         optimize-autoloader: false     # Optimize autoloader during autoloader dump.
-#         classmap-authoritative: false  # Autoload classes from the classmap only. Implicitly enables `optimize-autoloader`.
+        config:
+            optimize-autoloader: false     # Optimize autoloader during autoloader dump.
+            classmap-authoritative: false  # Autoload classes from the classmap only. Implicitly enables `optimize-autoloader`.
 
-# Enforcing the use of SSL. If set, all but the front-end pages will enforce an
-# SSL connection (and redirect to HTTPS if you attempt to visit the backend over
-# plain HTTP).
-enforce_ssl: true
+# Enforcing the use of SSL. If set, all pages will enforce an SSL connection,
+# and redirect to HTTPS if you attempt to visit plain HTTP pages.
+# enforce_ssl: true
 
 # If configured, Bolt will trust X-Forwarded-XXX headers from the listed IP
 # addresses and ranges when determining whether the current request is
@@ -455,3 +456,10 @@ enforce_ssl: true
 #        disable: true     # Disable news panel. Defaults to false. "Alerts" will still be shown.
 #    stack:
 #        disable: true     # Disable stack usage. Defaults to false.
+
+# Options that will be forced in next major version
+compatibility:
+    # Whether to return TemplateView instead of TemplateResponse from Controller\Base::render()
+    # Response methods cannot be used on TemplateView objects.
+    # Setting this value to false is deprecated.
+    template_view: true
