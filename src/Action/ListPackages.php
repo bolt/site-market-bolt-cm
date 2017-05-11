@@ -52,8 +52,12 @@ class ListPackages extends AbstractAction
                 }
             }
         }
+        $final = [];
+        foreach ($packages as $package) {
+            $final[] = $package;
+        }
 
-        $response = new JsonResponse(['packages' => $packages]);
+        $response = new JsonResponse(['packages' => $final]);
         $response->setCallback($request->get('callback'));
 
         return $response;
