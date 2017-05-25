@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "108d9314931210a21e4105ad90517e1d",
+    "content-hash": "11e297f19e974770ab74be427cdaab32",
     "packages": [
         {
             "name": "bolt/boltforms",
@@ -233,17 +233,11 @@
         },
         {
             "name": "bolt/members",
-            "version": "v3.0.0-beta8",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bolt/Members.git",
-                "reference": "f56b95e45be6959571ee9fc63e8b973fb4557997"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bolt/Members/zipball/f56b95e45be6959571ee9fc63e8b973fb4557997",
-                "reference": "f56b95e45be6959571ee9fc63e8b973fb4557997",
-                "shasum": ""
+                "url": "https://github.com/BoltAuth/Auth.git",
+                "reference": "d4b067ea4a1d9029553fc7b76b94d34d7d7566bf"
             },
             "require": {
                 "bolt/bolt": "^3.2",
@@ -296,10 +290,7 @@
                 "oauth",
                 "profiles"
             ],
-            "support": {
-                "source": "https://github.com/bolt/Members/tree/master"
-            },
-            "time": "2017-02-14T11:32:43+00:00"
+            "time": "2017-05-13 13:22:56"
         },
         {
             "name": "google/recaptcha",
@@ -757,7 +748,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "bolt/boltforms": 10,
-        "bolt/members": 10
+        "bolt/members": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
