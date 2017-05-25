@@ -12,15 +12,15 @@
             "email": "gawain.lynch@gmail.com"
         }
     ],
-    "minimum-stability": "beta",
     "require": {
         "bolt/bolt": "^3.3@beta",
         "bolt/collection": "dev-master@dev",
-        "composer/composer": "^1.1",
-        "composer/satis": "dev-master@dev",
+        "composer/composer": "^1.4",
+        "composer/satis": "^1.0@alpha",
+        "doctrine/dbal": "^2.6@dev",
         "fabpot/goutte": "^3.1",
         "forxer/gravatar": "^1.2",
-        "doctrine/dbal": "^2.6@dev"
+        "passwordlib/passwordlib": "^1.0@beta"
     },
     "autoload": {
         "psr-4": {
