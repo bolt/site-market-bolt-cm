@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ae98acadec68b5d40cf427a4e9714c9",
+    "content-hash": "358ca3a7feea7175fba2f4e41d208e66",
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.3.0-beta7",
+            "version": "dev-release/3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "f1f48cb7ff12300b42996273d7c76883180f02a6"
+                "reference": "2b2196be1f10ed4553851c41e3bfaa05e741e345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/f1f48cb7ff12300b42996273d7c76883180f02a6",
-                "reference": "f1f48cb7ff12300b42996273d7c76883180f02a6",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/2b2196be1f10ed4553851c41e3bfaa05e741e345",
+                "reference": "2b2196be1f10ed4553851c41e3bfaa05e741e345",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,6 @@
                 "codeception/codeception": "^2.2",
                 "league/flysystem-memory": "^1.0",
                 "lstrojny/phpunit-function-mocker": "0.3.0",
-                "phpmd/phpmd": "^2.2",
                 "phpunit/dbunit": "^1.3",
                 "phpunit/php-code-coverage": "^2.0",
                 "phpunit/phpunit": "^4.8",
@@ -102,7 +101,6 @@
                 "psr/simple-cache": "^1.0",
                 "sebastian/phpcpd": "^2.0",
                 "sorien/silex-pimple-dumper": "^1.0",
-                "squizlabs/php_codesniffer": "^2.0",
                 "symfony/phpunit-bridge": "^2.8"
             },
             "bin": [
@@ -134,7 +132,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2017-05-09T19:35:15+00:00"
+            "time": "2017-05-24 16:24:17"
         },
         {
             "name": "bolt/collection",
@@ -521,16 +519,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.4.1",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "7ee2a5e1cf32e9c8439445fe8dce2c046c2abebd"
+                "reference": "489e09ee6c3ba431fbeeef9147afdaeb6f91b647"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/7ee2a5e1cf32e9c8439445fe8dce2c046c2abebd",
-                "reference": "7ee2a5e1cf32e9c8439445fe8dce2c046c2abebd",
+                "url": "https://api.github.com/repos/composer/composer/zipball/489e09ee6c3ba431fbeeef9147afdaeb6f91b647",
+                "reference": "489e09ee6c3ba431fbeeef9147afdaeb6f91b647",
                 "shasum": ""
             },
             "require": {
@@ -594,24 +592,24 @@
                 "dependency",
                 "package"
             ],
-            "time": "2017-03-10T08:29:45+00:00"
+            "time": "2017-05-17T06:17:53+00:00"
         },
         {
             "name": "composer/satis",
-            "version": "dev-master",
+            "version": "1.0.0-alpha3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/satis.git",
-                "reference": "146ad270b0d7976d0d5dfeb73701a2fa62a1c791"
+                "reference": "e2f8b9aff84d5030519dcf0d506d18bdc8656636"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/satis/zipball/146ad270b0d7976d0d5dfeb73701a2fa62a1c791",
-                "reference": "146ad270b0d7976d0d5dfeb73701a2fa62a1c791",
+                "url": "https://api.github.com/repos/composer/satis/zipball/e2f8b9aff84d5030519dcf0d506d18bdc8656636",
+                "reference": "e2f8b9aff84d5030519dcf0d506d18bdc8656636",
                 "shasum": ""
             },
             "require": {
-                "composer/composer": "^1.4",
+                "composer/composer": "^1.0",
                 "php": "^5.6 || ^7.0",
                 "symfony/console": "^2.1 || ^3.0.4",
                 "twig/twig": "^1.7 || ^2.0"
@@ -660,7 +658,7 @@
                 "repository",
                 "static"
             ],
-            "time": "2017-05-05 08:36:07"
+            "time": "2017-04-07T12:44:08+00:00"
         },
         {
             "name": "composer/semver",
@@ -787,21 +785,21 @@
         },
         {
             "name": "contao/imagine-svg",
-            "version": "0.1.3",
+            "version": "0.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/imagine-svg.git",
-                "reference": "8e5515c757f23bc03c59fd14ecc2f8ade82f3447"
+                "reference": "aa9d4d1847364cb9c2f589833ec63096de914cf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/imagine-svg/zipball/8e5515c757f23bc03c59fd14ecc2f8ade82f3447",
-                "reference": "8e5515c757f23bc03c59fd14ecc2f8ade82f3447",
+                "url": "https://api.github.com/repos/contao/imagine-svg/zipball/aa9d4d1847364cb9c2f589833ec63096de914cf2",
+                "reference": "aa9d4d1847364cb9c2f589833ec63096de914cf2",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
-                "imagine/imagine": "^0.6",
+                "imagine/imagine": "^0.6|^0.7",
                 "php": ">=5.5.0"
             },
             "require-dev": {
@@ -832,7 +830,7 @@
                 }
             ],
             "description": "Contao Imagine SVG library",
-            "time": "2017-02-14T13:44:59+00:00"
+            "time": "2017-05-20T13:06:46+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1118,12 +1116,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "e98d2416d6dc8b1a2eddd8461aea426388ec3deb"
+                "reference": "9d696ac2ff9391c0dc5328170667248de10e0606"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/e98d2416d6dc8b1a2eddd8461aea426388ec3deb",
-                "reference": "e98d2416d6dc8b1a2eddd8461aea426388ec3deb",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/9d696ac2ff9391c0dc5328170667248de10e0606",
+                "reference": "9d696ac2ff9391c0dc5328170667248de10e0606",
                 "shasum": ""
             },
             "require": {
@@ -1183,7 +1181,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-05-09 10:48:39"
+            "time": "2017-05-21 18:53:37"
         },
         {
             "name": "doctrine/inflector",
@@ -1775,23 +1773,24 @@
         },
         {
             "name": "imagine/imagine",
-            "version": "v0.6.3",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d"
+                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/149041d2a1b517107bfe270ca2b1a17aa341715d",
-                "reference": "149041d2a1b517107bfe270ca2b1a17aa341715d",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/a9a702a946073cbca166718f1b02a1e72d742daa",
+                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "sami/sami": "dev-master"
+                "sami/sami": "^3.3",
+                "symfony/phpunit-bridge": "^3.2"
             },
             "suggest": {
                 "ext-gd": "to use the GD implementation",
@@ -1828,7 +1827,7 @@
                 "image manipulation",
                 "image processing"
             ],
-            "time": "2015-09-19T16:54:05+00:00"
+            "time": "2017-05-16T10:31:22+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -2025,16 +2024,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "5.2.0",
+            "version": "5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "e3c9bccdc38bbd09bcac0131c00f3be58368b416"
+                "reference": "429be236f296ca249d61c65649cdf2652f4a5e80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/e3c9bccdc38bbd09bcac0131c00f3be58368b416",
-                "reference": "e3c9bccdc38bbd09bcac0131c00f3be58368b416",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/429be236f296ca249d61c65649cdf2652f4a5e80",
+                "reference": "429be236f296ca249d61c65649cdf2652f4a5e80",
                 "shasum": ""
             },
             "require": {
@@ -2043,7 +2042,7 @@
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.1",
                 "json-schema/json-schema-test-suite": "1.2.0",
-                "phpdocumentor/phpdocumentor": "~2",
+                "phpdocumentor/phpdocumentor": "^2.7",
                 "phpunit/phpunit": "^4.8.22"
             },
             "bin": [
@@ -2088,7 +2087,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2017-03-22T22:43:35+00:00"
+            "time": "2017-05-16T21:06:09+00:00"
         },
         {
             "name": "league/flysystem",
@@ -3112,16 +3111,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.3.0-BETA1",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "c2c8ceb1aa9dab9eae54e9150e6a588ce3e53be1"
+                "reference": "9fab1ab6f77b77f3df5fc5250fc6956811699b57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/c2c8ceb1aa9dab9eae54e9150e6a588ce3e53be1",
-                "reference": "c2c8ceb1aa9dab9eae54e9150e6a588ce3e53be1",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/9fab1ab6f77b77f3df5fc5250fc6956811699b57",
+                "reference": "9fab1ab6f77b77f3df5fc5250fc6956811699b57",
                 "shasum": ""
             },
             "require": {
@@ -3138,7 +3137,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -3165,7 +3164,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12T14:14:56+00:00"
+            "time": "2017-04-12T14:13:17+00:00"
         },
         {
             "name": "symfony/config",
@@ -3286,16 +3285,16 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.3.0-BETA1",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "4d882dced7b995d5274293039370148e291808f2"
+                "reference": "02983c144038e697c959e6b06ef6666de759ccbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/4d882dced7b995d5274293039370148e291808f2",
-                "reference": "4d882dced7b995d5274293039370148e291808f2",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/02983c144038e697c959e6b06ef6666de759ccbc",
+                "reference": "02983c144038e697c959e6b06ef6666de759ccbc",
                 "shasum": ""
             },
             "require": {
@@ -3304,7 +3303,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -3335,7 +3334,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-01T15:01:29+00:00"
+            "time": "2017-05-01T14:55:58+00:00"
         },
         {
             "name": "symfony/debug",
@@ -3396,16 +3395,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.3.0-BETA1",
+            "version": "v3.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "921c1edcf6dc1e82867c85e6d58eac40bd47460f"
+                "reference": "f1ad34e8af09ed17570e027cf0c58a12eddec286"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/921c1edcf6dc1e82867c85e6d58eac40bd47460f",
-                "reference": "921c1edcf6dc1e82867c85e6d58eac40bd47460f",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/f1ad34e8af09ed17570e027cf0c58a12eddec286",
+                "reference": "f1ad34e8af09ed17570e027cf0c58a12eddec286",
                 "shasum": ""
             },
             "require": {
@@ -3421,7 +3420,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.3-dev"
+                    "dev-master": "3.2-dev"
                 }
             },
             "autoload": {
@@ -3448,7 +3447,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-04-12T14:14:56+00:00"
+            "time": "2017-04-12T14:13:17+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5534,12 +5533,13 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "beta",
+    "minimum-stability": "stable",
     "stability-flags": {
-        "bolt/bolt": 10,
+        "bolt/bolt": 20,
         "bolt/collection": 20,
-        "composer/satis": 20,
-        "doctrine/dbal": 20
+        "composer/satis": 15,
+        "doctrine/dbal": 20,
+        "passwordlib/passwordlib": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
