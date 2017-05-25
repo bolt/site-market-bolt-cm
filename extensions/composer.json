@@ -24,6 +24,10 @@
     },
     "repositories": {
         "packagist": false,
+        "members": {
+            "type": "git",
+            "url": "https://github.com/BoltAuth/Auth.git"
+        },
         "bolt": {
             "type": "composer",
             "url": "https://market.bolt.cm/satis/"
@@ -37,7 +41,7 @@
         "bolt/boltforms": "^4.0@beta",
         "bolt/github": "^3.1",
         "bolt/marketplace": "^1.0",
-        "bolt/members": "^3.0@beta"
+        "bolt/members": "dev-master@dev"
     },
     "scripts": {
         "post-autoload-dump": "Bolt\\Composer\\EventListener\\PackageEventListener::dump",
