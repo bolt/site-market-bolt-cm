@@ -1,11 +1,8 @@
 Bolt Extensions Market Place Repository
 =======================================
 
-Extensions & Theme
-------------------
-
-Core functionality is provided by the [`bolt/marketplace`](https://github.com/bolt/marketplace-core)
-extension.
+Theme
+-----
 
 Theme is provided by the [`bolt/marketplace-theme`](https://github.com/bolt/marketplace-theme).
 
@@ -23,7 +20,7 @@ Dump package repository JSON from database
 Rebuild JSON data for all packages:
 
 ```
-./app/nut package:build 
+./app/nut package:build
 ```
 
 Rebuild a single package's JSON data
