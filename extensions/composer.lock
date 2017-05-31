@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "11e297f19e974770ab74be427cdaab32",
+    "content-hash": "b1c7224404eed52778b71b53a8a333af",
     "packages": [
         {
             "name": "bolt/boltforms",
@@ -182,54 +182,6 @@
                 "source": "https://github.com/GawainLynch/bolt-extension-github/tree/v3.1.0"
             },
             "time": "2017-02-15T01:17:10+00:00"
-        },
-        {
-            "name": "bolt/marketplace",
-            "version": "1.1.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bolt/marketplace-core.git",
-                "reference": "524b31de9e800492b206ab870788e95bd5f961e0"
-            },
-            "require": {
-                "bolt/bolt": "^3.3",
-                "php": "^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.7"
-            },
-            "type": "bolt-extension",
-            "extra": {
-                "bolt-assets": "web",
-                "bolt-class": "Bolt\\Extension\\Bolt\\MarketPlace\\MarketPlaceExtension"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Bolt\\Extension\\Bolt\\MarketPlace\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": []
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ross Riley",
-                    "email": "riley.ross@gmail.com"
-                },
-                {
-                    "name": "Gawain Lynch",
-                    "email": "gawain.lynch@gmail.com"
-                }
-            ],
-            "description": "Bolt Market Place core functionality",
-            "keywords": [
-                "composer",
-                "satis"
-            ],
-            "time": "2017-05-11T11:51:55+00:00"
         },
         {
             "name": "bolt/members",

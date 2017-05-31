@@ -31,16 +31,11 @@
         "bolt": {
             "type": "composer",
             "url": "https://market.bolt.cm/satis/"
-        },
-        "core": {
-            "type": "git",
-            "url": "https://github.com/bolt/marketplace-core.git"
         }
     },
     "require": {
         "bolt/boltforms": "^4.0@beta",
         "bolt/github": "^3.1",
-        "bolt/marketplace": "^1.0",
         "bolt/members": "dev-master@dev"
     },
     "scripts": {
