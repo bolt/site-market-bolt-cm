@@ -2,3 +2,5 @@ paths:
     var: %root%/var
     composer: %var%/cache/composer
     satis: %var%/cache/satis
+extensions:
+    - Bolt\Extension\Bolt\MarketPlace\MarketPlaceExtension
