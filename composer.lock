@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4932aa22cfe0c6822b96c4dac39e076",
+    "content-hash": "1324e0768d6961169a99965e1f8fb687",
     "packages": [
         {
             "name": "bolt/bolt",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "86cefafc2894cc0161ba8cc9f9696249b7363113"
+                "reference": "630692197d0c1bd58826d0776a33de8dac193c0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/86cefafc2894cc0161ba8cc9f9696249b7363113",
-                "reference": "86cefafc2894cc0161ba8cc9f9696249b7363113",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/630692197d0c1bd58826d0776a33de8dac193c0d",
+                "reference": "630692197d0c1bd58826d0776a33de8dac193c0d",
                 "shasum": ""
             },
             "require": {
@@ -5542,6 +5542,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.0"
+    },
     "platform-dev": []
 }
