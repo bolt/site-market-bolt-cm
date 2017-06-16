@@ -1,4 +1,6 @@
 paths:
+    web: %root%/web
+    bolt_assets: %web%/bolt-web
     var: %root%/var
     cache: %var%/cache
     composer: %cache%/composer

@@ -6,9 +6,9 @@ config/env.phpvendor
 config/github*
 config/github.json
 node_modules
-public/bolt-public/view/
-public/satis
-public/theme/marketplace/
+web/bolt-web/*
+web/satis
+web/theme/marketplace/
 satis.json
 var/*
 vendor
