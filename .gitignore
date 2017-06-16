@@ -1,4 +1,3 @@
-app/cache/
 app/config/satis/auth.json
 app/config/satis/boltrunner_id_rsa
 app/database/*.db
@@ -11,5 +10,5 @@ public/bolt-public/view/
 public/satis
 public/theme/marketplace/
 satis.json
-var/cache/
+var/*
 vendor
