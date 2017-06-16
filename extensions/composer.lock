@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1c7224404eed52778b71b53a8a333af",
+    "content-hash": "848d0e51a260403ea4cc764d980e99d6",
     "packages": [
         {
             "name": "bolt/boltforms",
@@ -184,12 +184,12 @@
             "time": "2017-02-15T01:17:10+00:00"
         },
         {
-            "name": "bolt/members",
-            "version": "dev-master",
+            "name": "boltauth/auth",
+            "version": "v3.0.0-beta9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BoltAuth/Auth.git",
-                "reference": "d4b067ea4a1d9029553fc7b76b94d34d7d7566bf"
+                "reference": "e5443d49708283d0e5c25554a297f2c275cac502"
             },
             "require": {
                 "bolt/bolt": "^3.2",
@@ -204,7 +204,7 @@
             "type": "bolt-extension",
             "extra": {
                 "bolt-assets": "web",
-                "bolt-class": "Bolt\\Extension\\Bolt\\Members\\MembersExtension",
+                "bolt-class": "Bolt\\Extension\\BoltAuth\\Auth\\AuthExtension",
                 "bolt-icon": "icon.png",
                 "branch-alias": {
                     "dev-master": "3.0.x-dev"
@@ -212,14 +212,14 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Bolt\\Extension\\Bolt\\Members\\": "src",
+                    "Bolt\\Extension\\BoltAuth\\Auth\\": "src",
                     "League\\OAuth2\\Client\\": "lib/League/OAuth2/Client/",
                     "Stevenmaguire\\OAuth2\\Client\\": "lib/League/OAuth2/Client/"
                 }
             },
             "autoload-dev": {
                 "psr-4": {
-                    "Bolt\\Extension\\Bolt\\Members\\Tests\\": "tests",
+                    "Bolt\\Extension\\BoltAuth\\Auth\\Tests\\": "tests",
                     "Bolt\\Tests\\": "vendor/bolt/bolt/tests/phpunit/unit/"
                 }
             },
@@ -228,21 +228,21 @@
             ],
             "authors": [
                 {
-                    "name": "Gawain Lynch",
-                    "email": "gawain.lynch@gmail.com"
+                    "name": "Svante Richter",
+                    "email": "svante.richter@gmail.com"
                 }
             ],
-            "description": "Membership creation and management for Bolt",
+            "description": "Auth management for Bolt",
             "keywords": [
                 "Facebook",
                 "GitHub",
                 "Google",
+                "auth",
                 "login",
-                "membership",
                 "oauth",
                 "profiles"
             ],
-            "time": "2017-05-13 13:22:56"
+            "time": "2017-06-13T10:58:10+00:00"
         },
         {
             "name": "google/recaptcha",
@@ -700,7 +700,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "bolt/boltforms": 10,
-        "bolt/members": 20
+        "boltauth/auth": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
