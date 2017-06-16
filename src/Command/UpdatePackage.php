@@ -5,8 +5,8 @@ namespace Bolt\Extension\Bolt\MarketPlace\Command;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Extension\Bolt\Members\Storage\Entity\Account as MembersAccountEntity;
-use Bolt\Extension\Bolt\Members\Storage\Repository\Account as MembersAccountRepository;
+use Bolt\Extension\BoltAuth\Auth\Storage\Entity\Account as AuthAccountEntity;
+use Bolt\Extension\BoltAuth\Auth\Storage\Repository\Account as AuthAccountRepository;
 use Bolt\Nut\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -42,8 +42,8 @@ class UpdatePackage extends BaseCommand
         $packageManager = $this->app['marketplace.manager_package'];
         /** @var Repository\Package $packageRepo */
         $packageRepo = $this->app['storage']->getRepository(Entity\Package::class);
-        /** @var MembersAccountRepository $accountRepo */
-        $accountRepo = $this->app['storage']->getRepository(MembersAccountEntity::class);
+        /** @var AuthAccountRepository $accountRepo */
+        $accountRepo = $this->app['storage']->getRepository(AuthAccountEntity::class);
 
         if ($input->getOption('name')) {
             $package = $packageRepo->findOneBy(['name' => $input->getOption('name')]);
@@ -81,8 +81,8 @@ class UpdatePackage extends BaseCommand
         $output->writeln('<info>Updating ' . $package->getName() . '</info>');
         try {
             $packageManager->syncPackage($package);
-            /** @var MembersAccountEntity $account */
-            $account = $this->app['members.records']->getAccountByGuid($package->getAccountId());
+            /** @var AuthAccountEntity $account */
+            $account = $this->app['auth.records']->getAccountByGuid($package->getAccountId());
             if ($account->isEnabled()) {
                 $package->setApproved(true);
             }

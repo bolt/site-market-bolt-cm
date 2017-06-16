@@ -49,8 +49,8 @@ abstract class AbstractAction implements ActionInterface
      */
     public function getWebhookData(Entity\Package $package)
     {
-        /** @var \Bolt\Extension\Bolt\Members\AccessControl\Session $members */
-        $members = $this->getAppService('members.session');
+        /** @var \Bolt\Extension\BoltAuth\Auth\AccessControl\Session $members */
+        $members = $this->getAppService('auth.session');
         if (!$members->hasAuthorisation()) {
             return false;
         }

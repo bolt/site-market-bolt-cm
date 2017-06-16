@@ -4,7 +4,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\Members\AccessControl\Authorisation;
+use Bolt\Extension\BoltAuth\Auth\AccessControl\Authorisation;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +36,7 @@ class TestListing extends AbstractAction
         /** @var PackageManager $packageManager */
         $packageManager = $this->getAppService('marketplace.manager_package');
         /** @var Authorisation $member */
-        $member = $this->getAppService('members.session')->getAuthorisation();
+        $member = $this->getAppService('auth.session')->getAuthorisation();
         /** @var Entity\Package $package */
         $package = $packageRepo->findOneBy(['id' => $params['package'], 'account_id' => $member->getGuid()]);
         if (!$package || $package->getAccountId() !== $member->getGuid()) {

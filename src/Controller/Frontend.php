@@ -166,7 +166,7 @@ class Frontend implements ControllerProviderInterface
         ;
 
         $ctr->match('/update/{package}', [$this, 'update'])
-            ->bind('update')
+            ->bind('updatePackage')
             ->before([$this, 'auth'])
             ->method(Request::METHOD_GET)
         ;
@@ -207,7 +207,7 @@ class Frontend implements ControllerProviderInterface
      */
     public function auth(Request $request, Application $app)
     {
-        if ($app['members.session']->hasAuthorisation()) {
+        if ($app['auth.session']->hasAuthorisation()) {
             return null;
         }
 
@@ -295,7 +295,7 @@ class Frontend implements ControllerProviderInterface
     public function edit(Application $app, Request $request, $package)
     {
         $params = [
-            'user'    => $app['members.session']->getAuthorisation(),
+            'user'    => $app['auth.session']->getAuthorisation(),
             'package' => $package,
         ];
 
@@ -374,7 +374,7 @@ class Frontend implements ControllerProviderInterface
     public function profile(Application $app, Request $request)
     {
         $params = [
-            'user' => $app['members.session']->getAuthorisation(),
+            'user' => $app['auth.session']->getAuthorisation(),
         ];
 
         return $this->getAction($app, 'account_profile')->execute($request, $params);
@@ -383,7 +383,7 @@ class Frontend implements ControllerProviderInterface
     public function profileStarred(Application $app, Request $request)
     {
         $params = [
-            'user' => $app['members.session']->getAuthorisation(),
+            'user' => $app['auth.session']->getAuthorisation(),
         ];
 
         return $this->getAction($app, 'account_starred')->execute($request, $params);
@@ -487,7 +487,7 @@ class Frontend implements ControllerProviderInterface
     {
         /** @var UrlGeneratorInterface $urlGen */
         $urlGen = $app['url_generator'];
-        $route = $urlGen->generate('membersProfileRegister');
+        $route = $urlGen->generate('authProfileRegister');
 
         return new RedirectResponse($route);
     }
@@ -538,7 +538,7 @@ class Frontend implements ControllerProviderInterface
     public function stats(Application $app, Request $request, $package)
     {
         $params = [
-            'user'    => $app['members.session']->getAuthorisation(),
+            'user'    => $app['auth.session']->getAuthorisation(),
             'package' => $package,
         ];
 
@@ -555,7 +555,7 @@ class Frontend implements ControllerProviderInterface
     public function statsApi(Application $app, Request $request, $package)
     {
         $params = [
-            'user'    => $app['members.session']->getAuthorisation(),
+            'user'    => $app['auth.session']->getAuthorisation(),
             'package' => $package,
         ];
 
@@ -571,7 +571,7 @@ class Frontend implements ControllerProviderInterface
     public function status(Application $app, Request $request)
     {
         $params = [
-            'user' => $app['members.session']->getAuthorisation(),
+            'user' => $app['auth.session']->getAuthorisation(),
         ];
 
         return $this->getAction($app, 'status')->execute($request, $params);
@@ -586,7 +586,7 @@ class Frontend implements ControllerProviderInterface
     public function submit(Application $app, Request $request)
     {
         $params = [
-            'user' => $app['members.session']->getAuthorisation(),
+            'user' => $app['auth.session']->getAuthorisation(),
         ];
 
         return $this->getAction($app, 'submit')->execute($request, $params);

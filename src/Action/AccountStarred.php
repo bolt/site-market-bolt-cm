@@ -4,7 +4,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository\Package;
-use Bolt\Extension\Bolt\Members\AccessControl\Authorisation;
+use Bolt\Extension\BoltAuth\Auth\AccessControl\Authorisation;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

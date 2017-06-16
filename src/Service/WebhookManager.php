@@ -2,7 +2,7 @@
 
 namespace Bolt\Extension\Bolt\MarketPlace\Service;
 
-use Bolt\Extension\Bolt\Members\AccessControl\Session as MembersSession;
+use Bolt\Extension\BoltAuth\Auth\AccessControl\Session as AuthSession;
 use Github\Client as GithubClient;
 use Github\Exception\ApiLimitExceedException;
 use Github\Exception\ExceptionInterface as GithubExceptionInterface;
@@ -214,14 +214,14 @@ class WebhookManager
     }
 
     /**
-     * Return the in-use access token from the Members session.
+     * Return the in-use access token from the Auth session.
      *
      * @return \League\OAuth2\Client\Token\AccessToken
      */
     protected function getAccessToken()
     {
-        /** @var MembersSession $membersSession */
-        $membersSession = $this->app['members.session'];
+        /** @var AuthSession $membersSession */
+        $membersSession = $this->app['auth.session'];
 
         if ($membersSession->hasAuthorisation() === false) {
             return null;

@@ -4,8 +4,8 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Extension\Bolt\Members\Storage\Entity\Account;
-use Bolt\Extension\Bolt\Members\Storage\Records;
+use Bolt\Extension\BoltAuth\Auth\Storage\Entity\Account;
+use Bolt\Extension\BoltAuth\Auth\Storage\Records;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +45,7 @@ class PackageStar extends AbstractAction
         }
 
         /** @var Records $records */
-        $records = $this->getAppService('members.records');
+        $records = $this->getAppService('auth.records');
         /** @var Account $account */
         $account = $records->getAccountByGuid($package->getAccountId());
 

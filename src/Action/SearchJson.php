@@ -46,8 +46,8 @@ class SearchJson extends AbstractAction
      */
     private function formatPackage(Entity\Package $package)
     {
-        /** @var \Bolt\Extension\Bolt\Members\Storage\Records $membersRecords */
-        $membersRecords = $this->getAppService('members.records');
+        /** @var \Bolt\Extension\BoltAuth\Auth\Storage\Records $membersRecords */
+        $membersRecords = $this->getAppService('auth.records');
         $account = $membersRecords->getAccountByGuid($package->getAccountId());
         $accountMeta = $membersRecords->getAccountMeta($package->getAccountId(), 'username');
         $updateEntities = $this->getUpdated($package);

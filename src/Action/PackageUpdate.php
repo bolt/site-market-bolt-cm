@@ -5,7 +5,7 @@ namespace Bolt\Extension\Bolt\MarketPlace\Action;
 use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
 use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Extension\Bolt\Members\Storage\Entity\Account;
+use Bolt\Extension\BoltAuth\Auth\Storage\Entity\Account;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ class PackageUpdate extends AbstractAction
     {
         /** @var UrlGeneratorInterface $urlGen */
         $urlGen = $this->getAppService('url_generator');
-        $route = $urlGen->generate('profile');
+        $route = $urlGen->generate('profilePackages');
 
         /** @var Session $session */
         $session = $this->getAppService('session');
@@ -65,7 +65,7 @@ class PackageUpdate extends AbstractAction
         $session = $this->getAppService('session');
         /** @var PackageManager $packageManager */
         $packageManager = $this->getAppService('marketplace.manager_package');
-        $membersRecords = $this->getAppService('members.records');
+        $membersRecords = $this->getAppService('auth.records');
         /** @var Account $account */
         $account = $membersRecords->getAccountByGuid($package->getAccountId());
 
