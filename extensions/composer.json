@@ -12,7 +12,7 @@
     },
     "description": "Bolt extension installation interface",
     "extra": {
-        "bolt-web-path": "../public",
+        "bolt-web-path": "../web",
         "bolt-root-path": ".."
     },
     "license": "MIT",
