@@ -60,8 +60,9 @@ class PackageReleases extends AbstractAction
             $versions[$ver['stability']][] = $ver;
             $i++;
         }
-
-        $repo->save($package);
+        foreach ($versions as $stability => &$vers) {
+            krsort($vers);
+        }
 
         /** @var \Twig_Environment $twig */
         $twig = $this->getAppService('twig');
