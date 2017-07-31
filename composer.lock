@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "v3.3.0",
+            "version": "v3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "b99ba84df93d3ce458acd4fa9bdba6be45e8f8b8"
+                "reference": "73c016ff740152afc544793dbab46d9b912f636e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/b99ba84df93d3ce458acd4fa9bdba6be45e8f8b8",
-                "reference": "b99ba84df93d3ce458acd4fa9bdba6be45e8f8b8",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/73c016ff740152afc544793dbab46d9b912f636e",
+                "reference": "73c016ff740152afc544793dbab46d9b912f636e",
                 "shasum": ""
             },
             "require": {
@@ -132,7 +132,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2017-07-27T07:56:45+00:00"
+            "time": "2017-07-30T08:18:50+00:00"
         },
         {
             "name": "bolt/collection",
@@ -1155,16 +1155,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "v2.6.0",
+            "version": "v2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "498760e55195ccaf08076cb9100a2972ba74c001"
+                "reference": "1a086f853425b1f5349775ce57e45a772d2d2ba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/498760e55195ccaf08076cb9100a2972ba74c001",
-                "reference": "498760e55195ccaf08076cb9100a2972ba74c001",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1a086f853425b1f5349775ce57e45a772d2d2ba5",
+                "reference": "1a086f853425b1f5349775ce57e45a772d2d2ba5",
                 "shasum": ""
             },
             "require": {
@@ -1224,7 +1224,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-07-23T01:02:22+00:00"
+            "time": "2017-07-28T10:40:18+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1598,16 +1598,16 @@
         },
         {
             "name": "forxer/gravatar",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forxer/gravatar.git",
-                "reference": "98a17ed7880b986d03356baa7bc01b0162761c05"
+                "reference": "ed26d994a73f2316709671afef447107124e0083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forxer/gravatar/zipball/98a17ed7880b986d03356baa7bc01b0162761c05",
-                "reference": "98a17ed7880b986d03356baa7bc01b0162761c05",
+                "url": "https://api.github.com/repos/forxer/gravatar/zipball/ed26d994a73f2316709671afef447107124e0083",
+                "reference": "ed26d994a73f2316709671afef447107124e0083",
                 "shasum": ""
             },
             "require": {
@@ -1634,7 +1634,7 @@
             "keywords": [
                 "gravatar"
             ],
-            "time": "2016-02-26T21:12:47+00:00"
+            "time": "2017-07-27T12:21:32+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
