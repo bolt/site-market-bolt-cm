@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "848d0e51a260403ea4cc764d980e99d6",
+    "content-hash": "5b1c4b57600d474a81e3440f04df8346",
     "packages": [
         {
             "name": "bolt/boltforms",
-            "version": "4.0.0-beta2",
+            "version": "v4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/boltforms.git",
-                "reference": "8d2169c112129f673f0346b7d338837264175116"
+                "reference": "9313d004a6370b6c4b0862dde24f86d1d86d9cd3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/boltforms/zipball/8d2169c112129f673f0346b7d338837264175116",
-                "reference": "8d2169c112129f673f0346b7d338837264175116",
+                "url": "https://api.github.com/repos/bolt/boltforms/zipball/9313d004a6370b6c4b0862dde24f86d1d86d9cd3",
+                "reference": "9313d004a6370b6c4b0862dde24f86d1d86d9cd3",
                 "shasum": ""
             },
             "require": {
@@ -75,10 +75,10 @@
                 "uploads"
             ],
             "support": {
-                "source": "https://github.com/bolt/boltforms/tree/4.0",
+                "source": "https://github.com/bolt/boltforms/tree/4.1",
                 "issues": "https://github.com/bolt/boltforms/issues"
             },
-            "time": "2017-03-20T15:24:51+00:00"
+            "time": "2017-07-31T13:50:25+00:00"
         },
         {
             "name": "bolt/email-spooler",
@@ -185,11 +185,17 @@
         },
         {
             "name": "boltauth/auth",
-            "version": "v3.0.0-beta9",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BoltAuth/Auth.git",
-                "reference": "e5443d49708283d0e5c25554a297f2c275cac502"
+                "reference": "0444fca3bd72c2881d05989af2a8de4fd93d7df1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BoltAuth/Auth/zipball/0444fca3bd72c2881d05989af2a8de4fd93d7df1",
+                "reference": "0444fca3bd72c2881d05989af2a8de4fd93d7df1",
+                "shasum": ""
             },
             "require": {
                 "bolt/bolt": "^3.2",
@@ -205,10 +211,7 @@
             "extra": {
                 "bolt-assets": "web",
                 "bolt-class": "Bolt\\Extension\\BoltAuth\\Auth\\AuthExtension",
-                "bolt-icon": "icon.png",
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
+                "bolt-icon": "fingerprint-user.svg.png"
             },
             "autoload": {
                 "psr-4": {
@@ -242,7 +245,11 @@
                 "oauth",
                 "profiles"
             ],
-            "time": "2017-06-13T10:58:10+00:00"
+            "support": {
+                "source": "https://github.com/BoltAuth/Auth/tree/master",
+                "issues": "https://github.com/BoltAuth/Auth/issues"
+            },
+            "time": "2017-07-01T17:43:16+00:00"
         },
         {
             "name": "google/recaptcha",
@@ -587,16 +594,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.6.1",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e"
+                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
-                "reference": "4ae32dd9ab8860a4bbd750ad269cba7f06f7934e",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
+                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
                 "shasum": ""
             },
             "require": {
@@ -692,7 +699,7 @@
                 "issues": "https://github.com/ramsey/uuid/issues",
                 "source": "https://github.com/ramsey/uuid"
             },
-            "time": "2017-03-26T20:37:53+00:00"
+            "time": "2017-08-04T13:39:04+00:00"
         }
     ],
     "packages-dev": [],
