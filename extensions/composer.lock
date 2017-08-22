@@ -130,16 +130,16 @@
         },
         {
             "name": "bolt/github",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt-extension-github.git",
-                "reference": "ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358"
+                "reference": "7f1092cc47d48e2ebeaef82792776c8612c086f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt-extension-github/zipball/ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358",
-                "reference": "ee4ed5a476aaf2d3e51a453f5d5bf1b0c3efa358",
+                "url": "https://api.github.com/repos/bolt/bolt-extension-github/zipball/7f1092cc47d48e2ebeaef82792776c8612c086f6",
+                "reference": "7f1092cc47d48e2ebeaef82792776c8612c086f6",
                 "shasum": ""
             },
             "require": {
@@ -179,9 +179,9 @@
                 "Webhooks"
             ],
             "support": {
-                "source": "https://github.com/GawainLynch/bolt-extension-github/tree/v3.1.0"
+                "source": "https://github.com/bolt/bolt-extension-github/tree/v3.1.1"
             },
-            "time": "2017-02-15T01:17:10+00:00"
+            "time": "2017-08-22T17:00:13+00:00"
         },
         {
             "name": "boltauth/auth",
