@@ -207,7 +207,7 @@ class WebhookManager
         }
 
         /** @var GithubClient $client */
-        $client = $this->app['github.api']['client'];
+        $client = $this->app['github.api.client'];
         $client->authenticate($accessToken, $accessToken, GithubClient::AUTH_HTTP_TOKEN);
 
         return $client;
