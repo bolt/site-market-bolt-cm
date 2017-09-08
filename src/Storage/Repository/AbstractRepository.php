@@ -28,7 +28,7 @@ abstract class AbstractRepository extends Repository
         try {
             $result = $querySet->execute();
         } catch (\PDOException $e) {
-            // Hackishly handle "Object not in prerequisite state: 7 ERROR: currval of sequence "bolt_marketplace_stat_id_seq" is not yet defined in this session"
+            // Hackishly handle "Object not in prerequisite state: 7 ERROR: currval of sequence "bolt_market_stat_id_seq" is not yet defined in this session"
             if ((int) $e->getCode() !== 55000) {
                 throw $e;
             }

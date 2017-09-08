@@ -100,7 +100,7 @@ class Package extends AbstractRepository
                     ->orderBy('p.title', 'ASC');
                 break;
             case 'downloads':
-                $installStatTable = 'bolt_marketplace_stat_install';
+                $installStatTable = 'bolt_market_stat_install';
                 $qb
                     ->select('DISTINCT ON (p.id, pcount) p.*, COUNT(p.id) as pcount')
                     ->leftJoin('p', $installStatTable, 's', 'p.id = s.package_id')
@@ -109,7 +109,7 @@ class Package extends AbstractRepository
                 ;
                 break;
             case 'stars':
-                $installStarTable = 'bolt_marketplace_package_star';
+                $installStarTable = 'bolt_market_package_star';
                 $qb
                     ->select('DISTINCT ON (p.id, pcount) p.*, COUNT(p.id) as pcount')
                     ->leftJoin('p', $installStarTable, 's', 'p.id = s.package_id')
@@ -150,7 +150,7 @@ class Package extends AbstractRepository
     {
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p', 'bolt_marketplace_package_versions', 'v', 'p.id = v.package_id')
+            ->leftJoin('p', 'bolt_market_package_versions', 'v', 'p.id = v.package_id')
             ->where('p.approved = :status')
         ;
 
@@ -312,7 +312,7 @@ class Package extends AbstractRepository
 
     public function getStarredPackagesQuery($accountId)
     {
-        $installStarTable = 'bolt_marketplace_package_star';
+        $installStarTable = 'bolt_market_package_star';
         /** @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('p')
             ->innerJoin('p', $installStarTable, 's', 'p.id = s.package_id')
