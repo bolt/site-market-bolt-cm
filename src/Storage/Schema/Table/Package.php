@@ -16,23 +16,23 @@ class Package extends BaseTable
      */
     protected function addColumns()
     {
-        $this->table->addColumn('id',            'guid',       []);
-        $this->table->addColumn('account_id',    'guid',       []);
-        $this->table->addColumn('source',        'string',     ['notnull' => false]);
-        $this->table->addColumn('title',         'string',     ['notnull' => false]);
-        $this->table->addColumn('name',          'string',     ['notnull' => false]);
-        $this->table->addColumn('keywords',      'json_array', ['notnull' => false]);
-        $this->table->addColumn('type',          'string',     ['notnull' => false]);
-        $this->table->addColumn('description',   'text',       ['notnull' => false]);
-        $this->table->addColumn('documentation', 'text',       ['notnull' => false]);
-        $this->table->addColumn('approved',      'boolean',    ['notnull' => false, 'default' => true]);
-        $this->table->addColumn('authors',       'json_array', ['notnull' => false]);
-        $this->table->addColumn('license',       'json_array', ['notnull' => false]);
-        $this->table->addColumn('created',       'datetime',   ['notnull' => false]);
-        $this->table->addColumn('screenshots',   'json_array', ['notnull' => false]);
-        $this->table->addColumn('icon',          'text',       ['notnull' => false]);
-        $this->table->addColumn('support',       'json_array', ['notnull' => false]);
-        $this->table->addColumn('suggested',     'json_array', ['notnull' => false]);
+        $this->table->addColumn('id',            'guid',     []);
+        $this->table->addColumn('account_id',    'guid',     []);
+        $this->table->addColumn('source',        'string',   ['notnull' => false]);
+        $this->table->addColumn('title',         'string',   ['notnull' => false]);
+        $this->table->addColumn('name',          'string',   ['notnull' => false]);
+        $this->table->addColumn('keywords',      'json',     ['notnull' => false]);
+        $this->table->addColumn('type',          'string',   ['notnull' => false]);
+        $this->table->addColumn('description',   'text',     ['notnull' => false]);
+        $this->table->addColumn('documentation', 'text',     ['notnull' => false]);
+        $this->table->addColumn('approved',      'boolean',  ['notnull' => false, 'default' => true]);
+        $this->table->addColumn('authors',       'json',     ['notnull' => false]);
+        $this->table->addColumn('license',       'json',     ['notnull' => false]);
+        $this->table->addColumn('created',       'datetime', ['notnull' => false]);
+        $this->table->addColumn('screenshots',   'json',     ['notnull' => false]);
+        $this->table->addColumn('icon',          'text',     ['notnull' => false]);
+        $this->table->addColumn('support',       'json',     ['notnull' => false]);
+        $this->table->addColumn('suggested',     'json',     ['notnull' => false]);
     }
 
     /**

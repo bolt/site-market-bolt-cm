@@ -16,10 +16,10 @@ class PackageToken extends BaseTable
      */
     protected function addColumns()
     {
-        $this->table->addColumn('id',            'guid',       []);
-        $this->table->addColumn('package_id',    'guid',       []);
-        $this->table->addColumn('token',         'string',     []);
-        $this->table->addColumn('type',          'string',     []);
+        $this->table->addColumn('id',         'guid',   []);
+        $this->table->addColumn('package_id', 'guid',   []);
+        $this->table->addColumn('token',      'string', []);
+        $this->table->addColumn('type',       'string', []);
     }
 
     /**
