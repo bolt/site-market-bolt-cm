@@ -14,14 +14,14 @@
         }
     ],
     "require": {
-        "bolt/bolt": "^3.3",
+        "bolt/bolt": "3.3.x@dev",
         "composer/composer": "^1.4",
         "composer/satis": "^1.0@alpha",
         "doctrine/dbal": "^2.6",
         "fabpot/goutte": "^3.1",
         "forxer/gravatar": "^1.2",
         "passwordlib/passwordlib": "^1.0@beta",
-        "php": "^7.0"
+        "php": "^7.1"
     },
     "autoload": {
         "psr-4": {
