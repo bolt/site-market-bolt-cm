@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d487f07e5ba2a4683c640dda2a6640c5",
+    "content-hash": "c7b27f990bda336737792881e8e10ccd",
     "packages": [
         {
             "name": "bolt/bolt",
-            "version": "3.3.x-dev",
+            "version": "v3.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/bolt.git",
-                "reference": "e21979a6ff635a9942a92e6937e930e97031df8a"
+                "reference": "dd1b49f2fa942ac2febf86293f758049cc664cde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/bolt/zipball/e21979a6ff635a9942a92e6937e930e97031df8a",
-                "reference": "e21979a6ff635a9942a92e6937e930e97031df8a",
+                "url": "https://api.github.com/repos/bolt/bolt/zipball/dd1b49f2fa942ac2febf86293f758049cc664cde",
+                "reference": "dd1b49f2fa942ac2febf86293f758049cc664cde",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
                 "silex",
                 "symfony"
             ],
-            "time": "2017-09-07T15:30:51+00:00"
+            "time": "2017-09-29T10:19:54+00:00"
         },
         {
             "name": "bolt/collection",
@@ -563,16 +563,16 @@
         },
         {
             "name": "composer/ca-bundle",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "b17e6153cb7f33c7e44eb59578dc12eee5dc8e12"
+                "reference": "9dd73a03951357922d8aee6cc084500de93e2343"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/b17e6153cb7f33c7e44eb59578dc12eee5dc8e12",
-                "reference": "b17e6153cb7f33c7e44eb59578dc12eee5dc8e12",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/9dd73a03951357922d8aee6cc084500de93e2343",
+                "reference": "9dd73a03951357922d8aee6cc084500de93e2343",
                 "shasum": ""
             },
             "require": {
@@ -618,20 +618,20 @@
                 "ssl",
                 "tls"
             ],
-            "time": "2017-03-06T11:59:08+00:00"
+            "time": "2017-09-11T07:24:36+00:00"
         },
         {
             "name": "composer/composer",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "d60a1ff0cb421fcd2811c3f2b57f7e3e2b6c9d0e"
+                "reference": "c639623fa2178b404ed4bab80f0d1263853fa4ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/d60a1ff0cb421fcd2811c3f2b57f7e3e2b6c9d0e",
-                "reference": "d60a1ff0cb421fcd2811c3f2b57f7e3e2b6c9d0e",
+                "url": "https://api.github.com/repos/composer/composer/zipball/c639623fa2178b404ed4bab80f0d1263853fa4ae",
+                "reference": "c639623fa2178b404ed4bab80f0d1263853fa4ae",
                 "shasum": ""
             },
             "require": {
@@ -695,7 +695,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2017-08-09T14:07:22+00:00"
+            "time": "2017-09-11T14:59:26+00:00"
         },
         {
             "name": "composer/satis",
@@ -888,22 +888,22 @@
         },
         {
             "name": "contao/imagine-svg",
-            "version": "0.1.4",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/contao/imagine-svg.git",
-                "reference": "aa9d4d1847364cb9c2f589833ec63096de914cf2"
+                "reference": "edd20d1fc09f32a6bdd87e154063363e72b9d3f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/contao/imagine-svg/zipball/aa9d4d1847364cb9c2f589833ec63096de914cf2",
-                "reference": "aa9d4d1847364cb9c2f589833ec63096de914cf2",
+                "url": "https://api.github.com/repos/contao/imagine-svg/zipball/edd20d1fc09f32a6bdd87e154063363e72b9d3f5",
+                "reference": "edd20d1fc09f32a6bdd87e154063363e72b9d3f5",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "imagine/imagine": "^0.6|^0.7",
-                "php": ">=5.5.0"
+                "php": "^5.5|^7.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.0",
@@ -933,7 +933,7 @@
                 }
             ],
             "description": "Contao Imagine SVG library",
-            "time": "2017-05-20T13:06:46+00:00"
+            "time": "2017-09-14T16:47:37+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1413,16 +1413,16 @@
         },
         {
             "name": "embed/embed",
-            "version": "v3.2.0",
+            "version": "v3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oscarotero/Embed.git",
-                "reference": "5f518153df7735726b9f43838bb59be27df76fe7"
+                "reference": "f951eb15872b05fef056f48442efef2dbb5d51ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oscarotero/Embed/zipball/5f518153df7735726b9f43838bb59be27df76fe7",
-                "reference": "5f518153df7735726b9f43838bb59be27df76fe7",
+                "url": "https://api.github.com/repos/oscarotero/Embed/zipball/f951eb15872b05fef056f48442efef2dbb5d51ed",
+                "reference": "f951eb15872b05fef056f48442efef2dbb5d51ed",
                 "shasum": ""
             },
             "require": {
@@ -1462,7 +1462,7 @@
                 "opengraph",
                 "twitter cards"
             ],
-            "time": "2017-08-01T18:23:02+00:00"
+            "time": "2017-09-25T20:57:58+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -3222,7 +3222,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -3396,7 +3396,7 @@
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -3506,16 +3506,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.3.8",
+            "version": "v3.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "d15dfaf71b65bf3affb80900470caf4451a8217e"
+                "reference": "6b511d7329b203a620f09a2288818d27dcc915ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/d15dfaf71b65bf3affb80900470caf4451a8217e",
-                "reference": "d15dfaf71b65bf3affb80900470caf4451a8217e",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/6b511d7329b203a620f09a2288818d27dcc915ae",
+                "reference": "6b511d7329b203a620f09a2288818d27dcc915ae",
                 "shasum": ""
             },
             "require": {
@@ -3558,7 +3558,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-08-15T13:31:09+00:00"
+            "time": "2017-09-11T15:55:22+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -5392,16 +5392,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.34.4",
+            "version": "v1.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "f878bab48edb66ad9c6ed626bf817f60c6c096ee"
+                "reference": "daa657073e55b0a78cce8fdd22682fddecc6385f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f878bab48edb66ad9c6ed626bf817f60c6c096ee",
-                "reference": "f878bab48edb66ad9c6ed626bf817f60c6c096ee",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/daa657073e55b0a78cce8fdd22682fddecc6385f",
+                "reference": "daa657073e55b0a78cce8fdd22682fddecc6385f",
                 "shasum": ""
             },
             "require": {
@@ -5415,7 +5415,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.34-dev"
+                    "dev-master": "1.35-dev"
                 }
             },
             "autoload": {
@@ -5453,7 +5453,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-07-04T13:19:31+00:00"
+            "time": "2017-09-27T18:06:46+00:00"
         },
         {
             "name": "ua-parser/uap-php",
@@ -5653,7 +5653,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bolt/bolt": 20,
         "composer/satis": 15,
         "passwordlib/passwordlib": 10
     },
