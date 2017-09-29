@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "bolt/bolt": "3.3.x@dev",
+        "bolt/bolt": "^3.3",
         "composer/composer": "^1.4",
         "composer/satis": "^1.0@alpha",
         "doctrine/dbal": "^2.6",
