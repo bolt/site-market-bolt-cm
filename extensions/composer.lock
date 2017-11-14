@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "07a35cf2969c7ab85eb40351d5d617ed",
+    "content-hash": "48b7d3a8bab7e3efcfbb07a0a817082d",
     "packages": [
         {
             "name": "bolt/boltforms",
-            "version": "v4.1.13",
+            "version": "v4.1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bolt/boltforms.git",
-                "reference": "6bac1b9cca85f30f47ed177de33c1b7d11d6b79c"
+                "reference": "febf11d4020af16a7e5981bb4ecdf4b42ae1e5d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bolt/boltforms/zipball/6bac1b9cca85f30f47ed177de33c1b7d11d6b79c",
-                "reference": "6bac1b9cca85f30f47ed177de33c1b7d11d6b79c",
+                "url": "https://api.github.com/repos/bolt/boltforms/zipball/febf11d4020af16a7e5981bb4ecdf4b42ae1e5d0",
+                "reference": "febf11d4020af16a7e5981bb4ecdf4b42ae1e5d0",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "source": "https://github.com/bolt/boltforms/tree/4.1",
                 "issues": "https://github.com/bolt/boltforms/issues"
             },
-            "time": "2017-10-18T15:19:49+00:00"
+            "time": "2017-11-01T09:09:14+00:00"
         },
         {
             "name": "bolt/email-spooler",
@@ -705,10 +705,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "bolt/boltforms": 10,
-        "boltauth/auth": 10
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
