@@ -112,7 +112,7 @@ class PackageVersion extends AbstractRepository
 
         /** @var Entity\PackageVersion $versionEntity */
         foreach ($versionEntities as $versionEntity) {
-            if ($versionEntity->getBoltMin() === null || $versionEntity->getBoltMax() === null) {
+            if (!$versionEntity->getBoltMin() || !$versionEntity->getBoltMax()) {
                 continue;
             }
             $boltConstraints = $parser->parseConstraints(sprintf('%s,%s', $versionEntity->getBoltMin(), $versionEntity->getBoltMax()));
