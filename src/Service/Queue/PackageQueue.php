@@ -1,10 +1,10 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Service\Queue;
+namespace Bundle\Site\MarketPlace\Service\Queue;
 
-use Bolt\Extension\Bolt\MarketPlace\Location;
-use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Location;
+use Bundle\Site\MarketPlace\Service\SatisManager;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\LockHandler;

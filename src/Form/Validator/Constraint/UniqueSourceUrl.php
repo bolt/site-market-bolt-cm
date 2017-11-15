@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Form\Validator\Constraint;
+namespace Bundle\Site\MarketPlace\Form\Validator\Constraint;
 
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bundle\Site\MarketPlace\Storage\Repository;
 use Symfony\Component\Validator\Constraint;
 
 /**

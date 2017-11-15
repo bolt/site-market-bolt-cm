@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Service;
+namespace Bundle\Site\MarketPlace\Service;
 
 use Bolt\Extension\BoltAuth\Auth\AccessControl\Session as AuthSession;
 use Github\Client as GithubClient;

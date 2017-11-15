@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Action;
+namespace Bundle\Site\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

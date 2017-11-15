@@ -1,9 +1,9 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Command;
+namespace Bundle\Site\MarketPlace\Command;
 
-use Bolt\Extension\Bolt\MarketPlace\Location;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Location;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use Bolt\Nut\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

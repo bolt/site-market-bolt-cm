@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Storage\Schema\Table;
+namespace Bundle\Site\MarketPlace\Storage\Schema\Table;
 
 use Bolt\Storage\Database\Schema\Table\BaseTable;
 

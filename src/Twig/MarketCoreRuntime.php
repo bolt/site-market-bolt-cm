@@ -1,9 +1,9 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Twig;
+namespace Bundle\Site\MarketPlace\Twig;
 
-use Bolt\Extension\Bolt\MarketPlace\Service;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Service;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use forxer\Gravatar\Gravatar;
 use Ramsey\Uuid\Uuid;
 

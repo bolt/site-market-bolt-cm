@@ -1,8 +1,8 @@
 <?php
-namespace Bolt\Extension\Bolt\MarketPlace\Command;
+namespace Bundle\Site\MarketPlace\Command;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
+use Bundle\Site\MarketPlace\Service\PackageManager;
+use Bundle\Site\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
 use Composer\IO\BufferIO;
 use Composer\Json\JsonValidationException;

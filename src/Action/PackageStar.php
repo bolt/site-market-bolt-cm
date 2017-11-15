@@ -1,9 +1,9 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Action;
+namespace Bundle\Site\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bundle\Site\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Storage\Repository;
 use Bolt\Extension\BoltAuth\Auth\Storage\Entity\Account;
 use Bolt\Extension\BoltAuth\Auth\Storage\Records;
 use Bolt\Storage\EntityManager;

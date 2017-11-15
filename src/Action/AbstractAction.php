@@ -1,10 +1,10 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Action;
+namespace Bundle\Site\MarketPlace\Action;
 
 use Bolt\Config;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bundle\Site\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Storage\Repository;
 use Bolt\Storage\EntityManager;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Session\Session;

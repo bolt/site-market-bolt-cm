@@ -1,11 +1,11 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Service;
+namespace Bundle\Site\MarketPlace\Service;
 
 use Bolt\Configuration\PathResolver;
-use Bolt\Extension\Bolt\MarketPlace\Location;
-use Bolt\Extension\Bolt\MarketPlace\Output\BufferedOutputArray;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Location;
+use Bundle\Site\MarketPlace\Output\BufferedOutputArray;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
 use Composer\Composer;
 use Composer\Config;

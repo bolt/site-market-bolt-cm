@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace;
+namespace Bundle\Site\MarketPlace;
 
 /**
  * Location constants.

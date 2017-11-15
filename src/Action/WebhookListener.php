@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Action;
+namespace Bundle\Site\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\Queue\QueueManager;
+use Bundle\Site\MarketPlace\Service\Queue\QueueManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

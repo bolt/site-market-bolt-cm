@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Action;
+namespace Bundle\Site\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\WebhookManager;
+use Bundle\Site\MarketPlace\Service\WebhookManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 

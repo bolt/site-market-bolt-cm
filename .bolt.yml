@@ -6,4 +6,4 @@ paths:
     composer: %cache%/composer
     satis: %cache%/satis
 extensions:
-    - Bolt\Extension\Bolt\MarketPlace\MarketPlaceExtension
+    - Bundle\Site\MarketPlace\MarketPlaceExtension

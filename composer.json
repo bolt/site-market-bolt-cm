@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bolt\\Extension\\Bolt\\MarketPlace\\": "src"
+            "Bundle\\Site\\MarketPlace\\": "src"
         }
     }
 }

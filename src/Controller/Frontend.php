@@ -1,9 +1,9 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Controller;
+namespace Bundle\Site\MarketPlace\Controller;
 
-use Bolt\Extension\Bolt\MarketPlace\Action\ActionInterface;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Action\ActionInterface;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use Ramsey\Uuid\Uuid;
 use Silex\Application;
 use Silex\ControllerCollection;

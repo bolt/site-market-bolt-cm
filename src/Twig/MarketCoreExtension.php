@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Twig;
+namespace Bundle\Site\MarketPlace\Twig;
 
 use Twig_Extension as TwigExtension;
 use Twig_SimpleFilter as TwigSimpleFilter;

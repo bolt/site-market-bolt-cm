@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Storage;
+namespace Bundle\Site\MarketPlace\Storage;
 
 use Bolt\Storage\EntityManager;
 use Composer\Package\PackageInterface;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace;
+namespace Bundle\Site\MarketPlace;
 
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Schema\Table;
+use Bundle\Site\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Storage\Repository;
+use Bundle\Site\MarketPlace\Storage\Schema\Table;
 use Bolt\Extension\DatabaseSchemaTrait;
 use Bolt\Extension\SimpleExtension;
 use Bolt\Extension\StorageTrait;

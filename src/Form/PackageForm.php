@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Form;
+namespace Bundle\Site\MarketPlace\Form;
 
-use Bolt\Extension\Bolt\MarketPlace\Form\Validator\Constraint\UniqueSourceUrl;
+use Bundle\Site\MarketPlace\Form\Validator\Constraint\UniqueSourceUrl;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+namespace Bundle\Site\MarketPlace\Storage\Repository;
 
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use Composer\Semver\Constraint\Constraint;
 use Composer\Semver\VersionParser;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Provider;
+namespace Bundle\Site\MarketPlace\Provider;
 
-use Bolt\Extension\Bolt\MarketPlace\Action;
-use Bolt\Extension\Bolt\MarketPlace\Controller;
-use Bolt\Extension\Bolt\MarketPlace\Form;
-use Bolt\Extension\Bolt\MarketPlace\Form\Validator\Constraint;
-use Bolt\Extension\Bolt\MarketPlace\Service;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
-use Bolt\Extension\Bolt\MarketPlace\Twig;
+use Bundle\Site\MarketPlace\Action;
+use Bundle\Site\MarketPlace\Controller;
+use Bundle\Site\MarketPlace\Form;
+use Bundle\Site\MarketPlace\Form\Validator\Constraint;
+use Bundle\Site\MarketPlace\Service;
+use Bundle\Site\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Storage\Repository;
+use Bundle\Site\MarketPlace\Twig;
 use Composer\Config as ComposerConfig;
 use Composer\Config\JsonConfigSource;
 use Composer\Factory;

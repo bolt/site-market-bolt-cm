@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+namespace Bundle\Site\MarketPlace\Storage\Entity;
 
 use Bolt\Storage\Entity\Entity;
 use DateTime;

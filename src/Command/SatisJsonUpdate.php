@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Command;
+namespace Bundle\Site\MarketPlace\Command;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
+use Bundle\Site\MarketPlace\Service\SatisManager;
 use Bolt\Nut\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

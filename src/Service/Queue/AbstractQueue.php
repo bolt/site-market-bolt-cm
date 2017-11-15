@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Service\Queue;
+namespace Bundle\Site\MarketPlace\Service\Queue;
 
 use Bolt\Configuration\PathResolver;
 use Bolt\Storage\EntityManager;

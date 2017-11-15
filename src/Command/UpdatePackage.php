@@ -1,10 +1,10 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Command;
+namespace Bundle\Site\MarketPlace\Command;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\PackageManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+use Bundle\Site\MarketPlace\Service\PackageManager;
+use Bundle\Site\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Storage\Repository;
 use Bolt\Extension\BoltAuth\Auth\Storage\Entity\Account as AuthAccountEntity;
 use Bolt\Extension\BoltAuth\Auth\Storage\Repository\Account as AuthAccountRepository;
 use Bolt\Nut\BaseCommand;

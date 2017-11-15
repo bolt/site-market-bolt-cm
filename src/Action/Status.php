@@ -1,8 +1,8 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Action;
+namespace Bundle\Site\MarketPlace\Action;
 
-use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
+use Bundle\Site\MarketPlace\Service\SatisManager;
 use Bolt\Filesystem\Filesystem;
 use Bolt\Filesystem\Handler\FileInterface;
 use Composer\Package\CompletePackageInterface;

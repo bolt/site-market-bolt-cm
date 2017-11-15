@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Storage\Repository;
+namespace Bundle\Site\MarketPlace\Storage\Repository;
 
 use Bolt\Storage\Repository;
 

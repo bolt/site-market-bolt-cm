@@ -1,10 +1,10 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Service\Queue;
+namespace Bundle\Site\MarketPlace\Service\Queue;
 
 use Bolt\Configuration\PathResolver;
-use Bolt\Extension\Bolt\MarketPlace\Service\SatisManager;
-use Bolt\Extension\Bolt\MarketPlace\Storage\Entity;
+use Bundle\Site\MarketPlace\Service\SatisManager;
+use Bundle\Site\MarketPlace\Storage\Entity;
 use Bolt\Storage\EntityManager;
 use Composer\IO\NullIO;
 use Pimple as Container;

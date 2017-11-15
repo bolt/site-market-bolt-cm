@@ -1,6 +1,6 @@
 <?php
 
-namespace Bolt\Extension\Bolt\MarketPlace\Output;
+namespace Bundle\Site\MarketPlace\Output;
 
 use Symfony\Component\Console\Output\Output;
 
