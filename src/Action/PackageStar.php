@@ -54,7 +54,7 @@ class PackageStar extends AbstractAction
         $existing = $starRepo->isStarredBy($package->getId(), $account->getGuid());
 
         if ($existing) {
-            $session->getFlashBag()->add('error', 'Your have already starred this package');
+            $session->getFlashBag()->add('error', 'You have already starred this package');
         } else {
             $star = new Entity\PackageStar([
                 'source'     => $request->server->get('HTTP_REFERER'),
@@ -65,7 +65,7 @@ class PackageStar extends AbstractAction
             ]);
 
             $starRepo->save($star);
-            $session->getFlashBag()->add('success', 'Your have starred this package');
+            $session->getFlashBag()->add('success', 'You have starred this package');
         }
 
         $route = $urlGen->generate('view', ['package' => $packageId]);
