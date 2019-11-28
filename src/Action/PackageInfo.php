@@ -30,7 +30,7 @@ class PackageInfo extends AbstractAction
         /** @var Repository\Package $packageRepo */
         $packageRepo = $em->getRepository(Entity\Package::class);
         /** @var Entity\Package $package */
-        $package = $packageRepo->findOneBy(['approved' => true, 'name' => $p]);
+        $package = array_reverse($packageRepo->findOneBy(['approved' => true, 'name' => $p]));
 
         if (!$package) {
             return new JsonResponse(['package' => false, 'version' => false]);
